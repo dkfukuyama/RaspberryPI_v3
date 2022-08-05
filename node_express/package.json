@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "test": "mocha test/*.ts"
+    "test": "mocha test/*.js --recursive -r dotenv/config"
   },
   "devDependencies": {
     "@types/mocha": "^9.1.1",
@@ -24,7 +24,9 @@
     "bonjour": "^3.5.0",
     "castv2-client": "^1.2.0",
     "chromecast-api": "^0.4.0",
+    "date-fns": "^2.29.1",
     "date-utils": "^1.2.21",
+    "dotenv": "^16.0.1",
     "ejs-cli": "^2.2.3",
     "express": "^4.17.3",
     "express-favicon": "^2.0.1",

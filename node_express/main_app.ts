@@ -1,6 +1,5 @@
 ﻿const express = require("express");
 const app = express();
-const path = require('path');
 const gtts = require('./google_home')
 const favicon = require('express-favicon');
 const vars = require('./variables');
@@ -10,7 +9,6 @@ const bodyParser = require('body-parser');
 const mail = require('./send_mail');
 const ghome = require('./gHomeCnt');
 const ut = require('./utils');
-const { resolve } = require("path");
 
 const calc = require('./calculator')
 const slk = require('./slacksend');
@@ -18,6 +16,8 @@ const slk = require('./slacksend');
 const sch = require('./scheduler');
 
 require('date-utils');
+
+import path = require('path');
 
 app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 
@@ -88,7 +88,7 @@ page_path_set_index_ejs.pages = [
                     ).then((params) => {
                         let mailer = new mail.NodeMailer();
                         mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>resolve(d));
+                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
             }
             return;
         },
@@ -132,7 +132,7 @@ page_path_set_index_ejs.pages = [
                     ).then((params) => {
                         let mailer = new mail.NodeMailer();
                         mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>resolve(d));
+                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
             }
             return;
         },
