@@ -1,0 +1,24 @@
+{
+  "script": ".\\main_app.js",
+  "name": "main_app",
+  "filter_env": [],
+  "namespace": "default",
+  "log_file": "log.txt",
+  "env": {
+	
+  },
+  "merge_logs": true,
+  "vizion": true,
+  "autorestart": true,
+  "watch": true,
+  "watch_delay": 3,
+  "ignore_watch" : "log.txt",
+  "instance_var": "NODE_APP_INSTANCE",
+  "pmx": true,
+  "automation": true,
+  "treekill": true,
+  "username": "dfuku",
+  "windowsHide": true,
+  "kill_retry_time": 100,
+  "write": true
+}

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NodejsConsoleApp1", "NodejsConsoleApp1\NodejsConsoleApp1.njsproj", "{94FE7C6C-89BD-4D29-8326-D93EA2D5F860}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "node_express", "node_express\node_express.njsproj", "{94FE7C6C-89BD-4D29-8326-D93EA2D5F860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
