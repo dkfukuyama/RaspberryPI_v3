@@ -7,8 +7,8 @@
     "name": ""
   },
   "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean",
+    "build": "powershell -Command ./prebuild.ps1;\n tsc --build",
+    "clean": "powershell -Command ./prebuild.ps1;\n tsc --build --clean",
     "test": "mocha test/*.js --recursive -r dotenv/config"
   },
   "devDependencies": {

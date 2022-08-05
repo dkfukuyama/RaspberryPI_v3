@@ -1,12 +1,13 @@
-import assert = require('assert');
+﻿import assert = require('assert');
 
 import { globalVars, getLocalAddress } from '../variables';
 
 
 describe("variables", () => {
     require('dotenv').config();
+
     console.log("process.env.serverPort");
-    console.log(process.env.serverPort);
+    console.log(process.env.SERVER_PORT);
 
     it("globalVars_01", () => {
         console.log(globalVars());

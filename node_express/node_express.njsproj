@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".env" />
+    <Content Include=".env_test.common" />
+    <Content Include=".env_test.secret" />
+    <Content Include=".gitignore" />
     <Content Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
     <Content Include="clean.ts">
@@ -48,6 +51,8 @@
     <Content Include="google_tts.ts" />
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
+    <Content Include="postbuild.ps1" />
+    <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
     <Content Include="scheduler.ts" />
     <Content Include="send_mail.ts" />

@@ -39,9 +39,10 @@ export function globalVars() : IGL{
         if (firstTry || GL_VARS.errorFlag) {
             console.log("LOAD VAL");
             GL_VARS.errorFlag = true;
-            GL_VARS.serverPort = (parseInt(process.env.SERVER_PORT) || 80);
+            GL_VARS.serverPort = (parseInt(process.env.SERVER_PORT) || GL_VARS.serverPort);
             GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
 
+            console.log(process.env.TEST_IPV4);
             if (process.env.TEST_IPV4) {
                 GL_VARS.httpDir0 = `${process.env.TEST_IPV4}:${GL_VARS.serverPort}`;
             } else {
