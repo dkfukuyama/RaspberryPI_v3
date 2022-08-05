@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const app = express();
-const path = require('path');
 const gtts = require('./google_home');
 const favicon = require('express-favicon');
 const vars = require('./variables');
@@ -19,11 +20,11 @@ const bodyParser = require('body-parser');
 const mail = require('./send_mail');
 const ghome = require('./gHomeCnt');
 const ut = require('./utils');
-const { resolve } = require("path");
 const calc = require('./calculator');
 const slk = require('./slacksend');
 const sch = require('./scheduler');
 require('date-utils');
+const path = require("path");
 app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 app.use(bodyParser.urlencoded({
     extended: true
@@ -50,7 +51,7 @@ page_path_set_index_ejs.pages = [
         title: 'しゃべらせたいとき',
         view_page: './speak.ejs',
         level: 0,
-        postfunc: (req, res) => __awaiter(this, void 0, void 0, function* () {
+        postfunc: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             console.log(`req.body.submit = ${req.body.submit}`);
             let speaker_name = '';
             if (req.body.submit.startsWith('google|')) {
@@ -82,7 +83,7 @@ page_path_set_index_ejs.pages = [
                         }).then((params) => {
                             let mailer = new mail.NodeMailer();
                             mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                        }).catch(er => console.log(er)).then((d) => resolve(d));
+                        }).catch(er => console.log(er)).then((d) => Promise.resolve(d));
                 }
             return;
         }),
@@ -95,7 +96,7 @@ page_path_set_index_ejs.pages = [
         title: 'でんたく',
         view_page: './calculator.ejs',
         level: 0,
-        postfunc: (req, res) => __awaiter(this, void 0, void 0, function* () {
+        postfunc: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             console.log(`req.body.submit = ${req.body.submit}`);
             req.body.text = calc.make_calculation_text(req.body);
             let speaker_name = '';
@@ -120,7 +121,7 @@ page_path_set_index_ejs.pages = [
                         }).then((params) => {
                             let mailer = new mail.NodeMailer();
                             mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                        }).catch(er => console.log(er)).then((d) => resolve(d));
+                        }).catch(er => console.log(er)).then((d) => Promise.resolve(d));
                 }
             return;
         }),
@@ -136,7 +137,7 @@ page_path_set_index_ejs.pages = [
         specialParams: {
             musicList_get: require('./get_musicList').get,
         },
-        postfunc: (req, res) => __awaiter(this, void 0, void 0, function* () {
+        postfunc: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (req.body.mode == 'playOnce') {
                 let filename = encodeURI(vars.globalVars().httpDir_music + "/" + req.body.filename);
                 return ghome.play(req.body.gHomeName, filename, { volume: 80 });
@@ -174,7 +175,7 @@ page_path_set_index_ejs.pages = [
         path: '/command',
         title: '',
         hidden: true,
-        postfunc: (req, res) => __awaiter(this, void 0, void 0, function* () {
+        postfunc: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (req.body.mode) {
                 console.log('COMMAND MODE');
                 console.log(req.body.mode);

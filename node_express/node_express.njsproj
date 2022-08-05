@@ -35,37 +35,49 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="calculator.js" />
+    <Content Include=".env" />
+    <Content Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
-    <Content Include="clean.js">
+    <Content Include="clean.ts">
       <TestFramework>mocha</TestFramework>
     </Content>
     <Content Include="clean_wav.sh" />
-    <Content Include="get_musicList.js" />
-    <Content Include="gHomeCnt.js" />
-    <Content Include="google_home.js" />
-    <Content Include="google_tts.js" />
+    <Content Include="get_musicList.ts" />
+    <Content Include="gHomeCnt.ts" />
+    <Content Include="google_home.ts" />
+    <Content Include="google_tts.ts" />
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
     <Content Include="README.md" />
-    <Content Include="scheduler.js" />
-    <Content Include="send_mail.js" />
-    <Content Include="slacksend.js" />
-    <Content Include="sqlite_lib.js" />
-    <Content Include="test_echo.js" />
-    <Content Include="test_google_calender_access.js" />
+    <Content Include="scheduler.ts" />
+    <Content Include="send_mail.ts" />
+    <Content Include="sqlite_lib.ts" />
+    <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
-    <Content Include="utils.js" />
-    <Content Include="variables.js" />
+    <Content Include="utils.ts" />
+    <Content Include="variables.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="main_app.ts">
       <TestFramework>mocha</TestFramework>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="slacksend.ts" />
+    <TypeScriptCompile Include="test\test_variables.ts">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="test\UnitTest1.ts">
       <SubType>Code</SubType>
       <TestFramework>mocha</TestFramework>
       <Publish>True</Publish>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="test\UnitTest2.ts">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="test\test_utils.ts">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>

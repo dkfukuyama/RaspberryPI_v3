@@ -1,29 +1,30 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require('fs');
-const path = require("path");
-const slk = require('./slacksend');
-const variables_1 = require("./variables");
+import path = require('path');
+const slk: any = require('./slacksend');
+
+import { globalVars } from './variables';
+
+
 function clean_wav(leftnum) {
-    let dir = (0, variables_1.globalVars)().saveDir;
+
+    let dir = globalVars().saveDir;
     console.log(dir);
     fs.readdir(dir, function (err, files) {
-        if (err)
-            throw err;
+        if (err) throw err;
         var fileList = [];
         files.filter(function (file) {
             let f = path.join(dir, file);
-            return fs.statSync(f).isFile() && /.*\.wav$/.test(file);
+            return fs.statSync(f).isFile() && /.*\.wav$/.test(file); 
         }).forEach(function (file) {
             fileList.push(path.join(dir, file));
         });
-        fileList.sort((a, b) => {
+        fileList.sort((a,b)=>{
             //at = fs.statSync(a).atime;
             //bt = fs.statSync(b).atime;
-            if (a < b) {
+
+            if (a<b) {
                 return -1;
-            }
-            else if (a > b) {
+            }else if (a>b) {
                 return 1;
             }
             // a は b と等しいはず
@@ -37,15 +38,16 @@ function clean_wav(leftnum) {
             try {
                 fs.unlinkSync(f0);
                 console.log('DELETED');
-            }
-            catch (error) {
+            } catch (error) {
                 console.log("ERROR : " + JSON.stringify(error));
                 return { message: "ERROR : " + JSON.stringify(error) };
             }
         });
     });
+
     slk.slacksend(`CLEAN WAV OK`);
-    return { message: `CLEAN WAV OK` };
+
+    return { message: `CLEAN WAV OK`};
 }
+
 exports.clean_wav = clean_wav;
-//# sourceMappingURL=clean.js.map

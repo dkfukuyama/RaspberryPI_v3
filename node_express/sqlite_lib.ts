@@ -1,45 +1,40 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 const res = require("express/lib/response");
 const sqlite3 = require("sqlite3");
-function GetResults(err) {
-    if (err) {
+
+
+function GetResults(err){
+    if(err){
         console.log("エラー： " + JSON.stringify(err));
     }
-}
-;
-function GetResultsT(db, resolve, reject, continue_status = '') {
+};
+
+function GetResultsT(db, resolve, reject, continue_status: string = ''){
     return (err) => {
-        if (continue_status != 'open') {
+        if(continue_status != 'open'){
             //console.log('DB CLOSE');
             db.close();
-        }
-        else {
+        }else{
             //console.log('DB CONTINUE');
         }
-        if (err) {
+        if(err){
             reject(JSON.stringify(err));
         }
         resolve(db);
     };
 }
+
 function DisplayTable(dbpath, tablename) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject)=>{
         const db = new sqlite3.Database(dbpath);
-        db.on("error", (err) => reject(err));
+        db.on("error", (err)=>reject(err));
+
         console.log(`command: "SELECT * FROM ${tablename}"`);
         db.all(`SELECT * FROM ${tablename}`, (err, rows) => {
             if (err) {
                 console.log('------');
                 reject(err);
             }
+
             rows.forEach(row => {
                 console.log(JSON.stringify(row));
             });
@@ -49,21 +44,24 @@ function DisplayTable(dbpath, tablename) {
         });
     });
 }
-function InitDB(dbpath) {
-    return new Promise((resolve, reject) => {
+
+function InitDB(dbpath){
+    return new Promise((resolve, reject)=>{
+
         const db = new sqlite3.Database(dbpath);
-        db.on("error", (err) => reject(err));
+        db.on("error", (err)=>reject(err));
         db.serialize(() => {
+
             db.run(`
             CREATE TABLE IF NOT EXISTS FamilyMembers(
                 id INTEGER PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 age INTEGER NOT NULL
             )
-            `, GetResults);
+            `,GetResults);
             /*
             var insertData = db.prepare('INSERT INTO FamilyMembers VALUES (?, ?, ?)');
-            insertData.run([1, 'あああああ', 9], GetResults);
+            insertData.run([1, 'あああああ', 9], GetResults); 
             insertData.run([2, 'いいいいい', 7], GetResults);
             insertData.run([3, 'ううううう', 4], GetResults);
             insertData.finalize();
@@ -79,31 +77,37 @@ function InitDB(dbpath) {
             )
             `, GetResultsT(db, resolve, reject));
         });
+
     });
 }
+
 function GetIdFromName(dbpath, name) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject)=>{
         const db = new sqlite3.Database(dbpath);
-        db.on("error", (err) => reject(err));
+        db.on("error", (err)=>reject(err));
+
         let command = `SELECT * FROM FamilyMembers WHERE name=\"${name}\"`;
         console.log(command);
         db.get(command, (err, row) => {
-            var _a;
             db.close();
             if (err) {
                 resolve({
-                    err: err,
+                    err:err,
                     results: -1
                 });
             }
-            resolve({
-                row: row,
-                results: (_a = row === null || row === void 0 ? void 0 : row.id) !== null && _a !== void 0 ? _a : -1
+            resolve(
+            {
+                row:row,
+                results: row?.id ?? -1
             });
         });
     });
 }
-function AddMember(memberName) {
+
+
+
+function AddMember(memberName){ 
     /*
     db.serialize(() =>{
         db.all("select * FamilyMembers", (error, rows) =>{
@@ -112,6 +116,7 @@ function AddMember(memberName) {
     });
     */
 }
+
 /*
 async function AddQuiz(id, right, wrong1, wrong2){
     return new Promise((resolve, reject)=>{
@@ -130,23 +135,28 @@ async function AddQuiz(id, right, wrong1, wrong2){
     });
 }
 */
-function AddQuiz(dbpath, memberName, right, wrong1, wrong2, quizid = -1) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var res = yield GetIdFromName(dbpath, memberName);
-        if (res.results == -1) {
-            return new Promise((resolve, reject) => reject(res));
-        }
-        console.log(res);
-        const memberId = res.results;
-        return AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid);
-    });
+
+async function AddQuiz(dbpath, memberName, right, wrong1, wrong2, quizid=-1){
+    var res: any = await GetIdFromName(dbpath, memberName);
+    if(res.results == -1){
+        return new Promise((resolve, reject)=>reject(res));
+    }
+    
+    console.log(res);
+
+    const memberId = res.results;
+
+    return AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid);
 }
-function AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid = -1) {
+
+function AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid=-1){
+    
     // データが存在するかを確認
-    if (quizid != -1) {
-        return new Promise((resolve, reject) => {
+    if(quizid != -1){
+        return new Promise((resolve, reject)=>{
             const db = new sqlite3.Database(dbpath);
-            db.on("error", (err) => reject(err));
+            db.on("error", (err)=>reject(err));
+            
             let command = `
             UPDATE Quiz 
             SET Composer_id=${memberId},
@@ -164,11 +174,11 @@ function AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid = -1)
                 resolve(row);
             });
         });
-    }
-    else {
-        return new Promise((resolve, reject) => {
+    }else{
+        return new Promise((resolve, reject)=>{
             const db = new sqlite3.Database(dbpath);
-            db.on("error", (err) => reject(err));
+            db.on("error", (err)=>reject(err));
+            
             let command = `
             INSERT INTO Quiz(id, Composer_Id, Right, Wrong1, Wrong2)
             VALUES ((SELECT MAX(id) from Quiz) + 1, ${memberId}, \"${right}\", \"${wrong1}\", \"${wrong2}\")
@@ -185,10 +195,13 @@ function AddQuizByMemberId(dbpath, memberId, right, wrong1, wrong2, quizid = -1)
         });
     }
 }
-function RemoveQuiz(dbpath, removeId) {
-    return new Promise((resolve, reject) => {
+
+
+function RemoveQuiz(dbpath, removeId){
+    return new Promise((resolve, reject)=>{
         const db = new sqlite3.Database(dbpath);
-        db.on("error", (err) => reject(err));
+        db.on("error", (err)=>reject(err));
+        
         let command = `
         DELETE FROM Quiz
         WHERE id=${removeId}
@@ -204,13 +217,16 @@ function RemoveQuiz(dbpath, removeId) {
         });
     });
 }
-function DisplayTableLog(dbpath) {
+
+function DisplayTableLog(dbpath){
     return DisplayTable(dbpath, 'LogData');
 }
-function InitLogDB(dbpath) {
-    return new Promise((resolve, reject) => {
+
+function InitLogDB(dbpath){
+    return new Promise((resolve, reject)=>{
         const db = new sqlite3.Database(dbpath);
-        db.on("error", (err) => reject(err));
+
+        db.on("error", (err)=>reject(err));
         db.serialize(() => {
             db.run(`
             CREATE TABLE IF NOT EXISTS LogData (
@@ -222,20 +238,25 @@ function InitLogDB(dbpath) {
         });
     });
 }
+
+
 function getRowNum() {
     let e = new Error();
-    let i = e.stack.split("\n")[2].split(":");
+    let i: string[] = e.stack.split("\n")[2].split(":");
     i.pop();
     return i.pop();
 }
-function AddLogDB(dbpath, type, str, continue_status) {
+
+function AddLogDB(dbpath, type, str, continue_status){
     return InitLogDB(dbpath)
-        .then((db) => new Promise((resolve, reject) => {
+    .then((db: any)=>new Promise((resolve, reject) => {
         var insertData = db.prepare('INSERT INTO LogData VALUES (?, ?, CURRENT_TIMESTAMP)');
-        insertData.run([type, str], null, GetResultsT(db, resolve, reject, continue_status));
+        insertData.run([type, str], null, GetResultsT(db, resolve, reject, continue_status)); 
         return db;
     }));
 }
+
+
 /*
 async function main(){
 
@@ -255,4 +276,3 @@ async function main(){
     
 }
 */
-//# sourceMappingURL=sqlite_lib.js.map

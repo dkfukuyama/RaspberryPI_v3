@@ -1,16 +1,24 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 const gh = require('./google_home');
-
 require('date-utils');
-
-async function test_main() {
-    let dts = Date.Today;
-    let dte = Date.Tomorrow;
-    console.log(dts);
-    console.log(dte);
-
-    let g = await gh.getCalJson(dts, dte);
-    console.log(g);
+function test_main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var d = new Date();
+        let dts = d.Today;
+        let dte = d.Tomorrow;
+        console.log(dts);
+        console.log(dte);
+        let g = yield gh.getCalJson(dts, dte);
+        console.log(g);
+    });
 }
-
-
 test_main();
+//# sourceMappingURL=test_google_calender_access.js.map
