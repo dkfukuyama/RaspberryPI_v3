@@ -6,7 +6,7 @@
     <RootNamespace>NodejsConsoleApp1</RootNamespace>
     <JavaScriptTestFramework>mocha</JavaScriptTestFramework>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
-    <JavaScriptTestRoot>test</JavaScriptTestRoot>
+    <JavaScriptTestRoot>UnitTest</JavaScriptTestRoot>
     <NodeExePath>
     </NodeExePath>
   </PropertyGroup>
@@ -35,7 +35,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".env" />
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
@@ -45,6 +44,7 @@
       <TestFramework>mocha</TestFramework>
     </Content>
     <Content Include="clean_wav.sh" />
+    <Content Include="FunctionTest\test_all.ps1" />
     <Content Include="get_musicList.ts" />
     <Content Include="gHomeCnt.ts" />
     <Content Include="google_home.ts" />
@@ -63,30 +63,44 @@
     <Content Include="variables.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="FunctionTest\MainMonitor.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="FunctionTest\test_env.secret">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="main_app.ts">
       <TestFramework>mocha</TestFramework>
     </TypeScriptCompile>
     <TypeScriptCompile Include="slacksend.ts" />
-    <TypeScriptCompile Include="test\test_variables.ts">
+    <TypeScriptCompile Include="UnitTest\test_GoogleHome.ts">
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="test\UnitTest1.ts">
+    <TypeScriptCompile Include="UnitTest\test_variables.ts">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="UnitTest\UnitTest1.ts">
       <SubType>Code</SubType>
       <TestFramework>mocha</TestFramework>
       <Publish>True</Publish>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="test\UnitTest2.ts">
+    <TypeScriptCompile Include="UnitTest\UnitTest2.ts">
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="test\test_utils.ts">
+    <TypeScriptCompile Include="UnitTest\test_utils.ts">
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="test\" />
+    <Folder Include="FunctionTest\" />
+    <Folder Include="UnitTest\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

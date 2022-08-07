@@ -1,4 +1,4 @@
-import path = require('path');
+﻿import path = require('path');
 
 interface IGL {
     errorFlag: boolean;
@@ -96,6 +96,11 @@ export function globalVars() : IGL{
 }
 
 export function getLocalAddress() {
+
+    if (process.env.TEST_MODE) {
+        console.log("TEST MODE ");
+    }
+
     const os = require('os');
     let ifacesObj: any = {};
     ifacesObj.ipv4 = [];

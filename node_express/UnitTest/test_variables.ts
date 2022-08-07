@@ -1,15 +1,19 @@
 ﻿import assert = require('assert');
 
 import { globalVars, getLocalAddress } from '../variables';
-
+import Encoding = require('encoding-japanese');
+import { TextDecoder, TextEncoder } from 'util';
 
 describe("variables", () => {
     require('dotenv').config();
 
-    console.log("process.env.serverPort");
-    console.log(process.env.SERVER_PORT);
-
     it("globalVars_01", () => {
+        let s = "あいうえお";
+        let a : any = new TextEncoder().encode(s);
+        console.log(a.map((x) => x.toString(16)));
+        console.log(a);
+        console.log(new TextDecoder().decode(a));
+
         console.log(globalVars());
         assert.equal(false, globalVars().errorFlag);
         assert.equal(9000, globalVars().serverPort);

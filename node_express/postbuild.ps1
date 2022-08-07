@@ -1,1 +1,1 @@
-ls * -r
+﻿Write-Host "Post Build!"

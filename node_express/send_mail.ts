@@ -1,5 +1,5 @@
 ﻿const mailer :any = require("nodemailer");
-const vars: any = require('./variables');
+import { globalVars } from './variables';
 
 class NodeMailer {
     private mail_from: string;
@@ -27,14 +27,14 @@ class NodeMailer {
         attachments: { filename: string; path: any; }[];    } | null;
 
     constructor() {
-        this.mail_from = vars.globalVars().gmail_addr;
+        this.mail_from = globalVars().gmail_addr;
         this.smtpConfig = {
             host: 'smtp.gmail.com',
             port: 465,
             secure: true, // SSL
             auth: {
                 user: this.mail_from,
-                pass: vars.globalVars().gmail_pass
+                pass: globalVars().gmail_pass
             }
         }
         this.transporter = mailer.createTransport(this.smtpConfig);

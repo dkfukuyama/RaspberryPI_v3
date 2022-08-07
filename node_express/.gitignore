@@ -1,4 +1,7 @@
+.env
+
 *.secret
 
 *.js
 *.js.map
+

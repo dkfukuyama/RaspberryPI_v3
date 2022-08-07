@@ -2,7 +2,7 @@ const { IncomingWebhook } = require("@slack/webhook");
 
 let webhook = null;
 
-async function slacksend(text) {
+export async function slacksend(text) {
 
   try{
     if(!webhook) webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK);
@@ -15,7 +15,5 @@ async function slacksend(text) {
     console.log(`SLACK WEBHOOK ERROR -- ${text}`);
   }
 };
-
-exports.slacksend = slacksend;
 
 

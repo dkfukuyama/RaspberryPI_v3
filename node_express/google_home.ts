@@ -26,7 +26,7 @@ async function speechOnGoogleHome(ghName, params){
             setTimeout(()=>reject('TIMEOUT speechOnGoogleHome'), 120000);
             let path_togo = (params.outFile ?? getNowDateWithString()) + ".wav";
             // 日付時刻から保存パス設定
-            params.outfilePath = path.join(vars.globalVars().saveDir, path_togo);
+            params.outfilePath = path.join(globalVars().saveDir, path_togo);
 
             if(params.reverse_play){
                 params.text = params.text.split("").reverse().join("");
@@ -68,7 +68,7 @@ async function speechOnGoogleHome(ghName, params){
                 });
             }
 
-            const fullPathUrl = vars.globalVars().httpDir + "/" + path_togo;
+            const fullPathUrl = globalVars().httpDir + "/" + path_togo;
 
             if(ghName) await gHome.play(ghName, fullPathUrl, params).then((d)=>resolve(d)).catch((err)=>reject(err));
             else resolve(params);
@@ -83,7 +83,7 @@ async function getCalJson(sdate: any = undefined, edate: any = undefined){
         setTimeout(()=>reject('Get Cal Timeout'), 30000);
 
         var options = {
-            url: vars.globalVars().g_calenderSummaryUrl,
+            url: globalVars().g_calenderSummaryUrl,
             method: 'POST',
             json: true,
             followAllRedirects: true,
