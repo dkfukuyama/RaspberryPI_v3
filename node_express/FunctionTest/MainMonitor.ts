@@ -28,7 +28,6 @@ export class MainMonitor {
 
     private GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
         for (let key in this.GHomes) {
-            //console.log([this.GHomes[key].g.SelfStatus.speakerName, name]);
             if (this.GHomes[key].g.SelfStatus.speakerName == name) return this.GHomes[key];
         }
         return null;
@@ -37,8 +36,6 @@ export class MainMonitor {
     private CreateOrOverWriteObjects() {
         let addrs: string[] | null = GoogleHomeController.gHomeAddresses?.map(a => a.address);
         addrs?.forEach((ad: string) => {
-            //console.log("------------------------");
-            //console.log(ad);
             if (ad in this.GHomes) {
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
                 this.GHomes[ad].lastUpdated = new Date();
@@ -48,7 +45,6 @@ export class MainMonitor {
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
-                //console.log(this.GHomes[ad]);
             }
         })
         for (const key in this.GHomes) {
@@ -57,9 +53,6 @@ export class MainMonitor {
                 delete this.GHomes[key];
             }
         }
-        //console.log(addrs);
-        //console.log(JSON.stringify(this.GHomes, null, null));
-        //console.log(this.GetGhObjByName("青色グーグル"));
     }
     private async GetGhStatus(): Promise<void> {
         for (let key in this.GHomes) {

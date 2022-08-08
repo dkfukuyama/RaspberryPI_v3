@@ -20,7 +20,7 @@ export class GoogleHomeController {
     public SelfStatus: IGoogleHomeSeekResults;
     private ConnectedCient;
     private IsConnected: boolean = false;
-    private IsLaunhed: boolean = false;
+    private IsLaunched: boolean = false;
     public Player: any | null = null;
     public Sessions: any[] = [];
 
@@ -108,96 +108,15 @@ export class GoogleHomeController {
         return contentTypes[extType];
     }
 
-    public play_dir(gHomeName, dirPath, fileName, params) {
-        //return this.play(gHomeName, globalVars().httpDir + "/" + fileName, params);
-    }
-
-    public playAsync(gHomeName, playUrl) {
-
-    }
-
-    public pushPlayList(gHomeName, playUrl) {
-
-    }
-
-    public clearPlayList(gHomeName) {
-
-    }
-
-    public interruptPlay(gHomeName, playUrl) {
-
-    }
-
-    public interruptAndResumePlay(gHomeName, playUrl) {
-
-    }
-
-    public setVolume(gHomeName, playVolume) {
-        return new Promise((resolve, reject) => {
-            let adrs = GoogleHomeController.getGHAddrFromName(gHomeName);
-            if (adrs.length == 0) {
-                reject(`the address corresponds to "${gHomeName}" is NOT FOUND!!`);
-                return;
-            }
-            const client = new this.Client();
-            client.connect({ host: adrs[0] }, function () {
-                client.setVolume({
-                    muted: false,
-                    level: playVolume / 100,
-                }, function (err, vol) {
-                    if (err) {
-                        client.close();
-                        reject(err) // handle error
-                    } else {
-                        resolve(playVolume);
-                    }
-                });
-            });
-            client.on('error', function (err) {
-                client.close();
-                reject(`Error: ${err.message}`);
-            });
-        });
-    }
-
-    public getVolume(gHomeName) {
-        return new Promise((resolve, reject) => {
-            let adrs = GoogleHomeController.getGHAddrFromName(gHomeName);
-            if (adrs.length == 0) {
-                reject(`the address corresponds to "${gHomeName}" is NOT FOUND!!`);
-                return;
-            }
-            const client = new this.Client();
-            client.connect({ host: adrs[0] }, function () {
-                client.getVolume(function (err, vol) {
-                    if (err) {
-                        client.close();
-                        reject(err) // handle error
-                    }
-                    client.close();
-                    resolve(vol) // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
-                });
-            });
-            client.on('error', function (err) {
-                client.close();
-                reject(`Error: ${err.message}`);
-            });
-        });
-    }
-
-
     public async Connect(): Promise<void> {
         if (!this.IsConnected) {
             console.log("CONNECTION");
             this.ConnectedCient = new this.Client();
+            this.IsConnected = true;
             this.ConnectedCient.on('error',  (err) => {
                 this.IsConnected = false;
                 console.log('Error: %s', err.message);
-                try {
-                    this.Disconnect();
-                } catch (e) {
-                    console.log(e);
-                }
+                this.Disconnect();
             });
             this.IsConnected = true;
             return new Promise<void>((resolve, reject) => {
@@ -215,7 +134,6 @@ export class GoogleHomeController {
                 if (err) {
                     this.Disconnect();
                 }
-                //console.log(vol); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
             });
         } catch (e) {
             console.log(e);
@@ -229,8 +147,6 @@ export class GoogleHomeController {
                 if (err) {
                     this.Disconnect();
                 }
-                //console.log("--- STATUS ---");
-                //console.log(stat); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
             });
         } catch (e) {
             console.log(e);
@@ -244,9 +160,7 @@ export class GoogleHomeController {
                 if (err) {
                     this.Disconnect();
                 }
-                //console.log("--- SESSION ---");
                 this.Sessions = sessions;
-                //console.log(sessions); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
             });
         } catch (e) {
             console.log(e);
@@ -255,7 +169,9 @@ export class GoogleHomeController {
     }
 
     public async Launch(): Promise<void> {
-        if (this.IsLaunhed) return Promise.resolve();
+        await this.Connect();
+
+        if (this.IsLaunched) return Promise.resolve();
 
         return new Promise<void>((resolve, reject) => {
             this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
@@ -266,11 +182,11 @@ export class GoogleHomeController {
                     resolve();
                 });
                 this.Player = player;
-                this.IsLaunhed = true;
+                this.IsLaunched = true;
                 if (err) {
                     console.log(err);
                     this.Disconnect();
-                    this.IsLaunhed = false;
+                    this.IsLaunched = false;
                     reject();
                 }
             });
@@ -279,7 +195,7 @@ export class GoogleHomeController {
 
     public async PlayUrl(playUrl: string) {
 
-        if (!this.IsLaunhed) await this.Launch();
+        if (!this.IsLaunched) await this.Launch();
 
         var media = {
             contentId: playUrl,
@@ -311,7 +227,7 @@ export class GoogleHomeController {
 
     public async PlayList(playUrlList: string[]) {
 
-        if (!this.IsLaunhed) await this.Launch();
+        await this.Launch();
 
         let items: any[] = [];
         playUrlList.forEach(playUrl => {
@@ -360,6 +276,7 @@ export class GoogleHomeController {
     public Disconnect() {
         console.log("DISCONNET");
         this.IsConnected = false;
+        this.IsLaunched = false;
         this.Player = null;
         this.ConnectedCient.close();
     }
