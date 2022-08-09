@@ -17,8 +17,8 @@ export class MainMonitor {
     }
     public Start() {
         GoogleHomeController.startSeekGoogleLoop();
-        setInterval(() => {
-            this.Monitoring();
+        setInterval(async () => {
+            await this.Monitoring();
         }, 999);
     }
     public End() {
@@ -54,22 +54,30 @@ export class MainMonitor {
             }
         }
     }
-    private async GetGhStatus(): Promise<void> {
-        for (let key in this.GHomes) {
-            await this.GHomes[key].g.Connect();
-            await this.GHomes[key].g.Launch();
-            this.GHomes[key].g.GetStatus();
-            this.GHomes[key].g.GetSessions();
+    private async GetGhStatus() {
+        //return new Promise(async (resolve, reject) => {
+        try {
+            for (let key in this.GHomes) {
+                console.log(key);
+                this.GHomes[key].g.GetStatus();
+                //await this.GHomes[key].g.GetSessions();
+                //resolve();
+            }
+        } catch (err) {
+            console.log(err);
+            //reject(err);
         }
+
+        //});
     }
 
     static count: number = 0;
-    private Monitoring(){
+    private async Monitoring(){
         MainMonitor.count++;
 
         this.CreateOrOverWriteObjects();
-        this.GetGhStatus();
-
+        await this.GetGhStatus();
+        /*
         if (this.GetGhObjByName("青色グーグル")) {
             console.log("STAT STAT STAT");
             this.GetGhObjByName("青色グーグル").g.Player?.getStatus((a, b) => console.log([a, b]));
@@ -80,7 +88,7 @@ export class MainMonitor {
                 ]);
             }
         }
-       
+        */
     }
 }
 

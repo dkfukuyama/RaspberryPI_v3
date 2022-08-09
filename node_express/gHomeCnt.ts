@@ -115,37 +115,38 @@ export class GoogleHomeController {
     }
 
     public async Connect(): Promise<void> {
-        if (!this.IsConnected) {
-            this.ConnectedCient = new this.Client();
+        console.log(this.SelfStatus.speakerName);
+        return new Promise<void>((resolve, reject) => {
+            if (this.IsConnected) return Promise.resolve();
+            else this.ConnectedCient = new this.Client();
             this.ConnectedCient.on('error', (err) => {
                 this.Disconnect();
             });
-            return new Promise<void>((resolve, reject) => {
-                this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
-                    console.log("connected");
-                    this.IsConnected = true;
-                    resolve();
-                });
+            this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
+                console.log(`connected to ${this.SelfStatus.speakerName}`);
+                this.IsConnected = true;
+                resolve();
             });
-        }
+        });
     }
 
     public async Launch(): Promise<void> {
-        if (this.IsLaunhed) return Promise.resolve();
-
-        return new Promise<void>((resolve, reject) => {
-            this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
+        return new Promise<void>(async (resolve, reject) => {
+            await this.Connect();
+            if (this.IsLaunched) return Promise.resolve();
+            else this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
                 player.on('status', (status) => {
                     console.log('status broadcast playerState=%s', status.playerState);
                     console.log('status=', status);
                     this.Player = player;
-                    this.IsLaunhed = true;
+                    this.IsLaunched = true;
                     resolve();
                 });
                 if (err) {
                     this.Disconnect();
                     reject(err);
                 }
+                console.log("launched!");
             });
         });
     }
@@ -289,11 +290,11 @@ export class GoogleHomeController {
     }
 
     public Disconnect() {
-        console.log("DISCONNET");
+        console.log("DISCONNECT");
         this.IsConnected = false;
         this.IsLaunched = false;
         this.Player = null;
-        this.ConnectedCient.close();
+        this.ConnectedCient?.close();
         this.ConnectedCient = null;
     }
 
