@@ -8,6 +8,20 @@ interface IGoogleHomeSeekResults {
     speakerName: string;
 }
 
+interface Imedia_info {
+    playUrl: string;
+    contentType: string | null;
+    title: string | null
+}
+
+interface Imedia {
+    contentId: string;
+    contentType: string;
+    streamType: string;
+    metadata: any;
+}
+
+
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
     Client = require('castv2-client').Client; // class
@@ -76,11 +90,8 @@ export class GoogleHomeController {
         return new Promise((resolve, _) => {
             let return_val: IGoogleHomeSeekResults[] = [];
             const browser = GoogleHomeController.bonjour.find({ type: 'googlecast' },
-                //const browser = bonjour.find({ type: 'http' },
                 function (service) {
-                    //console.log(service);
                     return_val.push(
-                        //{ address: s.addresses[0], friendlyName: s.txt.fn }
                         { address: service.addresses[0], friendlyName: service.name, speakerName: service?.txt?.fn ?? '' }
                     );
                 });
@@ -92,11 +103,6 @@ export class GoogleHomeController {
             }, timeout);
         });
     }
-    /*
-    public static seekGoogleHomes(arg0: number, arg1: number): IGoogleHomeSeekResults[] | PromiseLike<IGoogleHomeSeekResults[]> {
-        throw new Error('Function not implemented.');
-    }
-    */
 
     public static getProperContentType(url) {
         let extType = url.substr(-4);
@@ -112,145 +118,19 @@ export class GoogleHomeController {
         //return this.play(gHomeName, globalVars().httpDir + "/" + fileName, params);
     }
 
-    public playAsync(gHomeName, playUrl) {
-
-    }
-
-    public pushPlayList(gHomeName, playUrl) {
-
-    }
-
-    public clearPlayList(gHomeName) {
-
-    }
-
-    public interruptPlay(gHomeName, playUrl) {
-
-    }
-
-    public interruptAndResumePlay(gHomeName, playUrl) {
-
-    }
-
-    public setVolume(gHomeName, playVolume) {
-        return new Promise((resolve, reject) => {
-            let adrs = GoogleHomeController.getGHAddrFromName(gHomeName);
-            if (adrs.length == 0) {
-                reject(`the address corresponds to "${gHomeName}" is NOT FOUND!!`);
-                return;
-            }
-            const client = new this.Client();
-            client.connect({ host: adrs[0] }, function () {
-                client.setVolume({
-                    muted: false,
-                    level: playVolume / 100,
-                }, function (err, vol) {
-                    if (err) {
-                        client.close();
-                        reject(err) // handle error
-                    } else {
-                        resolve(playVolume);
-                    }
-                });
-            });
-            client.on('error', function (err) {
-                client.close();
-                reject(`Error: ${err.message}`);
-            });
-        });
-    }
-
-    public getVolume(gHomeName) {
-        return new Promise((resolve, reject) => {
-            let adrs = GoogleHomeController.getGHAddrFromName(gHomeName);
-            if (adrs.length == 0) {
-                reject(`the address corresponds to "${gHomeName}" is NOT FOUND!!`);
-                return;
-            }
-            const client = new this.Client();
-            client.connect({ host: adrs[0] }, function () {
-                client.getVolume(function (err, vol) {
-                    if (err) {
-                        client.close();
-                        reject(err) // handle error
-                    }
-                    client.close();
-                    resolve(vol) // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
-                });
-            });
-            client.on('error', function (err) {
-                client.close();
-                reject(`Error: ${err.message}`);
-            });
-        });
-    }
-
-
     public async Connect(): Promise<void> {
         if (!this.IsConnected) {
-            console.log("CONNECTION");
             this.ConnectedCient = new this.Client();
-            this.ConnectedCient.on('error',  (err) => {
-                this.IsConnected = false;
-                console.log('Error: %s', err.message);
-                try {
-                    this.Disconnect();
-                } catch (e) {
-                    console.log(e);
-                }
+            this.ConnectedCient.on('error', (err) => {
+                this.Disconnect();
             });
-            this.IsConnected = true;
             return new Promise<void>((resolve, reject) => {
-                this.ConnectedCient.connect({ host: this.SelfStatus.address }, function () {
+                this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
                     console.log("connected");
+                    this.IsConnected = true;
                     resolve();
                 });
             });
-        }
-    }
-
-    public GetVolume() {
-        try {
-            this.ConnectedCient.getVolume( (err, vol) => {
-                if (err) {
-                    this.Disconnect();
-                }
-                //console.log(vol); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
-            });
-        } catch (e) {
-            console.log(e);
-            this.Disconnect();
-        }
-    }
-
-    public GetStatus() {
-        try {
-            this.ConnectedCient.getStatus( (err, stat) => {
-                if (err) {
-                    this.Disconnect();
-                }
-                //console.log("--- STATUS ---");
-                //console.log(stat); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
-            });
-        } catch (e) {
-            console.log(e);
-            this.Disconnect();
-        }
-    }
-
-    public GetSessions() {
-        try {
-            this.ConnectedCient.getSessions( (err, sessions) => {
-                if (err) {
-                    this.Disconnect();
-                }
-                //console.log("--- SESSION ---");
-                this.Sessions = sessions;
-                //console.log(sessions); // {"controlType":"attenuation","level":0.7999999523162842,"muted":false,"stepInterval":0.05000000074505806}
-            });
-        } catch (e) {
-            console.log(e);
-            this.Disconnect();
         }
     }
 
@@ -263,90 +143,145 @@ export class GoogleHomeController {
                     console.log('status broadcast playerState=%s', status.playerState);
                     console.log('status=', status);
                     this.Player = player;
+                    this.IsLaunhed = true;
                     resolve();
                 });
-                this.Player = player;
-                this.IsLaunhed = true;
                 if (err) {
-                    console.log(err);
                     this.Disconnect();
-                    this.IsLaunhed = false;
-                    reject();
+                    reject(err);
+                } 
+            });
+        });
+    }
+
+    public async GetVolume(): Promise<number|null> {
+        await this.Launch();
+        return new Promise((resolve, reject) => {
+            this.ConnectedCient.getVolume((err, vol) => {
+                if (err) {
+                    this.Disconnect();
+                    reject(null)
+                } else {
+                    resolve(vol);
                 }
             });
         });
     }
 
-    public async PlayUrl(playUrl: string) {
+    public async SetVolume(vol: number): Promise<void> {
+        await this.Launch();
+        return new Promise((resolve, reject) => {
+            this.ConnectedCient.setVolume(
+                {
+                    muted: false,
+                    level: vol / 100,
+                }, (err) => {
+                    if (err) {
+                        this.Disconnect()
+                        reject();
+                    } else {
+                        resolve();
+                    }
+                }
+            );
+        });
+    }
 
-        if (!this.IsLaunhed) await this.Launch();
+    public async GetStatus() {
+        await this.Launch();
+        return new Promise<any>((resolve, reject) => {
+            this.ConnectedCient.getStatus((err, stat) => {
+                if (err) {
+                    this.Disconnect();
+                    reject(err)
+                } else {
+                    resolve(stat);
+                }
+            });
+        });
+    }
 
-        var media = {
-            contentId: playUrl,
-            contentType: GoogleHomeController.getProperContentType(playUrl),
+    public async GetSessions() {
+        await this.Launch();
+        return new Promise<any>((resolve, reject) => {
+            this.ConnectedCient.getSessions((err, sessions) => {
+                if (err) {
+                    this.Disconnect();
+                    reject(err);
+                } else {
+                    resolve(sessions);
+                }
+            });
+        });
+    }
+
+    private BuildMediaData(media_info: Imedia_info | string): Imedia {
+        let media_info_temp: Imedia_info;
+
+        if (typeof (media_info) == "string") {
+            media_info_temp = {
+                playUrl: media_info,
+                contentType: null,
+                title: null
+            }
+        } else {
+            media_info_temp = media_info;
+        }
+
+        return {
+            contentId: media_info_temp.playUrl,
+            contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
             streamType: 'BUFFERED', // or LIVE
 
             metadata: {
                 type: 0,
                 metadataType: 0,
-                title: "Big Buck Bunny",
-                images: [
-                    { url: playUrl}
-                ]
+                title: media_info_temp.title ?? 'No Title',
             }
         };
-
-        this.Player.load(media, { autoplay: true, currentTime: 0 }, (err, status)=> {
-            if (status?.playerState) {
-                console.log('media loaded playerState=%s', status.playerState);
-            } else {
-                console.log('media loaded playerState=NULL_OR_UNDEF');
-            }
-            if (err) {
-                console.log(err);
-                this.Disconnect();
-            }
-        });
     }
 
-    public async PlayList(playUrlList: string[]) {
+    public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
+        await this.Launch();
 
-        if (!this.IsLaunhed) await this.Launch();
-
-        let items: any[] = [];
-        playUrlList.forEach(playUrl => {
-            let media =
-            {
-                contentId: playUrl,
-                contentType: GoogleHomeController.getProperContentType(playUrl),
-                streamType: 'BUFFERED', // or LIVE
-                metadata: {
-                    type: 0,
-                    metadataType: 0,
-                    title: "Big Buck Bunny",
-                    images: [
-                        { url: playUrl }
-                    ]
+        let media = this.BuildMediaData(media_info);
+        return new Promise<void>((resolve, reject) => {
+            this.Player.load(media, { autoplay: true, currentTime: 0 }, (err, status) => {
+                if (status?.playerState) {
+                    console.log('media loaded playerState=%s', status.playerState);
+                } else {
+                    console.log('media loaded playerState=NULL_OR_UNDEF');
                 }
-            }
-            items.push({
-                media: media
+                if (err) {
+                    this.Disconnect();
+                    reject(err);
+                } else {
+                    resolve();
+                }
             });
         });
-
-        this.Player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL'}, (err, status) => {
-            if (status?.playerState) {
-                console.log('media loaded playerState=%s', status.playerState);
-            } else {
-                console.log('media loaded playerState=NULL_OR_UNDEF');
-            }
-            if (err) {
-                console.log(err);
-                this.Disconnect();
-            }
-        });
     }
 
+    public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+        await this.Launch();
+
+        let items: Imedia[] = media_info_list.map(media_info => this.BuildMediaData(media_info));
+        return new Promise<void>((resolve, reject) => {
+            this.Player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => {
+                if (status?.playerState) {
+                    console.log('media loaded playerState=%s', status.playerState);
+                } else {
+                    console.log('media loaded playerState=NULL_OR_UNDEF');
+                }
+                if (err) {
+                    this.Disconnect();
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
 
     public GetAppInfo() {
         this.Sessions.map(s => s.appId).forEach(apid => {
@@ -362,62 +297,7 @@ export class GoogleHomeController {
         this.IsConnected = false;
         this.Player = null;
         this.ConnectedCient.close();
+        this.ConnectedCient = null;
     }
 
-
-    public sample_play_func(host) {
-        const client = new this.Client();
-
-        client.connect({ host: host },  () => {
-            console.log('connected, launching app ...');
-
-            client.launch(this.DefaultMediaReceiver, function (err, player) {
-                var media = {
-
-                    // Here you can plug an URL to any mp4, webm, mp3 or jpg file with the proper contentType.
-                    contentId: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/big_buck_bunny_1080p.mp4',
-                    //contentType: 'audio/mp3',
-                    contentType: 'video/mp4',
-                    streamType: 'BUFFERED', // or LIVE
-
-                    // Title and cover displayed while buffering
-                    metadata: {
-                        type: 0,
-                        metadataType: 0,
-                        title: "Big Buck Bunny",
-                        images: [
-                            { url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg' }
-                        ]
-                    }
-                };
-
-                player.on('status', function (status) {
-                    console.log('status broadcast playerState=%s', status.playerState);
-                });
-
-                console.log('app "%s" launched, loading media %s ...', player.session.displayName, media.contentId);
-
-                player.load(media, { autoplay: true }, function (err, status) {
-                    console.log('media loaded playerState=%s', status.playerState);
-
-                    /*
-                    // Seek to 2 minutes after 15 seconds playing.
-                    setTimeout(function () {
-                        player.seek(2 * 60, function (err, status) {
-                            //
-                        });
-                    }, 15000);
-                    */
-                });
-
-            });
-
-        });
-
-        client.on('error', function (err) {
-            console.log('Error: %s', err.message);
-            client.close();
-        });
-
-    }
 }

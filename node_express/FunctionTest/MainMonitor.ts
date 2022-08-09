@@ -57,9 +57,6 @@ export class MainMonitor {
                 delete this.GHomes[key];
             }
         }
-        //console.log(addrs);
-        //console.log(JSON.stringify(this.GHomes, null, null));
-        //console.log(this.GetGhObjByName("青色グーグル"));
     }
     private async GetGhStatus(): Promise<void> {
         for (let key in this.GHomes) {

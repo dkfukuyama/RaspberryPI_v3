@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".env_test.common" />
-    <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
     <Content Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
