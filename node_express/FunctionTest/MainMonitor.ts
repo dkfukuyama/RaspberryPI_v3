@@ -1,5 +1,6 @@
 ﻿import { GoogleHomeController } from '../gHomeCnt';
 import { addMinutes, addSeconds } from 'date-fns';
+import { promises } from 'dns';
 
 
 export class MainMonitor {
@@ -54,21 +55,13 @@ export class MainMonitor {
             }
         }
     }
-    private async GetGhStatus() {
-        //return new Promise(async (resolve, reject) => {
-        try {
-            for (let key in this.GHomes) {
-                console.log(key);
-                this.GHomes[key].g.GetStatus();
-                //await this.GHomes[key].g.GetSessions();
-                //resolve();
-            }
-        } catch (err) {
-            console.log(err);
-            //reject(err);
+    private async GetGhStatus(): Promise<void> {
+        for (let key in this.GHomes) {
+            console.log(key);
+            await this.GHomes[key].g.GetStatus().then(console.log);
+            await this.GHomes[key].g.GetSessions().then(console.log);
+            await this.GHomes[key].g.GetPalyerStatus().then(console.log);
         }
-
-        //});
     }
 
     static count: number = 0;
@@ -76,19 +69,17 @@ export class MainMonitor {
         MainMonitor.count++;
 
         this.CreateOrOverWriteObjects();
-        await this.GetGhStatus();
-        /*
-        if (this.GetGhObjByName("青色グーグル")) {
-            console.log("STAT STAT STAT");
-            this.GetGhObjByName("青色グーグル").g.Player?.getStatus((a, b) => console.log([a, b]));
+
+        try {
+            await this.GetGhStatus();
+
             if (MainMonitor.count == 10) {
-                this.GetGhObjByName("青色グーグル").g.PlayList([
-                    'http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav',
-                    'http://192.168.1.200/g_dlfile/2022-05-10_20-36-59_487.wav'
-                ]);
+                this.GetGhObjByName("青色グーグル")?.g?.PlayList(['http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav']);
             }
+        } catch (err) {
+            console.log("ERR DETECTED");
+            console.log(err);
         }
-        */
     }
 }
 

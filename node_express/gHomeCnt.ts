@@ -1,5 +1,6 @@
 import { globalVars, getLocalAddress } from './variables';
 import path = require('path');
+import { resolve } from 'dns';
 
 
 interface IGoogleHomeSeekResults {
@@ -19,6 +20,10 @@ interface Imedia {
     contentType: string;
     streamType: string;
     metadata: any;
+}
+
+interface Imedia2 {
+    media: Imedia;
 }
 
 
@@ -116,37 +121,38 @@ export class GoogleHomeController {
 
     public async Connect(): Promise<void> {
         console.log(this.SelfStatus.speakerName);
-        return new Promise<void>((resolve, reject) => {
-            if (this.IsConnected) return Promise.resolve();
-            else this.ConnectedCient = new this.Client();
+        if (this.IsConnected) return;
+        else return new Promise<void>((resolve, reject) => {
+            this.ConnectedCient = new this.Client();
             this.ConnectedCient.on('error', (err) => {
                 this.Disconnect();
             });
             this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
-                console.log(`connected to ${this.SelfStatus.speakerName}`);
+                console.log();
                 this.IsConnected = true;
                 resolve();
             });
         });
     }
 
-    public async Launch(): Promise<void> {
-        return new Promise<void>(async (resolve, reject) => {
-            await this.Connect();
-            if (this.IsLaunched) return Promise.resolve();
-            else this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
+    public async Launch(): Promise<any> {
+        await this.Connect();
+        if (this.IsLaunched) return;
+        else return new Promise<any>((resolve, reject) => {
+            this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
                 player.on('status', (status) => {
                     console.log('status broadcast playerState=%s', status.playerState);
                     console.log('status=', status);
-                    this.Player = player;
-                    this.IsLaunched = true;
-                    resolve();
                 });
                 if (err) {
                     this.Disconnect();
                     reject(err);
+                } else {
+                    this.Player = player;
+                    this.IsLaunched = true;
+                    resolve("launched!");
+                    console.log("launched!");
                 }
-                console.log("launched!");
             });
         });
     }
@@ -238,6 +244,34 @@ export class GoogleHomeController {
         };
     }
 
+    private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
+        let media_info_temp: Imedia_info;
+
+        if (typeof (media_info) == "string") {
+            media_info_temp = {
+                playUrl: media_info,
+                contentType: null,
+                title: null
+            }
+        } else {
+            media_info_temp = media_info;
+        }
+
+        return {
+            media: {
+                contentId: media_info_temp.playUrl,
+                contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
+                streamType: 'BUFFERED', // or LIVE
+
+                metadata: {
+                    type: 0,
+                    metadataType: 0,
+                    title: media_info_temp.title ?? 'No Title',
+                }
+            }
+        };
+    }
+
     public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
         await this.Launch();
 
@@ -262,7 +296,7 @@ export class GoogleHomeController {
     public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
         await this.Launch();
 
-        let items: Imedia[] = media_info_list.map(media_info => this.BuildMediaData(media_info));
+        let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
         return new Promise<void>((resolve, reject) => {
             this.Player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => {
                 if (status?.playerState) {
@@ -280,7 +314,20 @@ export class GoogleHomeController {
         });
     }
 
-    public GetAppInfo() {
+    public async GetPalyerStatus(): Promise<object | null> {
+        await this.Launch();
+
+        return new Promise((resolve, reject) => {
+            this.Player?.getStatus((err, status) => {
+                if (err) reject(err);
+                else resolve(status);
+            });
+        });
+    }
+
+    public async GetAppInfo() {
+        await this.Launch();
+
         this.Sessions.map(s => s.appId).forEach(apid => {
             this.ConnectedCient.getAppAvailability(apid, (err, AppInfo) => {
                 console.log(apid);
