@@ -1,9 +1,7 @@
-﻿import { GoogleHomeController } from '../gHomeCnt';
+﻿import { GoogleHomeController } from '@/gHomeCnt';
 import { addMinutes, addSeconds } from 'date-fns';
-import { promises } from 'dns';
 
-
-export class MainMonitor {
+export class GHomeMonitor {
     GHomes: {
         [Key: string]: {
             g: GoogleHomeController;
@@ -11,17 +9,30 @@ export class MainMonitor {
         }
     };
 
+    private SocketIo: any;
+
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
     constructor() {
         GoogleHomeController.init();
         this.GHomes = {};
+        this.SocketIo = require('socket.io').listen(8080);
     }
     public Start() {
+        this.StartSpeakerMonitor();
+        this.StartIOMonitor();
+    }
+
+    public StartSpeakerMonitor() {
         GoogleHomeController.startSeekGoogleLoop();
         setInterval(async () => {
             await this.Monitoring();
         }, 999);
     }
+
+    public StartIOMonitor() {
+
+    }
+
     public End() {
         GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
@@ -85,5 +96,5 @@ export class MainMonitor {
     }
 }
 
-const Monitor = new MainMonitor();
+const Monitor = new GHomeMonitor();
 Monitor.Start();

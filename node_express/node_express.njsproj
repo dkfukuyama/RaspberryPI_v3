@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".env_test.common" />
+    <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
     <Content Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
@@ -79,20 +80,13 @@
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\test_variables.ts">
-      <SubType>Code</SubType>
-      <TestFramework>ExportRunner</TestFramework>
-    </TypeScriptCompile>
+    <TypeScriptCompile Include="UnitTest\test_variables.ts" />
     <TypeScriptCompile Include="UnitTest\UnitTest1.ts">
       <SubType>Code</SubType>
       <TestFramework>mocha</TestFramework>
       <Publish>True</Publish>
     </TypeScriptCompile>
     <TypeScriptCompile Include="UnitTest\UnitTest2.ts">
-      <SubType>Code</SubType>
-      <TestFramework>ExportRunner</TestFramework>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\test_utils.ts">
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>

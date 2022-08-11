@@ -1,12 +1,17 @@
 ﻿{
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
+    "emitBOM": true,
     "lib": [ "es6" ],
-    "sourceMap": true,
+    "module": "commonjs",
     "noImplicitThis": true,
     "removeComments": true,
-    "emitBOM": true
+    "sourceMap": true,
+    "target": "es6",
+
+    "paths": {
+      "@/*": [ "./*" ]
+    }
+
   },
   "exclude": [
     "node_modules"
