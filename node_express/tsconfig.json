@@ -5,6 +5,8 @@
     "lib": [ "es6" ],
     "sourceMap": true,
     "noImplicitThis": true,
+    "removeComments": true,
+    "emitBOM": true
   },
   "exclude": [
     "node_modules"

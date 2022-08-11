@@ -64,21 +64,23 @@ export class MainMonitor {
         }
     }
 
-    static count: number = 0;
+    //static count: number = 0;
     private async Monitoring(){
-        MainMonitor.count++;
+        //MainMonitor.count++;
 
         this.CreateOrOverWriteObjects();
 
         try {
             await this.GetGhStatus();
 
+            /*
             if (MainMonitor.count == 10) {
                 this.GetGhObjByName("青色グーグル")?.g?.PlayList(['http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav']);
             }
+            */
         } catch (err) {
             console.log("ERR DETECTED");
-            console.log(err);
+            console.error(err);
         }
     }
 }
