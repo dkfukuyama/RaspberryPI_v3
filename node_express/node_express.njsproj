@@ -4,7 +4,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>node_express</Name>
     <RootNamespace>NodejsConsoleApp1</RootNamespace>
-    <JavaScriptTestFramework>mocha</JavaScriptTestFramework>
+    <JavaScriptTestFramework>Tape</JavaScriptTestFramework>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <JavaScriptTestRoot>UnitTest</JavaScriptTestRoot>
     <NodeExePath>
@@ -35,9 +35,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".env.secret" />
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
+    <Content Include="BuildAndExec.ps1" />
     <Content Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
     <Content Include="clean.ts">
@@ -49,6 +51,9 @@
     <Content Include="gHomeCnt.ts" />
     <Content Include="google_home.ts" />
     <Content Include="google_tts.ts" />
+    <Content Include=".env.common">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
     <Content Include="postbuild.ps1" />
@@ -61,9 +66,23 @@
     <Content Include="tsconfig.json" />
     <Content Include="utils.ts" />
     <Content Include="variables.ts" />
-    <Content Include="viewes\test_index.html">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="views\calculator.ejs" />
+    <Content Include="views\config.ejs" />
+    <Content Include="views\css\base0.css" />
+    <Content Include="views\ER\404.ejs" />
+    <Content Include="views\ER\500.ejs" />
+    <Content Include="views\ER\__error.ejs" />
+    <Content Include="views\ico\favicon.png" />
+    <Content Include="views\index.ejs" />
+    <Content Include="views\item.ejs" />
+    <Content Include="views\menu.ejs" />
+    <Content Include="views\music.ejs" />
+    <Content Include="views\quiz.ejs" />
+    <Content Include="views\quiz_0.ejs" />
+    <Content Include="views\quiz_1.ejs" />
+    <Content Include="views\send_voice.ejs" />
+    <Content Include="views\speak.ejs" />
+    <Content Include="views\test_index.html" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
@@ -93,15 +112,14 @@
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="viewes\scripts\socket_io_client.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FunctionTest\" />
-    <Folder Include="viewes\" />
     <Folder Include="UnitTest\" />
-    <Folder Include="viewes\scripts\" />
+    <Folder Include="views\" />
+    <Folder Include="views\css\" />
+    <Folder Include="views\ER\" />
+    <Folder Include="views\ico\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

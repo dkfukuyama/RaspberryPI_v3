@@ -2,6 +2,7 @@
 import { addMinutes, addSeconds } from 'date-fns';
 import { EventEmitter } from 'stream';
 import { Server } from "socket.io";
+import { clearTimeout } from 'timers';
 
 export class GHomeMonitor {
     GHomes: {
@@ -38,22 +39,18 @@ export class GHomeMonitor {
         const io = new Server({});
         io.on("connection", (socket) => {
             // send a message to the client
-            console.log("CONNECTED");
-            socket.emit("hello from server", 1, "2", { 3: Buffer.from([4]) });
+            console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
+            socket.emit("hello from server", { send_datetime: new Date()});
+
+            let t: NodeJS.Timeout = setInterval(() => {
+                socket.emit("S2C_send_status", { obj: "AAAAA" });
+                console.log(".");
+            }, 1000);
 
             // receive a message from the client
-            socket.on("hello from client", (args) => {
-                console.log("hello from client");
+            socket.on("hello from client", (data) => {
+                console.log(`hello from client :: ${data.send_datetime}`);
             });
-        });
-        io.listen(8080);
-        /*
-        const httpServer = require("http").createServer();
-        this.SocketIo = require('socket.io')(httpServer, {});
-
-        this.SocketIo.on("connection", (socket) => {
-            console.log("connected");
-            socket.emit("S2C_connection_OK", "MESSAGE");
             socket.on("C2S_play", (data) => {
                 console.log(data);
                 socket.emit("S2C_play_OK", null);
@@ -61,9 +58,17 @@ export class GHomeMonitor {
             socket.on("C2S_stop", (data) => {
                 console.log(data); socket.emit("S2C_stop_OK", null);
             });
+
+            socket.on("error", (err) => {
+                console.log(err);
+            });
+            socket.on("disconnect", (data) => {
+                clearTimeout(t);
+            });
+
         });
-        httpServer.listen(80, () => console.log("PORT 8080 START"));
-        */
+
+        io.listen(8080, () => console.log("START Socket.IO Port Listening"));
     }
 
     public End() {

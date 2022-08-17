@@ -1,0 +1,62 @@
+<html>
+<body>
+    <h1>AAAAA</h1>
+    <input type="button" value="button" onclick="buttonClick()">
+    <div id="inputText">---<BR></div>
+    <ul id="messageList" />
+
+    <!-- ライブラリの読み込み -->
+
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+
+    <script>
+
+        function AddToList(str) {
+            document.getElementById("inputText").innerHTML = `${str}<BR/>` + document.getElementById("inputText").innerHTML;
+        }
+
+        // サーバーへ接続
+        const socket = io("ws://192.168.1.231:8080", { transports: ['websocket'] });
+        socket.on("connect", () => {
+            AddToList("connection OK");
+            // send a message to the server
+            socket.emit("hello from client", { send_datetime: new Date() });
+        });
+
+        // receive a message from the server
+        socket.on("hello from server", (data) => {
+            AddToList(`hello from server :: ${JSON.stringify(data, null, null)}`);
+        });
+
+        socket.on("S2C_send_status", (data) => {
+            AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
+        });
+
+        socket.on("S2C_play_OK", (data) => {
+            AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
+        });
+
+
+        socket.on("error", () => {
+            // ...
+            AddToList("error");
+        });
+        socket.on("disconnect", () => {
+            AddToList("disconnected");
+        });
+
+        socket.on("connect_error", (err) => {
+            AddToList(err);
+            setTimeout(() => {
+                socket.connect();
+            }, 1000);
+        });
+
+
+        function buttonClick() {
+            socket.emit("C2S_play", { send_datetime: new Date() });
+        }
+
+    </script>
+</body>
+</html>

@@ -7,7 +7,7 @@ const exec = require('child_process').exec;
 const { execSync } = require('child_process');
 const bodyParser = require('body-parser');
 const mail = require('./send_mail');
-const ghome = require('./gHomeCnt');
+//const ghome = require('./gHomeCnt');
 const ut = require('./utils');
 
 const calc = require('./calculator')
@@ -29,15 +29,14 @@ app.use(express.json());
 // テンプレートエンジンの指定
 app.set("view engine", "ejs");
 
+require('dotenv').config();
 
-const speaker_name = '2Fリビング';
-let volumeLevel = 30;
 
 let page_path_set_index_ejs :any = {};
 
 function update_common_paramters(){
     page_path_set_index_ejs.common = {
-        ghomeSpeakers : ghome.getGoogleHomeAddresses(),
+        ghomeSpeakers: [{}],
     }
 }
 
@@ -152,7 +151,8 @@ page_path_set_index_ejs.pages = [
         postfunc: async (req, res)=>{
             if(req.body.mode == 'playOnce'){
                 let filename = encodeURI(vars.globalVars().httpDir_music + "/" + req.body.filename);
-                return ghome.play(req.body.gHomeName, filename, {volume : 80});
+                Promise.resolve();
+                //return ghome.play(req.body.gHomeName, filename, { volume: 80 });
             }
             return Promise.reject({error : `FALSE play :: ${req.body.filename}`});
         },
@@ -195,24 +195,28 @@ page_path_set_index_ejs.pages = [
                 slk.slacksend('COMMAND MODE');
                 slk.slacksend(req.body.mode);
                 switch(req.body.mode){
-                case 'cal_today' :
-                    return gtts.speechOnGoogleHomeCal(ghome.getGoogleHomeAddresses()[0].speakerName, {});
-                case 'clean_wav':
-                    return new Promise((resolve, _) => resolve(require('./clean').clean_wav(100)));
-                case 'system_command' :
-                    console.log(`${req.body.command}`);
-                    return new Promise((resolve, reject)=>{
-                        exec(req.body.command, (err, stdout, stderr) => {
-                            if (err) {
-                                reject(err);
-                            }else{
-                                console.log(`stdout: ${stdout}`)
-                                resolve(stdout);
-                            }
+                    case 'cal_today':
+                        return Promise.resolve();
+                        //return gtts.speechOnGoogleHomeCal(ghome.getGoogleHomeAddresses()[0].speakerName, {});
+                        break;
+                    case 'clean_wav':
+                        return new Promise((resolve, _) => resolve(require('./clean').clean_wav(100)));
+                        break;
+                    case 'system_command':
+                        console.log(`${req.body.command}`);
+                        return new Promise((resolve, reject) => {
+                            exec(req.body.command, (err, stdout, stderr) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    console.log(`stdout: ${stdout}`)
+                                    resolve(stdout);
+                                }
+                            });
                         });
-                    });
-                default:
-                    return new Promise<void>((resolve, _)=>resolve());
+                        break;
+                    default:
+                        return new Promise<void>((resolve, _)=>resolve());
                 }
             }
         }
@@ -342,7 +346,7 @@ async function main() {
     let httpServerPort = vars.globalVars().serverPort;
 
     app.listen(httpServerPort, () => console.log(`http server port No. ${httpServerPort}`));
-    ghome.startSeekGoogleLoop();
+    //ghome.startSeekGoogleLoop();
 
     slk.slacksend('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
     slk.slacksend(process.env.COMPUTERNAME);
@@ -353,18 +357,6 @@ async function main() {
     slk.slacksend(currentTime);
 
     sch.setNodeCrontab();
-
-    for (let i = 0; ; await ut.delay_ms(1000)) {
-        if(ghome.getGoogleHomeAddresses().length){
-            if(i == 0) console.log(ghome.getGoogleHomeAddresses());
-            else{
-
-            }
-        }else{
-            i = -1;
-        }
-        i = (i+1)%10000;
-    }
 }
 
 main();

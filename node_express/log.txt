@@ -1,0 +1,370 @@
+process.env.SLACK_WEBHOOK=undefined
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 35 38 30 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:50:45)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:342:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:306:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:370:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+TypeError: ghome.startSeekGoogleLoop is not a function
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:345:11
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:306:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:370:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+process.env.SLACK_WEBHOOK=undefined
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 35 36 33 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:50:45)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:342:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:306:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:370:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+TypeError: ghome.startSeekGoogleLoop is not a function
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:345:11
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:306:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:370:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=undefined
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 35 37 36 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:50:45)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:346:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:307:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:362:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 37 36 36 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:50:45)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:346:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:307:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:362:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 37 32 37 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+[]
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:51:41)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:346:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:307:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:362:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 38 36 38 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+[]
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:51:41)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:346:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:307:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:362:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 36 30 37 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+[]
+Error: Http Addr cannot be detected
+    at Object.globalVars (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\variables.ts:51:41)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:346:31
+    at Generator.next (<anonymous>)
+    at C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:4:12)
+    at main (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.js:307:12)
+    at Object.<anonymous> (C:\Users\dfuku\source\repos\dkfukuyama\RaspberryPI_v3\node_express\main_app.ts:362:1)
+    at Module._compile (node:internal/modules/cjs/loader:1105:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)
+http server port No. 80
+process.env.SLACK_WEBHOOK=https://hooks.slack.com/services/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
+<Buffer 0a 75 70 20 74 6f 20 64 61 74 65 2c 20 61 75 64 69 74 65 64 20 33 39 30 20 70 61 63 6b 61 67 65 73 20 69 6e 20 35 38 34 6d 73 0a 0a 34 34 20 70 61 63 ... 84 more bytes>
+LOAD VAL
+undefined
+[ { name: 'イーサネット', address: '192.168.1.231' } ]
+{
+  httpDir0: '192.168.1.231:80',
+  httpDir: 'http://192.168.1.231:80/g_dlfile',
+  httpDir_music: 'http://192.168.1.231:80',
+  saveDir0: 'C:\\Users\\dfuku\\source\\repos\\dkfukuyama\\RaspberryPI_v3\\node_express\\test_mp3',
+  voiceSubDir: 'g_dlfile'
+}
+http server port No. 80

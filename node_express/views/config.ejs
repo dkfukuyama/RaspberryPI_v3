@@ -1,0 +1,108 @@
+<% let g_addr = common.ghomeSpeakers %>
+<P>みつかったぐーぐるすぴーかー</P>
+<% if(g_addr.length == 0){ %>
+	<%- '<P>ないよ。</p>' %>
+<% } else g_addr.forEach(e=> {%>
+<%- `<li>${e.address} / ${e.friendlyName} / ${e.speakerName}</li>` %>
+<% }) %>
+<P>きまったじこくによていをよみあげる</P>
+<button id="g_cal_button" class="btn btn-primary mx-2">いま、よていをよみあげる</button>
+
+<P>きまったじこくにおんがくをかける</P>
+<P>おとのおおきさ</P>
+<button id="clean_wav" class="btn btn-primary mx-2">たまったおんせいファイルをしょうきょする</button>
+<br/>
+<br/>
+<button id="reboot_webserver" class="btn btn-primary mx-2">ウェブサーバをさいきどうする</button>
+<br/>
+<br/>
+<button id="reboot_button" class="btn btn-primary mx-2">ラズベリーパイをさいきどう</button>
+<br/>
+<br/>
+<button id="show_log" class="btn btn-primary mx-2">ログをひょうじする</button>
+
+<p>
+	<P id="resXmlHttpRequestObj"></P>
+</p>
+<script>
+	let xhr = new XMLHttpRequest();
+
+	document.getElementById('g_cal_button').onclick = function() {
+	post_command(
+	{
+	alert_text : 'よていをよみあげます',
+	mode : 'cal_today',
+	return_header : 'text/plain',
+	short_return : true
+	});
+	}
+
+	document.getElementById('clean_wav').onclick = function() {
+	post_command(
+	{
+	alert_text : 'おんせいファイルをしょうきょします。',
+	mode : 'clean_wav',
+	return_header : 'text/plain',
+	short_return : true
+	});
+	}
+
+
+	document.getElementById('reboot_webserver').onclick = function(){
+	post_command(
+	{
+	alert_text : 'ウェブサーバをさいきどうします。',
+	mode : 'system_command',
+	command : 'sudo systemctl restart pi_server',
+	return_header : 'text/plain',
+	short_return : true
+	});
+	}
+
+	document.getElementById('reboot_button').onclick = function(){
+	post_command(
+	{
+	alert_text : 'ラズベリーパイをさいきどうします。',
+	mode : 'system_command',
+	command : 'sudo reboot',
+	return_header : 'text/plain',
+	short_return : true
+	});
+	}
+
+	document.getElementById('show_log').onclick = function(){
+	post_command(
+	{
+	alert_text : 'ログを表示します。',
+	mode : 'system_command',
+	command : 'sudo systemctl status pi_server -n 80 | cat',
+	return_header : 'text/plain',
+	short_return : true
+	});
+	}
+
+
+	function post_command(command_param) {
+	alert(command_param.alert_text);
+	let snd = JSON.stringify(command_param);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', '/command');
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	xhr.onreadystatechange = function(){
+	/* XMLデータ取得 */
+	let data = xhr.responseText;
+	let j = null;
+	try {
+		j = JSON.parse(data);
+		document.getElementById("resXmlHttpRequestObj").innerText=JSON.stringify(j,null,"\r");
+	} catch (error) {
+	document.getElementById("resXmlHttpRequestObj").innerText=data;
+	}
+
+
+	}
+
+	xhr.send(snd);
+	}
+</script>

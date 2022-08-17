@@ -1,0 +1,99 @@
+<% let special = page?.specialParams ?? [] %>
+<% let vol = 30 %>
+
+<script language="javascript" type="text/javascript">
+  function butotnClick(file){
+
+    alert(file);
+
+    const gh = document.getElementById('gHomeName');
+    const vs = document.getElementById('volume_slider');
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/music', true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    let sendData = {
+      mode:"playOnce",
+      filename:file,
+      gHomeName : gh?.value,
+      short_return:true,
+      volume:vs.value
+    };
+
+	  xhr.send(JSON.stringify(sendData));
+    /*
+    // XMLデータ取得 
+    let data = xhr.responseText;
+    let j = null;
+    try {
+      j = JSON.parse(data);
+      alert(JSON.stringify(j));
+    } catch (error) {
+      alert(error);
+    }
+    */
+  }
+
+</script>
+
+
+
+<div class="row mt-5">
+  <ul class="list-group list-group-horizontal">
+    <% let g_addr = common.ghomeSpeakers %>
+    <% if(g_addr.length == 0){ %>
+      <li class="list-group-item"><%= 'ねっとわーくのなかに、ぐーぐるさんがみつかりません' %></li>
+    <% } else g_addr.forEach((e,i)=> {%>
+      <li class="list-group-item">
+        <input type="radio" value="<%- e.speakerName %>" name="gHomeName" id="gHomeName">ぐーぐるさん(<%- e.speakerName %>)で音楽をかける</input>
+      </li>
+    <% }) %>
+  </ul>
+</div>
+
+
+<ul class="list-group list-group-horizontal">
+  <li class="list-group-item">おとのおおきさ</li>
+  <li class="list-group-item"><input id="volume_slider" type="range" name="volume" min="0" max="100" step="5" value="<%- vol %>"></li>
+  <li class="list-group-item"><div id="volume_value"><%- vol %></div></li>
+</ul>
+
+<div><%- JSON.stringify(query) %></div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"><div class="text-center">#</div></th>
+        <th scope="col"><div class="text-center">ファイル名</div></th>
+        <th scope="col"><div class="text-center">曲名</div></th>
+        <th scope="col"><div class="text-center">操作</div></th>
+      </tr>
+    </thead>
+    <tbody>
+        <% const list = special.musicList_get(); %>
+        <% list.fileList.forEach((file, i)=>{ %>
+            <tr>
+                <th scope="row"><div class="text-center"><%= i+1 %></div></th>
+                <td><div class="text-left"><%= file %></div></td>
+                <td><div class="align-top"><textarea></textarea><button class="btn btn-warning mx-2 btn-sm">変更保存</button></div></td>
+                <td><div class="text-center"><input type="button" value="1回再生" class="btn btn-primary mx-2" onclick="javascript:butotnClick('<%- file %>');"><button class="btn btn-success mx-2">無限再生</button></div></td>
+            </tr>
+        <% }) %>
+        <% list.dirList.forEach((file, i)=>{ %>
+          <tr>
+            <th scope="row"><div class="text-center"><%= i+1 %></div></th>
+            <td><div class="text-left"><a href="/music?pagepath=<%- file %>"><%= file %></a></div></td>
+          </tr>
+          <% }) %>
+    </tbody>
+</table>
+
+
+<script language="javascript" type="text/javascript">
+  function inputChange2(event){
+    val2.innerText = volume_slider.value;
+  }    
+  let element2 = document.getElementById('volume_slider');
+  element2.addEventListener('change', inputChange2);
+  let val2 = document.getElementById('volume_value');
+</script>

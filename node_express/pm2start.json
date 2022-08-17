@@ -1,6 +1,6 @@
 {
   "script": ".\\main_app.js",
-  "name": "main_app",
+  "name": "PI_2B",
   "filter_env": [],
   "namespace": "default",
   "log_file": "log.txt",
@@ -10,10 +10,10 @@
   "merge_logs": true,
   "vizion": true,
   "autorestart": true,
-  "watch": true,
-  "watch_delay": 3,
-  "ignore_watch" : "log.txt",
-  "instance_var": "NODE_APP_INSTANCE",
+  "watch": ["."],
+  "watch_delay": 1,
+  "ignore_watch": [ "node_modules", "log.txt" ],
+  "instance_var": "RPI_APP_INSTANCE",
   "pmx": true,
   "automation": true,
   "treekill": true,
@@ -22,3 +22,4 @@
   "kill_retry_time": 100,
   "write": true
 }
+

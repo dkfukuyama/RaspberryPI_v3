@@ -47,7 +47,8 @@ export function globalVars() : IGL{
                 GL_VARS.httpDir0 = `${process.env.TEST_IPV4}:${GL_VARS.serverPort}`;
             } else {
                 const ipv4 = getLocalAddress().ipv4;
-                if (ipv4.length == 0) throw new Error('Http Addr cannot be detected');
+                console.log(ipv4)
+                if (!ipv4.length) throw new Error('Http Addr cannot be detected');
                 GL_VARS.httpDir0 = `${ipv4[0].address}:${GL_VARS.serverPort}`;
             }
 
@@ -108,14 +109,15 @@ export function getLocalAddress() {
     let interfaces = os.networkInterfaces();
 
     for (let dev in interfaces) {
-        interfaces[dev].forEach(function(details:any){
+        console.log(dev);
+        interfaces[dev].forEach(function (details: any) {
             if (!details.internal) {
                 let add0: string = details?.address ?? '';
                 switch(details.family){
-                    case "IPv4":
+                    case 4:
                         ifacesObj.ipv4.push({name:dev, address:add0});
                     break;
-                    case "IPv6":
+                    case 6:
                         ifacesObj.ipv6.push({name:dev, address:add0})
                     break;
                 }

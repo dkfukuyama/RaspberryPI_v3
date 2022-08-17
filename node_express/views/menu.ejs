@@ -1,0 +1,25 @@
+<HR>
+<ol>
+    <% let level_pre = 0 %>
+    <% pages.forEach((page)=> { %>
+
+        <% if(page.hidden){ return; } %>
+
+        <% let level_def = page.level - level_pre %>
+        <% if(level_def < 0){ %>
+            <% for(let i = 0; i < -level_def; i++){ %>
+                </ol>
+            <% } %>
+        <% }else if(level_def > 0){ %>
+            <ol>
+        <% } %>
+        <li>
+        <% if(page.path) { %>
+            <a class="nav-link" href="<%- page.path %>"><%- page.title %></a>
+        <% }else{ %>
+            <%- page.title %>
+        <% } %>
+        </li>
+        <% level_pre = page.level %>
+    <% }); %>
+</ol>
