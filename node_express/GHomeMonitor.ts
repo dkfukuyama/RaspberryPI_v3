@@ -1,5 +1,7 @@
-﻿import { GoogleHomeController } from '@/gHomeCnt';
+﻿import { GoogleHomeController } from './gHomeCnt';
 import { addMinutes, addSeconds } from 'date-fns';
+import { EventEmitter } from 'stream';
+import { Server } from "socket.io";
 
 export class GHomeMonitor {
     GHomes: {
@@ -9,13 +11,12 @@ export class GHomeMonitor {
         }
     };
 
-    private SocketIo: any;
+    private SocketIo: EventEmitter | null = null;
 
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
     constructor() {
         GoogleHomeController.init();
         this.GHomes = {};
-        this.SocketIo = require('socket.io').listen(8080);
     }
     public Start() {
         this.StartSpeakerMonitor();
@@ -30,7 +31,39 @@ export class GHomeMonitor {
     }
 
     public StartIOMonitor() {
+        if (this.SocketIo != null) return;
+        
+        const { Server } = require("socket.io");
 
+        const io = new Server({});
+        io.on("connection", (socket) => {
+            // send a message to the client
+            console.log("CONNECTED");
+            socket.emit("hello from server", 1, "2", { 3: Buffer.from([4]) });
+
+            // receive a message from the client
+            socket.on("hello from client", (args) => {
+                console.log("hello from client");
+            });
+        });
+        io.listen(8080);
+        /*
+        const httpServer = require("http").createServer();
+        this.SocketIo = require('socket.io')(httpServer, {});
+
+        this.SocketIo.on("connection", (socket) => {
+            console.log("connected");
+            socket.emit("S2C_connection_OK", "MESSAGE");
+            socket.on("C2S_play", (data) => {
+                console.log(data);
+                socket.emit("S2C_play_OK", null);
+            });
+            socket.on("C2S_stop", (data) => {
+                console.log(data); socket.emit("S2C_stop_OK", null);
+            });
+        });
+        httpServer.listen(80, () => console.log("PORT 8080 START"));
+        */
     }
 
     public End() {

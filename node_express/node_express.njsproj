@@ -61,12 +61,15 @@
     <Content Include="tsconfig.json" />
     <Content Include="utils.ts" />
     <Content Include="variables.ts" />
+    <Content Include="viewes\test_index.html">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="FunctionTest\MainMonitor.ts">
+    <TypeScriptCompile Include="GHomeMonitor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="FunctionTest\test_env.secret">
@@ -90,10 +93,15 @@
       <SubType>Code</SubType>
       <TestFramework>ExportRunner</TestFramework>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="viewes\scripts\socket_io_client.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FunctionTest\" />
+    <Folder Include="viewes\" />
     <Folder Include="UnitTest\" />
+    <Folder Include="viewes\scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
