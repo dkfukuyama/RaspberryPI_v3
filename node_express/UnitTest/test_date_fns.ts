@@ -1,6 +1,6 @@
+import assert = require('assert');
 import { format, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 
-import assert = require('assert');
 describe("date-fns_testcode", () => {
     it("formatted_output_01", () => {
         const DATE_FORMAT = 'yyyy-MM-dd';

@@ -5,3 +5,6 @@
 *.js
 *.js.map
 
+*.log
+
+test_mp3/

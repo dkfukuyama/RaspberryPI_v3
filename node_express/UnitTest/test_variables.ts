@@ -1,7 +1,6 @@
 ﻿import assert = require('assert');
 
 import { globalVars, getLocalAddress } from '../variables';
-import Encoding = require('encoding-japanese');
 import { TextDecoder, TextEncoder } from 'util';
 
 describe("variables", () => {

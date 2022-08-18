@@ -24,6 +24,61 @@ function get(baseDir) {
         dirList:dirList
     };
 }
-
 exports.get = get;
+
+
+interface FileInfo {
+    BaseName: string;
+    Ext: string;
+    Name: string;
+    Fullname: string;
+    CreationTime: Date;
+    Type: "File" | "Directory" | "NotDetected";
+}
+
+interface FileListSearchResults {
+    FileList: FileInfo[];
+    DirList: FileInfo[];
+}
+
+export class FileListSearch {
+    private DirBaseFullPath: string;
+    private DirNow: FileInfo;
+
+    constructor(baseDir: string | null = null) {
+        this.DirBaseFullPath = baseDir ?? __dirname;
+        this.DirNow = this.GetInfo(this.DirBaseFullPath);
+    }
+
+    GetDirBaseFullPath = (): string => this.DirBaseFullPath;
+    GetDirNow = (): FileInfo => this.DirNow;
+
+    GetList(path: string|null): FileListSearchResults {
+        let ret_val: FileListSearchResults;
+        return ret_val;
+    }
+
+    GetInfo(inp_path:string): FileInfo {
+        let stat = fs.statSync(inp_path);
+        
+        console.log({ inp_path });
+
+        let inp_path_r = path.posix.relative(this.DirBaseFullPath, inp_path);
+
+        console.log({ inp_path_r });
+
+        let ps = path.posix.parse(inp_path_r);
+        let rs = path.posix.resolve(inp_path_r);
+        return {
+            BaseName: ps.base,
+            Fullname: rs,
+            CreationTime: stat.ctime,
+            Ext: ps.ext,
+            Name: ps.name,
+            Type: stat.isDirectory() ? 'Directory' : stat.isFile() ? 'File' : 'NotDetected',
+        }
+    }
+}
+
+
 

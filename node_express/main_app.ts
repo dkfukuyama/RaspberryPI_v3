@@ -1,13 +1,11 @@
-﻿const express = require("express");
-const app = express();
+﻿import { globalVars } from './variables';
+
+const express = require("express");
 const gtts = require('./google_home')
 const favicon = require('express-favicon');
-const vars = require('./variables');
 const exec = require('child_process').exec;
-const { execSync } = require('child_process');
 const bodyParser = require('body-parser');
 const mail = require('./send_mail');
-//const ghome = require('./gHomeCnt');
 const ut = require('./utils');
 
 const calc = require('./calculator')
@@ -15,12 +13,11 @@ const slk = require('./slacksend');
 
 const sch = require('./scheduler');
 
-require('date-utils');
-
 import path = require('path');
+import { GHomeMonitor } from './GHomeMonitor';
 
+const app = express();
 app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -28,7 +25,6 @@ app.use(express.json());
 
 // テンプレートエンジンの指定
 app.set("view engine", "ejs");
-
 require('dotenv').config();
 
 
@@ -150,7 +146,7 @@ page_path_set_index_ejs.pages = [
         },
         postfunc: async (req, res)=>{
             if(req.body.mode == 'playOnce'){
-                let filename = encodeURI(vars.globalVars().httpDir_music + "/" + req.body.filename);
+                let filename = encodeURI(globalVars().httpDir_music + "/" + req.body.filename);
                 Promise.resolve();
                 //return ghome.play(req.body.gHomeName, filename, { volume: 80 });
             }
@@ -305,7 +301,7 @@ app.all("*.css", function (req, res, next) {
 });
 
 app.get("*.wav|*.mp3", function (req, res, next){
-    const p = path.join(vars.globalVars().saveDir0, req.path);
+    const p = path.join(globalVars().saveDir0, req.path);
     res.sendFile(decodeURI(p), (err)=>{
         if(err){
             next(err);
@@ -324,39 +320,61 @@ app.use((err, req, res, next) => {
     res.render("./ER/500.ejs", {path: req.path, pages: page_path_set_index_ejs.pages });
 })
 
+async function npm_install(): Promise<any> {
 
-console.log(`process.env.SLACK_WEBHOOK=${process.env.SLACK_WEBHOOK}`);
-
-async function main() {
-
-
-    let command = "";
-    switch(process.env.COMPUTERNAME){
+    let command: string[] = [];
+    switch (process.env.COMPUTERNAME) {
         case 'PI_ZERO_01':
         case 'PI_2B_01':
-            command = 'sudo npm install';
+            command = ['sudo npm install'];
             break;
         default:
-            command = 'npm install';
+            command = ['npm install'];
             break;
     }
-    
-    const stdout = execSync(command);
-    console.log(stdout);
-    let httpServerPort = vars.globalVars().serverPort;
 
-    app.listen(httpServerPort, () => console.log(`http server port No. ${httpServerPort}`));
-    //ghome.startSeekGoogleLoop();
+    return Promise.all(
+    command.map(async c => { 
+        return new Promise((resolve, reject) => {
+            if (c) {
+                exec(c, { windowsHide: true }, (err, stdout, stderr) => {
+                    if (err) {
+                        console.error(err);
+                        reject(stderr);
+                    } else {
+                        resolve({ command: c, results: stdout});
+                    }
+                });
+            } else resolve("npm install is NOT executed");
+        })
+    })
+    );
+}
 
-    slk.slacksend('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-    slk.slacksend(process.env.COMPUTERNAME);
-    slk.slacksend('system start');
-
-    const date :any = new Date();
+async function main() {
+    slk.slacksend("********************\n*** SYSTEM START ***\n********************");
+    const date: any = new Date();
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
-    slk.slacksend(currentTime);
+    slk.slacksend({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
 
     sch.setNodeCrontab();
+
+    await npm_install().then((t)=>slk.slacksend(t)).catch((e)=>console.error(e));
+
+    let httpServerPort = globalVars().serverPort;
+
+    slk.slacksend({
+        httpDir0: globalVars().httpDir0,
+        httpDir: globalVars().httpDir,
+        httpDir_music: globalVars().httpDir_music,
+        saveDir0: globalVars().saveDir0,
+        voiceSubDir: globalVars().voiceSubDir
+    });
+
+    app.listen(httpServerPort, () => slk.slacksend(`http server port No. ${httpServerPort}`));
+
+    const Monitor = new GHomeMonitor();
+    Monitor.Start();
 }
 
 main();

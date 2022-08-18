@@ -4,7 +4,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>node_express</Name>
     <RootNamespace>NodejsConsoleApp1</RootNamespace>
-    <JavaScriptTestFramework>Tape</JavaScriptTestFramework>
+    <JavaScriptTestFramework>mocha</JavaScriptTestFramework>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <JavaScriptTestRoot>UnitTest</JavaScriptTestRoot>
     <NodeExePath>
@@ -83,6 +83,7 @@
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="views\test_index.html" />
+    <Content Include="watch_ts.ps1" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
@@ -98,19 +99,16 @@
       <TestFramework>mocha</TestFramework>
     </TypeScriptCompile>
     <TypeScriptCompile Include="slacksend.ts" />
-    <TypeScriptCompile Include="UnitTest\test_GoogleHome.ts">
+    <TypeScriptCompile Include="UnitTest\test_Files.ts">
       <SubType>Code</SubType>
-      <TestFramework>ExportRunner</TestFramework>
+      <TestFramework>Mocha</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\test_variables.ts" />
-    <TypeScriptCompile Include="UnitTest\UnitTest1.ts">
-      <SubType>Code</SubType>
-      <TestFramework>mocha</TestFramework>
-      <Publish>True</Publish>
+    <TypeScriptCompile Include="UnitTest\test_variables.ts">
+      <TestFramework>Mocha</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\UnitTest2.ts">
+    <TypeScriptCompile Include="UnitTest\test_date_fns.ts">
       <SubType>Code</SubType>
-      <TestFramework>ExportRunner</TestFramework>
+      <TestFramework>Mocha</TestFramework>
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>

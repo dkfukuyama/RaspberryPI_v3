@@ -44,7 +44,7 @@ export class GHomeMonitor {
 
             let t: NodeJS.Timeout = setInterval(() => {
                 socket.emit("S2C_send_status", { obj: "AAAAA" });
-                console.log(".");
+                //console.log(".");
             }, 1000);
 
             // receive a message from the client
@@ -134,5 +134,3 @@ export class GHomeMonitor {
     }
 }
 
-const Monitor = new GHomeMonitor();
-Monitor.Start();

@@ -42,15 +42,15 @@ export function globalVars() : IGL{
             GL_VARS.serverPort = (parseInt(process.env.SERVER_PORT) || GL_VARS.serverPort);
             GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
 
-            console.log(process.env.TEST_IPV4);
+            console.log({ TEST_MODE : process.env.TEST_IPV4 });
             if (process.env.TEST_IPV4) {
-                GL_VARS.httpDir0 = `${process.env.TEST_IPV4}:${GL_VARS.serverPort}`;
+                GL_VARS.httpDir0 = `${process.env.TEST_IPV4}`;
             } else {
                 const ipv4 = getLocalAddress().ipv4;
-                console.log(ipv4)
                 if (!ipv4.length) throw new Error('Http Addr cannot be detected');
-                GL_VARS.httpDir0 = `${ipv4[0].address}:${GL_VARS.serverPort}`;
+                GL_VARS.httpDir0 = `${ipv4[0].address}`;
             }
+            if (GL_VARS.serverPort != 80) GL_VARS.httpDir0 += `:${GL_VARS.serverPort}`;
 
             GL_VARS.httpDir_music = "http://" + GL_VARS.httpDir0;
             GL_VARS.httpDir = "http://" + path.posix.join(GL_VARS.httpDir0, GL_VARS.voiceSubDir);
@@ -71,15 +71,6 @@ export function globalVars() : IGL{
                     GL_VARS.saveDir0 = "/mnt/nas_music";
                     break;
             }
-
-            console.log({
-                httpDir0: GL_VARS.httpDir0,
-                httpDir: GL_VARS.httpDir,
-                httpDir_music: GL_VARS.httpDir_music,
-                saveDir0: GL_VARS.saveDir0,
-                voiceSubDir: GL_VARS.voiceSubDir
-            });
-
             GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
 
             GL_VARS.gmail_addr = process.env.GMAIL_ADDR || '';
@@ -98,10 +89,6 @@ export function globalVars() : IGL{
 
 export function getLocalAddress() {
 
-    if (process.env.TEST_MODE) {
-        console.log("TEST MODE ");
-    }
-
     const os = require('os');
     let ifacesObj: any = {};
     ifacesObj.ipv4 = [];
@@ -109,7 +96,6 @@ export function getLocalAddress() {
     let interfaces = os.networkInterfaces();
 
     for (let dev in interfaces) {
-        console.log(dev);
         interfaces[dev].forEach(function (details: any) {
             if (!details.internal) {
                 let add0: string = details?.address ?? '';
