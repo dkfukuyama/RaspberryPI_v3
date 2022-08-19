@@ -1,8 +1,7 @@
-﻿import { GoogleHomeController } from './gHomeCnt';
-import { addMinutes, addSeconds } from 'date-fns';
+﻿import { addMinutes, addSeconds } from 'date-fns';
 import { EventEmitter } from 'stream';
-import { Server } from "socket.io";
-import { clearTimeout } from 'timers';
+
+import { GoogleHomeController } from '@/GoogleHomeController';
 
 export class GHomeMonitor {
     GHomes: {
@@ -12,12 +11,14 @@ export class GHomeMonitor {
         }
     };
 
+    private SocketIoPort: number = 3000;
     private SocketIo: EventEmitter | null = null;
 
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
-    constructor() {
+    constructor(socket_io_port: number) {
         GoogleHomeController.init();
         this.GHomes = {};
+        this.SocketIoPort = socket_io_port;
     }
     public Start() {
         this.StartSpeakerMonitor();
@@ -43,8 +44,7 @@ export class GHomeMonitor {
             socket.emit("hello from server", { send_datetime: new Date()});
 
             let t: NodeJS.Timeout = setInterval(() => {
-                socket.emit("S2C_send_status", { obj: "AAAAA" });
-                //console.log(".");
+                socket.emit("S2C_send_status", this.GetStatusAll());
             }, 1000);
 
             // receive a message from the client
@@ -68,7 +68,7 @@ export class GHomeMonitor {
 
         });
 
-        io.listen(8080, () => console.log("START Socket.IO Port Listening"));
+        io.listen(this.SocketIoPort, () => console.log("START Socket.IO Port Listening"));
     }
 
     public End() {
@@ -104,13 +104,22 @@ export class GHomeMonitor {
             }
         }
     }
-    private async GetGhStatus(): Promise<void> {
+
+    private async UpdateGhStatusAll(): Promise<void> {
         for (let key in this.GHomes) {
-            console.log(key);
-            await this.GHomes[key].g.GetStatus().then(console.log);
-            await this.GHomes[key].g.GetSessions().then(console.log);
-            await this.GHomes[key].g.GetPalyerStatus().then(console.log);
+            await this.GHomes[key].g.UpdateStatus().then(console.log);
+            await this.GHomes[key].g.UpdateSessions().then(console.log);
+            await this.GHomes[key].g.UpdatePalyerStatus().then(console.log);
         }
+    }
+
+    private GetStatusAll() {
+        return Object.keys(this.GHomes).map(key => {
+            return {
+                Key: key,
+                Value: this.GHomes[key].g.GetAllStatus()
+            }
+        });
     }
 
     //static count: number = 0;
@@ -120,7 +129,7 @@ export class GHomeMonitor {
         this.CreateOrOverWriteObjects();
 
         try {
-            await this.GetGhStatus();
+            await this.UpdateGhStatusAll();
 
             /*
             if (MainMonitor.count == 10) {

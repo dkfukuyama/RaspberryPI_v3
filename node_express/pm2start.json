@@ -1,5 +1,6 @@
 {
-  "script": ".\\main_app.js",
+  "script": "main_app.js",
+  "node_args":  "-r tsconfig-paths/register",
   "name": "PI_2B",
   "filter_env": [],
   "namespace": "default",
@@ -13,8 +14,9 @@
   "vizion": true,
   "autorestart": true,
   "watch": true,
-  "watch_delay": 100,
-  "ignore_watch": [ "node_modules", "test_mp3","UnitTest", "FunctionTest",".vs", "log.txt", "*.log", "*.ts", "*.ps1", "package.json", "package-lock.json" ],
+  "watch_delay": 500,
+  "restart_delay": 500,
+  "ignore_watch": [ "node_modules", "test_mp3", "UnitTest", "FunctionTest", ".vs", "log.txt", "*.log", "*.ts", "*.ps1", "package.json", "package-lock.json", "*.ejs" ],
   "instance_var": "RPI_APP_INSTANCE",
   "pmx": true,
   "automation": true,
@@ -24,4 +26,3 @@
   "kill_retry_time": 100,
   "write": true
 }
-

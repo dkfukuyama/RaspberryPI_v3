@@ -1,21 +1,11 @@
-﻿import { globalVars } from './variables';
-
-const express = require("express");
-const gtts = require('./google_home')
-const favicon = require('express-favicon');
-const exec = require('child_process').exec;
-const bodyParser = require('body-parser');
-const mail = require('./send_mail');
-const ut = require('./utils');
-
-const calc = require('./calculator')
-const slk = require('./slacksend');
-
-const sch = require('./scheduler');
+﻿require('dotenv').config();
 
 import path = require('path');
-import { GHomeMonitor } from './GHomeMonitor';
+const exec = require('child_process').exec;
 
+const express = require("express");
+const favicon = require('express-favicon');
+const bodyParser = require('body-parser');
 const app = express();
 app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 app.use(bodyParser.urlencoded({
@@ -25,14 +15,29 @@ app.use(express.json());
 
 // テンプレートエンジンの指定
 app.set("view engine", "ejs");
-require('dotenv').config();
+
+import { globalVars } from '@/variables';
+import { Slack } from '@/SlackSend';
+
+const gtts = require('@/google_home')
+const mail = require('@/send_mail');
+
+const calc = require('@/calculator')
+const sch = require('@/scheduler');
+
+import { GHomeMonitor } from '@/GHomeMonitor';
+import { GoogleHomeController } from '@/GoogleHomeController';
+
+const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
+const slk = new Slack(process.env.SLACK_WEBHOOK);
 
 
-let page_path_set_index_ejs :any = {};
+let page_path_set_index_ejs: any = {};
 
 function update_common_paramters(){
     page_path_set_index_ejs.common = {
-        ghomeSpeakers: [{}],
+        ghomeSpeakers: GoogleHomeController.gHomeAddresses,
+        env: process.env,
     }
 }
 
@@ -41,6 +46,12 @@ page_path_set_index_ejs.pages = [
         path: '/',
         title: 'こんにちは、ぐーぐるさんだよ',
         level: 0
+    },
+    {
+        path: '/test',
+        title: 'しゃべらせたいとき(テスト)',
+        view_page: './test.ejs',
+        level: 0,
     },
     {
         path: '/speak',
@@ -81,7 +92,7 @@ page_path_set_index_ejs.pages = [
                             voiceTypeId: req.body.voice_type
                         }
                     ).then((params) => {
-                        let mailer = new mail.NodeMailer();
+                        let mailer = new mail.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
                         mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
                     }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
             }
@@ -188,8 +199,8 @@ page_path_set_index_ejs.pages = [
             {
                 console.log('COMMAND MODE');
                 console.log(req.body.mode);
-                slk.slacksend('COMMAND MODE');
-                slk.slacksend(req.body.mode);
+                slk.Log('COMMAND MODE');
+                slk.Log(req.body.mode);
                 switch(req.body.mode){
                     case 'cal_today':
                         return Promise.resolve();
@@ -291,13 +302,39 @@ page_path_set_index_ejs.pages.forEach(p =>{
     });
 });
 
-app.all("*.css", function (req, res, next) {
+app.all("*.css|*.js", function (req, res, next) {
     const p = { root: path.join(__dirname, "views")};
     res.sendFile(req.path, p, (err)=>{
         if(err){
             next(err);
         }
     });
+});
+
+app.all("/stream/*.wav|*.mp3", function (req, res, next) {
+
+    console.log(req.path);
+
+    const fs = require('fs');
+
+    const p = path.join(globalVars().saveDir0, req.path);
+
+    let fpath = decodeURI(p);
+    fs.stat(fpath, (err, stat) => {
+        if (err) {
+            next(err)
+        }
+        // ファイル名をエンコードする
+        const filename = encodeURIComponent("aaa.mp3");
+        // ヘッダーセットする
+        res.set({
+            'Content-Type': "audio/mpeg",
+            'Content-disposition': `inline; filename*=utf-8''${filename}`,
+            'Content-Length': stat.size
+        })
+        let filestream = fs.createReadStream(fpath)
+        filestream.pipe(res)
+    })
 });
 
 app.get("*.wav|*.mp3", function (req, res, next){
@@ -352,18 +389,18 @@ async function npm_install(): Promise<any> {
 }
 
 async function main() {
-    slk.slacksend("********************\n*** SYSTEM START ***\n********************");
+    slk.Log("********************\n*** SYSTEM START ***\n********************");
     const date: any = new Date();
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
-    slk.slacksend({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
+    slk.Log({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
 
     sch.setNodeCrontab();
 
-    await npm_install().then((t)=>slk.slacksend(t)).catch((e)=>console.error(e));
+    await npm_install().then((t)=>slk.Log(t)).catch((e)=>console.error(e));
 
-    let httpServerPort = globalVars().serverPort;
+    let httpServerPort = process.env.HTTP_SERVER_PORT;
 
-    slk.slacksend({
+    slk.Log({
         httpDir0: globalVars().httpDir0,
         httpDir: globalVars().httpDir,
         httpDir_music: globalVars().httpDir_music,
@@ -371,9 +408,8 @@ async function main() {
         voiceSubDir: globalVars().voiceSubDir
     });
 
-    app.listen(httpServerPort, () => slk.slacksend(`http server port No. ${httpServerPort}`));
+    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`));
 
-    const Monitor = new GHomeMonitor();
     Monitor.Start();
 }
 

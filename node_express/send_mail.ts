@@ -1,17 +1,10 @@
-﻿const mailer :any = require("nodemailer");
-import { globalVars } from './variables';
-
-class NodeMailer {
+﻿
+export class NodeMailer {
     private mail_from: string;
-    private cmtpConfig: {
-        host: string;
-        port: number;
-        secure: boolean;
-        auth: {
-            user: string;
-            pass: string;
-        };
-    };
+    private mail_pass: string;
+
+    private mailer: any = require("nodemailer");
+
     private smtpConfig: {
         host: string;
         port: number;
@@ -26,18 +19,19 @@ class NodeMailer {
         to: string; 
         attachments: { filename: string; path: any; }[];    } | null;
 
-    constructor() {
-        this.mail_from = globalVars().gmail_addr;
+    constructor(_mail_from: string, _mail_pass: string) {
+        this.mail_from = _mail_from;
+        this.mail_pass = _mail_pass;
         this.smtpConfig = {
             host: 'smtp.gmail.com',
             port: 465,
             secure: true, // SSL
             auth: {
                 user: this.mail_from,
-                pass: globalVars().gmail_pass
+                pass: this.mail_pass
             }
         }
-        this.transporter = mailer.createTransport(this.smtpConfig);
+        this.transporter = this.mailer.createTransport(this.smtpConfig);
         this.data = {
             text: '',
             subject: '',
@@ -70,7 +64,7 @@ class NodeMailer {
     sendCallBack(err, info){
         if (err) {
             console.log("send mail ERROR : ");
-            console.log(err);
+            console.error(err);
         } else {
             console.log("send mail OK : ");
             console.log(info);
@@ -78,5 +72,4 @@ class NodeMailer {
     }
 };
 
-exports.NodeMailer = NodeMailer;
 

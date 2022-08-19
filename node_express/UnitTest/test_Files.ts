@@ -1,5 +1,5 @@
 import assert = require('assert');
-import { FileListSearch } from '../get_musicList';
+import { FileListSearch } from '@/get_musicList';
 
 describe("FileListSearch", () => {
     it("get_path_01", () => {

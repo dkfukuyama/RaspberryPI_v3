@@ -1,10 +1,12 @@
 import path = require('path');
-import { globalVars } from './variables';
-const gtts = require('./google_tts')
-const gHome = require('./gHomeCnt');
 const request = require('request');
-const ut = require('./utils');
 const execSync = require('child_process').execSync;
+
+import { globalVars } from '@/variables';
+const gtts = require('@/google_tts')
+const ut = require('@/utils');
+const gHome = require('@/GoogleHomeController');
+
 
 function getNowDateWithString(){
     let dt: any = new Date();
@@ -83,7 +85,7 @@ async function getCalJson(sdate: any = undefined, edate: any = undefined){
         setTimeout(()=>reject('Get Cal Timeout'), 30000);
 
         var options = {
-            url: globalVars().g_calenderSummaryUrl,
+            url: "---------",
             method: 'POST',
             json: true,
             followAllRedirects: true,

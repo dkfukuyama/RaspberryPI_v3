@@ -7,9 +7,10 @@
     "name": ""
   },
   "scripts": {
-    "build": "powershell -Command ./prebuild.ps1;\n tsc --build",
-    "clean": "powershell -Command ./prebuild.ps1;\n tsc --build --clean",
-    "test": "mocha UnitTest/*.js --recursive -r dotenv/config"
+    "build": "powershell -Command ./prebuild.ps1 | tsc --build",
+    "clean": "powershell -Command ./prebuild.ps1 CLEAN | tsc --build --clean",
+    "test": "powershell -Command ./prebuild.ps1 TEST | tsc --build | mocha UnitTest/*.js --recursive -r tsconfig-paths/register",
+    "exec": "node -r tsconfig-paths/register main_app.js"
   },
   "devDependencies": {
     "@types/mocha": "^9.1.1",
@@ -37,6 +38,7 @@
     "pm2": "^5.2.0",
     "request": "^2.88.2",
     "socket.io": "^4.5.1",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "tsconfig-paths": "^4.1.0"
   }
 }

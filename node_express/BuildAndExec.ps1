@@ -4,6 +4,6 @@ cd $PSScriptRoot;
 tsc --build;
 .\postbuild.ps1;
 
-node main_app.js
+ts-node main_app.ts -r tsconfig-paths/register
 
 

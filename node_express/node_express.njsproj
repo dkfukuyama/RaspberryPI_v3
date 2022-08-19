@@ -35,6 +35,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".env" />
     <Content Include=".env.secret" />
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
@@ -48,7 +49,7 @@
     <Content Include="clean_wav.sh" />
     <Content Include="FunctionTest\test_all.ps1" />
     <Content Include="get_musicList.ts" />
-    <Content Include="gHomeCnt.ts" />
+    <Content Include="GoogleHomeController.ts" />
     <Content Include="google_home.ts" />
     <Content Include="google_tts.ts" />
     <Content Include=".env.common">
@@ -56,7 +57,6 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
-    <Content Include="postbuild.ps1" />
     <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
     <Content Include="scheduler.ts" />
@@ -82,7 +82,7 @@
     <Content Include="views\quiz_1.ejs" />
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
-    <Content Include="views\test_index.html" />
+    <Content Include="views\test.ejs" />
     <Content Include="watch_ts.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +98,7 @@
     <TypeScriptCompile Include="main_app.ts">
       <TestFramework>mocha</TestFramework>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="slacksend.ts" />
+    <TypeScriptCompile Include="SlackSend.ts" />
     <TypeScriptCompile Include="UnitTest\test_Files.ts">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
@@ -110,6 +110,9 @@
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="views\scripts\connect.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FunctionTest\" />
@@ -118,6 +121,7 @@
     <Folder Include="views\css\" />
     <Folder Include="views\ER\" />
     <Folder Include="views\ico\" />
+    <Folder Include="views\scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

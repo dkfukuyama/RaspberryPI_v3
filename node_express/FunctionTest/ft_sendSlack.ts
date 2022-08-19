@@ -1,3 +1,4 @@
-﻿import { slacksend } from '../slacksend';
+﻿import { Slack } from '../slacksend';
 
-slacksend("test _ send ");
+const slk = new Slack(process.env.SLACK_WEBHOOK);
+slk.Log("test _ send ");

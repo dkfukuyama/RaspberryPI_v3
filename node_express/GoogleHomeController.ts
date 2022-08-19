@@ -1,7 +1,4 @@
-import { globalVars, getLocalAddress } from './variables';
 import path = require('path');
-import { resolve } from 'dns';
-
 
 interface IGoogleHomeSeekResults {
     address: string;
@@ -26,11 +23,10 @@ interface Imedia2 {
     media: Imedia;
 }
 
-
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
-    Client = require('castv2-client').Client; // class
-    DefaultMediaReceiver = require('castv2-client').DefaultMediaReceiver;
+    private Client = require('castv2-client').Client; // class
+    private DefaultMediaReceiver = require('castv2-client').DefaultMediaReceiver;
 
     static gHomeAddresses: IGoogleHomeSeekResults[];
     static gHomeSeekFlag_timeout: NodeJS.Timeout | null = null;
@@ -42,6 +38,22 @@ export class GoogleHomeController {
     private IsLaunched: boolean = false;
     public Player: any | null = null;
     public Sessions: any[] = [];
+
+    private Vol: any = null;
+    private Status: any = null
+    private PlayerStatus: any = null;
+
+    GetVol = () => this.Vol;
+    GetStatus = () => this.Status;
+    GetPlayerStatus = () => this.PlayerStatus;
+
+    GetAllStatus() {
+        return {
+            Vol: this.Vol,
+            Status: this.Status,
+            PalyerStatus: this.PlayerStatus,
+        }
+    }
 
     constructor() {
 
@@ -157,14 +169,16 @@ export class GoogleHomeController {
         });
     }
 
-    public async GetVolume(): Promise<number|null> {
+    public async UpdateVolume(): Promise<any|null> {
         await this.Launch();
         return new Promise((resolve, reject) => {
             this.ConnectedCient.getVolume((err, vol) => {
                 if (err) {
                     this.Disconnect();
+                    this.Vol = null;
                     reject(null)
                 } else {
+                    this.Vol = vol;
                     resolve(vol);
                 }
             });
@@ -190,21 +204,23 @@ export class GoogleHomeController {
         });
     }
 
-    public async GetStatus() {
+    public async UpdateStatus() {
         await this.Launch();
         return new Promise<any>((resolve, reject) => {
             this.ConnectedCient.getStatus((err, stat) => {
                 if (err) {
                     this.Disconnect();
+                    this.Status = null;
                     reject(err)
                 } else {
+                    this.Status = stat;
                     resolve(stat);
                 }
             });
         });
     }
 
-    public async GetSessions() {
+    public async UpdateSessions() {
         await this.Launch();
         return new Promise<any>((resolve, reject) => {
             this.ConnectedCient.getSessions((err, sessions) => {
@@ -314,13 +330,19 @@ export class GoogleHomeController {
         });
     }
 
-    public async GetPalyerStatus(): Promise<object | null> {
+    public async UpdatePalyerStatus(): Promise<object | null> {
         await this.Launch();
 
         return new Promise((resolve, reject) => {
             this.Player?.getStatus((err, status) => {
-                if (err) reject(err);
-                else resolve(status);
+                if (err) {
+                    this.PlayerStatus = null;
+                    reject(err);
+                }
+                else {
+                    this.PlayerStatus = status;
+                    resolve(status);
+                }
             });
         });
     }

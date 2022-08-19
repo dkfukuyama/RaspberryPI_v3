@@ -1,45 +1,39 @@
 ﻿import path = require('path');
 
+const httpServerPort_Default = 80;
+
 interface IGL {
     errorFlag: boolean;
-    serverPort: number;
+    httpServerPort: number;
     voiceSubDir: string;
 
     httpDir0: string;
     httpDir_music: string;
     httpDir: string;
 
-    g_calenderSummaryUrl: string;
-
     saveDir0: string;
     saveDir: string;
-
-    gmail_addr: string;
-    gmail_pass: string;
 }
 
 let GL_VARS: IGL = {
     errorFlag: false,
-    serverPort: 80,
+    httpServerPort: httpServerPort_Default,
     voiceSubDir: '',
     httpDir0: '',
     httpDir_music: '',
     httpDir: '',
-    g_calenderSummaryUrl: '',
     saveDir0: '',
     saveDir: '',
-    gmail_addr: '',
-    gmail_pass: ''
 };
 
 let firstTry = true;
 
-export function globalVars() : IGL{
+export function globalVars(): IGL {
     try {
         if (firstTry || GL_VARS.errorFlag) {
             console.log("LOAD VAL");
             GL_VARS.errorFlag = true;
-            GL_VARS.serverPort = (parseInt(process.env.SERVER_PORT) || GL_VARS.serverPort);
+            GL_VARS.httpServerPort = (parseInt(process.env.HTTP_SERVER_PORT) || GL_VARS.httpServerPort);
             GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
 
             console.log({ TEST_MODE : process.env.TEST_IPV4 });
@@ -50,12 +44,10 @@ export function globalVars() : IGL{
                 if (!ipv4.length) throw new Error('Http Addr cannot be detected');
                 GL_VARS.httpDir0 = `${ipv4[0].address}`;
             }
-            if (GL_VARS.serverPort != 80) GL_VARS.httpDir0 += `:${GL_VARS.serverPort}`;
+            if (GL_VARS.httpServerPort != httpServerPort_Default) GL_VARS.httpDir0 += `:${GL_VARS.httpServerPort}`;
 
             GL_VARS.httpDir_music = "http://" + GL_VARS.httpDir0;
             GL_VARS.httpDir = "http://" + path.posix.join(GL_VARS.httpDir0, GL_VARS.voiceSubDir);
-
-            GL_VARS.g_calenderSummaryUrl = process.env.G_CAL_SUM;
 
             switch (process.env.COMPUTERNAME) {
                 case 'FUKU333_DESKTOP':
@@ -72,9 +64,6 @@ export function globalVars() : IGL{
                     break;
             }
             GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
-
-            GL_VARS.gmail_addr = process.env.GMAIL_ADDR || '';
-            GL_VARS.gmail_pass = process.env.GMAIL_PASS || '';
 
             firstTry = false;
         }
