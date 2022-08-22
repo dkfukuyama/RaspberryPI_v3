@@ -132,7 +132,7 @@ export class GoogleHomeController {
     }
 
     public async Connect(): Promise<void> {
-        console.log(this.SelfStatus.speakerName);
+        //console.log(this.SelfStatus.speakerName);
         if (this.IsConnected) return;
         else return new Promise<void>((resolve, reject) => {
             this.ConnectedCient = new this.Client();
@@ -140,7 +140,7 @@ export class GoogleHomeController {
                 this.Disconnect();
             });
             this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
-                console.log();
+                //console.log();
                 this.IsConnected = true;
                 resolve();
             });
@@ -352,8 +352,8 @@ export class GoogleHomeController {
 
         this.Sessions.map(s => s.appId).forEach(apid => {
             this.ConnectedCient.getAppAvailability(apid, (err, AppInfo) => {
-                console.log(apid);
-                console.log(AppInfo);
+                //console.log(apid);
+                //console.log(AppInfo);
             });
         });
     }

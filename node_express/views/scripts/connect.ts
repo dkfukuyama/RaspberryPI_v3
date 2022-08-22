@@ -1,13 +1,14 @@
 declare const document: any;
 declare const io: any;
 declare const io_port_num: number;
+declare const server_ws: string;
 
 function AddToList(str) {
 	document.getElementById("inputText").innerHTML = `${str}<BR/>` + document.getElementById("inputText").innerHTML;
 }
 
 // サーバーへ接続
-const socket = io(`ws://192.168.1.231:${io_port_num}`, { transports: ['websocket'] });
+const socket = io(server_ws, { transports: ['websocket'] });
 socket.on("connect", () => {
 	AddToList("connection OK");
 	// send a message to the server
