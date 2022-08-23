@@ -78,11 +78,10 @@ export function globalVars(): IGL {
 
 export function getLocalAddress() {
 
-    const os = require('os');
     let ifacesObj: any = {};
     ifacesObj.ipv4 = [];
     ifacesObj.ipv6 = [];
-    let interfaces = os.networkInterfaces();
+    let interfaces = require('os').networkInterfaces();
 
     for (let dev in interfaces) {
         interfaces[dev].forEach(function (details: any) {
@@ -90,9 +89,11 @@ export function getLocalAddress() {
                 let add0: string = details?.address ?? '';
                 switch(details.family){
                     case 4:
+                    case "IPv4":
                         ifacesObj.ipv4.push({name:dev, address:add0});
                     break;
                     case 6:
+                    case "IPv6":
                         ifacesObj.ipv6.push({name:dev, address:add0})
                     break;
                 }

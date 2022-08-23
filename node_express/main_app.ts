@@ -37,7 +37,7 @@ let page_path_set_index_ejs: any = {};
 function update_common_paramters(){
     page_path_set_index_ejs.common = {
         ghomeSpeakers: GoogleHomeController.gHomeAddresses,
-        env: process.env,
+        server_ws: `ws://${globalVars().httpDir0}:${process.env.SOCKETIO_PORT}`
     }
 }
 

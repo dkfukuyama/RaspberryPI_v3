@@ -107,9 +107,9 @@ export class GHomeMonitor {
 
     private async UpdateGhStatusAll(): Promise<void> {
         for (let key in this.GHomes) {
-            await this.GHomes[key].g.UpdateStatus().then(console.log);
-            await this.GHomes[key].g.UpdateSessions().then(console.log);
-            await this.GHomes[key].g.UpdatePalyerStatus().then(console.log);
+            await this.GHomes[key].g.UpdateStatus();
+            await this.GHomes[key].g.UpdateSessions();
+            await this.GHomes[key].g.UpdatePalyerStatus();
         }
     }
 
@@ -122,20 +122,20 @@ export class GHomeMonitor {
         });
     }
 
-    //static count: number = 0;
+    static count: number = 0;
     private async Monitoring(){
-        //MainMonitor.count++;
+        GHomeMonitor.count++;
 
         this.CreateOrOverWriteObjects();
 
         try {
             await this.UpdateGhStatusAll();
 
-            /*
-            if (MainMonitor.count == 10) {
-                this.GetGhObjByName("青色グーグル")?.g?.PlayList(['http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav']);
+            
+            if (GHomeMonitor.count == 10) {
+                this.GetGhObjByName("２階のリビング")?.g?.PlayUrl(['http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav']);
             }
-            */
+            
         } catch (err) {
             console.log("ERR DETECTED");
             console.error(err);
