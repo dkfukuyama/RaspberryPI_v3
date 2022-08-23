@@ -414,3 +414,9 @@ async function main() {
 }
 
 main();
+
+/*
+ * 参考記事
+https://blog.bagooon.com/?p=1728
+https://stackoverflow.com/questions/28819182/expressjs-piping-to-response-stream-doesnt-work
+ */
