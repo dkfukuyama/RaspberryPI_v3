@@ -302,7 +302,28 @@ page_path_set_index_ejs.pages.forEach(p =>{
     });
 });
 
-app.all("*.css|*.js", function (req, res, next) {
+// テストファイルをぞのまま出力するもの
+app.all("/__ftest__/*.*", function (req, res, next) {
+    const p = { root: path.join(__dirname, "FunctionTest") };
+    res.sendFile(req.path.replace("/__ftest__/", ""), p, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+// テストファイルをぞのまま出力するもの
+app.all("/__utest__/*.*", function (req, res, next) {
+    const p = { root: path.join(__dirname, "UnitTest") };
+    res.sendFile(req.path.replace("/__utest__/", ""), p, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+
+
+// 指定ファイルをぞのまま出力するもの
+app.all("*.css|*.js|*.html", function (req, res, next) {
     const p = { root: path.join(__dirname, "views")};
     res.sendFile(req.path, p, (err)=>{
         if(err){

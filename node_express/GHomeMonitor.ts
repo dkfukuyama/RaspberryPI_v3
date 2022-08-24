@@ -130,11 +130,6 @@ export class GHomeMonitor {
 
         try {
             await this.UpdateGhStatusAll();
-
-            
-            if (GHomeMonitor.count == 10) {
-                this.GetGhObjByName("２階のリビング")?.g?.PlayUrl(['http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav']);
-            }
             
         } catch (err) {
             console.log("ERR DETECTED");

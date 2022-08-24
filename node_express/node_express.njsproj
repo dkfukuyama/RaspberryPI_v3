@@ -47,6 +47,8 @@
       <TestFramework>mocha</TestFramework>
     </Content>
     <Content Include="clean_wav.sh" />
+    <Content Include="FunctionTest\test_02.json" />
+    <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
     <Content Include="get_musicList.ts" />
     <Content Include="GoogleHomeController.ts" />
@@ -77,6 +79,7 @@
     <Content Include="views\item.ejs" />
     <Content Include="views\menu.ejs" />
     <Content Include="views\music.ejs" />
+    <Content Include="views\parts\SpeakerStatus.html" />
     <Content Include="views\quiz.ejs" />
     <Content Include="views\quiz_0.ejs" />
     <Content Include="views\quiz_1.ejs" />
@@ -121,6 +124,7 @@
     <Folder Include="views\css\" />
     <Folder Include="views\ER\" />
     <Folder Include="views\ico\" />
+    <Folder Include="views\parts\" />
     <Folder Include="views\scripts\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

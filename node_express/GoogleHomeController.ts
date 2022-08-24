@@ -50,6 +50,7 @@ export class GoogleHomeController {
     GetAllStatus() {
         return {
             Vol: this.Vol,
+            Self: this.SelfStatus,
             Status: this.Status,
             PalyerStatus: this.PlayerStatus,
         }
@@ -102,7 +103,7 @@ export class GoogleHomeController {
         }
     }
 
-    public static async seekGoogleHomes(timeout: number, repeatType): Promise<IGoogleHomeSeekResults[]> {
+    public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
 
         return new Promise((resolve, _) => {
             let return_val: IGoogleHomeSeekResults[] = [];
@@ -115,7 +116,6 @@ export class GoogleHomeController {
             return_val.sort();
             setTimeout(() => {
                 browser.stop();
-
                 resolve(return_val);
             }, timeout);
         });
