@@ -102,17 +102,9 @@
       <TestFramework>mocha</TestFramework>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SlackSend.ts" />
-    <TypeScriptCompile Include="UnitTest\test_Files.ts">
-      <SubType>Code</SubType>
-      <TestFramework>Mocha</TestFramework>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\test_variables.ts">
-      <TestFramework>Mocha</TestFramework>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="UnitTest\test_date_fns.ts">
-      <SubType>Code</SubType>
-      <TestFramework>Mocha</TestFramework>
-    </TypeScriptCompile>
+    <TypeScriptCompile Include="UnitTest\test_date_fns.ts" />
+    <TypeScriptCompile Include="UnitTest\test_Files.ts" />
+    <TypeScriptCompile Include="UnitTest\test_variables.ts" />
     <TypeScriptCompile Include="views\scripts\connect.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

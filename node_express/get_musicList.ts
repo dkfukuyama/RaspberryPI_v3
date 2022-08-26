@@ -43,6 +43,7 @@ interface FileListSearchResults {
 
 export class FileListSearch {
     private DirBaseFullPath: string;
+    private ExtraDirBaseFullPath: string[];
     private DirNow: FileInfo;
 
     constructor(baseDir: string | null = null) {
