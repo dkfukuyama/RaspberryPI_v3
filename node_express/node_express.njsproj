@@ -41,7 +41,7 @@
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
     <Content Include="BuildAndExec.ps1" />
-    <Content Include="calculator.ts" />
+    <TypeScriptCompile Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
     <Content Include="clean.ts">
       <TestFramework>mocha</TestFramework>
@@ -50,10 +50,10 @@
     <Content Include="FunctionTest\test_02.json" />
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
-    <Content Include="get_musicList.ts" />
-    <Content Include="GoogleHomeController.ts" />
-    <Content Include="google_home.ts" />
-    <Content Include="google_tts.ts" />
+    <TypeScriptCompile Include="get_musicList.ts" />
+    <TypeScriptCompile Include="GoogleHomeController.ts" />
+    <TypeScriptCompile Include="google_home.ts" />
+    <TypeScriptCompile Include="google_tts.ts" />
     <Content Include=".env.common">
       <SubType>Code</SubType>
     </Content>
@@ -61,13 +61,13 @@
     <Content Include="pm2start.json" />
     <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
-    <Content Include="scheduler.ts" />
-    <Content Include="send_mail.ts" />
-    <Content Include="sqlite_lib.ts" />
+    <TypeScriptCompile Include="scheduler.ts" />
+    <TypeScriptCompile Include="send_mail.ts" />
+    <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
-    <Content Include="utils.ts" />
-    <Content Include="variables.ts" />
+    <TypeScriptCompile Include="utils.ts" />
+    <TypeScriptCompile Include="variables.ts" />
     <Content Include="views\calculator.ejs" />
     <Content Include="views\config.ejs" />
     <Content Include="views\css\base0.css" />
@@ -99,12 +99,19 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="main_app.ts">
-      <TestFramework>mocha</TestFramework>
+      <TestFramework>
+      </TestFramework>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SlackSend.ts" />
-    <TypeScriptCompile Include="UnitTest\test_date_fns.ts" />
-    <TypeScriptCompile Include="UnitTest\test_Files.ts" />
-    <TypeScriptCompile Include="UnitTest\test_variables.ts" />
+    <TypeScriptCompile Include="UnitTest\test_date_fns.ts">
+      <TestFramework>mocha</TestFramework>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="UnitTest\test_Files.ts">
+      <TestFramework>mocha</TestFramework>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="UnitTest\test_variables.ts">
+      <TestFramework>mocha</TestFramework>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="views\scripts\connect.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

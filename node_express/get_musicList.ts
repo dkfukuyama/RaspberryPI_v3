@@ -44,11 +44,19 @@ interface FileListSearchResults {
 export class FileListSearch {
     private DirBaseFullPath: string;
     private ExtraDirBaseFullPath: string[];
-    private DirNow: FileInfo;
+    private DirNow: FileInfo|null = null;
 
     constructor(baseDir: string | null = null) {
-        this.DirBaseFullPath = baseDir ?? __dirname;
+        const path_to_resolve: string = baseDir ?? __dirname;
+        console.debug({ path_to_resolve });
+
+        this.DirBaseFullPath = path.resolve(path_to_resolve);
+        console.debug({ DirBaseFullPath: this.DirBaseFullPath });
+
         this.DirNow = this.GetInfo(this.DirBaseFullPath);
+
+        console.debug({ DirNow: this.DirNow });
+
     }
 
     GetDirBaseFullPath = (): string => this.DirBaseFullPath;
@@ -59,20 +67,22 @@ export class FileListSearch {
         return ret_val;
     }
 
-    GetInfo(inp_path:string): FileInfo {
-        let stat = fs.statSync(inp_path);
-        
-        console.log({ inp_path });
+    GetInfo(inp_path: string): FileInfo {
+        let inp_path_a: string = "";
+        if (this.DirNow == null) {
+            inp_path_a = path.resolve(inp_path);
+            console.debug({ inp_path_a });
+        } else {
+            if(path.isAbsolute(inp_path)){
 
-        let inp_path_r = path.posix.relative(this.DirBaseFullPath, inp_path);
-
-        console.log({ inp_path_r });
-
-        let ps = path.posix.parse(inp_path_r);
-        let rs = path.posix.resolve(inp_path_r);
+            }
+            path.join(this.DirNow, inp_path);
+        }
+        let stat = fs.statSync(inp_path_a);
+        let ps = path.parse(inp_path);
         return {
             BaseName: ps.base,
-            Fullname: rs,
+            Fullname: inp_path_a,
             CreationTime: stat.ctime,
             Ext: ps.ext,
             Name: ps.name,
