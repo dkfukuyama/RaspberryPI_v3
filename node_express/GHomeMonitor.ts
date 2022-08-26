@@ -13,12 +13,19 @@ export class GHomeMonitor {
 
     private SocketIoPort: number = 3000;
     private SocketIo: EventEmitter | null = null;
+    private SimulationMode: boolean | number = false;
 
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
-    constructor(socket_io_port: number) {
+    constructor(socket_io_port: number, sim_mode: boolean|number = false) {
         GoogleHomeController.init();
         this.GHomes = {};
         this.SocketIoPort = socket_io_port;
+        this.SimulationMode = sim_mode;
+
+        if (this.SimulationMode) {
+            console.log(" xxxxxxx  SIMULATION MODE  xxxxxxxx");
+            console.log({ SimulationMode : this.SimulationMode });
+        }
     }
     public Start() {
         this.StartSpeakerMonitor();
@@ -114,7 +121,13 @@ export class GHomeMonitor {
     }
 
     private GetStatusAll() {
-        return Object.keys(this.GHomes).map(key => {
+        if (this.SimulationMode) {
+            const gh = require('@/FunctionTest/test_02');
+            gh.forEach(g => {
+                g.Value.Status.volume.level += 0.01;
+            });
+            return gh;
+        }else return Object.keys(this.GHomes).map(key => {
             return {
                 Key: key,
                 Value: this.GHomes[key].g.GetAllStatus()

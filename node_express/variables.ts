@@ -13,6 +13,8 @@ interface IGL {
 
     saveDir0: string;
     saveDir: string;
+
+    simulation_mode: boolean|number;
 }
 
 let GL_VARS: IGL = {
@@ -24,6 +26,8 @@ let GL_VARS: IGL = {
     httpDir: '',
     saveDir0: '',
     saveDir: '',
+
+    simulation_mode: false
 };
 
 let firstTry = true;
@@ -55,6 +59,7 @@ export function globalVars(): IGL {
                     GL_VARS.saveDir0 = "\\\\LANDISK-201129\\disk1\\RaspberryPI_FILES\\Accessible_From_Raspberrypi";
                     break;
                 case 'FUKUYAMA':
+                    GL_VARS.simulation_mode = 2;
                     GL_VARS.saveDir0 = path.join(__dirname, "test_mp3");
                     break;
                 case 'PI_ZERO_01':

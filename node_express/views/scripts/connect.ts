@@ -26,12 +26,12 @@ socket.on("hello from server", (data) => {
 
 socket.on("S2C_send_status", (data) => {
 	AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
+	ghhc.BuildHtml(data);
 });
 
 socket.on("S2C_play_OK", (data) => {
 	AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
 });
-
 
 socket.on("error", () => {
 	// ...
@@ -48,9 +48,8 @@ socket.on("connect_error", (err) => {
 	}, 1000);
 });
 
-
 function AddToList(str) {
-	document.getElementById("inputText").innerHTML = `${str}<BR/>` + document.getElementById("inputText").innerHTML;
+	document.getElementById("inputText").innerHTML = str;
 }
 
 function buttonClick() {
@@ -79,9 +78,9 @@ class GoogleHomeHtmlContainer {
 			const xhr = new XMLHttpRequest();
 			xhr.open('GET', '/parts/SpeakerStatus.html');
 			xhr.send();
-			xhr.onload = function () {
-				let responseObj = xhr.response;
-				resolve(responseObj)
+			xhr.onload = ()=> {
+				this.load_html = xhr.response;
+				resolve(this.load_html)
 			};
 		});
     }
@@ -100,33 +99,46 @@ class GoogleHomeHtmlContainer {
 			xhr.open('GET', load_path);
 			xhr.responseType = "json";
 			xhr.send();
-			xhr.onload = function () {
+			xhr.onload = ()=> {
 				let responseObj = xhr.response;
 				resolve(responseObj)
 			};
 		});
 	}
 
-	async BuildHtml(g_array: GContainer[] | null) {
-
-		this.load_html = await ghhc.Load();
+	BuildHtml(g_array: GContainer[] | null) {
 		g_array.forEach(g => this.BuildHtml_sub(g));
-		try {
-			document.getElementsByName("vol").forEach(e => e.innerText = "123");
-		} catch (err) {
-			alert(err);
-		}
-
 	}
 
+	static a: number = 0;
 	BuildHtml_sub(g: GContainer) {
+		let addr = g.Value.Self.address.replace(/\./g, "_");
+
+		let elem1 = document.getElementById(addr);
+
+		if (elem1 == null) {
 			const parser = new DOMParser();
-			this.load_doc = parser.parseFromString(this.load_html, 'text/html');
-			this.load_doc.getElementsByName('IpAddress')[0].innerText = g.Value.Self.address;
-			const docString = new XMLSerializer().serializeToString(this.load_doc);
-			document.getElementById(this.container).insertAdjacentHTML('beforeend', docString);
+			let str: string = this.load_html.replace(/ID_NAME/g, addr).replace(/collapseExample/g, `collapse_${addr}`);
+
+			this.load_doc = parser.parseFromString(str, 'text/html');
+			let elem = this.load_doc.getElementById(addr);
+			document.getElementById(this.container).appendChild(elem);
+
+			elem1 = document.getElementById(addr);
+		}
+
+		const v = g.Value;
+		elem1.getElementsByClassName("speakerName")[0].innerText = v.Self.speakerName;
+		elem1.getElementsByClassName('IpAddress')[0].innerText = v.Self.address;
+		elem1.getElementsByClassName('Volume')[0].innerText = v.Status?.volume?.level * 100;
+		elem1.getElementsByClassName('statusText')[0].innerText = v.Status?.applications[0]?.statusText;
+		elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime;
+		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
+
+		
+
 	}
 }
 
-const ghhc = new GoogleHomeHtmlContainer("container");
-ghhc.Test('/__ftest__/test_02.json');
+var ghhc = new GoogleHomeHtmlContainer("container");
+ghhc.Load();

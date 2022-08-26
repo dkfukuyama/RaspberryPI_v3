@@ -28,7 +28,7 @@ const sch = require('@/scheduler');
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController } from '@/GoogleHomeController';
 
-const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
+const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT), globalVars().simulation_mode);
 const slk = new Slack(process.env.SLACK_WEBHOOK);
 
 

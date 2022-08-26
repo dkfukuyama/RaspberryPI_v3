@@ -58,7 +58,7 @@
 					"stepInterval": 0.019999999552965164
 				}
 			},
-			"PalyerStatus": {
+			"PlayerStatus": {
 				"mediaSessionId": 2,
 				"playbackRate": 1,
 				"playerState": "PAUSED",
