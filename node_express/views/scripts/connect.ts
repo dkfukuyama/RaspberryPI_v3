@@ -21,16 +21,16 @@ socket.on("connect", () => {
 
 // receive a message from the server
 socket.on("hello from server", (data) => {
-	AddToList(`hello from server :: ${JSON.stringify(data, null, null)}`);
+	AddToList(`hello from server :: ${JSON.stringify(data, null, "\t")}`);
 });
 
 socket.on("S2C_send_status", (data) => {
-	AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
+	AddToList(`Status :: ${JSON.stringify(data, null, "\t")}`);
 	ghhc.BuildHtml(data);
 });
 
 socket.on("S2C_play_OK", (data) => {
-	AddToList(`Status :: ${JSON.stringify(data, null, null)}`);
+	AddToList(`Status :: ${JSON.stringify(data, null, "\t")}`);
 });
 
 socket.on("error", () => {
@@ -49,12 +49,14 @@ socket.on("connect_error", (err) => {
 });
 
 function AddToList(str) {
-	document.getElementById("inputText").innerHTML = str;
+	document.getElementById("MessageText").innerHTML = `<PRE>${str}</PRE>`;
 }
 
+/*
 function buttonClick() {
 	socket.emit("C2S_play", { send_datetime: new Date() });
 }
+*/
 
 interface IGoogleHomeSeekResults {
 	address: string;

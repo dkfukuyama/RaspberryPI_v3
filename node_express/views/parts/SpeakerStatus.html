@@ -1,15 +1,58 @@
 ﻿<div id="ID_NAME">
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <span class="speakerName"></span>
-    </button>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            <span>IPアドレス</span><span class="IpAddress"></span>
-            <span>音量</span><span class="Volume"></span>
-            <span class="statusText"></span>
-            <span class="title"></span>
-            <span class="currentTime"></span>
-            <span class="duration"></span>
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <span class="speakerName"></span>
+        </button>
+    </div>
+    <div class="d-grid gap-2">
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">状態一覧</th>
+                            <th>曲を選択</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>IPアドレス</td>
+                                            <td><span class="IpAddress"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>音量</span></td>
+                                            <td><span class="Volume"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>状態</td>
+                                            <td><span class="statusText"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>曲名</td>
+                                            <td><span class="title"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>再生中の時間</td>
+                                            <td><span class="currentTime"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>曲の長さ</td>
+                                            <td><span class="duration"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                ここで曲選択
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

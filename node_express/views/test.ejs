@@ -1,8 +1,15 @@
 <div id="container"></div>
 
-<input type="button" value="button" onclick="buttonClick()" />
-<div id="inputText"></div>
-<ul id="messageList" />
+<div class="d-grid gap-2">
+	<button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+		サーバメッセージ表示の切り替え
+	</button>
+	<div class="collapse" id="collapseExample">
+		<div class="card card-body">
+			<div id="MessageText" />
+		</div>
+	</div>
+</div>
 
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 <script>
@@ -10,4 +17,5 @@
 	const container_id = "container";
 </script>
 <script src="/scripts/connect.js"></script>
+
 
