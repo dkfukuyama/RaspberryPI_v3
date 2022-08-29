@@ -42,9 +42,8 @@ interface FileListSearchResults {
 }
 
 export class FileListSearch {
-    private DirBaseFullPath: string;
-    private ExtraDirBaseFullPath: string[];
-    private DirNow: FileInfo|null = null;
+    private DirBaseFullPath: string;  // ファイル探索の起点となるパス
+    private DirNow: FileInfo | null = null; // 現在探索しているディレクトリのパス(DirBaseFullPath起点の相対パス)
 
     constructor(baseDir: string | null = null) {
         const path_to_resolve: string = baseDir ?? __dirname;
@@ -79,6 +78,11 @@ export class FileListSearch {
             Name: ps.name,
             Type: stat.isDirectory() ? 'Directory' : stat.isFile() ? 'File' : 'NotDetected',
         }
+    }
+
+    // 遷移先のパス(DirNowを基準に)
+    SetCurrentDir(path: string): void {
+
     }
 }
 
