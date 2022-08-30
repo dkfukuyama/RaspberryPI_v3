@@ -1,4 +1,4 @@
-declare const document: any;
+﻿declare const document: any;
 declare const io: any;
 declare const io_port_num: number;
 declare const server_ws: string;
@@ -11,7 +11,10 @@ declare const container_id: string;
 declare const DOMParser: any;
 declare const Node: any;
 
-// �T�[�o�[�֐ڑ�
+
+let MusicList: any = {};
+
+// サーバーへ接続
 const socket = io(server_ws, { transports: ['websocket'] });
 socket.on("connect", () => {
 	AddToList("connection OK");
@@ -33,6 +36,10 @@ socket.on("S2C_play_OK", (data) => {
 	AddToList(`Status :: ${JSON.stringify(data, null, "\t")}`);
 });
 
+socket.on("S2C_reply_musiclist", (data) => {
+	MusicList[data.ack.addr] = data.data;
+});
+
 socket.on("error", () => {
 	// ...
 	AddToList("error");
@@ -51,12 +58,6 @@ socket.on("connect_error", (err) => {
 function AddToList(str) {
 	document.getElementById("MessageText").innerHTML = `<PRE>${str}</PRE>`;
 }
-
-/*
-function buttonClick() {
-	socket.emit("C2S_play", { send_datetime: new Date() });
-}
-*/
 
 interface IGoogleHomeSeekResults {
 	address: string;
@@ -125,8 +126,9 @@ class GoogleHomeHtmlContainer {
 			this.load_doc = parser.parseFromString(str, 'text/html');
 			let elem = this.load_doc.getElementById(addr);
 			document.getElementById(this.container).appendChild(elem);
-
 			elem1 = document.getElementById(addr);
+
+			socket.emit("C2S_request_musiclist", { addr: addr });			
 		}
 
 		const v = g.Value;
@@ -137,8 +139,16 @@ class GoogleHomeHtmlContainer {
 		elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime;
 		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
 
-		
+		//alert(addr);
 
+		if (addr in MusicList) {
+			let out_html: string = "曲の一覧";
+			MusicList[addr].FileList.forEach(f => out_html += `<div>${f.Name}</div>`)
+
+			out_html += "フォルダを移動する";
+			MusicList[addr].DirList.forEach(f => out_html += `<button class="btn btn-info">${f.Name}</button>`)
+			elem1.getElementsByClassName('music_selection')[0].innerHTML = out_html;
+		}
 	}
 }
 

@@ -2,6 +2,7 @@
 import { EventEmitter } from 'stream';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
+import { FileListSearch } from '@/FileListSearch';
 
 export class GHomeMonitor {
     GHomes: {
@@ -46,6 +47,7 @@ export class GHomeMonitor {
 
         const io = new Server({});
         io.on("connection", (socket) => {
+            const FSearch: FileListSearch = new FileListSearch('test_mp3');
             // send a message to the client
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date()});
@@ -63,8 +65,14 @@ export class GHomeMonitor {
                 socket.emit("S2C_play_OK", null);
             });
             socket.on("C2S_stop", (data) => {
-                console.log(data); socket.emit("S2C_stop_OK", null);
+                socket.emit("S2C_stop_OK", null);
             });
+
+            socket.on("C2S_request_musiclist", (data) => {
+                console.log("C2S_request_musiclist");
+                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch.GetList() });
+            });
+
 
             socket.on("error", (err) => {
                 console.log(err);

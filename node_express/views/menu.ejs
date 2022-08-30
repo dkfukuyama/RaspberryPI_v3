@@ -8,18 +8,19 @@
         <%_ let level_def = page.level - level_pre _%>
         <%_ if(level_def < 0){ _%>
             <%_ for(let i = 0; i < -level_def; i++){ _%>
-                </ol>
+    </ol>
             <%_ } _%>
         <%_ }else if(level_def > 0){ _%>
-            <ol>
-        <%_ } _%>
-        <li>
+    <ol>
+	<%_ } _%>
+		
         <%_ if(page.path) { _%>
-            <a class="nav-link" href="<%- page.path %>"><%- page.title _%></a>
+			<li><a href="<%- page.path %>" class="btn btn-outline-secondary py-0"><%- page.title _%></a></li>
         <%_ }else{ _%>
-            <%- page.title _%>
+			<li><%- page.title _%></li>
         <%_ } _%>
-        </li>
+        
         <%_ level_pre = page.level _%>
     <%_ }); _%>
+
 </ol>

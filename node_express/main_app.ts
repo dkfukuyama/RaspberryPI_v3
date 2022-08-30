@@ -28,6 +28,8 @@ const sch = require('@/scheduler');
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController } from '@/GoogleHomeController';
 
+import {delay_ms} from '@/utils';
+
 const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT), globalVars().simulation_mode);
 const slk = new Slack(process.env.SLACK_WEBHOOK);
 
@@ -48,9 +50,9 @@ page_path_set_index_ejs.pages = [
         level: 0
     },
     {
-        path: '/test',
-        title: 'しゃべらせたいとき(テスト)',
-        view_page: './test.ejs',
+        path: '/play_music',
+        title: 'おんがくをかける',
+        view_page: './play_music.ejs',
         level: 0,
     },
     {
@@ -147,6 +149,7 @@ page_path_set_index_ejs.pages = [
         },
     },
 
+/*
     {
         path: '/music',
         title: 'おんがくをかける',
@@ -164,6 +167,8 @@ page_path_set_index_ejs.pages = [
             return Promise.reject({error : `FALSE play :: ${req.body.filename}`});
         },
     },
+*/
+
     {
         path: '',
         title: 'クイズゲーム',
@@ -419,7 +424,7 @@ async function main() {
 
     sch.setNodeCrontab();
 
-    await npm_install().then((t)=>slk.Log(t)).catch((e)=>console.error(e));
+    await npm_install().then((t) => slk.Log(t)).catch((e) => console.error(e));
 
     let httpServerPort = process.env.HTTP_SERVER_PORT;
 
@@ -431,14 +436,12 @@ async function main() {
         voiceSubDir: globalVars().voiceSubDir
     });
 
-
-    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`));
-
+    app.listen(httpServerPort, () => { slk.Log(`http server port No. ${httpServerPort}`); });
     Monitor.Start();
 }
 
-main();
 
+main();
 /*
  * 参考記事
 https://blog.bagooon.com/?p=1728
