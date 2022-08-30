@@ -2,11 +2,12 @@ import assert = require('assert');
 import path = require('path');
 
 import { FileListSearch, FileListSearchResults } from '@/FileListSearch';
+import { globalVars } from '../variables';
 
 describe("FileListSearch", () => {
     it("get_path_01", () => {
         console.debug("--------------------- get_path_01");
-        let FSearch: FileListSearch = new FileListSearch();
+        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
         assert.equal(FSearch.GetDirBaseFullPath(),
             path.resolve(path.join(__dirname, "..")));
 

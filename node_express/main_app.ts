@@ -391,10 +391,8 @@ async function npm_install(): Promise<any> {
         case 'PI_2B_01':
             command = ['sudo npm install'];
             break;
-        case 'FKUYAMA':
-            command = [];
         default:
-            command = ['npm install'];
+            command = [];
             break;
     }
 
@@ -416,6 +414,7 @@ async function npm_install(): Promise<any> {
     );
 }
 
+
 async function main() {
     slk.Log("********************\n*** SYSTEM START ***\n********************");
     const date: any = new Date();
@@ -435,8 +434,7 @@ async function main() {
         saveDir0: globalVars().saveDir0,
         voiceSubDir: globalVars().voiceSubDir
     });
-
-    app.listen(httpServerPort, () => { slk.Log(`http server port No. ${httpServerPort}`); });
+    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
     Monitor.Start();
 }
 

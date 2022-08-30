@@ -3,6 +3,8 @@ import { EventEmitter } from 'stream';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
+import { Socket } from 'socket.io';
+import { globalVars } from './variables';
 
 export class GHomeMonitor {
     GHomes: {
@@ -46,8 +48,10 @@ export class GHomeMonitor {
         const { Server } = require("socket.io");
 
         const io = new Server({});
-        io.on("connection", (socket) => {
-            const FSearch: FileListSearch = new FileListSearch('test_mp3');
+        io.on("connection", (socket: Socket) => {
+            
+            //const FSearch: FileListSearch = new FileListSearch('test_mp3');
+            const FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
             // send a message to the client
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date()});
@@ -77,6 +81,11 @@ export class GHomeMonitor {
             socket.on("error", (err) => {
                 console.log(err);
             });
+
+            socket.on("connect_error", (err) => {
+                console.log(err);
+            });
+            
             socket.on("disconnect", (data) => {
                 clearTimeout(t);
             });
