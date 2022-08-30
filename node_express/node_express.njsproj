@@ -50,7 +50,7 @@
     <Content Include="FunctionTest\test_02.json" />
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
-    <TypeScriptCompile Include="get_musicList.ts" />
+    <TypeScriptCompile Include="FileListSearch.ts" />
     <TypeScriptCompile Include="GoogleHomeController.ts" />
     <TypeScriptCompile Include="google_home.ts" />
     <TypeScriptCompile Include="google_tts.ts" />
@@ -80,12 +80,12 @@
     <Content Include="views\menu.ejs" />
     <Content Include="views\music.ejs" />
     <Content Include="views\parts\SpeakerStatus.html" />
+    <Content Include="views\play_music.ejs" />
     <Content Include="views\quiz.ejs" />
     <Content Include="views\quiz_0.ejs" />
     <Content Include="views\quiz_1.ejs" />
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
-    <Content Include="views\test.ejs" />
     <Content Include="watch_ts.ps1" />
   </ItemGroup>
   <ItemGroup>

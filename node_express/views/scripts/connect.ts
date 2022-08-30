@@ -139,14 +139,29 @@ class GoogleHomeHtmlContainer {
 		elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime;
 		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
 
-		//alert(addr);
-
 		if (addr in MusicList) {
-			let out_html: string = "曲の一覧";
-			MusicList[addr].FileList.forEach(f => out_html += `<div>${f.Name}</div>`)
+			let out_html: string = `曲の一覧<div class="container"><div class="row">`;
+			let end_i: number;
+			MusicList[addr].FileList.forEach((f, i) => {
+				if (i % 3 == 0) out_html += '<div class="row">';
+				out_html += `<div class="col"><button class="btn btn-light py-0 my-2 w-100">${f.Name}</button></div>`;
+				if (i % 3 == 2) out_html += '</div>';
+				end_i = i;
+			})
+			if (end_i % 3 != 2) out_html += '</div>';
+			out_html += `</div>`;
 
-			out_html += "フォルダを移動する";
-			MusicList[addr].DirList.forEach(f => out_html += `<button class="btn btn-info">${f.Name}</button>`)
+			out_html += `フォルダを移動する<div class="container"><div class="row">`;
+
+			MusicList[addr].DirList.forEach((f, i) => {
+				if (i % 3 == 0) out_html += '<div class="row">';
+				out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100">${f.Name}</button></div>`;
+				if (i % 3 == 2) out_html += '</div>';
+				end_i = i;
+			})
+			if (end_i % 3 != 2) out_html += '</div>';
+			out_html += `</div>`;
+
 			elem1.getElementsByClassName('music_selection')[0].innerHTML = out_html;
 		}
 	}

@@ -22,10 +22,9 @@ export class FileListSearch {
     private FileNow: FileInfo | null = null; // 現在探索しているファイルのパス(DirBaseFullPath起点の相対パス)
 
     constructor(baseDir: string | null = null) {
-        this.DirBaseFullPath = __dirname;
-        const path_to_resolve: string = baseDir ?? this.DirBaseFullPath;
-        let currentPath = path.resolve(path_to_resolve);
-        this.FileNow = this.GetInfo(currentPath);
+        const path_to_resolve: string = baseDir ?? __dirname;
+        this.DirBaseFullPath = path.resolve(path_to_resolve);
+        this.FileNow = this.GetInfo(this.DirBaseFullPath);
     }
 
     GetDirBaseFullPath = (): string => this.DirBaseFullPath;
