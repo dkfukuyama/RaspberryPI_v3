@@ -1,0 +1,29 @@
+<HTML>
+<head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height:100vh;
+}
+
+iframe {
+  border:none;
+  width:100%;
+  height:100%;
+}
+</style>
+
+<script>
+window.onload=function(){
+setInterval("document.getElementById('hoge').src='./report.html'",5000);
+//5ïbñàÇ…åƒÇ—èoÇ∑
+}
+</script>
+</head>
+
+<body>
+<iframe src='./report.html' id="hoge"></iframe>
+</body>
+</html>

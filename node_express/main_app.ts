@@ -386,6 +386,8 @@ async function npm_install(): Promise<any> {
         case 'PI_2B_01':
             command = ['sudo npm install'];
             break;
+        case 'FKUYAMA':
+            command = [];
         default:
             command = ['npm install'];
             break;
@@ -428,6 +430,7 @@ async function main() {
         saveDir0: globalVars().saveDir0,
         voiceSubDir: globalVars().voiceSubDir
     });
+
 
     app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`));
 

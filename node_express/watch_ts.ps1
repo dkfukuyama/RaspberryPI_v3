@@ -1,2 +1,2 @@
-chokidar "**/*.ts" | ? {$_ -match "^change:"} | % {$_.Trim("change:");} | % { npm run build}
+chokidar "**/*.ts" | ? {$_ -match "^change:"} | % {$_.Trim("change:");} | % { tsc --build }
 

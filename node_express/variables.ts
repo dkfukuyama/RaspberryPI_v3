@@ -75,7 +75,7 @@ export function globalVars(): IGL {
         GL_VARS.errorFlag = false;
     } catch (err) {
         GL_VARS.errorFlag = true;
-        console.log(err);
+        console.error(err);
     } finally {
         return GL_VARS;
     }

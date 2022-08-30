@@ -5,7 +5,6 @@ describe("variables", () => {
     require('dotenv').config();
 
     it("globalVars_01", () => {
-        console.log(globalVars());
         assert.equal(false, globalVars().errorFlag);
         assert.equal(9000, globalVars().httpServerPort);
         assert.equal('192.168.100.100:9000', globalVars().httpDir0);

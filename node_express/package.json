@@ -9,7 +9,7 @@
   "scripts": {
     "build": "powershell -Command ./prebuild.ps1 | tsc --build",
     "clean": "powershell -Command ./prebuild.ps1 CLEAN | tsc --build --clean",
-    "test": "powershell -Command ./prebuild.ps1 TEST | tsc --build | ts-mocha -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=report.html",
+    "test": "powershell -Command ./prebuild.ps1 TEST | tsc --build | ts-mocha -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=UnitTest/report.html",
     "exec": "node -r tsconfig-paths/register main_app.js"
   },
   "devDependencies": {

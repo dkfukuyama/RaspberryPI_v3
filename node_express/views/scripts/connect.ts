@@ -142,5 +142,5 @@ class GoogleHomeHtmlContainer {
 	}
 }
 
-var ghhc = new GoogleHomeHtmlContainer("container");
+var ghhc = new GoogleHomeHtmlContainer(container_id);
 ghhc.Load();
