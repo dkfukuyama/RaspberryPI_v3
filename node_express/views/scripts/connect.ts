@@ -11,6 +11,11 @@ declare const container_id: string;
 declare const DOMParser: any;
 declare const Node: any;
 
+declare const query: {
+	testmode: number;
+};
+
+
 
 let MusicList: any = {};
 
