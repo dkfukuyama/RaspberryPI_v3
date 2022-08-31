@@ -25,7 +25,7 @@ const socket = io(server_ws, { transports: ['websocket'] });
 socket.on("connect", () => {
 	AddToList("connection OK");
 	// send a message to the server
-	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type });
+	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type, testmode: query.testmode });
 });
 
 // receive a message from the server
