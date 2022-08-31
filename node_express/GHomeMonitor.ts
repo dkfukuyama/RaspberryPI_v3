@@ -1,10 +1,77 @@
 ﻿import { addMinutes, addSeconds } from 'date-fns';
-import { EventEmitter } from 'stream';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
-import { Socket } from 'socket.io';
+import { Socket, Server } from 'socket.io';
 import { globalVars } from './variables';
+
+
+interface IStatus {
+    client_type: 'MusicPlayer' | 'StatusController'
+}
+
+export class SocketIoConnectionManager {
+    private Io: Server;
+    private SocketIoPort: number = 3000;
+    private Status: IStatus;
+
+    GetStatusAll: () => object;
+
+    constructor(portnum: number, _getStatusAll: ()=>object) {
+        this.SocketIoPort = portnum;
+        this.GetStatusAll = _getStatusAll;
+        this.Io = new Server();
+        this.Io.on("connection", (socket: Socket) => {
+            // send a message to the client
+
+            let FSearch: FileListSearch;
+            console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
+            socket.emit("hello from server", { send_datetime: new Date() });
+
+            let t: NodeJS.Timeout = setInterval(() => {
+                socket.emit("S2C_send_status", this.GetStatusAll());
+            }, 1000);
+
+            // receive a message from the client
+            socket.on("hello from client", (data: { send_datetime: Date; client_type: 'MusicPlayer' | 'StatusController' }) => {
+                console.log(`hello from client :: ${data.send_datetime} / TYPE :: ${data.client_type}`);
+                if (data.client_type == 'MusicPlayer') {
+                    // FSearch = new FileListSearch('test_mp3'); テストモード
+                    FSearch = new FileListSearch(globalVars().saveDir0);
+                }
+            });
+            socket.on("C2S_play", (data) => {
+                console.log(data);
+                socket.emit("S2C_play_OK", null);
+            });
+            socket.on("C2S_stop", (data) => {
+                socket.emit("S2C_stop_OK", null);
+            });
+
+            socket.on("C2S_request_musiclist", (data) => {
+                console.log("C2S_request_musiclist");
+                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch.GetList() });
+            });
+
+
+            socket.on("error", (err) => {
+                console.log(err);
+            });
+
+            socket.on("connect_error", (err) => {
+                console.log(err);
+            });
+
+            socket.on("disconnect", (data) => {
+                clearTimeout(t);
+            });
+
+        });
+
+        this.Io.listen(this.SocketIoPort);
+        console.log("START Socket.IO Port Listening");
+    }
+}
 
 export class GHomeMonitor {
     GHomes: {
@@ -15,8 +82,8 @@ export class GHomeMonitor {
     };
 
     private SocketIoPort: number = 3000;
-    private SocketIo: EventEmitter | null = null;
     private SimulationMode: boolean | number = false;
+    private ConnectionManager: SocketIoConnectionManager;
 
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
     constructor(socket_io_port: number, sim_mode: boolean|number = false) {
@@ -43,56 +110,7 @@ export class GHomeMonitor {
     }
 
     public StartIOMonitor() {
-        if (this.SocketIo != null) return;
-        
-        const { Server } = require("socket.io");
-
-        const io = new Server({});
-        io.on("connection", (socket: Socket) => {
-            
-            //const FSearch: FileListSearch = new FileListSearch('test_mp3');
-            const FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
-            // send a message to the client
-            console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
-            socket.emit("hello from server", { send_datetime: new Date()});
-
-            let t: NodeJS.Timeout = setInterval(() => {
-                socket.emit("S2C_send_status", this.GetStatusAll());
-            }, 1000);
-
-            // receive a message from the client
-            socket.on("hello from client", (data) => {
-                console.log(`hello from client :: ${data.send_datetime}`);
-            });
-            socket.on("C2S_play", (data) => {
-                console.log(data);
-                socket.emit("S2C_play_OK", null);
-            });
-            socket.on("C2S_stop", (data) => {
-                socket.emit("S2C_stop_OK", null);
-            });
-
-            socket.on("C2S_request_musiclist", (data) => {
-                console.log("C2S_request_musiclist");
-                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch.GetList() });
-            });
-
-
-            socket.on("error", (err) => {
-                console.log(err);
-            });
-
-            socket.on("connect_error", (err) => {
-                console.log(err);
-            });
-            
-            socket.on("disconnect", (data) => {
-                clearTimeout(t);
-            });
-
-        });
-
-        io.listen(this.SocketIoPort, () => console.log("START Socket.IO Port Listening"));
+        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, () => this.GetStatusAll());
     }
 
     public End() {
@@ -137,7 +155,7 @@ export class GHomeMonitor {
         }
     }
 
-    private GetStatusAll() {
+    private GetStatusAll(): object {
         if (this.SimulationMode) {
             const gh = require('@/FunctionTest/test_02');
             gh.forEach(g => {

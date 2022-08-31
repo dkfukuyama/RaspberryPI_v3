@@ -1,23 +1,13 @@
 <% let g_addr = common.ghomeSpeakers %>
-<P>みつかったぐーぐるすぴーかー</P>
-<% if(g_addr.length == 0){ %>
-	<%- '<P>ないよ。</p>' %>
-<% } else g_addr.forEach(e=> {%>
-<%- `<li>${e.address} / ${e.friendlyName} / ${e.speakerName}</li>` %>
-<% }) %>
-<P>きまったじこくによていをよみあげる</P>
-<button id="g_cal_button" class="btn btn-primary mx-2">いま、よていをよみあげる</button>
 
-<P>きまったじこくにおんがくをかける</P>
-<P>おとのおおきさ</P>
 <button id="clean_wav" class="btn btn-primary mx-2">たまったおんせいファイルをしょうきょする</button>
 <br/>
 <br/>
+<button id="update_reboot_webserver" class="btn btn-primary mx-2">ウェブサーバをアップデートしてさいきどうする</button>
 <button id="reboot_webserver" class="btn btn-primary mx-2">ウェブサーバをさいきどうする</button>
 <br/>
 <br/>
 <button id="reboot_button" class="btn btn-primary mx-2">ラズベリーパイをさいきどう</button>
-<br/>
 <br/>
 <button id="show_log" class="btn btn-primary mx-2">ログをひょうじする</button>
 

@@ -11,6 +11,8 @@ declare const container_id: string;
 declare const DOMParser: any;
 declare const Node: any;
 
+declare const client_type: any;
+
 
 let MusicList: any = {};
 
@@ -19,7 +21,7 @@ const socket = io(server_ws, { transports: ['websocket'] });
 socket.on("connect", () => {
 	AddToList("connection OK");
 	// send a message to the server
-	socket.emit("hello from client", { send_datetime: new Date() });
+	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type });
 });
 
 // receive a message from the server
@@ -54,6 +56,14 @@ socket.on("connect_error", (err) => {
 		socket.connect();
 	}, 1000);
 });
+
+function MusicSelectButtonClick(arg) {
+	alert(JSON.stringify(arg));
+}
+
+function DirSelectButtonClick(arg) {
+	alert(JSON.stringify(arg));
+}
 
 function AddToList(str) {
 	document.getElementById("MessageText").innerHTML = `<PRE>${str}</PRE>`;
@@ -140,27 +150,24 @@ class GoogleHomeHtmlContainer {
 		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
 
 		if (addr in MusicList) {
-			let out_html: string = `曲の一覧<div class="container"><div class="row">`;
+			let out_html: string = `曲の一覧`;
 			let end_i: number;
 			MusicList[addr].FileList.forEach((f, i) => {
 				if (i % 3 == 0) out_html += '<div class="row">';
-				out_html += `<div class="col"><button class="btn btn-light py-0 my-2 w-100">${f.Name}</button></div>`;
+				out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'f': '${f.Name}'})">${f.Name}</button></div>`;
 				if (i % 3 == 2) out_html += '</div>';
 				end_i = i;
 			})
 			if (end_i % 3 != 2) out_html += '</div>';
-			out_html += `</div>`;
-
-			out_html += `フォルダを移動する<div class="container"><div class="row">`;
+			out_html += `フォルダを移動する`;
 
 			MusicList[addr].DirList.forEach((f, i) => {
 				if (i % 3 == 0) out_html += '<div class="row">';
-				out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100">${f.Name}</button></div>`;
+				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'f': '${f.Name}'})">${f.Name}</button></div>`;
 				if (i % 3 == 2) out_html += '</div>';
 				end_i = i;
 			})
 			if (end_i % 3 != 2) out_html += '</div>';
-			out_html += `</div>`;
 
 			elem1.getElementsByClassName('music_selection')[0].innerHTML = out_html;
 		}

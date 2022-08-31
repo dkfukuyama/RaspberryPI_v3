@@ -37,6 +37,7 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include=".env.secret" />
+    <Content Include=".env_test" />
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />

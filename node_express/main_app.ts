@@ -1,4 +1,4 @@
-﻿require('dotenv').config();
+﻿require('dotenv').config({ path: '.env' });
 
 import path = require('path');
 const exec = require('child_process').exec;
@@ -423,7 +423,7 @@ async function main() {
 
     sch.setNodeCrontab();
 
-    await npm_install().then((t) => slk.Log(t)).catch((e) => console.error(e));
+    //await npm_install().then((t) => slk.Log(t)).catch((e) => console.error(e));
 
     let httpServerPort = process.env.HTTP_SERVER_PORT;
 

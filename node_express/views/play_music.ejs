@@ -1,12 +1,11 @@
-<div class="container">
-	<div id="gs-container"/>
-		
-	<div class="row">
-		<button class="btn btn-secondary my-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-			サーバメッセージ表示の切り替え
-		</button>
-		<div class="collapse" id="collapseExample">
-			<div id="MessageText" />
+<div class="col">
+	<div class="row" id="gs-container"></div>
+	<button class="btn btn-secondary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+		サーバメッセージ表示の切り替え
+	</button>
+	<div class="collapse" id="collapseExample">
+		<div style="width: 100%; height: 500px; overflow-y: scroll; border: 1px #999999 solid;">
+			<div id="MessageText" ></div>
 		</div>
 	</div>
 </div>
@@ -15,6 +14,7 @@
 <script>
 	const server_ws = "<%- common.server_ws %>";
 	const container_id = "gs-container";
+	const client_type = 'MusicPlayer';
 </script>
 <script src="/scripts/connect.js"></script>
 

@@ -2,7 +2,7 @@
 import { globalVars, getLocalAddress } from '@/variables';
 
 describe("variables", () => {
-    require('dotenv').config();
+    require('dotenv').config({ path: '../env_test' });
 
     it("globalVars_01", () => {
         assert.equal(false, globalVars().errorFlag);
