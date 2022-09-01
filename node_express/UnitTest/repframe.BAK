@@ -11,12 +11,8 @@ function Reload(interval_ms){
 	if(t) clearInterval(t);
 	t = setInterval("document.getElementById('hoge').src='./report.html'", interval_ms);
 }
-
-window.onload=()=>{
-	Reload(2000);
-}
-
 </script>
+
 
 <style type="text/css">
         iframe{

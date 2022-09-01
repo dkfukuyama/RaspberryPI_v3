@@ -1,21 +1,27 @@
 ﻿import { addMinutes, addSeconds } from 'date-fns';
+import { Socket, Server } from 'socket.io';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
-import { Socket, Server } from 'socket.io';
-import { globalVars } from './variables';
+import { globalVars } from '@/variables';
 
-
+type TClient = 'MusicPlayer' | 'StatusController';
 interface IStatus {
-    client_type: 'MusicPlayer' | 'StatusController'
+    client_type: TClient;
 }
+
+interface query {
+    test_mp3_path: string;
+    GStatusSimType: string;
+};
 
 export class SocketIoConnectionManager {
     private Io: Server;
     private SocketIoPort: number = 3000;
+
     private Status: IStatus;
 
-    GetStatusAll: () => object;
+    GetStatusAll: (a?:string) => object;
 
     constructor(portnum: number, _getStatusAll: ()=>object) {
         this.SocketIoPort = portnum;
@@ -25,20 +31,26 @@ export class SocketIoConnectionManager {
             // send a message to the client
 
             let FSearch: FileListSearch;
+            let GStatusSimType: string | null = "";
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date() });
 
             let t: NodeJS.Timeout = setInterval(() => {
-                socket.emit("S2C_send_status", this.GetStatusAll());
+                socket.emit("S2C_send_status", this.GetStatusAll(GStatusSimType));
             }, 1000);
 
             // receive a message from the client
-            socket.on("hello from client", (data: { send_datetime: Date; client_type: 'MusicPlayer' | 'StatusController' }) => {
-                console.log(`hello from client :: ${data.send_datetime} / TYPE :: ${data.client_type}`);
+            socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: query  }) => {
+                console.log(`hello from client :: ${data.send_datetime} / TYPE :: ${data.client_type} `);
                 if (data.client_type == 'MusicPlayer') {
-                    // FSearch = new FileListSearch('test_mp3'); テストモード
-                    FSearch = new FileListSearch(globalVars().saveDir0);
+                    console.log({ MP3_Path: data.query.test_mp3_path });
+                    if (data.query.test_mp3_path) {
+                        FSearch = new FileListSearch(data.query.test_mp3_path, globalVars().httpDir_music);
+                    } else {
+                        FSearch = new FileListSearch(globalVars().saveDir0, globalVars().httpDir_music);
+                    }
                 }
+                GStatusSimType = data.query.GStatusSimType ?? "";
             });
             socket.on("C2S_play", (data) => {
                 console.log(data);
@@ -82,20 +94,13 @@ export class GHomeMonitor {
     };
 
     private SocketIoPort: number = 3000;
-    private SimulationMode: boolean | number = false;
     private ConnectionManager: SocketIoConnectionManager;
 
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
-    constructor(socket_io_port: number, sim_mode: boolean|number = false) {
+    constructor(socket_io_port: number) {
         GoogleHomeController.init();
         this.GHomes = {};
         this.SocketIoPort = socket_io_port;
-        this.SimulationMode = sim_mode;
-
-        if (this.SimulationMode) {
-            console.log(" xxxxxxx  SIMULATION MODE  xxxxxxxx");
-            console.log({ SimulationMode : this.SimulationMode });
-        }
     }
     public Start() {
         this.StartSpeakerMonitor();
@@ -110,7 +115,7 @@ export class GHomeMonitor {
     }
 
     public StartIOMonitor() {
-        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, () => this.GetStatusAll());
+        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, this.GetStatusAll);
     }
 
     public End() {
@@ -155,19 +160,23 @@ export class GHomeMonitor {
         }
     }
 
-    private GetStatusAll(): object {
-        if (this.SimulationMode) {
-            const gh = require('@/FunctionTest/test_02');
+    private GetStatusAll(test_json?: string): object {
+        if (test_json) {
+            const gh = require(`@/FunctionTest/${test_json}`);
             gh.forEach(g => {
                 g.Value.Status.volume.level += 0.01;
             });
             return gh;
-        }else return Object.keys(this.GHomes).map(key => {
-            return {
-                Key: key,
-                Value: this.GHomes[key].g.GetAllStatus()
-            }
-        });
+        } else if (this.GHomes != null && Object.keys(this.GHomes).length > 0) {
+            return Object.keys(this.GHomes).map(key => {
+                return {
+                    Key: key,
+                    Value: this.GHomes[key].g.GetAllStatus()
+                }
+            });
+        } else {
+            return {};
+        }
     }
 
     static count: number = 0;

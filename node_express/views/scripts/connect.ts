@@ -12,20 +12,40 @@ declare const DOMParser: any;
 declare const Node: any;
 
 declare const query: {
-	testmode: number;
+	test_mp3_path: string;
 };
-
-
 declare const client_type: any;
 
-let MusicList: any = {};
+
+type EType = "File" | "Directory" | "NotDetected";
+interface FileInfo {
+	BaseName: string;
+	Ext: string;
+	Name: string;
+	ParentFullName: string;
+	Url: string;
+	FullName: string;
+	CreationTime: Date;
+	Type: EType;
+}
+
+interface FileListSearchResults {
+	FileList: FileInfo[];
+	DirList: FileInfo[];
+	ErrorFlag: boolean;
+}
+
+interface IMusicList {
+	[index: string]: FileListSearchResults;
+}
+let MusicList: IMusicList = {};
 
 // サーバーへ接続
 const socket = io(server_ws, { transports: ['websocket'] });
 socket.on("connect", () => {
 	AddToList("connection OK");
 	// send a message to the server
-	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type, testmode: query.testmode });
+	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type, query: query });
 });
 
 // receive a message from the server
@@ -47,7 +67,6 @@ socket.on("S2C_reply_musiclist", (data) => {
 });
 
 socket.on("error", () => {
-	// ...
 	AddToList("error");
 });
 socket.on("disconnect", () => {
@@ -102,33 +121,13 @@ class GoogleHomeHtmlContainer {
 		});
     }
 
-
-	async Test(load_path: string): Promise<any> {
-		this.TestLoadJson(load_path).then(o => {
-			this.BuildHtml(o);
-		});
-	}
-
-
-	async TestLoadJson(load_path: string): Promise<any> {
-		return new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			xhr.open('GET', load_path);
-			xhr.responseType = "json";
-			xhr.send();
-			xhr.onload = ()=> {
-				let responseObj = xhr.response;
-				resolve(responseObj)
-			};
-		});
-	}
-
 	BuildHtml(g_array: GContainer[] | null) {
 		g_array.forEach(g => this.BuildHtml_sub(g));
 	}
 
 	static a: number = 0;
 	BuildHtml_sub(g: GContainer) {
+
 		let addr = g.Value.Self.address.replace(/\./g, "_");
 
 		let elem1 = document.getElementById(addr);
@@ -153,26 +152,39 @@ class GoogleHomeHtmlContainer {
 		elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime;
 		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
 
+
 		if (addr in MusicList) {
-			let out_html: string = `曲の一覧`;
-			let end_i: number;
-			MusicList[addr].FileList.forEach((f, i) => {
-				if (i % 3 == 0) out_html += '<div class="row">';
-				out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'f': '${f.Name}'})">${f.Name}</button></div>`;
-				if (i % 3 == 2) out_html += '</div>';
-				end_i = i;
-			})
-			if (end_i % 3 != 2) out_html += '</div>';
-			out_html += `フォルダを移動する`;
+		} else {
+			MusicList[addr] = {
+				DirList: [],
+				FileList: [],
+				ErrorFlag: true,
+			}
+		}
+		let out_html: string = "";
+		if (addr in MusicList) {
+			if (MusicList[addr].ErrorFlag == false) {
+				out_html = `曲の一覧`;
+				let end_i: number;
+				MusicList[addr].FileList.forEach((f, i) => {
+					if (i % 3 == 0) out_html += '<div class="row">';
+					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'full':'${f.FullName}' })">${f.Name}</button></div>`;
+					if (i % 3 == 2) out_html += '</div>';
+					end_i = i;
+				})
+				if (end_i % 3 != 2) out_html += '</div>';
+				out_html += `フォルダを移動する`;
 
-			MusicList[addr].DirList.forEach((f, i) => {
-				if (i % 3 == 0) out_html += '<div class="row">';
-				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'f': '${f.Name}'})">${f.Name}</button></div>`;
-				if (i % 3 == 2) out_html += '</div>';
-				end_i = i;
-			})
-			if (end_i % 3 != 2) out_html += '</div>';
-
+				MusicList[addr].DirList.forEach((f, i) => {
+					if (i % 3 == 0) out_html += '<div class="row">';
+					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'full':'${f.FullName}'})">${f.Name}</button></div>`;
+					if (i % 3 == 2) out_html += '</div>';
+					end_i = i;
+				})
+				if (end_i % 3 != 2) out_html += '</div>';
+			} else {
+				out_html = `<b><font color="red">よみこんでいます</font></b>`;
+			}
 			elem1.getElementsByClassName('music_selection')[0].innerHTML = out_html;
 		}
 	}
