@@ -36,7 +36,8 @@ export class SocketIoConnectionManager {
             socket.emit("hello from server", { send_datetime: new Date() });
 
             let t: NodeJS.Timeout = setInterval(() => {
-                socket.emit("S2C_send_status", this.GetStatusAll(GStatusSimType));
+                let rep = this.GetStatusAll(GStatusSimType);
+                socket.emit("S2C_send_status", rep);
             }, 1000);
 
             // receive a message from the client
@@ -53,7 +54,7 @@ export class SocketIoConnectionManager {
                 GStatusSimType = data.query.GStatusSimType ?? "";
             });
             socket.on("C2S_play", (data) => {
-                console.log(data);
+                //console.log(data);
                 socket.emit("S2C_play_OK", null);
             });
             socket.on("C2S_stop", (data) => {
@@ -115,7 +116,7 @@ export class GHomeMonitor {
     }
 
     public StartIOMonitor() {
-        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, this.GetStatusAll);
+        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?:string) => this.GetStatusAll(a));
     }
 
     public End() {
@@ -123,9 +124,17 @@ export class GHomeMonitor {
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
     }
 
-    private GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
+    public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
         for (let key in this.GHomes) {
             if (this.GHomes[key].g.SelfStatus.speakerName == name) return this.GHomes[key];
+        }
+        return null;
+    }
+
+    public GetGhObjByAddress(name: string): { g: GoogleHomeController; lastUpdated: Date; } | null {
+        let names = name.replace(/_/g, "\.");
+        for (let key in this.GHomes) {
+            if (key == names) return this.GHomes[key];
         }
         return null;
     }

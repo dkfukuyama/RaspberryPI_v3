@@ -132,7 +132,6 @@ export class GoogleHomeController {
     }
 
     public async Connect(): Promise<void> {
-        //console.log(this.SelfStatus.speakerName);
         if (this.IsConnected) return;
         else return new Promise<void>((resolve, reject) => {
             this.ConnectedCient = new this.Client();
@@ -140,7 +139,6 @@ export class GoogleHomeController {
                 this.Disconnect();
             });
             this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
-                //console.log();
                 this.IsConnected = true;
                 resolve();
             });
@@ -152,10 +150,6 @@ export class GoogleHomeController {
         if (this.IsLaunched) return;
         else return new Promise<any>((resolve, reject) => {
             this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
-                player.on('status', (status) => {
-                    console.log('status broadcast playerState=%s', status.playerState);
-                    console.log('status=', status);
-                });
                 if (err) {
                     this.Disconnect();
                     reject(err);
@@ -163,8 +157,15 @@ export class GoogleHomeController {
                     this.Player = player;
                     this.IsLaunched = true;
                     resolve("launched!");
-                    console.log("launched!");
                 }
+
+                player.on('status', (status) => {
+                    console.log('status broadcast playerState=%s', status.playerState);
+                });
+                player.on('error', (err) => {
+                    console.log('player err callback');
+                    console.log(err);
+                });
             });
         });
     }

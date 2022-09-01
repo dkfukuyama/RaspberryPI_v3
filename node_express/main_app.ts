@@ -437,6 +437,14 @@ async function main() {
 
     app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
     Monitor.Start();
+
+    for (; ;) {
+        await delay_ms(12000);
+        if (Monitor.GetGhObjByAddress("192_168_1_20")?.g) {
+            Monitor.GetGhObjByAddress("192_168_1_20")?.g.PlayList(["http://192.168.1.81/g_dlfile/2022-05-21_12-25-38_021_sox.wav"]);
+            for (; ;) await delay_ms(3000);
+        }
+    }
 }
 
 
