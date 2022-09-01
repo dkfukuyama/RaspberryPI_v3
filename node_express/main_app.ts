@@ -30,7 +30,6 @@ import { GoogleHomeController } from '@/GoogleHomeController';
 
 import {delay_ms} from '@/utils';
 
-const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT), globalVars().simulation_mode);
 const slk = new Slack(process.env.SLACK_WEBHOOK);
 
 
@@ -148,27 +147,6 @@ page_path_set_index_ejs.pages = [
             voiceTypes: require('./google_tts').voiceType,
         },
     },
-
-/*
-    {
-        path: '/music',
-        title: 'おんがくをかける',
-        view_page: './music.ejs',
-        level: 0,
-        specialParams: {
-            musicList_get: require('./get_musicList').get,
-        },
-        postfunc: async (req, res)=>{
-            if(req.body.mode == 'playOnce'){
-                let filename = encodeURI(globalVars().httpDir_music + "/" + req.body.filename);
-                Promise.resolve();
-                //return ghome.play(req.body.gHomeName, filename, { volume: 80 });
-            }
-            return Promise.reject({error : `FALSE play :: ${req.body.filename}`});
-        },
-    },
-*/
-
     {
         path: '',
         title: 'クイズゲーム',
@@ -213,6 +191,26 @@ page_path_set_index_ejs.pages = [
                         break;
                     case 'clean_wav':
                         return new Promise((resolve, _) => resolve(require('./clean').clean_wav(100)));
+                        break;
+                    case 'update_reboot':
+                        let pr = ["git checkout master", "git reset --hard head", "git pull", "npm install", "tsc --build"];
+                        let k = "";
+                        for (let p of pr) {
+                            k += await new Promise((resolve, reject) => {
+                                exec(p, (err, stdout, stderr) => {
+                                    if (err) {
+                                        reject(err);
+                                    } else {
+                                        console.log(`stdout: ${stdout}`)
+                                        resolve(stdout);
+                                    }
+                                });
+                            });
+                        };
+                        return k;
+                        break;
+                    case 'reboot':
+                        process.exit(0);
                         break;
                     case 'system_command':
                         console.log(`${req.body.command}`);
@@ -434,6 +432,10 @@ async function main() {
         saveDir0: globalVars().saveDir0,
         voiceSubDir: globalVars().voiceSubDir
     });
+
+
+    const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
+
     app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
     Monitor.Start();
 }
