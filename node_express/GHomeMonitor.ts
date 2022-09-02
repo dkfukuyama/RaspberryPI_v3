@@ -194,7 +194,7 @@ export class GHomeMonitor {
         for (let key in this.GHomes) {
             await this.GHomes[key].g.UpdateStatus();
             await this.GHomes[key].g.UpdateSessions();
-            await this.GHomes[key].g.UpdatePalyerStatus();
+            await this.GHomes[key].g.UpdatePlayerStatus();
         }
     }
 

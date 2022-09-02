@@ -162,10 +162,6 @@ export class GoogleHomeController {
                 player.on('status', (status) => {
                     console.log('status broadcast playerState=%s', status.playerState);
                 });
-                player.on('error', (err) => {
-                    console.log('player err callback');
-                    console.log(err);
-                });
             });
         });
     }
@@ -176,7 +172,6 @@ export class GoogleHomeController {
             this.ConnectedCient.getVolume((err, vol) => {
                 if (err) {
                     this.Disconnect();
-                    this.Vol = null;
                     reject(null)
                 } else {
                     this.Vol = vol;
@@ -211,7 +206,6 @@ export class GoogleHomeController {
             this.ConnectedCient.getStatus((err, stat) => {
                 if (err) {
                     this.Disconnect();
-                    this.Status = null;
                     reject(err)
                 } else {
                     this.Status = stat;
@@ -331,9 +325,8 @@ export class GoogleHomeController {
         });
     }
 
-    public async UpdatePalyerStatus(): Promise<object | null> {
+    public async UpdatePlayerStatus(): Promise<object | null> {
         await this.Launch();
-
         return new Promise((resolve, reject) => {
             this.Player?.getStatus((err, status) => {
                 if (err) {
@@ -363,6 +356,8 @@ export class GoogleHomeController {
         console.log("DISCONNECT");
         this.IsConnected = false;
         this.IsLaunched = false;
+        this.Status = null;
+        this.Vol = null;
         this.Player = null;
         this.ConnectedCient?.close();
         this.ConnectedCient = null;
