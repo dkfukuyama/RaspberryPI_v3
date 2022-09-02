@@ -13,9 +13,10 @@ declare const Node: any;
 
 declare const query: {
 	test_mp3_path: string;
+	GStatusSimType: string;
 };
-declare const client_type: any;
 
+declare const client_type: any;
 
 type EType = "File" | "Directory" | "NotDetected";
 interface FileInfo {
@@ -32,6 +33,7 @@ interface FileInfo {
 interface FileListSearchResults {
 	FileList: FileInfo[];
 	DirList: FileInfo[];
+	PathNow: string;
 	ErrorFlag: boolean;
 }
 
@@ -85,7 +87,7 @@ function MusicSelectButtonClick(arg) {
 }
 
 function DirSelectButtonClick(arg) {
-	alert(JSON.stringify(arg));
+	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });			
 }
 
 function AddToList(str) {
@@ -141,7 +143,7 @@ class GoogleHomeHtmlContainer {
 			document.getElementById(this.container).appendChild(elem);
 			elem1 = document.getElementById(addr);
 
-			socket.emit("C2S_request_musiclist", { addr: addr });			
+			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });			
 		}
 
 		const v = g.Value;
@@ -158,6 +160,7 @@ class GoogleHomeHtmlContainer {
 			MusicList[addr] = {
 				DirList: [],
 				FileList: [],
+				PathNow: "",
 				ErrorFlag: true,
 			}
 		}
@@ -168,20 +171,24 @@ class GoogleHomeHtmlContainer {
 				let end_i: number;
 				MusicList[addr].FileList.forEach((f, i) => {
 					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'full':'${f.FullName}' })">${f.Name}</button></div>`;
+					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}' })">${f.Name}</button></div>`;
 					if (i % 3 == 2) out_html += '</div>';
 					end_i = i;
 				})
 				if (end_i % 3 != 2) out_html += '</div>';
+				out_html += "<HR/>";
 				out_html += `フォルダを移動する`;
-
+				if(MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
 				MusicList[addr].DirList.forEach((f, i) => {
 					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'full':'${f.FullName}'})">${f.Name}</button></div>`;
+					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}'})">${f.Name}</button></div>`;
 					if (i % 3 == 2) out_html += '</div>';
 					end_i = i;
 				})
 				if (end_i % 3 != 2) out_html += '</div>';
+				out_html += '<div class="row">';
+				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${"../"}', 'url':'../'})">上のフォルダへ</button></div>`;
+				out_html += '</div>';
 			} else {
 				out_html = `<b><font color="red">よみこんでいます</font></b>`;
 			}

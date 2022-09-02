@@ -28,9 +28,20 @@ export class SocketIoConnectionManager {
         this.GetStatusAll = _getStatusAll;
         this.Io = new Server();
         this.Io.on("connection", (socket: Socket) => {
-            // send a message to the client
 
-            let FSearch: FileListSearch;
+            let Client: {
+                ConnectionStartTime: Date;
+                Type: TClient;
+                TestMp3path: string;
+            };
+
+            let FSearch0: FileListSearch;
+
+
+            let FSearch: {
+                [Key: string]: FileListSearch;
+            } = {};
+
             let GStatusSimType: string | null = "";
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date() });
@@ -42,16 +53,23 @@ export class SocketIoConnectionManager {
 
             // receive a message from the client
             socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: query  }) => {
-                console.log(`hello from client :: ${data.send_datetime} / TYPE :: ${data.client_type} `);
-                if (data.client_type == 'MusicPlayer') {
-                    console.log({ MP3_Path: data.query.test_mp3_path });
-                    if (data.query.test_mp3_path) {
-                        FSearch = new FileListSearch(data.query.test_mp3_path, globalVars().httpDir_music);
+
+                Client = {
+                    ConnectionStartTime: data.send_datetime,
+                    Type: data.client_type,
+                    TestMp3path: data.query.test_mp3_path ?? "",
+                }
+
+                console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
+                GStatusSimType = data.query.GStatusSimType ?? "";
+
+                if (Client.Type == 'MusicPlayer') {
+                    if (Client.TestMp3path) {
+                        FSearch0 = new FileListSearch(Client.TestMp3path);
                     } else {
-                        FSearch = new FileListSearch(globalVars().saveDir0, globalVars().httpDir_music);
+                        FSearch0 = new FileListSearch(globalVars().saveDir0);
                     }
                 }
-                GStatusSimType = data.query.GStatusSimType ?? "";
             });
             socket.on("C2S_play", (data) => {
                 //console.log(data);
@@ -62,8 +80,19 @@ export class SocketIoConnectionManager {
             });
 
             socket.on("C2S_request_musiclist", (data) => {
-                console.log("C2S_request_musiclist");
-                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch.GetList() });
+                let list_arg: string = data.dir;
+                console.log(`C2S_request_musiclist :: ${data.addr} :: ${list_arg}`);
+
+                if (Object.keys(FSearch).indexOf(data.addr) == -1)
+                    if (Client.TestMp3path) {
+                        FSearch[data.addr] = new FileListSearch(Client.TestMp3path);
+                } else {
+                        FSearch[data.addr] = new FileListSearch(globalVars().saveDir0);
+                }
+                if (list_arg) FSearch[data.addr].GetInfo(list_arg);
+
+                // Send FileList
+                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch[data.addr].GetList() });
             });
 
 
