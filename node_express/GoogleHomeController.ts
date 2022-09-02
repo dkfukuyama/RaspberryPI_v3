@@ -33,27 +33,24 @@ export class GoogleHomeController {
     static secondsCount: number = 0;
 
     public SelfStatus: IGoogleHomeSeekResults;
-    private ConnectedCient;
+    private ConnectedClient;
     private IsConnected: boolean = false;
-    private IsLaunched: boolean = false;
-    public Player: any | null = null;
     public Sessions: any[] = [];
+
+    private StatsAll: any = null;
 
     private Vol: any = null;
     private Status: any = null
     private PlayerStatus: any = null;
+
+    static InitializedFlag: boolean = false;
 
     GetVol = () => this.Vol;
     GetStatus = () => this.Status;
     GetPlayerStatus = () => this.PlayerStatus;
 
     GetAllStatus() {
-        return {
-            Vol: this.Vol,
-            Self: this.SelfStatus,
-            Status: this.Status,
-            PalyerStatus: this.PlayerStatus,
-        }
+        return this.StatsAll;
     }
 
     constructor() {
@@ -64,7 +61,16 @@ export class GoogleHomeController {
     }
 
     public static init() {
-        GoogleHomeController.gHomeAddresses = [];
+        if (!this.InitializedFlag) {
+            GoogleHomeController.gHomeAddresses = [];
+            require('castv2-client').Client.prototype.getSpecial = function (callback) {
+                this.getStatus(function (err, status) {
+                    if (err) return callback(err);
+                    callback(null, status);
+                });
+            };
+        }
+        this.InitializedFlag = true;
     }
 
     public static getGoogleHomeAddresses(): IGoogleHomeSeekResults[] {
@@ -134,27 +140,27 @@ export class GoogleHomeController {
     public async Connect(): Promise<void> {
         if (this.IsConnected) return;
         else return new Promise<void>((resolve, reject) => {
-            this.ConnectedCient = new this.Client();
-            this.ConnectedCient.on('error', (err) => {
+            this.ConnectedClient = new this.Client();
+            this.ConnectedClient.on('error', (err) => {
                 this.Disconnect();
             });
-            this.ConnectedCient.connect({ host: this.SelfStatus.address }, () => {
+            this.ConnectedClient.connect({ host: this.SelfStatus.address }, () => {
                 this.IsConnected = true;
                 resolve();
             });
         });
     }
 
+    /*
     public async Launch(): Promise<any> {
         await this.Connect();
         if (this.IsLaunched) return;
         else return new Promise<any>((resolve, reject) => {
-            this.ConnectedCient.launch(this.DefaultMediaReceiver, (err, player) => {
+            this.ConnectedClient.launch(this.DefaultMediaReceiver, (err, player) => {
                 if (err) {
                     this.Disconnect();
                     reject(err);
                 } else {
-                    this.Player = player;
                     this.IsLaunched = true;
                     resolve("launched!");
                 }
@@ -162,38 +168,35 @@ export class GoogleHomeController {
                 player.on('status', (status) => {
                     console.log('status broadcast playerState=%s', status.playerState);
                 });
-                player.on('error', (err) => {
-                    console.log('player err callback');
-                    console.log(err);
-                });
             });
         });
     }
+    */
 
-    public async UpdateVolume(): Promise<any|null> {
-        await this.Launch();
+    public async UpdateStatsAll(): Promise<any> {
+        await this.Connect();
         return new Promise((resolve, reject) => {
-            this.ConnectedCient.getVolume((err, vol) => {
+            this.ConnectedClient.getSpecial((err, stat) => {
                 if (err) {
                     this.Disconnect();
-                    this.Vol = null;
                     reject(null)
                 } else {
-                    this.Vol = vol;
-                    resolve(vol);
+                    this.StatsAll = stat;
+                    resolve(this.StatsAll);
                 }
             });
         });
     }
 
+
     public async SetVolume(vol: number): Promise<void> {
-        await this.Launch();
+        await this.Connect();
         return new Promise((resolve, reject) => {
-            this.ConnectedCient.setVolume(
+            this.ConnectedClient.setVolume(
                 {
                     muted: false,
                     level: vol / 100,
-                }, (err) => {
+                }, (err, response) => {
                     if (err) {
                         this.Disconnect()
                         reject();
@@ -206,12 +209,11 @@ export class GoogleHomeController {
     }
 
     public async UpdateStatus() {
-        await this.Launch();
+        await this.Connect();
         return new Promise<any>((resolve, reject) => {
-            this.ConnectedCient.getStatus((err, stat) => {
+            this.ConnectedClient.getStatus((err, stat) => {
                 if (err) {
                     this.Disconnect();
-                    this.Status = null;
                     reject(err)
                 } else {
                     this.Status = stat;
@@ -221,10 +223,11 @@ export class GoogleHomeController {
         });
     }
 
+    /*
     public async UpdateSessions() {
-        await this.Launch();
+        await this.Connect();
         return new Promise<any>((resolve, reject) => {
-            this.ConnectedCient.getSessions((err, sessions) => {
+            this.ConnectedClient.getSessions((err, sessions) => {
                 if (err) {
                     this.Disconnect();
                     reject(err);
@@ -234,6 +237,7 @@ export class GoogleHomeController {
             });
         });
     }
+    */
 
     private BuildMediaData(media_info: Imedia_info | string): Imedia {
         let media_info_temp: Imedia_info;
@@ -331,9 +335,8 @@ export class GoogleHomeController {
         });
     }
 
-    public async UpdatePalyerStatus(): Promise<object | null> {
+    public async UpdatePlayerStatus(): Promise<object | null> {
         await this.Launch();
-
         return new Promise((resolve, reject) => {
             this.Player?.getStatus((err, status) => {
                 if (err) {
@@ -352,7 +355,7 @@ export class GoogleHomeController {
         await this.Launch();
 
         this.Sessions.map(s => s.appId).forEach(apid => {
-            this.ConnectedCient.getAppAvailability(apid, (err, AppInfo) => {
+            this.ConnectedClient.getAppAvailability(apid, (err, AppInfo) => {
                 //console.log(apid);
                 //console.log(AppInfo);
             });
@@ -363,9 +366,11 @@ export class GoogleHomeController {
         console.log("DISCONNECT");
         this.IsConnected = false;
         this.IsLaunched = false;
+        this.Status = null;
+        this.Vol = null;
         this.Player = null;
-        this.ConnectedCient?.close();
-        this.ConnectedCient = null;
+        this.ConnectedClient?.close();
+        this.ConnectedClient = null;
     }
 
 }

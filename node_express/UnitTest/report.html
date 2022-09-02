@@ -423,10 +423,10 @@ body {
                     <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
                 </ul>
                 <ul class="mocha-stats">
-                    <li class="passes">passes: <em>7</em></li>
+                    <li class="passes">passes: <em>8</em></li>
                     <li class="pending">pending: <em>0</em></li>
                     <li class="failures">failures: <em>0</em></li>
-                    <li class="duration">duration: <em>39ms</em></li>
+                    <li class="duration">duration: <em>19ms</em></li>
                 </ul>
             </div>
             <ul id="report"><li class="suite"><h1>date-fns_testcode</h1><ul><li class="test pass fast"><h2>formatted_output_01<span class="duration">1ms</span></h2><pre><code>const DATE_FORMAT = &#x27;yyyy-MM-dd&#x27;;
@@ -434,7 +434,7 @@ const lastMonth = () =&#x3E; (0, date_fns_1.subMonths)(new Date(), 1);
 const defaultDateStringFrom = () =&#x3E; (0, date_fns_1.format)((0, date_fns_1.startOfMonth)(lastMonth()), DATE_FORMAT);
 const defaultDateStringTo = () =&#x3E; (0, date_fns_1.format)((0, date_fns_1.endOfMonth)(lastMonth()), DATE_FORMAT);
 console.log(defaultDateStringFrom());
-console.log(defaultDateStringTo());</code></pre></li></ul></li><li class="suite"><h1>FileListSearch</h1><ul><li class="test pass fast"><h2>get_path_01<span class="duration">0ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_01&#x22;);
+console.log(defaultDateStringTo());</code></pre></li></ul></li><li class="suite"><h1>FileListSearch</h1><ul><li class="test pass fast"><h2>get_path_01<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_01&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch((0, variables_1.globalVars)().saveDir0);
 assert.equal(FSearch.GetDirBaseFullPath(), path.resolve(path.join(__dirname, &#x22;../test_mp3&#x22;)));
 const results = FSearch.GetDirNow();
@@ -450,7 +450,7 @@ assert.equal(results.BaseName, &#x27;file_example_MP3_1.mp3&#x27;);
 assert.equal(results.Url, &#x60;${(0, variables_1.globalVars)().httpDir_music}/file_example_MP3_1.mp3&#x60;);
 assert.equal(results.Ext, &#x27;.mp3&#x27;);
 assert.equal(results.Name, &#x27;file_example_MP3_1&#x27;);
-assert.equal(results.Type, &#x27;File&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_04<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_04&#x22;);
+assert.equal(results.Type, &#x27;File&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_05<span class="duration">0ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_04&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
 assert.equal(FSearch.GetDirBaseFullPath(), path.resolve(path.join(__dirname, &#x22;../test_mp3&#x22;)));
 let results = FSearch.GetList();
@@ -460,7 +460,7 @@ assert.equal(results.FileList[1].BaseName, &#x27;file_example_MP3_2.mp3&#x27;);
 assert.equal(results.FileList[2].BaseName, &#x27;&#x3042;&#x3044;&#x3046;&#x3048;&#x304A;.mp3&#x27;);
 assert.equal(results.DirList.length, 2);
 assert.equal(results.DirList[0].BaseName, &#x27;g_dlfile&#x27;);
-assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_05<span class="duration">0ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_05&#x22;);
+assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_06<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_05&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch((0, variables_1.globalVars)().saveDir0, (0, variables_1.globalVars)().httpDir_music);
 FSearch.GetInfo(&#x22;stream&#x22;);
 let results = FSearch.GetList();
@@ -469,7 +469,7 @@ assert.equal(results.FileList[0].BaseName, &#x27;1.mp3&#x27;);
 assert.equal(results.FileList[1].BaseName, &#x27;2.mp3&#x27;);
 assert.equal(results.FileList[2].BaseName, &#x27;file_example_MP3_1.mp3&#x27;);
 assert.equal(results.FileList[3].BaseName, &#x27;file_example_MP3_2.mp3&#x27;);
-assert.equal(results.DirList.length, 0);</code></pre></li><li class="test pass fast"><h2>get_path_06<span class="duration">0ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_06&#x22;);
+assert.equal(results.DirList.length, 0);</code></pre></li><li class="test pass fast"><h2>get_path_07<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_07&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
 let results;
 FSearch.GetInfo(&#x22;stream&#x22;);
@@ -488,7 +488,13 @@ assert.equal(results.FileList[1].BaseName, &#x27;file_example_MP3_2.mp3&#x27;);
 assert.equal(results.FileList[2].BaseName, &#x27;&#x3042;&#x3044;&#x3046;&#x3048;&#x304A;.mp3&#x27;);
 assert.equal(results.DirList.length, 2);
 assert.equal(results.DirList[0].BaseName, &#x27;g_dlfile&#x27;);
-assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li></ul></li><li class="suite"><h1>variables</h1><ul><li class="test pass fast"><h2>globalVars_01<span class="duration">1ms</span></h2><pre><code>console.log({ TEST_MODE: process.env.TEST_MODE });
+assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_08<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_08&#x22;);
+let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
+let results;
+FSearch.GetInfo(&#x22;stream&#x22;);
+results = FSearch.GetList();
+assert.equal(results.FileList[3].Url, &#x27;stream/file_example_MP3_2.mp3&#x27;);
+assert.equal(results.DirList.length, 0);</code></pre></li></ul></li><li class="suite"><h1>variables</h1><ul><li class="test pass fast"><h2>globalVars_01<span class="duration">0ms</span></h2><pre><code>console.log({ TEST_MODE: process.env.TEST_MODE });
 assert.equal(false, (0, variables_1.globalVars)().errorFlag);
 assert.equal(&#x27;192.168.100.100:9000&#x27;, (0, variables_1.globalVars)().httpDir0);
 assert.equal(9000, (0, variables_1.globalVars)().httpServerPort);

@@ -1,4 +1,4 @@
-import path = require('path')
+ï»¿import path = require('path')
 import fs = require('fs');
 
 
@@ -17,14 +17,15 @@ export interface FileInfo {
 export interface FileListSearchResults {
     FileList: FileInfo[];
     DirList: FileInfo[];
+    PathNow: string;
     ErrorFlag: boolean;
 }
 
 export class FileListSearch {
     private InitializeOK: boolean = false;
-    private DirBaseFullPath: string;  // ƒtƒ@ƒCƒ‹’Tõ‚Ì‹N“_‚Æ‚È‚éƒpƒX
-    private DirNow: FileInfo | null = null; // Œ»Ý’Tõ‚µ‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX(DirBaseFullPath‹N“_‚Ì‘Š‘ÎƒpƒX)
-    private FileNow: FileInfo | null = null; // Œ»Ý’Tõ‚µ‚Ä‚¢‚éƒtƒ@ƒCƒ‹‚ÌƒpƒX(DirBaseFullPath‹N“_‚Ì‘Š‘ÎƒpƒX)
+    private DirBaseFullPath: string;  // ãƒ•ã‚¡ã‚¤ãƒ«æŽ¢ç´¢ã®èµ·ç‚¹ã¨ãªã‚‹ãƒ‘ã‚¹
+    private DirNow: FileInfo | null = null; // ç¾åœ¨æŽ¢ç´¢ã—ã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ãƒ‘ã‚¹(DirBaseFullPathèµ·ç‚¹ã®ç›¸å¯¾ãƒ‘ã‚¹)
+    private FileNow: FileInfo | null = null; // ç¾åœ¨æŽ¢ç´¢ã—ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹(DirBaseFullPathèµ·ç‚¹ã®ç›¸å¯¾ãƒ‘ã‚¹)
     private RootUrl: string = "";
 
     constructor(baseDir: string | null = null, rootUrl?: string) {
@@ -44,18 +45,19 @@ export class FileListSearch {
     GetDirBaseFullPath = (): string => this.DirBaseFullPath;
     GetDirNow = (): FileInfo => this.DirNow;
 
-    GetList(getpath: string = ""): FileListSearchResults {
+    GetList(): FileListSearchResults {
 
         let ret_val: FileListSearchResults = {
             FileList: [],
             DirList: [],
+            PathNow: this.DirNow.Url,
             ErrorFlag: true,
         }
         try {
             if (this.InitializeOK) {
                 fs.readdirSync(this.DirNow.FullName).sort((a, b) => (a < b) ? -1 : (a > b) ? 1 : 0)
                     .map(file => path.join(this.DirNow.FullName, file)).forEach((fullname) => {
-                        let info: FileInfo = FileListSearch.GetInfo_sub(fullname);
+                        let info: FileInfo = FileListSearch.GetInfo_sub(fullname, this.DirBaseFullPath);
                         if (info.Type == 'File') ret_val.FileList.push(info);
                         else if (info.Type == 'Directory') ret_val.DirList.push(info);
                     });
@@ -70,14 +72,13 @@ export class FileListSearch {
     }
 
     static GetInfo_sub(inp_fullpath: string, base_fullpath?: string, rootUrl?: string): FileInfo {
-
         let stat = fs.statSync(inp_fullpath);
         let ps = path.parse(inp_fullpath);
 
         let tp: EType = stat.isDirectory() ? 'Directory' : stat.isFile() ? 'File' : 'NotDetected';
         let url: string = "";
         if (base_fullpath) {
-            url = path.relative(base_fullpath, inp_fullpath);
+            url = path.relative(base_fullpath, inp_fullpath).split(path.sep).join(path.posix.sep);;
             if (rootUrl) url = `${rootUrl}/${url}`;
         }
 
@@ -93,9 +94,15 @@ export class FileListSearch {
         }
     }
 
-
     GetInfo(inp_path: string): FileInfo {
         try {
+
+            if (inp_path == ".." || inp_path == "../") {
+                if (this.DirNow.Url == "" || this.DirNow.Url == ".") {
+                    return this.FileNow;
+                }
+            }
+
             let tempFullName: string = inp_path;
             if (this.DirNow == null) {
                 tempFullName = path.resolve(inp_path);
