@@ -34,6 +34,7 @@
     "encoding-japanese": "^2.0.0",
     "express": "^4.17.3",
     "express-favicon": "^2.0.1",
+    "https": "^1.0.0",
     "mocha-simple-html-reporter": "^2.0.0",
     "node-cron": "^3.0.0",
     "nodemailer": "^6.7.3",

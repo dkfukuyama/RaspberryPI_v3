@@ -348,15 +348,26 @@ app.all("/stream/*.wav|*.mp3", function (req, res, next) {
             next(err)
         }
         // ファイル名をエンコードする
-        const filename = encodeURIComponent("aaa.mp3");
+        const filename = encodeURIComponent("aaa.wav");
         // ヘッダーセットする
         res.set({
-            'Content-Type': "audio/mpeg",
+            'Content-Type': "audio/wav",
             'Content-disposition': `inline; filename*=utf-8''${filename}`,
-            'Content-Length': stat.size
+            //'Content-Length': stat.size
         })
-        let filestream = fs.createReadStream(fpath)
-        filestream.pipe(res)
+        const { spawn } = require('node:child_process');
+        //"chorus 1 1 100.0 1 5 5.0 -s"
+        fpath = "https://www.ne.jp/asahi/music/myuu/wave/eine.mp3";
+        let kk = `sox ${fpath} -t wav - `;
+        if (req.query.effects) {
+            kk += req.query.effects;
+        }
+        console.log(kk);
+        let sp = spawn(kk, [], { shell: true });
+        sp.on('error', (err) => {
+            next(err);
+        })
+        sp.stdout.pipe(res);
     })
 });
 
