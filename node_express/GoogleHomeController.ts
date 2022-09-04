@@ -294,6 +294,8 @@ export class GoogleHomeController {
     }
 
     public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
+
+        /*
         await this.Launch();
 
         let media = this.BuildMediaData(media_info);
@@ -312,9 +314,11 @@ export class GoogleHomeController {
                 }
             });
         });
+        */
     }
 
     public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+        /*
         await this.Launch();
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
@@ -333,9 +337,12 @@ export class GoogleHomeController {
                 }
             });
         });
+        */
     }
 
     public async UpdatePlayerStatus(): Promise<object | null> {
+        return Promise.resolve(null);
+        /*
         await this.Launch();
         return new Promise((resolve, reject) => {
             this.Player?.getStatus((err, status) => {
@@ -349,10 +356,11 @@ export class GoogleHomeController {
                 }
             });
         });
+        */
     }
 
     public async GetAppInfo() {
-        await this.Launch();
+        //await this.Launch();
 
         this.Sessions.map(s => s.appId).forEach(apid => {
             this.ConnectedClient.getAppAvailability(apid, (err, AppInfo) => {
@@ -365,10 +373,10 @@ export class GoogleHomeController {
     public Disconnect() {
         console.log("DISCONNECT");
         this.IsConnected = false;
-        this.IsLaunched = false;
+        //this.IsLaunched = false;
         this.Status = null;
         this.Vol = null;
-        this.Player = null;
+        //this.Player = null;
         this.ConnectedClient?.close();
         this.ConnectedClient = null;
     }

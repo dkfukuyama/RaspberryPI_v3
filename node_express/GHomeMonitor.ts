@@ -193,7 +193,7 @@ export class GHomeMonitor {
     private async UpdateGhStatusAll(): Promise<void> {
         for (let key in this.GHomes) {
             await this.GHomes[key].g.UpdateStatus();
-            await this.GHomes[key].g.UpdateSessions();
+            //await this.GHomes[key].g.UpdateSessions();
             await this.GHomes[key].g.UpdatePlayerStatus();
         }
     }
