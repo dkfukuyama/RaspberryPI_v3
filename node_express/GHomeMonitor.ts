@@ -176,7 +176,7 @@ export class GHomeMonitor {
                 this.GHomes[ad].lastUpdated = new Date();
             } else {
                 this.GHomes[ad] = {
-                    g: new GoogleHomeController(),
+                    g: new GoogleHomeController(ad),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
@@ -184,18 +184,20 @@ export class GHomeMonitor {
         })
         for (const key in this.GHomes) {
             if (addSeconds(this.GHomes[key].lastUpdated, 30) < new Date()) {
-                this.GHomes[key].g.Fnalize();
+                this.GHomes[key].g.Finalize();
                 delete this.GHomes[key];
             }
         }
     }
 
     private async UpdateGhStatusAll(): Promise<void> {
+        /*
         for (let key in this.GHomes) {
             await this.GHomes[key].g.UpdateStatus();
             //await this.GHomes[key].g.UpdateSessions();
             await this.GHomes[key].g.UpdatePlayerStatus();
         }
+        */
     }
 
     private GetStatusAll(test_json?: string): object {

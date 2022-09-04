@@ -62,13 +62,12 @@
     <Content Include="pm2start.json" />
     <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
-    <TypeScriptCompile Include="PSender.ts" />
     <TypeScriptCompile Include="scheduler.ts" />
     <TypeScriptCompile Include="send_mail.ts" />
     <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
-    <TypeScriptCompile Include="utils.ts" />
+    <TypeScriptCompile Include="UtilFunctions.ts" />
     <TypeScriptCompile Include="variables.ts" />
     <Content Include="views\calculator.ejs" />
     <Content Include="views\config.ejs" />

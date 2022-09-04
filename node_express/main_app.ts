@@ -28,7 +28,7 @@ const sch = require('@/scheduler');
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController } from '@/GoogleHomeController';
 
-import {delay_ms} from '@/utils';
+import {delay_ms} from '@/UtilFunctions';
 
 const slk = new Slack(process.env.SLACK_WEBHOOK);
 

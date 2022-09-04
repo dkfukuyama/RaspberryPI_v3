@@ -4,14 +4,14 @@ export async function delay_ms(timeout_ms) {
     });
 }
 
-function getRandomInt(max) {
+export function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-
-export class Utils {
+export function clearEventEmitter(emitter){
+    emitter?.removeAllListeners(emitter.eventNames());
 }
 
 
-exports.getRandomInt = getRandomInt;
+
 

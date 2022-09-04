@@ -1,5 +1,7 @@
 import path = require('path');
 
+import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
+
 interface IGoogleHomeSeekResults {
     address: string;
     friendlyName: string;
@@ -25,40 +27,27 @@ interface Imedia2 {
 
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
-    private Client = require('castv2-client').Client; // class
-    private DefaultMediaReceiver = require('castv2-client').DefaultMediaReceiver;
+
+    private readonly DefaultMediaReceiver = require('castv2-client').DefaultMediaReceiver;
+    private readonly PlatformSender = require('castv2-client').PlatformSender;
 
     static gHomeAddresses: IGoogleHomeSeekResults[];
     static gHomeSeekFlag_timeout: NodeJS.Timeout | null = null;
     static secondsCount: number = 0;
 
     public SelfStatus: IGoogleHomeSeekResults;
-    private ConnectedClient;
-    private IsConnected: boolean = false;
-    public Sessions: any[] = [];
-
-    private StatsAll: any = null;
-
-    private Vol: any = null;
-    private Status: any = null
-    private PlayerStatus: any = null;
 
     static InitializedFlag: boolean = false;
 
-    GetVol = () => this.Vol;
-    GetStatus = () => this.Status;
-    GetPlayerStatus = () => this.PlayerStatus;
 
-    GetAllStatus() {
-        return this.StatsAll;
-    }
+    private PfSender = new this.PlatformSender();
+    private JoinedAppId: string | null = null;
+    private MediaPlayer = null;
 
-    constructor() {
+    private IpAddress: string = "";
+    private ConnectionRetryIntervalMs: number = 100;
 
-    }
-    Fnalize(): void {
-        //throw new Error('Method not implemented.');
-    }
+
 
     public static init() {
         if (!this.InitializedFlag) {
@@ -137,107 +126,12 @@ export class GoogleHomeController {
         return contentTypes[extType];
     }
 
-    public async Connect(): Promise<void> {
-        if (this.IsConnected) return;
-        else return new Promise<void>((resolve, reject) => {
-            this.ConnectedClient = new this.Client();
-            this.ConnectedClient.on('error', (err) => {
-                this.Disconnect();
-            });
-            this.ConnectedClient.connect({ host: this.SelfStatus.address }, () => {
-                this.IsConnected = true;
-                resolve();
-            });
-        });
+    public GetAllStatus() {
+
     }
 
-    /*
     public async Launch(): Promise<any> {
-        await this.Connect();
-        if (this.IsLaunched) return;
-        else return new Promise<any>((resolve, reject) => {
-            this.ConnectedClient.launch(this.DefaultMediaReceiver, (err, player) => {
-                if (err) {
-                    this.Disconnect();
-                    reject(err);
-                } else {
-                    this.IsLaunched = true;
-                    resolve("launched!");
-                }
-
-                player.on('status', (status) => {
-                    console.log('status broadcast playerState=%s', status.playerState);
-                });
-            });
-        });
     }
-    */
-
-    public async UpdateStatsAll(): Promise<any> {
-        await this.Connect();
-        return new Promise((resolve, reject) => {
-            this.ConnectedClient.getSpecial((err, stat) => {
-                if (err) {
-                    this.Disconnect();
-                    reject(null)
-                } else {
-                    this.StatsAll = stat;
-                    resolve(this.StatsAll);
-                }
-            });
-        });
-    }
-
-
-    public async SetVolume(vol: number): Promise<void> {
-        await this.Connect();
-        return new Promise((resolve, reject) => {
-            this.ConnectedClient.setVolume(
-                {
-                    muted: false,
-                    level: vol / 100,
-                }, (err, response) => {
-                    if (err) {
-                        this.Disconnect()
-                        reject();
-                    } else {
-                        resolve();
-                    }
-                }
-            );
-        });
-    }
-
-    public async UpdateStatus() {
-        await this.Connect();
-        return new Promise<any>((resolve, reject) => {
-            this.ConnectedClient.getStatus((err, stat) => {
-                if (err) {
-                    this.Disconnect();
-                    reject(err)
-                } else {
-                    this.Status = stat;
-                    resolve(stat);
-                }
-            });
-        });
-    }
-
-    /*
-    public async UpdateSessions() {
-        await this.Connect();
-        return new Promise<any>((resolve, reject) => {
-            this.ConnectedClient.getSessions((err, sessions) => {
-                if (err) {
-                    this.Disconnect();
-                    reject(err);
-                } else {
-                    resolve(sessions);
-                }
-            });
-        });
-    }
-    */
 
     private BuildMediaData(media_info: Imedia_info | string): Imedia {
         let media_info_temp: Imedia_info;
@@ -295,90 +189,118 @@ export class GoogleHomeController {
 
     public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
 
-        /*
         await this.Launch();
 
         let media = this.BuildMediaData(media_info);
         return new Promise<void>((resolve, reject) => {
-            this.Player.load(media, { autoplay: true, currentTime: 0 }, (err, status) => {
+            this.MediaPlayer.load(media, { autoplay: true, currentTime: 0 }, (err, status) => {
                 if (status?.playerState) {
                     console.log('media loaded playerState=%s', status.playerState);
                 } else {
                     console.log('media loaded playerState=NULL_OR_UNDEF');
                 }
                 if (err) {
-                    this.Disconnect();
                     reject(err);
                 } else {
                     resolve();
                 }
             });
         });
-        */
     }
 
     public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
-        /*
         await this.Launch();
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
         return new Promise<void>((resolve, reject) => {
-            this.Player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => {
+            this.MediaPlayer.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => {
                 if (status?.playerState) {
                     console.log('media loaded playerState=%s', status.playerState);
                 } else {
                     console.log('media loaded playerState=NULL_OR_UNDEF');
                 }
                 if (err) {
-                    this.Disconnect();
                     reject(err);
                 } else {
                     resolve();
                 }
             });
         });
-        */
+    }
+    private Media_onStatus(status) {
+        console.log("Media_onStatus");
+        console.log(status);
+    };
+
+    private InitMediaPlayer(): void {
+        clearEventEmitter(this.MediaPlayer); this.MediaPlayer = null;
     }
 
-    public async UpdatePlayerStatus(): Promise<object | null> {
-        return Promise.resolve(null);
-        /*
-        await this.Launch();
-        return new Promise((resolve, reject) => {
-            this.Player?.getStatus((err, status) => {
+    constructor(_ipAddress: string, _connectionRetryIntervalMs?: number) {
+        this.IpAddress = _ipAddress;
+        this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
+
+        this.PfSender.on('error', async (data) => {
+            console.log("ON ERROR");
+            console.log({ data });
+            this.PfSender.close();
+        });
+
+        this.PfSender.on('status', (status) => this.onStatus(status));
+
+        this.PfSender.on('error', async (data) => {
+            console.log("ON ERROR");
+            console.log({ data });
+            //ps.close();
+            if (this.ConnectionRetryIntervalMs > 0) {
+                await delay_ms(this.ConnectionRetryIntervalMs);
+                this.Connect();
+            }
+        });
+    }
+
+    private onStatus(status) {
+        console.log({ status });
+        let app = (status.applications || []);
+
+        if (app.length > 0) {
+            if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
+                this.InitMediaPlayer();
+
+                this.PfSender.join(app[0], this.DefaultMediaReceiver, (err, player) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    player.on('status', (status) => this.Media_onStatus(status));
+                    this.MediaPlayer = player;
+                    this.JoinedAppId = app[0].appId;
+
+                    player.getStatus((err, status) => {
+                        if (err) {
+                            console.log(err);
+                        } else this.Media_onStatus(status);
+                    });
+                });
+            }
+        } else {
+            this.InitMediaPlayer();
+            this.JoinedAppId = null;
+        }
+    }
+
+    public Connect(): void {
+        this.PfSender.connect(this.IpAddress, () => {
+            this.PfSender.getStatus((err, status) => {
                 if (err) {
-                    this.PlayerStatus = null;
-                    reject(err);
-                }
-                else {
-                    this.PlayerStatus = status;
-                    resolve(status);
-                }
-            });
-        });
-        */
-    }
-
-    public async GetAppInfo() {
-        //await this.Launch();
-
-        this.Sessions.map(s => s.appId).forEach(apid => {
-            this.ConnectedClient.getAppAvailability(apid, (err, AppInfo) => {
-                //console.log(apid);
-                //console.log(AppInfo);
+                    console.error(err);
+                    return;
+                } else this.onStatus(status);
             });
         });
     }
 
-    public Disconnect() {
-        console.log("DISCONNECT");
-        this.IsConnected = false;
-        //this.IsLaunched = false;
-        this.Status = null;
-        this.Vol = null;
-        //this.Player = null;
-        this.ConnectedClient?.close();
-        this.ConnectedClient = null;
-    }
+    public Finalize(): void {
 
+    }
 }
