@@ -15,6 +15,7 @@ declare const query: {
 	test_mp3_path: string;
 	GStatusSimType: string;
 };
+declare const client_type: any;
 
 declare const client_type: any;
 declare const location: any;
@@ -185,6 +186,7 @@ class GoogleHomeHtmlContainer {
 			elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime ?? "";
 			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
 		}
+
 
 		if (addr in MusicList) {
 		} else {

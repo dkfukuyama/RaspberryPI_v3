@@ -24,7 +24,7 @@ describe("FileListSearch", () => {
 
     it("get_path_02", () => {
         console.debug("--------------------- get_path_02");
-        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0, globalVars().httpDir_music);
+        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
         const results = FSearch.GetInfo("file_example_MP3_1.mp3");
         assert.equal(results.FullName, path.join(FSearch.GetDirBaseFullPath(), 'file_example_MP3_1.mp3'));
         assert.equal(results.BaseName, 'file_example_MP3_1.mp3');
@@ -44,7 +44,7 @@ describe("FileListSearch", () => {
         assert.equal(results.FileList.length, 3);
         assert.equal(results.FileList[0].BaseName, 'file_example_MP3_1.mp3');
         assert.equal(results.FileList[1].BaseName, 'file_example_MP3_2.mp3');
-        assert.equal(results.FileList[2].BaseName, 'あいうえお.mp3');
+        assert.equal(results.FileList[2].BaseName, '����������.mp3');
         assert.equal(results.DirList.length, 2);
         assert.equal(results.DirList[0].BaseName, 'g_dlfile');
         assert.equal(results.DirList[1].BaseName, 'stream');
@@ -52,7 +52,7 @@ describe("FileListSearch", () => {
 
     it("get_path_06", () => {
         console.debug("--------------------- get_path_05");
-        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0, globalVars().httpDir_music);
+        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
         FSearch.GetInfo("stream");
 
         let results: FileListSearchResults = FSearch.GetList();
@@ -84,7 +84,7 @@ describe("FileListSearch", () => {
         assert.equal(results.FileList.length, 3);
         assert.equal(results.FileList[0].BaseName, 'file_example_MP3_1.mp3');
         assert.equal(results.FileList[1].BaseName, 'file_example_MP3_2.mp3');
-        assert.equal(results.FileList[2].BaseName, 'あいうえお.mp3');
+        assert.equal(results.FileList[2].BaseName, '����������.mp3');
         assert.equal(results.DirList.length, 2);
         assert.equal(results.DirList[0].BaseName, 'g_dlfile');
         assert.equal(results.DirList[1].BaseName, 'stream');
@@ -110,7 +110,7 @@ describe("FileListSearch", () => {
         assert.equal(results.FileList.length, 3);
         assert.equal(results.FileList[0].BaseName, 'file_example_MP3_1.mp3');
         assert.equal(results.FileList[1].BaseName, 'file_example_MP3_2.mp3');
-        assert.equal(results.FileList[2].BaseName, 'あいうえお.mp3');
+        assert.equal(results.FileList[2].BaseName, '����������.mp3');
         assert.equal(results.DirList.length, 2);
         assert.equal(results.DirList[0].BaseName, 'g_dlfile');
         assert.equal(results.DirList[1].BaseName, 'stream');

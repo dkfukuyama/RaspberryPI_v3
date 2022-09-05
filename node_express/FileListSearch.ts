@@ -23,9 +23,9 @@ export interface FileListSearchResults {
 
 export class FileListSearch {
     private InitializeOK: boolean = false;
-    private DirBaseFullPath: string;  // ファイル探索の起点となるパス
-    private DirNow: FileInfo | null = null; // 現在探索しているディレクトリのパス(DirBaseFullPath起点の相対パス)
-    private FileNow: FileInfo | null = null; // 現在探索しているファイルのパス(DirBaseFullPath起点の相対パス)
+    private DirBaseFullPath: string;  // �t�@�C���T���̋N�_�ƂȂ�p�X
+    private DirNow: FileInfo | null = null; // ���ݒT�����Ă���f�B���N�g���̃p�X(DirBaseFullPath�N�_�̑��΃p�X)
+    private FileNow: FileInfo | null = null; // ���ݒT�����Ă���t�@�C���̃p�X(DirBaseFullPath�N�_�̑��΃p�X)
     private RootUrl: string = "";
 
     constructor(baseDir: string | null = null, rootUrl?: string) {
