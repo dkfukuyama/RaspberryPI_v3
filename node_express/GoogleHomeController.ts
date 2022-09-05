@@ -131,6 +131,22 @@ export class GoogleHomeController {
     }
 
     public async Launch(): Promise<any> {
+        this.EndJoin();
+        this.PfSender.launch(this.DefaultMediaReceiver, (err, player) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            player.on('status', (status) => this.Media_onStatus(status));
+            this.MediaPlayer = player;
+            this.JoinedAppId = app[0].appId;
+
+            player.getStatus((err, status) => {
+                if (err) {
+                    console.log(err);
+                } else this.Media_onStatus(status);
+            });
+        });
     }
 
     private BuildMediaData(media_info: Imedia_info | string): Imedia {
@@ -240,20 +256,13 @@ export class GoogleHomeController {
         this.IpAddress = _ipAddress;
         this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
 
-        this.PfSender.on('error', async (data) => {
-            console.log("ON ERROR");
-            console.log({ data });
-            this.PfSender.close();
-        });
-
         this.PfSender.on('status', (status) => this.onStatus(status));
 
         this.PfSender.on('error', async (data) => {
             console.log("ON ERROR");
             console.log({ data });
-            //ps.close();
+            this.Close();
             if (this.ConnectionRetryIntervalMs > 0) {
-                await delay_ms(this.ConnectionRetryIntervalMs);
                 this.Connect();
             }
         });
@@ -284,8 +293,7 @@ export class GoogleHomeController {
                 });
             }
         } else {
-            this.InitMediaPlayer();
-            this.JoinedAppId = null;
+            this.EndJoin();
         }
     }
 
@@ -298,6 +306,20 @@ export class GoogleHomeController {
                 } else this.onStatus(status);
             });
         });
+    }
+
+    public EndJoin() {
+        this.InitMediaPlayer();
+        this.JoinedAppId = null;
+    }
+
+    public Close(): void {
+        this.EndJoin();
+        try {
+            this.PfSender.close();
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     public Finalize(): void {
