@@ -186,8 +186,8 @@ page_path_set_index_ejs.pages = [
                 switch(req.body.mode){
                     case 'play_music':
                         if (req.body.speakeraddress && req.body.filename) {
-                            console.log(`Monitor.GetGhObjByAddress(${req.body.speakeraddress})?.g.PlayList([${req.body.filename}]);`)
-                            console.log(Monitor.GetGhObjByAddress(req.body.speakeraddress));
+                            //console.log(`Monitor.GetGhObjByAddress(${req.body.speakeraddress})?.g.PlayList([${req.body.filename}]);`)
+                            //console.log(Monitor.GetGhObjByAddress(req.body.speakeraddress));
                             Monitor.GetGhObjByAddress(req.body.speakeraddress)?.g.PlayList([req.body.filename]);
                         }
                     case 'cal_today':

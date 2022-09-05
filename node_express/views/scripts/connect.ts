@@ -15,7 +15,6 @@ declare const query: {
 	test_mp3_path: string;
 	GStatusSimType: string;
 };
-declare const client_type: any;
 
 declare const client_type: any;
 declare const location: any;

@@ -135,15 +135,7 @@ export class GoogleHomeController {
             PlayerStatus: this.PlayerStatus ?? {},
         }
     }
-
-            player.getStatus((err, status) => {
-                if (err) {
-                    console.log(err);
-                } else this.Media_onStatus(status);
-            });
-        });
-    }
-
+    
     private BuildMediaData(media_info: Imedia_info | string): Imedia {
         let media_info_temp: Imedia_info;
 
