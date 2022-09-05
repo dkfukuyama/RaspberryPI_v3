@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 import { globalVars } from '@/variables';
 const gtts = require('@/google_tts')
-const ut = require('@/utils');
+const ut = require('@/UtilFunctions');
 const gHome = require('@/GoogleHomeController');
 
 

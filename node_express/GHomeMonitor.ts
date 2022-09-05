@@ -35,9 +35,6 @@ export class SocketIoConnectionManager {
                 TestMp3path: string;
             };
 
-            let FSearch0: FileListSearch;
-
-
             let FSearch: {
                 [Key: string]: FileListSearch;
             } = {};
@@ -62,17 +59,9 @@ export class SocketIoConnectionManager {
 
                 console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
                 GStatusSimType = data.query.GStatusSimType ?? "";
-
-                if (Client.Type == 'MusicPlayer') {
-                    if (Client.TestMp3path) {
-                        FSearch0 = new FileListSearch(Client.TestMp3path);
-                    } else {
-                        FSearch0 = new FileListSearch(globalVars().saveDir0);
-                    }
-                }
             });
+
             socket.on("C2S_play", (data) => {
-                //console.log(data);
                 socket.emit("S2C_play_OK", null);
             });
             socket.on("C2S_stop", (data) => {

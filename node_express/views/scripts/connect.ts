@@ -17,6 +17,7 @@ declare const query: {
 };
 
 declare const client_type: any;
+declare const location: any;
 
 type EType = "File" | "Directory" | "NotDetected";
 interface FileInfo {
@@ -82,12 +83,41 @@ socket.on("connect_error", (err) => {
 	}, 1000);
 });
 
+
+//
 function MusicSelectButtonClick(arg) {
 	alert(JSON.stringify(arg));
+
+	const xmlHttpRequest = new XMLHttpRequest();
+
+	let data = {
+		"mode": "play_music",
+		"speakeraddress": arg.addr,
+		"filename": arg.fullurl,
+	};
+	const url = '/command';
+	xmlHttpRequest.open('POST', url);
+	// サーバに対して解析方法を指定する
+	xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	// データをリクエスト ボディに含めて送信する
+	xmlHttpRequest.send(EncodeHTMLForm(data));
+}
+
+function EncodeHTMLForm(data) {
+	var params = [];
+
+	for (var name in data) {
+		var value = data[name];
+		var param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+
+		params.push(param);
+	}
+
+	return params.join('&').replace(/%20/g, '+');
 }
 
 function DirSelectButtonClick(arg) {
-	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });			
+	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
 }
 
 function AddToList(str) {
@@ -100,7 +130,7 @@ interface IGoogleHomeSeekResults {
 	speakerName: string;
 }
 
-interface GContainer { Key: string, Value: { Vol: any, Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } };
+interface GContainer { Key: string, Value: {Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } };
 
 class GoogleHomeHtmlContainer {
 	private container: string;
@@ -143,17 +173,18 @@ class GoogleHomeHtmlContainer {
 			document.getElementById(this.container).appendChild(elem);
 			elem1 = document.getElementById(addr);
 
-			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });			
+			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });
 		}
 
 		const v = g.Value;
 		elem1.getElementsByClassName("speakerName")[0].innerText = v.Self.speakerName;
 		elem1.getElementsByClassName('IpAddress')[0].innerText = v.Self.address;
-		elem1.getElementsByClassName('Volume')[0].innerText = v.Status?.volume?.level * 100;
-		elem1.getElementsByClassName('statusText')[0].innerText = v.Status?.applications[0]?.statusText;
-		elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime;
-		elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration;
-
+		elem1.getElementsByClassName('Volume')[0].innerText = Math.round((v.Status?.volume?.level ?? 0) * 100);
+		if (v.Status?.applications && v.Status?.applications.length > 0) {
+			elem1.getElementsByClassName('statusText')[0].innerText = v.Status?.applications[0]?.statusText ?? "";
+			elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime ?? "";
+			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
+		}
 
 		if (addr in MusicList) {
 		} else {
@@ -170,8 +201,10 @@ class GoogleHomeHtmlContainer {
 				out_html = `曲の一覧`;
 				let end_i: number;
 				MusicList[addr].FileList.forEach((f, i) => {
+					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
+
 					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}' })">${f.Name}</button></div>`;
+					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}' })">${f.Name}</button></div>`;
 					if (i % 3 == 2) out_html += '</div>';
 					end_i = i;
 				})
@@ -180,8 +213,10 @@ class GoogleHomeHtmlContainer {
 				out_html += `フォルダを移動する`;
 				if(MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
 				MusicList[addr].DirList.forEach((f, i) => {
+					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
+
 					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}'})">${f.Name}</button></div>`;
+					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}'})">${f.Name}</button></div>`;
 					if (i % 3 == 2) out_html += '</div>';
 					end_i = i;
 				})
@@ -199,3 +234,4 @@ class GoogleHomeHtmlContainer {
 
 var ghhc = new GoogleHomeHtmlContainer(container_id);
 ghhc.Load();
+

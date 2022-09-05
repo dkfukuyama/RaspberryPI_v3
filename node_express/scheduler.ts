@@ -1,8 +1,8 @@
-﻿const slk: any = require('./slacksend');
-const ut = require('./utils');
-const exec = require('child_process').exec;
+﻿const exec = require('child_process').exec;
 const cron = require('node-cron');
-import gh = require('./google_home');
+const slk: any = require('@/slacksend');
+const ut = require('@/UtilFunctions');
+import gh = require('@/google_home');
 
 require('date-utils');
 

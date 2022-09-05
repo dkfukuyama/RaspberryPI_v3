@@ -32,6 +32,7 @@ import {delay_ms} from '@/UtilFunctions';
 
 const slk = new Slack(process.env.SLACK_WEBHOOK);
 
+const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 let page_path_set_index_ejs: any = {};
 
@@ -183,6 +184,12 @@ page_path_set_index_ejs.pages = [
                 slk.Log('COMMAND MODE');
                 slk.Log(req.body.mode);
                 switch(req.body.mode){
+                    case 'play_music':
+                        if (req.body.speakeraddress && req.body.filename) {
+                            console.log(`Monitor.GetGhObjByAddress(${req.body.speakeraddress})?.g.PlayList([${req.body.filename}]);`)
+                            console.log(Monitor.GetGhObjByAddress(req.body.speakeraddress));
+                            Monitor.GetGhObjByAddress(req.body.speakeraddress)?.g.PlayList([req.body.filename]);
+                        }
                     case 'cal_today':
                         return Promise.resolve();
                         //return gtts.speechOnGoogleHomeCal(ghome.getGoogleHomeAddresses()[0].speakerName, {});
@@ -334,6 +341,7 @@ app.all("*.css|*.js|*.html", function (req, res, next) {
     });
 });
 
+/*
 app.all("/stream/*.wav|*.mp3", function (req, res, next) {
 
     console.log(req.path);
@@ -370,6 +378,7 @@ app.all("/stream/*.wav|*.mp3", function (req, res, next) {
         sp.stdout.pipe(res);
     })
 });
+*/
 
 app.get("*.wav|*.mp3", function (req, res, next){
     const p = path.join(globalVars().saveDir0, req.path);
@@ -444,18 +453,19 @@ async function main() {
     });
 
 
-    const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
-
     app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
     Monitor.Start();
 
+    /*
     for (; ;) {
         await delay_ms(12000);
-        if (Monitor.GetGhObjByAddress("192_168_1_20")?.g) {
-            Monitor.GetGhObjByAddress("192_168_1_20")?.g.PlayList(["http://192.168.1.81/g_dlfile/2022-05-21_12-25-38_021_sox.wav"]);
+        console.log("242424");
+        if (Monitor.GetGhObjByAddress("192_168_1_24")?.g) {
+            Monitor.GetGhObjByAddress("192_168_1_24")?.g.PlayList(["http://192.168.1.103/g_dlfile/2022-05-21_12-25-38_021_sox.wav"]);
             for (; ;) await delay_ms(3000);
         }
     }
+    */
 }
 
 

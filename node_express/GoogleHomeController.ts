@@ -25,6 +25,9 @@ interface Imedia2 {
     media: Imedia;
 }
 
+//{ Key: string, Value: { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } };
+
+
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
 
@@ -36,6 +39,10 @@ export class GoogleHomeController {
     static secondsCount: number = 0;
 
     public SelfStatus: IGoogleHomeSeekResults;
+
+    public Status: any;
+    public PlayerStatus: any;
+
 
     static InitializedFlag: boolean = false;
 
@@ -52,12 +59,6 @@ export class GoogleHomeController {
     public static init() {
         if (!this.InitializedFlag) {
             GoogleHomeController.gHomeAddresses = [];
-            require('castv2-client').Client.prototype.getSpecial = function (callback) {
-                this.getStatus(function (err, status) {
-                    if (err) return callback(err);
-                    callback(null, status);
-                });
-            };
         }
         this.InitializedFlag = true;
     }
@@ -126,11 +127,13 @@ export class GoogleHomeController {
         return contentTypes[extType];
     }
 
-    public GetAllStatus() {
+    public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
 
-    }
-
-    public async Launch(): Promise<any> {
+        return {
+            Self: this.SelfStatus,
+            Status: this.Status,
+            PlayerStatus: this.PlayerStatus ?? {},
+        }
     }
 
     private BuildMediaData(media_info: Imedia_info | string): Imedia {
@@ -189,47 +192,50 @@ export class GoogleHomeController {
 
     public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
 
-        await this.Launch();
-
         let media = this.BuildMediaData(media_info);
-        return new Promise<void>((resolve, reject) => {
-            this.MediaPlayer.load(media, { autoplay: true, currentTime: 0 }, (err, status) => {
-                if (status?.playerState) {
-                    console.log('media loaded playerState=%s', status.playerState);
-                } else {
-                    console.log('media loaded playerState=NULL_OR_UNDEF');
-                }
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
+
+        const client = new (require('castv2-client').Client)();
+        client.connect(this.SelfStatus.address, () => {
+            client.launch(this.DefaultMediaReceiver, (err, player)=> {
+                player.load(media, { autoplay: true }, function (err, status) { });
             });
+
         });
+        client.once('error', function (err) {
+            console.log('Error: %s', err.message);
+            client.close();
+        });
+
+        setTimeout(() => {
+            client.close();
+            clearEventEmitter(client);
+        }, 10000);
     }
 
     public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
-        await this.Launch();
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
-        return new Promise<void>((resolve, reject) => {
-            this.MediaPlayer.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => {
-                if (status?.playerState) {
-                    console.log('media loaded playerState=%s', status.playerState);
-                } else {
-                    console.log('media loaded playerState=NULL_OR_UNDEF');
-                }
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
+
+        const client = new (require('castv2-client').Client)();
+        client.connect(this.SelfStatus.address, () => {
+            client.launch(this.DefaultMediaReceiver, (err, player) => {
+                player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => { });
             });
         });
+        client.once('error', function (err) {
+            console.log('Error: %s', err.message);
+            client.close();
+        });
+        setTimeout(() => {
+            client.close();
+            clearEventEmitter(client);
+        }, 10000);
+
     }
     private Media_onStatus(status) {
-        console.log("Media_onStatus");
-        console.log(status);
+        //console.log("Media_onStatus");
+        //console.log(status);
+        this.PlayerStatus = status;
     };
 
     private InitMediaPlayer(): void {
@@ -240,29 +246,22 @@ export class GoogleHomeController {
         this.IpAddress = _ipAddress;
         this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
 
-        this.PfSender.on('error', async (data) => {
-            console.log("ON ERROR");
-            console.log({ data });
-            this.PfSender.close();
-        });
-
         this.PfSender.on('status', (status) => this.onStatus(status));
-
         this.PfSender.on('error', async (data) => {
             console.log("ON ERROR");
             console.log({ data });
-            //ps.close();
+            this.Close();
             if (this.ConnectionRetryIntervalMs > 0) {
-                await delay_ms(this.ConnectionRetryIntervalMs);
                 this.Connect();
             }
         });
+        this.Connect();
     }
 
     private onStatus(status) {
-        console.log({ status });
-        let app = (status.applications || []);
+        this.Status = status;
 
+        let app = (status.applications || []);
         if (app.length > 0) {
             if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
                 this.InitMediaPlayer();
@@ -284,8 +283,7 @@ export class GoogleHomeController {
                 });
             }
         } else {
-            this.InitMediaPlayer();
-            this.JoinedAppId = null;
+            this.EndJoin();
         }
     }
 
@@ -298,6 +296,20 @@ export class GoogleHomeController {
                 } else this.onStatus(status);
             });
         });
+    }
+
+    public EndJoin() {
+        this.InitMediaPlayer();
+        this.JoinedAppId = null;
+    }
+
+    public Close(): void {
+        this.EndJoin();
+        try {
+            this.PfSender.close();
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     public Finalize(): void {
