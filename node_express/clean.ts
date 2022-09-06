@@ -1,8 +1,8 @@
 const fs = require('fs');
 import path = require('path');
-const slk: any = require('./slacksend');
+const slk: any = require('@/SlackSend');
 
-import { globalVars } from './variables';
+import { globalVars } from '@/variables';
 
 
 function clean_wav(leftnum) {
