@@ -86,7 +86,7 @@ socket.on("connect_error", (err) => {
 
 //
 function MusicSelectButtonClick(arg) {
-	alert(JSON.stringify(arg));
+	alert("曲を再生します");
 
 	const xmlHttpRequest = new XMLHttpRequest();
 

@@ -233,8 +233,6 @@ export class GoogleHomeController {
 
     }
     private Media_onStatus(status) {
-        //console.log("Media_onStatus");
-        //console.log(status);
         this.PlayerStatus = status;
     };
 
