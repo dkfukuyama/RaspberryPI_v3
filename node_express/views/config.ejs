@@ -18,81 +18,72 @@
 	let xhr = new XMLHttpRequest();
 
 	document.getElementById('g_cal_button').onclick = function() {
-	post_command(
-	{
-	alert_text : 'よていをよみあげます',
-	mode : 'cal_today',
-	return_header : 'text/plain',
-	short_return : true
-	});
+		post_command({
+			alert_text : 'よていをよみあげます',
+			mode : 'cal_today',
+			return_header : 'text/plain',
+			short_return : true
+		});
 	}
 
 	document.getElementById('clean_wav').onclick = function() {
-	post_command(
-	{
-	alert_text : 'おんせいファイルをしょうきょします。',
-	mode : 'clean_wav',
-	return_header : 'text/plain',
-	short_return : true
-	});
+		post_command({
+			alert_text : 'おんせいファイルをしょうきょします。',
+			mode : 'clean_wav',
+			return_header : 'text/plain',
+			short_return : true
+		});
 	}
 
 
 	document.getElementById('update_reboot_webserver').onclick = function(){
-	post_command(
-	{
-	alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
-	mode : 'update_reboot',
-	command : 'sudo systemctl restart pi_server',
-	return_header : 'text/plain',
-	short_return : true
-	});
+		post_command({
+		alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
+		mode : 'update_reboot',
+		command : 'sudo systemctl restart pi_server',
+		return_header : 'text/plain',
+		short_return : true
+		});
 	}
 
 	document.getElementById('reboot_button').onclick = function(){
-	post_command(
-	{
-	alert_text : 'ラズベリーパイをさいきどうします。',
-	mode : 'reboot',
-	command : 'sudo reboot',
-	return_header : 'text/plain',
-	short_return : true
-	});
+	post_command({
+		alert_text : 'ラズベリーパイをさいきどうします。',
+		mode : 'reboot',
+		command : 'sudo reboot',
+		return_header : 'text/plain',
+		short_return : true
+		});
 	}
 
 	document.getElementById('show_log').onclick = function(){
-	post_command(
-	{
-	alert_text : 'ログを表示します。',
-	mode : 'system_command',
-	command : 'sudo systemctl status pi_server -n 80 | cat',
-	return_header : 'text/plain',
-	short_return : true
-	});
+		post_command({
+			alert_text : 'ログを表示します。',
+			mode : 'system_command',
+			command : 'sudo systemctl status pi_server -n 80 | cat',
+			return_header : 'text/plain',
+			short_return : true
+		});
 	}
 
 
 	function post_command(command_param) {
-	alert(command_param.alert_text);
-	let snd = JSON.stringify(command_param);
-	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/command');
-	xhr.setRequestHeader("Content-Type", "application/json");
+		alert(command_param.alert_text);
+		let snd = JSON.stringify(command_param);
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '/command');
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function(){
 
-	xhr.onreadystatechange = function(){
-	/* XMLデータ取得 */
-	let data = xhr.responseText;
-	let j = null;
-	try {
-		j = JSON.parse(data);
-		document.getElementById("resXmlHttpRequestObj").innerText=JSON.stringify(j,null,"\r");
-	} catch (error) {
-	document.getElementById("resXmlHttpRequestObj").innerText=data;
-	}
-
-
-	}
-
-	xhr.send(snd);
+		/* XMLデータ取得 */
+		let data = xhr.responseText;
+		let j = null;
+		try {
+			j = JSON.parse(data);
+			document.getElementById("resXmlHttpRequestObj").innerText=JSON.stringify(j,null,"\r");
+		} catch (error) {
+			document.getElementById("resXmlHttpRequestObj").innerText=data;
+		}
+		xhr.send(snd);
 	}
 </script>
