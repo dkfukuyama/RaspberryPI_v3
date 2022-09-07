@@ -23,10 +23,13 @@ export class SocketIoConnectionManager {
 
     GetStatusAll: (a?:string) => object;
 
-    constructor(portnum: number, _getStatusAll: ()=>object) {
+    constructor(portnum: number, express_app: any, _getStatusAll: () => object) {
+
+        const httpServer = require("http").createServer(express_app);
+
         this.SocketIoPort = portnum;
         this.GetStatusAll = _getStatusAll;
-        this.Io = new Server();
+        this.Io = require("socket.io")(httpServer, {});
         this.Io.on("connection", (socket: Socket) => {
 
             let Client: {
@@ -98,9 +101,7 @@ export class SocketIoConnectionManager {
             });
 
         });
-
         this.Io.listen(this.SocketIoPort);
-        console.log("START Socket.IO Port Listening");
     }
 }
 
@@ -114,8 +115,8 @@ export class GHomeMonitor {
 
     private SocketIoPort: number = 3000;
     private ConnectionManager: SocketIoConnectionManager;
-
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
+
     constructor(socket_io_port: number) {
         GoogleHomeController.init();
         this.GHomes = {};
@@ -134,7 +135,7 @@ export class GHomeMonitor {
     }
 
     public StartIOMonitor() {
-        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?:string) => this.GetStatusAll(a));
+        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, this.ExpressApp, (a ?: string) => this.GetStatusAll(a));
     }
 
     public End() {

@@ -382,11 +382,46 @@ app.all("/stream/*.wav|*.mp3", function (req, res, next) {
 
 app.get("*.wav|*.mp3", function (req, res, next){
     const p = path.join(globalVars().saveDir0, req.path);
-    res.sendFile(decodeURI(p), (err)=>{
-        if(err){
+    const query = req.query;
+    if (!query.stream) {
+        res.sendFile(decodeURI(p), (err) => {
+            if (err) {
+                next(err);
+            }
+        });
+    } else {
+        try {
+            let fpath = decodeURI(p);
+            fs.stat(fpath, (err, stat) => {
+                if (err) {
+                    next(err)
+                }
+                // ファイル名をエンコードする
+                const filename = encodeURIComponent("noname.mp3");
+
+                // ヘッダーセットする
+                res.set({
+                    'Content-Type': "audio/mp3",
+                    'Content-disposition': `inline; filename*=utf-8''${filename}`,
+                    //'Content-Length': stat.size
+                })
+                const { spawn } = require('node:child_process');
+                //"chorus 1 1 100.0 1 5 5.0 -s"
+                let kk = `sox "${p}" -t wav - `;
+                if (query.effects) {
+                    kk += req.query.effects;
+                }
+                console.log(kk);
+                let sp = spawn(kk, [], { shell: true });
+                sp.on('error', (err) => {
+                    next(err);
+                })
+                sp.stdout.pipe(res);
+            });
+        } catch (err) {
             next(err);
         }
-    });
+    }
 });
 
 app.use(function(req, res, next){
