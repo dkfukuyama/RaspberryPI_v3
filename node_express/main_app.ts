@@ -380,37 +380,52 @@ app.all("/stream/*.wav|*.mp3", function (req, res, next) {
 });
 */
 
-app.get("*.wav|*.mp3", function (req, res, next){
-    const p = path.join(globalVars().saveDir0, req.path);
+app.get("*.wav|*.mp3", function (req, res, next) {
+    const fs = require('fs');
+
+    const p = path.join(globalVars().saveDir0, decodeURI(req.path));
     const query = req.query;
     if (!query.stream) {
-        res.sendFile(decodeURI(p), (err) => {
+        res.sendFile(p, (err) => {
             if (err) {
                 next(err);
             }
         });
     } else {
         try {
-            let fpath = decodeURI(p);
-            fs.stat(fpath, (err, stat) => {
+            fs.stat(p, (err, stat) => {
                 if (err) {
                     next(err)
                 }
                 // ファイル名をエンコードする
-                const filename = encodeURIComponent("noname.mp3");
+                const basename = path.basename(p);
+                const filename = encodeURIComponent(basename);
 
                 // ヘッダーセットする
                 res.set({
-                    'Content-Type': "audio/mp3",
+                    'Content-Type': GoogleHomeController.getProperContentType(basename),
                     'Content-disposition': `inline; filename*=utf-8''${filename}`,
                     //'Content-Length': stat.size
                 })
                 const { spawn } = require('node:child_process');
                 //"chorus 1 1 100.0 1 5 5.0 -s"
+
+                const preset: {
+                    [key: string]: string;
+                } = {
+                    "chorus01": "chorus 1 1 100.0 1 5 5.0 -s",
+                    "chorus02": "chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s",
+                    "reverb01": "reverb",
+                    "speedx2": "speed 2",
+                    "speedx0_5": "speed 0.5",
+                }
                 let kk = `sox "${p}" -t wav - `;
-                if (query.effects) {
+                if (preset[query.effectsPreset]) {
+                    kk += preset[query.effectsPreset];
+                } else if (query.effects) {
                     kk += req.query.effects;
                 }
+
                 console.log(kk);
                 let sp = spawn(kk, [], { shell: true });
                 sp.on('error', (err) => {
