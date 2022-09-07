@@ -38,11 +38,11 @@
 	}
 
 
-	document.getElementById('reboot_webserver').onclick = function(){
+	document.getElementById('update_reboot_webserver').onclick = function(){
 	post_command(
 	{
-	alert_text : 'ウェブサーバをさいきどうします。',
-	mode : 'system_command',
+	alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
+	mode : 'update_reboot',
 	command : 'sudo systemctl restart pi_server',
 	return_header : 'text/plain',
 	short_return : true
@@ -53,7 +53,7 @@
 	post_command(
 	{
 	alert_text : 'ラズベリーパイをさいきどうします。',
-	mode : 'system_command',
+	mode : 'reboot',
 	command : 'sudo reboot',
 	return_header : 'text/plain',
 	short_return : true

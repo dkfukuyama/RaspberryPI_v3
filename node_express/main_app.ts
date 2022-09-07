@@ -198,7 +198,7 @@ page_path_set_index_ejs.pages = [
                         return new Promise((resolve, _) => resolve(require('./clean').clean_wav(100)));
                         break;
                     case 'update_reboot':
-                        let pr = ["git checkout master", "git reset --hard head", "git pull", "npm install", "tsc --build"];
+                        let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
                         let k = "";
                         for (let p of pr) {
                             k += await new Promise((resolve, reject) => {
