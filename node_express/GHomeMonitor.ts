@@ -21,7 +21,7 @@ export class SocketIoConnectionManager {
 
     private Status: IStatus;
 
-    GetStatusAll: (a?:string) => object;
+    GetStatusAll: (test_json?:string) => object;
 
     constructor(portnum: number, _getStatusAll: () => object) {
 

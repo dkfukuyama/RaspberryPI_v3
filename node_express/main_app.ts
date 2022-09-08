@@ -254,6 +254,14 @@ page_path_set_index_ejs.pages.forEach(p =>{
             console.log(" ----- POST pfunc_results ----- ");
             console.log(pfunc_results);
             if (req.body.short_return) {
+                let send_obj = null;
+                if (typeof (pfunc_results) == "object") {
+                    send_obj = pfunc_results;
+                } else {
+                    send_obj = {
+                        results: pfunc_results,
+                    }
+                }
                 res.json(pfunc_results);
                 res.end();
             }else{
