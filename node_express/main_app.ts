@@ -218,7 +218,7 @@ page_path_set_index_ejs.pages = [
                         process.exit(0);
                         break;
                     case 'system_command':
-                        console.log(`${req.body.command}`);
+                        slk.Log(`${req.body.command}`);
                         return new Promise((resolve, reject) => {
                             exec(req.body.command, (err, stdout, stderr) => {
                                 if (err) {
@@ -246,13 +246,21 @@ page_path_set_index_ejs.pages.forEach(p =>{
             console.log(req.body);
 
             let er_occurred = false;
-            const pfunc_results = await p.postfunc(req, res).catch(er=>{
+            const pfunc_results = await p.postfunc(req, res).catch(err=>{
                 er_occurred = true;
-                return JSON.stringify(er);
+                return err;
             });
             console.log(" ----- POST pfunc_results ----- ");
             console.log(pfunc_results);
             if (req.body.short_return) {
+                let send_obj = null;
+                if (typeof (pfunc_results) == "object") {
+                    send_obj = pfunc_results;
+                } else {
+                    send_obj = {
+                        results: pfunc_results,
+                    }
+                }
                 res.json(pfunc_results);
                 res.end();
             }else{
