@@ -2,7 +2,7 @@ import path = require('path');
 
 import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
 
-interface IGoogleHomeSeekResults {
+export interface IGoogleHomeSeekResults {
     address: string;
     friendlyName: string;
     speakerName: string;

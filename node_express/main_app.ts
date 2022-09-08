@@ -1,11 +1,12 @@
 ﻿require('dotenv').config({ path: '.env' });
-
 import path = require('path');
+
 const exec = require('child_process').exec;
 
 const express = require("express");
 const favicon = require('express-favicon');
 const bodyParser = require('body-parser');
+
 const app = express();
 app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 app.use(bodyParser.urlencoded({
@@ -16,8 +17,6 @@ app.use(express.json());
 // テンプレートエンジンの指定
 app.set("view engine", "ejs");
 
-import { globalVars } from '@/variables';
-import { Slack } from '@/SlackSend';
 
 const gtts = require('@/google_home')
 const mail = require('@/send_mail');
@@ -25,14 +24,14 @@ const mail = require('@/send_mail');
 const calc = require('@/calculator')
 const sch = require('@/scheduler');
 
+import { delay_ms } from '@/UtilFunctions';
+
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController } from '@/GoogleHomeController';
 
-import {delay_ms} from '@/UtilFunctions';
-
-const slk = new Slack(process.env.SLACK_WEBHOOK);
-
 const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
+
+import { globalVars, slk } from '@/variables';
 
 let page_path_set_index_ejs: any = {};
 
@@ -330,7 +329,6 @@ app.all("/__utest__/*.*", function (req, res, next) {
     });
 });
 
-
 // 指定ファイルをぞのまま出力するもの
 app.all("*.css|*.js|*.html", function (req, res, next) {
     const p = { root: path.join(__dirname, "views")};
@@ -340,45 +338,6 @@ app.all("*.css|*.js|*.html", function (req, res, next) {
         }
     });
 });
-
-/*
-app.all("/stream/*.wav|*.mp3", function (req, res, next) {
-
-    console.log(req.path);
-
-    const fs = require('fs');
-
-    const p = path.join(globalVars().saveDir0, req.path);
-
-    let fpath = decodeURI(p);
-    fs.stat(fpath, (err, stat) => {
-        if (err) {
-            next(err)
-        }
-        // ファイル名をエンコードする
-        const filename = encodeURIComponent("aaa.wav");
-        // ヘッダーセットする
-        res.set({
-            'Content-Type': "audio/wav",
-            'Content-disposition': `inline; filename*=utf-8''${filename}`,
-            //'Content-Length': stat.size
-        })
-        const { spawn } = require('node:child_process');
-        //"chorus 1 1 100.0 1 5 5.0 -s"
-        fpath = "https://www.ne.jp/asahi/music/myuu/wave/eine.mp3";
-        let kk = `sox ${fpath} -t wav - `;
-        if (req.query.effects) {
-            kk += req.query.effects;
-        }
-        console.log(kk);
-        let sp = spawn(kk, [], { shell: true });
-        sp.on('error', (err) => {
-            next(err);
-        })
-        sp.stdout.pipe(res);
-    })
-});
-*/
 
 app.get("*.wav|*.mp3", function (req, res, next) {
     const fs = require('fs');
@@ -431,7 +390,7 @@ app.get("*.wav|*.mp3", function (req, res, next) {
                 sp.on('error', (err) => {
                     next(err);
                 })
-                sp.stdout.pipe(res);
+                sp.stdout.pipe(res).on('error', (err) => slk.Err(err) );
             });
         } catch (err) {
             next(err);

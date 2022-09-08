@@ -62,6 +62,9 @@
     <Content Include="pm2start.json" />
     <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
+    <TypeScriptCompile Include="PageParameters.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="scheduler.ts" />
     <TypeScriptCompile Include="send_mail.ts" />
     <TypeScriptCompile Include="sqlite_lib.ts" />

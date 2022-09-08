@@ -1,4 +1,5 @@
 ﻿import path = require('path');
+import { Slack } from '@/SlackSend';
 
 const httpServerPort_Default = 80;
 
@@ -103,4 +104,5 @@ export function getLocalAddress() {
     return ifacesObj;
 };
 
-exports.globalVars = globalVars;
+export const slk = new Slack(process.env.SLACK_WEBHOOK);
+
