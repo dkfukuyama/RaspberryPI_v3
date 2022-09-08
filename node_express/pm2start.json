@@ -13,7 +13,7 @@
   "merge_logs": true,
   "vizion": true,
   "autorestart": true,
-  "watch": true,
+  "watch": false,
   "watch_delay": 500,
   "restart_delay": 500,
   "ignore_watch": [ "node_modules", "test_mp3", "UnitTest", "FunctionTest", ".vs", "*.log", "*.ts", "*.ps1", "package.json", "package-lock.json", "views/*" ],
