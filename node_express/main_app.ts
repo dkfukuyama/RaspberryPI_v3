@@ -219,7 +219,7 @@ page_path_set_index_ejs.pages = [
                         process.exit(0);
                         break;
                     case 'system_command':
-                        console.log(`${req.body.command}`);
+                        slk.Log(`${req.body.command}`);
                         return new Promise((resolve, reject) => {
                             exec(req.body.command, (err, stdout, stderr) => {
                                 if (err) {
@@ -247,9 +247,9 @@ page_path_set_index_ejs.pages.forEach(p =>{
             console.log(req.body);
 
             let er_occurred = false;
-            const pfunc_results = await p.postfunc(req, res).catch(er=>{
+            const pfunc_results = await p.postfunc(req, res).catch(err=>{
                 er_occurred = true;
-                return JSON.stringify(er);
+                return err;
             });
             console.log(" ----- POST pfunc_results ----- ");
             console.log(pfunc_results);
@@ -340,45 +340,6 @@ app.all("*.css|*.js|*.html", function (req, res, next) {
         }
     });
 });
-
-/*
-app.all("/stream/*.wav|*.mp3", function (req, res, next) {
-
-    console.log(req.path);
-
-    const fs = require('fs');
-
-    const p = path.join(globalVars().saveDir0, req.path);
-
-    let fpath = decodeURI(p);
-    fs.stat(fpath, (err, stat) => {
-        if (err) {
-            next(err)
-        }
-        // ファイル名をエンコードする
-        const filename = encodeURIComponent("aaa.wav");
-        // ヘッダーセットする
-        res.set({
-            'Content-Type': "audio/wav",
-            'Content-disposition': `inline; filename*=utf-8''${filename}`,
-            //'Content-Length': stat.size
-        })
-        const { spawn } = require('node:child_process');
-        //"chorus 1 1 100.0 1 5 5.0 -s"
-        fpath = "https://www.ne.jp/asahi/music/myuu/wave/eine.mp3";
-        let kk = `sox ${fpath} -t wav - `;
-        if (req.query.effects) {
-            kk += req.query.effects;
-        }
-        console.log(kk);
-        let sp = spawn(kk, [], { shell: true });
-        sp.on('error', (err) => {
-            next(err);
-        })
-        sp.stdout.pipe(res);
-    })
-});
-*/
 
 app.get("*.wav|*.mp3", function (req, res, next) {
     const fs = require('fs');
@@ -503,7 +464,7 @@ async function main() {
     });
 
 
-    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
+    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Log(`......PORT LISTEN ERROR 80...${err}`));
     Monitor.Start();
 
     /*
