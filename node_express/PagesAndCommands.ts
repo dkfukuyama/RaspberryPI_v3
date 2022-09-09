@@ -8,11 +8,11 @@ interface IPage
     name?: string;
     path: string;
     title: string;
-    title2?: string;
-    level?: number;
-    view_page?: string;
-    hidden?: boolean;
-    postfunc?: IPFunc;
+    title2?: string | undefined;
+    level?: number | undefined;
+    view_page?: string | undefined;
+    hidden?: boolean | undefined;
+    postfunc?: IPFunc | undefined;
 };
 
 export class PageParameters {
@@ -85,7 +85,6 @@ export class PageParameters {
             hidden: true,
         }
     ];
-
 };
 
 

@@ -457,8 +457,6 @@ async function main() {
 
     sch.setNodeCrontab();
 
-    //await npm_install().then((t) => slk.Log(t)).catch((e) => console.error(e));
-
     let httpServerPort = process.env.HTTP_SERVER_PORT;
 
     slk.Log({
@@ -472,17 +470,6 @@ async function main() {
 
     app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
     Monitor.Start();
-
-    /*
-    for (; ;) {
-        await delay_ms(12000);
-        console.log("242424");
-        if (Monitor.GetGhObjByAddress("192_168_1_24")?.g) {
-            Monitor.GetGhObjByAddress("192_168_1_24")?.g.PlayList(["http://192.168.1.103/g_dlfile/2022-05-21_12-25-38_021_sox.wav"]);
-            for (; ;) await delay_ms(3000);
-        }
-    }
-    */
 }
 
 
