@@ -95,6 +95,13 @@ function MusicSelectButtonClick(arg) {
 		"speakeraddress": arg.addr,
 		"filename": arg.fullurl,
 	};
+
+	alert(arg.speedx2);
+
+	if (arg.speedx2) {
+		data.filename += "?stream=1&effectsPreset=speedx2";
+    }
+
 	const url = '/command';
 	xmlHttpRequest.open('POST', url);
 	// サーバに対して解析方法を指定する
@@ -186,6 +193,10 @@ class GoogleHomeHtmlContainer {
 			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
 		}
 
+		let speedx2: boolean = false
+		let checks0 = elem1.getElementsByClassName('check');
+		let checks1 = Object.keys(checks0).map(e=>checks0[e]).filter(e => e.checked && e.value == 'speedx2');
+		if (checks1.length > 0) speedx2 = true; 
 
 		if (addr in MusicList) {
 		} else {
@@ -205,7 +216,7 @@ class GoogleHomeHtmlContainer {
 					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
 
 					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}' })">${f.Name}</button></div>`;
+					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}', 'speedx2':${speedx2} })">${f.Name}</button></div>`;
 					if (i % 3 == 2) out_html += '</div>';
 					end_i = i;
 				})

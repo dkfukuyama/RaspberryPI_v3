@@ -4,12 +4,12 @@ import path = require('path');
 import { FileListSearch, FileListSearchResults } from '@/FileListSearch';
 
 require('dotenv').config({ path: ".env_test" });
-import { globalVars, getLocalAddress } from '@/variables';
+import { AppConf } from '@/AppConf';
 
 describe("FileListSearch", () => {
     it("get_path_01", () => {
         console.debug("--------------------- get_path_01");
-        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
+        let FSearch: FileListSearch = new FileListSearch(AppConf().saveDir0);
 
         assert.equal(FSearch.GetDirBaseFullPath(),
             path.resolve(path.join(__dirname, "../test_mp3")));
@@ -24,11 +24,11 @@ describe("FileListSearch", () => {
 
     it("get_path_02", () => {
         console.debug("--------------------- get_path_02");
-        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
+        let FSearch: FileListSearch = new FileListSearch(AppConf().saveDir0);
         const results = FSearch.GetInfo("file_example_MP3_1.mp3");
         assert.equal(results.FullName, path.join(FSearch.GetDirBaseFullPath(), 'file_example_MP3_1.mp3'));
         assert.equal(results.BaseName, 'file_example_MP3_1.mp3');
-        assert.equal(results.Url, `${globalVars().httpDir_music}/file_example_MP3_1.mp3`);
+        assert.equal(results.Url, `${AppConf().httpDir_music}/file_example_MP3_1.mp3`);
         assert.equal(results.Ext, '.mp3');
         assert.equal(results.Name, 'file_example_MP3_1');
         assert.equal(results.Type, 'File');
@@ -52,7 +52,7 @@ describe("FileListSearch", () => {
 
     it("get_path_06", () => {
         console.debug("--------------------- get_path_05");
-        let FSearch: FileListSearch = new FileListSearch(globalVars().saveDir0);
+        let FSearch: FileListSearch = new FileListSearch(AppConf().saveDir0);
         FSearch.GetInfo("stream");
 
         let results: FileListSearchResults = FSearch.GetList();

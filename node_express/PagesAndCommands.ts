@@ -1,5 +1,5 @@
 import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
-import { globalVars } from "@/variables";
+import { AppConf } from "@/AppConf";
 
 type IPFunc = (req: any, res: any) => Promise<any>;
 
@@ -24,7 +24,7 @@ export class PageParameters {
     UpdateCommon() {
         this.Common = {
             ghomeSpeakers: GoogleHomeController.gHomeAddresses,
-            server_ws: `ws://${globalVars().httpDir0}:${process.env.SOCKETIO_PORT}`
+            server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`
         }
     }
 

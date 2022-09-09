@@ -2,7 +2,7 @@ import path = require('path');
 const request = require('request');
 const execSync = require('child_process').execSync;
 
-import { globalVars } from '@/variables';
+import { AppConf } from '@/AppConf';
 const gtts = require('@/google_tts')
 const ut = require('@/UtilFunctions');
 const gHome = require('@/GoogleHomeController');
@@ -28,7 +28,7 @@ async function speechOnGoogleHome(ghName, params){
             setTimeout(()=>reject('TIMEOUT speechOnGoogleHome'), 120000);
             let path_togo = (params.outFile ?? getNowDateWithString()) + ".wav";
             // 日付時刻から保存パス設定
-            params.outfilePath = path.join(globalVars().saveDir, path_togo);
+            params.outfilePath = path.join(AppConf().saveDir, path_togo);
 
             if(params.reverse_play){
                 params.text = params.text.split("").reverse().join("");
@@ -70,7 +70,7 @@ async function speechOnGoogleHome(ghName, params){
                 });
             }
 
-            const fullPathUrl = globalVars().httpDir + "/" + path_togo;
+            const fullPathUrl = AppConf().httpDir + "/" + path_togo;
 
             if(ghName) await gHome.play(ghName, fullPathUrl, params).then((d)=>resolve(d)).catch((err)=>reject(err));
             else resolve(params);

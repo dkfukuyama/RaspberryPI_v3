@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
-import { globalVars } from '@/variables';
+import { AppConf } from '@/AppConf';
 
 type TClient = 'MusicPlayer' | 'StatusController';
 interface IStatus {
@@ -77,7 +77,7 @@ export class SocketIoConnectionManager {
                     if (Client.TestMp3path) {
                         FSearch[data.addr] = new FileListSearch(Client.TestMp3path);
                 } else {
-                        FSearch[data.addr] = new FileListSearch(globalVars().saveDir0);
+                        FSearch[data.addr] = new FileListSearch(AppConf().saveDir0);
                 }
                 if (list_arg) FSearch[data.addr].GetInfo(list_arg);
 

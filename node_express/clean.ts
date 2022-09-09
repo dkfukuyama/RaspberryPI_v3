@@ -2,12 +2,12 @@ const fs = require('fs');
 import path = require('path');
 const slk: any = require('@/SlackSend');
 
-import { globalVars } from '@/variables';
+import { AppConf } from '@/AppConf';
 
 
 function clean_wav(leftnum) {
 
-    let dir = globalVars().saveDir;
+    let dir = AppConf().saveDir;
     console.log(dir);
     fs.readdir(dir, function (err, files) {
         if (err) throw err;

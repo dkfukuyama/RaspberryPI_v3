@@ -1,21 +1,9 @@
 ﻿require('dotenv').config({ path: '.env' });
 import path = require('path');
 
+
 const exec = require('child_process').exec;
 
-const express = require("express");
-const favicon = require('express-favicon');
-const bodyParser = require('body-parser');
-
-const app = express();
-app.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(express.json());
-
-// テンプレートエンジンの指定
-app.set("view engine", "ejs");
 
 
 const gtts = require('@/google_home')
@@ -31,212 +19,10 @@ import { GoogleHomeController } from '@/GoogleHomeController';
 
 const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
-import { globalVars, slk } from '@/variables';
+import { AppConf } from '@/AppConf';
 
 let page_path_set_index_ejs: any = {};
 
-function update_common_paramters(){
-    page_path_set_index_ejs.common = {
-        ghomeSpeakers: GoogleHomeController.gHomeAddresses,
-        server_ws: `ws://${globalVars().httpDir0}:${process.env.SOCKETIO_PORT}`
-    }
-}
-
-page_path_set_index_ejs.pages = [
-    {
-        path: '/',
-        title: 'こんにちは、ぐーぐるさんだよ',
-        level: 0
-    },
-    {
-        path: '/play_music',
-        title: 'おんがくをかける',
-        view_page: './play_music.ejs',
-        level: 0,
-    },
-    {
-        path: '/speak',
-        title: 'しゃべらせたいとき',
-        view_page: './speak.ejs',
-        level: 0,
-        postfunc: async (req, res) => {
-            console.log(`req.body.submit = ${req.body.submit}`);
-            let speaker_name = '';
-            if(req.body.submit.startsWith('google|')){
-                console.log('グーグルスピーカーモード');
-                speaker_name = req.body.submit.replace('google|','');
-                console.log(speaker_name);
-                return gtts.speechOnGoogleHome(
-                    speaker_name,
-                    {
-                        text: req.body.text,
-                        reverse_play: req.body.reverse_play,
-                        pitch: req.body.pitch,
-                        rb_effects1 : req.body.rb_effects1,
-                        speakingRate: req.body.speed,
-                        volume: req.body.volume,
-                        voiceTypeId: req.body.voice_type
-                    }
-                );
-            }else switch (req.body.submit) {
-                case 'otosan':
-                    console.log('おとうさん送信モード');
-                    return gtts.speechOnGoogleHome(
-                        '',
-                        {
-                            text: req.body.text,
-                            reverse_play: req.body.reverse_play,
-                            rb_effects1 : req.body.rb_effects1,
-                            pitch: req.body.pitch,
-                            speakingRate: req.body.speed,
-                            volume: req.body.volume,
-                            voiceTypeId: req.body.voice_type
-                        }
-                    ).then((params) => {
-                        let mailer = new mail.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
-                        mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
-            }
-            return;
-        },
-        specialParams : {
-            voiceTypes : require('./google_tts').voiceType,
-        }
-    },
-    {
-        path: '/calculator',
-        title: 'でんたく',
-        view_page: './calculator.ejs',
-        level: 0,
-        postfunc: async (req, res)=>{
-            console.log(`req.body.submit = ${req.body.submit}`);
-
-            req.body.text = calc.make_calculation_text(req.body);
-
-            let speaker_name = '';
-            if(req.body.submit.startsWith('google|')){
-                console.log('グーグルスピーカーモード');
-                speaker_name = req.body.submit.replace('google|','');
-                console.log(speaker_name);
-                return gtts.speechOnGoogleHome(
-                    speaker_name,
-                    {
-                        text: req.body.text,
-                        volume: req.body.volume,
-                        voiceTypeId: req.body.voice_type
-                    }
-                );
-            }else switch (req.body.submit) {
-                case 'otosan':
-                    console.log('おとうさん送信モード');
-                    return gtts.speechOnGoogleHome(
-                        '',
-                        {
-                            text: req.body.text,
-                            volume: req.body.volume,
-                            voiceTypeId: req.body.voice_type
-                        }
-                    ).then((params) => {
-                        let mailer = new mail.NodeMailer();
-                        mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
-            }
-            return;
-        },
-        specialParams:{
-            voiceTypes: require('./google_tts').voiceType,
-        },
-    },
-    {
-        path: '',
-        title: 'クイズゲーム',
-        view_page: './quiz.ejs',
-        level: 0
-    },
-    {
-        path: '/quiz/play',
-        title: 'あそぶ',
-        title2: 'クイズゲームであそぶ',
-        view_page: './quiz.ejs',
-        level: 1
-    },
-    {
-        path: '/quiz/make',
-        title: 'つくる',
-        title2: 'クイズゲームをつくる',
-        view_page: './quiz.ejs',
-        level: 1
-    },
-    {
-        path: '/config',
-        title: 'かんり、せってい',
-        view_page: './config.ejs',
-        level: 0,
-    },
-    {
-        path: '/command',
-        title: '',
-        hidden: true,
-        postfunc: async (req, res)=>{
-            if(req.body.mode)
-            {
-                slk.Log('COMMAND MODE');
-                slk.Log(req.body.mode);
-                switch(req.body.mode){
-                    case 'play_music':
-                        if (req.body.speakeraddress && req.body.filename) {
-                            //console.log(`Monitor.GetGhObjByAddress(${req.body.speakeraddress})?.g.PlayList([${req.body.filename}]);`)
-                            //console.log(Monitor.GetGhObjByAddress(req.body.speakeraddress));
-                            Monitor.GetGhObjByAddress(req.body.speakeraddress)?.g.PlayList([req.body.filename]);
-                        }
-                    case 'cal_today':
-                        return Promise.resolve();
-                        //return gtts.speechOnGoogleHomeCal(ghome.getGoogleHomeAddresses()[0].speakerName, {});
-                        break;
-                    case 'clean_wav':
-                        return new Promise((resolve, _) => resolve(require('./clean').clean_wav(100)));
-                        break;
-                    case 'update_reboot':
-                        let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
-                        let k = "";
-                        for (let p of pr) {
-                            k += await new Promise((resolve, reject) => {
-                                exec(p, (err, stdout, stderr) => {
-                                    if (err) {
-                                        reject(err);
-                                    } else {
-                                        console.log(`stdout: ${stdout}`)
-                                        resolve(stdout);
-                                    }
-                                });
-                            });
-                        };
-                        process.exit(0);
-                        return k;
-                        break;
-                    case 'reboot':
-                        process.exit(0);
-                        break;
-                    case 'system_command':
-                        slk.Log(`${req.body.command}`);
-                        return new Promise((resolve, reject) => {
-                            exec(req.body.command, (err, stdout, stderr) => {
-                                if (err) {
-                                    reject(err);
-                                } else {
-                                    console.log(`stdout: ${stdout}`)
-                                    resolve(stdout);
-                                }
-                            });
-                        });
-                        break;
-                    default:
-                        return new Promise<void>((resolve, _)=>resolve());
-                }
-            }
-        }
-    }
-]
 
 page_path_set_index_ejs.pages.forEach(p =>{
 
@@ -350,7 +136,7 @@ app.all("*.css|*.js|*.html", function (req, res, next) {
 app.get("*.wav|*.mp3", function (req, res, next) {
     const fs = require('fs');
 
-    const p = path.join(globalVars().saveDir0, decodeURI(req.path));
+    const p = path.join(AppConf().saveDir0, decodeURI(req.path));
     const query = req.query;
     if (!query.stream) {
         res.sendFile(p, (err) => {
@@ -460,15 +246,14 @@ async function main() {
     let httpServerPort = process.env.HTTP_SERVER_PORT;
 
     slk.Log({
-        httpDir0: globalVars().httpDir0,
-        httpDir: globalVars().httpDir,
-        httpDir_music: globalVars().httpDir_music,
-        saveDir0: globalVars().saveDir0,
-        voiceSubDir: globalVars().voiceSubDir
+        httpDir0: AppConf().httpDir0,
+        httpDir: AppConf().httpDir,
+        httpDir_music: AppConf().httpDir_music,
+        saveDir0: AppConf().saveDir0,
+        voiceSubDir: AppConf().voiceSubDir
     });
 
-
-    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => console.log("......PORT LISTEN ERROR 80"));
+    app.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
     Monitor.Start();
 }
 
