@@ -1,8 +1,10 @@
 ﻿const exec = require('child_process').exec;
 const cron = require('node-cron');
-const slk: any = require('@/SlackSend');
 const ut = require('@/UtilFunctions');
 import gh = require('@/google_home');
+
+import { Slack } from '@/SlackSend';
+const slk = new Slack(process.env.SLACK_WEBHOOK);
 
 require('date-utils');
 
@@ -40,7 +42,7 @@ function setNodeCrontab() {
         console.log(g);
     });
     */
-    
+
     // WatchCalender
     //cron.schedule('10 */5 * * * *', async () => {
     //    let dts = new Date().add({ "minutes": 30 });
@@ -53,7 +55,7 @@ function setNodeCrontab() {
     //    console.log(g);
     //});
 
-    
+
     // WatchCalender
     //cron.schedule('10 */5 * * * *', async () => {
     //    let dts = new Date().add({ "minutes": 30 });
@@ -66,18 +68,19 @@ function setNodeCrontab() {
     //    console.log(g);
     //});
 
+    /*
     cron.schedule('18 12 5 * * *', () => {
 
         //{ "mode": "system_command", "command" : "sudo systemctl restart pi_server" }
 
         const command = 'curl -d \'mode=clean_wav&short_return=1\' http://localhost/command';
         exec(command, async (err, stdout, stderr) => {
-            slk.slacksend(command);
+            slk.Log(command);
             if (err) {
-                slk.slacksend(err);
+                slk.Err(err);
             }else{
                 console.log(`stdout: ${stdout}`)
-                slk.slacksend(stdout);
+                slk.Log(stdout);
             }
         });
     });
@@ -85,15 +88,16 @@ function setNodeCrontab() {
     cron.schedule('18 12 3 * * *', () => {
         const command = 'curl -d \'mode=system_command&command=sudo systemctl restart pi_server\' http://localhost/command';
         exec(command, async (err, stdout, stderr) => {
-            slk.slacksend(command);
+            slk.Log(command);
             if (err) {
-                slk.slacksend(err);
+                slk.Err(err);
             } else {
                 console.log(`stdout: ${stdout}`)
-                slk.slacksend(stdout);
+                slk.Log(stdout);
             }
         });
     });
+    */
 }
 
 async function start(){
