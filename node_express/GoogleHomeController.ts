@@ -304,7 +304,7 @@ export class GoogleHomeController {
     public Close(): void {
         this.EndJoin();
         try {
-            this.PfSender.close();
+            this.PfSender?.close();
         } catch (err) {
             console.error(err);
         }
