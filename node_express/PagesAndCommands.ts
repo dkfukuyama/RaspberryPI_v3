@@ -1,4 +1,4 @@
-import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
+ï»¿import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 
 type IPFunc = (req: any, res: any) => Promise<any>;
@@ -13,6 +13,7 @@ interface IPage
     view_page?: string | undefined;
     hidden?: boolean | undefined;
     postfunc?: IPFunc | undefined;
+    getfunc?: IPFunc | undefined;
 };
 
 export class PageParameters {
@@ -32,58 +33,53 @@ export class PageParameters {
     [
         {
             path: '/',
-            title: '‚±‚ñ‚É‚¿‚ÍA‚®[‚®‚é‚³‚ñ‚¾‚æ',
+            title: 'ã“ã‚“ã«ã¡ã¯ã€ããƒ¼ãã‚‹ã•ã‚“ã ã‚ˆ',
             level: 0
         },
         {
             path: '/play_music',
-            title: '‚¨‚ñ‚ª‚­‚ğ‚©‚¯‚é',
+            title: 'ãŠã‚“ãŒãã‚’ã‹ã‘ã‚‹',
             view_page: './play_music.ejs',
             level: 0,
         },
         {
             path: '/speak',
-            title: '‚µ‚á‚×‚ç‚¹‚½‚¢‚Æ‚«',
+            title: 'ã—ã‚ƒã¹ã‚‰ã›ãŸã„ã¨ã',
             view_page: './speak.ejs',
             level: 0,
         },
         {
             path: '/calculator',
-            title: '‚Å‚ñ‚½‚­',
+            title: 'ã§ã‚“ãŸã',
             view_page: './calculator.ejs',
             level: 0,
         },
         {
             path: '',
-            title: 'ƒNƒCƒYƒQ[ƒ€',
+            title: 'ã‚¯ã‚¤ã‚ºã‚²ãƒ¼ãƒ ',
             view_page: './quiz.ejs',
             level: 0
         },
         {
             path: '/quiz/play',
-            title: '‚ ‚»‚Ô',
-            title2: 'ƒNƒCƒYƒQ[ƒ€‚Å‚ ‚»‚Ô',
+            title: 'ã‚ãã¶',
+            title2: 'ã‚¯ã‚¤ã‚ºã‚²ãƒ¼ãƒ ã§ã‚ãã¶',
             view_page: './quiz.ejs',
             level: 1
         },
         {
             path: '/quiz/make',
-            title: '‚Â‚­‚é',
-            title2: 'ƒNƒCƒYƒQ[ƒ€‚ğ‚Â‚­‚é',
+            title: 'ã¤ãã‚‹',
+            title2: 'ã‚¯ã‚¤ã‚ºã‚²ãƒ¼ãƒ ã‚’ã¤ãã‚‹',
             view_page: './quiz.ejs',
             level: 1
         },
         {
             path: '/config',
-            title: '‚©‚ñ‚èA‚¹‚Á‚Ä‚¢',
+            title: 'ã‹ã‚“ã‚Šã€ã›ã£ã¦ã„',
             view_page: './config.ejs',
             level: 0,
         },
-        {
-            path: '/command',
-            title: '',
-            hidden: true,
-        }
     ];
 };
 

@@ -41,7 +41,13 @@
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
+    <Content Include="bak.txt">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="BuildAndExec.ps1" />
+    <TypeScriptCompile Include="AppFunctions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="calculator.ts" />
     <Content Include="cal_sum.sh" />
     <Content Include="clean.ts">

@@ -4,6 +4,8 @@ import { Socket, Server } from 'socket.io';
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
 import { AppConf } from '@/AppConf';
+import * as AppFunctions from '@/AppFunctions';
+
 
 type TClient = 'MusicPlayer' | 'StatusController';
 interface IStatus {
@@ -98,6 +100,8 @@ export class SocketIoConnectionManager {
                 clearTimeout(t);
             });
 
+            AppFunctions.ApplyToSocket(socket);
+
         });
         this.Io.listen(this.SocketIoPort);
     }
@@ -178,16 +182,6 @@ export class GHomeMonitor {
         }
     }
 
-    private async UpdateGhStatusAll(): Promise<void> {
-        /*
-        for (let key in this.GHomes) {
-            await this.GHomes[key].g.UpdateStatus();
-            //await this.GHomes[key].g.UpdateSessions();
-            await this.GHomes[key].g.UpdatePlayerStatus();
-        }
-        */
-    }
-
     private GetStatusAll(test_json?: string): object {
         if (test_json) {
             const gh = require(`@/FunctionTest/${test_json}`);
@@ -214,8 +208,8 @@ export class GHomeMonitor {
         this.CreateOrOverWriteObjects();
 
         try {
-            await this.UpdateGhStatusAll();
-            
+            // NOP
+            () => { }
         } catch (err) {
             console.log("ERR DETECTED");
             console.error(err);

@@ -68,16 +68,13 @@ function setNodeCrontab() {
     //    console.log(g);
     //});
 
-    /*
-    cron.schedule('18 12 5 * * *', () => {
-
-        //{ "mode": "system_command", "command" : "sudo systemctl restart pi_server" }
-
+    cron.schedule('18 12 3 * * *', () => {
         const command = 'curl -d \'mode=clean_wav&short_return=1\' http://localhost/command';
         exec(command, async (err, stdout, stderr) => {
             slk.Log(command);
             if (err) {
                 slk.Err(err);
+                slk.Err(stderr);
             }else{
                 console.log(`stdout: ${stdout}`)
                 slk.Log(stdout);
@@ -85,6 +82,7 @@ function setNodeCrontab() {
         });
     });
 
+    /*
     cron.schedule('18 12 3 * * *', () => {
         const command = 'curl -d \'mode=system_command&command=sudo systemctl restart pi_server\' http://localhost/command';
         exec(command, async (err, stdout, stderr) => {

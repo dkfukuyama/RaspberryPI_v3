@@ -1,0 +1,2360 @@
+2022-09-08 05:53 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:53 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:53 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:53 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:53 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:53 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:53 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:53 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:53 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:53 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:53 :     at Generator.next (<anonymous>) {
+2022-09-08 05:53 :   code: 'EADDRINUSE',
+2022-09-08 05:53 :   errno: -98,
+2022-09-08 05:53 :   syscall: 'listen',
+2022-09-08 05:53 :   address: '::',
+2022-09-08 05:53 :   port: 8080
+2022-09-08 05:53 : }
+2022-09-08 05:54 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:54 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:54 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:54 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:54 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:54 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:54 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:54 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:54 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:54 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:54 :     at Generator.next (<anonymous>) {
+2022-09-08 05:54 :   code: 'EADDRINUSE',
+2022-09-08 05:54 :   errno: -98,
+2022-09-08 05:54 :   syscall: 'listen',
+2022-09-08 05:54 :   address: '::',
+2022-09-08 05:54 :   port: 8080
+2022-09-08 05:54 : }
+2022-09-08 05:54 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:54 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:54 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:54 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:54 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:54 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:54 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:54 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:54 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:54 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:54 :     at Generator.next (<anonymous>) {
+2022-09-08 05:54 :   code: 'EADDRINUSE',
+2022-09-08 05:54 :   errno: -98,
+2022-09-08 05:54 :   syscall: 'listen',
+2022-09-08 05:54 :   address: '::',
+2022-09-08 05:54 :   port: 8080
+2022-09-08 05:54 : }
+2022-09-08 05:54 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:54 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:54 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:54 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:54 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:54 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:54 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:54 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:54 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:54 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:54 :     at Generator.next (<anonymous>) {
+2022-09-08 05:54 :   code: 'EADDRINUSE',
+2022-09-08 05:54 :   errno: -98,
+2022-09-08 05:54 :   syscall: 'listen',
+2022-09-08 05:54 :   address: '::',
+2022-09-08 05:54 :   port: 8080
+2022-09-08 05:54 : }
+2022-09-08 05:54 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:54 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:54 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:54 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:54 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:54 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:54 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:54 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:54 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:54 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:54 :     at Generator.next (<anonymous>) {
+2022-09-08 05:54 :   code: 'EADDRINUSE',
+2022-09-08 05:54 :   errno: -98,
+2022-09-08 05:54 :   syscall: 'listen',
+2022-09-08 05:54 :   address: '::',
+2022-09-08 05:54 :   port: 8080
+2022-09-08 05:54 : }
+2022-09-08 05:55 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:55 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:55 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:55 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:55 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:55 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:55 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:55 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:55 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:55 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:55 :     at Generator.next (<anonymous>) {
+2022-09-08 05:55 :   code: 'EADDRINUSE',
+2022-09-08 05:55 :   errno: -98,
+2022-09-08 05:55 :   syscall: 'listen',
+2022-09-08 05:55 :   address: '::',
+2022-09-08 05:55 :   port: 8080
+2022-09-08 05:55 : }
+2022-09-08 05:55 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:55 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:55 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:55 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:55 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:55 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:55 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:55 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:55 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:55 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:55 :     at Generator.next (<anonymous>) {
+2022-09-08 05:55 :   code: 'EADDRINUSE',
+2022-09-08 05:55 :   errno: -98,
+2022-09-08 05:55 :   syscall: 'listen',
+2022-09-08 05:55 :   address: '::',
+2022-09-08 05:55 :   port: 8080
+2022-09-08 05:55 : }
+2022-09-08 05:55 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 05:55 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 05:55 :     at listenInCluster (node:net:1428:12)
+2022-09-08 05:55 :     at Server.listen (node:net:1516:7)
+2022-09-08 05:55 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 05:55 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 05:55 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 05:55 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 05:55 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 05:55 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 05:55 :     at Generator.next (<anonymous>) {
+2022-09-08 05:55 :   code: 'EADDRINUSE',
+2022-09-08 05:55 :   errno: -98,
+2022-09-08 05:55 :   syscall: 'listen',
+2022-09-08 05:55 :   address: '::',
+2022-09-08 05:55 :   port: 8080
+2022-09-08 05:55 : }
+2022-09-08 06:19 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:19 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:19 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:19 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:19 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:19 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:19 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:19 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:19 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:19 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:19 :     at Generator.next (<anonymous>) {
+2022-09-08 06:19 :   code: 'EADDRINUSE',
+2022-09-08 06:19 :   errno: -98,
+2022-09-08 06:19 :   syscall: 'listen',
+2022-09-08 06:19 :   address: '::',
+2022-09-08 06:19 :   port: 8080
+2022-09-08 06:19 : }
+2022-09-08 06:20 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:20 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:20 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:20 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:20 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:20 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:20 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:20 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:20 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:20 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:20 :     at Generator.next (<anonymous>) {
+2022-09-08 06:20 :   code: 'EADDRINUSE',
+2022-09-08 06:20 :   errno: -98,
+2022-09-08 06:20 :   syscall: 'listen',
+2022-09-08 06:20 :   address: '::',
+2022-09-08 06:20 :   port: 8080
+2022-09-08 06:20 : }
+2022-09-08 06:20 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:20 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:20 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:20 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:20 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:20 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:20 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:20 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:20 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:20 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:20 :     at Generator.next (<anonymous>) {
+2022-09-08 06:20 :   code: 'EADDRINUSE',
+2022-09-08 06:20 :   errno: -98,
+2022-09-08 06:20 :   syscall: 'listen',
+2022-09-08 06:20 :   address: '::',
+2022-09-08 06:20 :   port: 8080
+2022-09-08 06:20 : }
+2022-09-08 06:20 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:20 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:20 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:20 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:20 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:20 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:20 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:20 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:20 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:20 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:20 :     at Generator.next (<anonymous>) {
+2022-09-08 06:20 :   code: 'EADDRINUSE',
+2022-09-08 06:20 :   errno: -98,
+2022-09-08 06:20 :   syscall: 'listen',
+2022-09-08 06:20 :   address: '::',
+2022-09-08 06:20 :   port: 8080
+2022-09-08 06:20 : }
+2022-09-08 06:21 : Error: Cannot set headers after they are sent to the client
+2022-09-08 06:21 :     at new NodeError (node:internal/errors:372:5)
+2022-09-08 06:21 :     at ServerResponse.setHeader (node:_http_outgoing:576:11)
+2022-09-08 06:21 :     at ServerResponse.header (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:794:10)
+2022-09-08 06:21 :     at ServerResponse.send (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:174:12)
+2022-09-08 06:21 :     at done (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:1035:10)
+2022-09-08 06:21 :     at tryHandleCache (/home/pi/RaspberryPI_v3/node_express/node_modules/ejs/lib/ejs.js:280:5)
+2022-09-08 06:21 :     at View.exports.renderFile [as engine] (/home/pi/RaspberryPI_v3/node_express/node_modules/ejs/lib/ejs.js:491:10)
+2022-09-08 06:21 :     at View.render (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/view.js:135:8)
+2022-09-08 06:21 :     at tryRender (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/application.js:657:10)
+2022-09-08 06:21 :     at Function.render (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/application.js:609:3)
+2022-09-08 06:21 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:21 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:21 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:21 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:21 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:21 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:21 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:21 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:21 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:21 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:21 :     at Generator.next (<anonymous>) {
+2022-09-08 06:21 :   code: 'EADDRINUSE',
+2022-09-08 06:21 :   errno: -98,
+2022-09-08 06:21 :   syscall: 'listen',
+2022-09-08 06:21 :   address: '::',
+2022-09-08 06:21 :   port: 8080
+2022-09-08 06:21 : }
+2022-09-08 06:21 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:21 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:21 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:21 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:21 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:21 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:21 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:21 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:21 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:21 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:21 :     at Generator.next (<anonymous>) {
+2022-09-08 06:21 :   code: 'EADDRINUSE',
+2022-09-08 06:21 :   errno: -98,
+2022-09-08 06:21 :   syscall: 'listen',
+2022-09-08 06:21 :   address: '::',
+2022-09-08 06:21 :   port: 8080
+2022-09-08 06:21 : }
+2022-09-08 06:21 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:21 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:21 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:21 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:21 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:21 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:21 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:21 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:21 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:21 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:21 :     at Generator.next (<anonymous>) {
+2022-09-08 06:21 :   code: 'EADDRINUSE',
+2022-09-08 06:21 :   errno: -98,
+2022-09-08 06:21 :   syscall: 'listen',
+2022-09-08 06:21 :   address: '::',
+2022-09-08 06:21 :   port: 8080
+2022-09-08 06:21 : }
+2022-09-08 06:22 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:22 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:22 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:22 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:22 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:22 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:22 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:22 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:22 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:22 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:22 :     at Generator.next (<anonymous>) {
+2022-09-08 06:22 :   code: 'EADDRINUSE',
+2022-09-08 06:22 :   errno: -98,
+2022-09-08 06:22 :   syscall: 'listen',
+2022-09-08 06:22 :   address: '::',
+2022-09-08 06:22 :   port: 8080
+2022-09-08 06:22 : }
+2022-09-08 06:22 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:22 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:22 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:22 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:22 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:22 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:22 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:22 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:22 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:22 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:22 :     at Generator.next (<anonymous>) {
+2022-09-08 06:22 :   code: 'EADDRINUSE',
+2022-09-08 06:22 :   errno: -98,
+2022-09-08 06:22 :   syscall: 'listen',
+2022-09-08 06:22 :   address: '::',
+2022-09-08 06:22 :   port: 8080
+2022-09-08 06:22 : }
+2022-09-08 06:22 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:22 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:22 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:22 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:22 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:22 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:22 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:22 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:22 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:22 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:22 :     at Generator.next (<anonymous>) {
+2022-09-08 06:22 :   code: 'EADDRINUSE',
+2022-09-08 06:22 :   errno: -98,
+2022-09-08 06:22 :   syscall: 'listen',
+2022-09-08 06:22 :   address: '::',
+2022-09-08 06:22 :   port: 8080
+2022-09-08 06:22 : }
+2022-09-08 06:23 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:23 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:23 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:23 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:23 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:23 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:23 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:23 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:23 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:23 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:23 :     at Generator.next (<anonymous>) {
+2022-09-08 06:23 :   code: 'EADDRINUSE',
+2022-09-08 06:23 :   errno: -98,
+2022-09-08 06:23 :   syscall: 'listen',
+2022-09-08 06:23 :   address: '::',
+2022-09-08 06:23 :   port: 8080
+2022-09-08 06:23 : }
+2022-09-08 06:23 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:23 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:23 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:23 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:23 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:23 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:23 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:23 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:23 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:23 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:23 :     at Generator.next (<anonymous>) {
+2022-09-08 06:23 :   code: 'EADDRINUSE',
+2022-09-08 06:23 :   errno: -98,
+2022-09-08 06:23 :   syscall: 'listen',
+2022-09-08 06:23 :   address: '::',
+2022-09-08 06:23 :   port: 8080
+2022-09-08 06:23 : }
+2022-09-08 06:23 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:23 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:23 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:23 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:23 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:23 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:23 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:23 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:23 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:23 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:23 :     at Generator.next (<anonymous>) {
+2022-09-08 06:23 :   code: 'EADDRINUSE',
+2022-09-08 06:23 :   errno: -98,
+2022-09-08 06:23 :   syscall: 'listen',
+2022-09-08 06:23 :   address: '::',
+2022-09-08 06:23 :   port: 8080
+2022-09-08 06:23 : }
+2022-09-08 06:23 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:23 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:23 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:23 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:23 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:23 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:23 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:23 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:23 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:23 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:23 :     at Generator.next (<anonymous>) {
+2022-09-08 06:23 :   code: 'EADDRINUSE',
+2022-09-08 06:23 :   errno: -98,
+2022-09-08 06:23 :   syscall: 'listen',
+2022-09-08 06:23 :   address: '::',
+2022-09-08 06:23 :   port: 8080
+2022-09-08 06:23 : }
+2022-09-08 06:24 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:24 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:24 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:24 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:24 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:24 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:24 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:24 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:24 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:24 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:24 :     at Generator.next (<anonymous>) {
+2022-09-08 06:24 :   code: 'EADDRINUSE',
+2022-09-08 06:24 :   errno: -98,
+2022-09-08 06:24 :   syscall: 'listen',
+2022-09-08 06:24 :   address: '::',
+2022-09-08 06:24 :   port: 8080
+2022-09-08 06:24 : }
+2022-09-08 06:24 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:24 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:24 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:24 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:24 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:24 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:24 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:24 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:24 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:24 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:24 :     at Generator.next (<anonymous>) {
+2022-09-08 06:24 :   code: 'EADDRINUSE',
+2022-09-08 06:24 :   errno: -98,
+2022-09-08 06:24 :   syscall: 'listen',
+2022-09-08 06:24 :   address: '::',
+2022-09-08 06:24 :   port: 8080
+2022-09-08 06:24 : }
+2022-09-08 06:24 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:24 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:24 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:24 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:24 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:24 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:24 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:24 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:24 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:24 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:24 :     at Generator.next (<anonymous>) {
+2022-09-08 06:24 :   code: 'EADDRINUSE',
+2022-09-08 06:24 :   errno: -98,
+2022-09-08 06:24 :   syscall: 'listen',
+2022-09-08 06:24 :   address: '::',
+2022-09-08 06:24 :   port: 8080
+2022-09-08 06:24 : }
+2022-09-08 06:25 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:25 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:25 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:25 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:25 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:25 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:25 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:25 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:25 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:25 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:25 :     at Generator.next (<anonymous>) {
+2022-09-08 06:25 :   code: 'EADDRINUSE',
+2022-09-08 06:25 :   errno: -98,
+2022-09-08 06:25 :   syscall: 'listen',
+2022-09-08 06:25 :   address: '::',
+2022-09-08 06:25 :   port: 8080
+2022-09-08 06:25 : }
+2022-09-08 06:25 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:25 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:25 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:25 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:25 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:25 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:25 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:25 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:25 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:25 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:25 :     at Generator.next (<anonymous>) {
+2022-09-08 06:25 :   code: 'EADDRINUSE',
+2022-09-08 06:25 :   errno: -98,
+2022-09-08 06:25 :   syscall: 'listen',
+2022-09-08 06:25 :   address: '::',
+2022-09-08 06:25 :   port: 8080
+2022-09-08 06:25 : }
+2022-09-08 06:25 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:25 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:25 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:25 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:25 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:25 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:25 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:25 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:25 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:25 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:25 :     at Generator.next (<anonymous>) {
+2022-09-08 06:25 :   code: 'EADDRINUSE',
+2022-09-08 06:25 :   errno: -98,
+2022-09-08 06:25 :   syscall: 'listen',
+2022-09-08 06:25 :   address: '::',
+2022-09-08 06:25 :   port: 8080
+2022-09-08 06:25 : }
+2022-09-08 06:26 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:26 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:26 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:26 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:26 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:26 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:26 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:26 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:26 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:26 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:26 :     at Generator.next (<anonymous>) {
+2022-09-08 06:26 :   code: 'EADDRINUSE',
+2022-09-08 06:26 :   errno: -98,
+2022-09-08 06:26 :   syscall: 'listen',
+2022-09-08 06:26 :   address: '::',
+2022-09-08 06:26 :   port: 8080
+2022-09-08 06:26 : }
+2022-09-08 06:26 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:26 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:26 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:26 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:26 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:26 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:26 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:26 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:26 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:26 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:26 :     at Generator.next (<anonymous>) {
+2022-09-08 06:26 :   code: 'EADDRINUSE',
+2022-09-08 06:26 :   errno: -98,
+2022-09-08 06:26 :   syscall: 'listen',
+2022-09-08 06:26 :   address: '::',
+2022-09-08 06:26 :   port: 8080
+2022-09-08 06:26 : }
+2022-09-08 06:26 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:26 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:26 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:26 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:26 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:26 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:26 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:26 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:26 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:26 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:26 :     at Generator.next (<anonymous>) {
+2022-09-08 06:26 :   code: 'EADDRINUSE',
+2022-09-08 06:26 :   errno: -98,
+2022-09-08 06:26 :   syscall: 'listen',
+2022-09-08 06:26 :   address: '::',
+2022-09-08 06:26 :   port: 8080
+2022-09-08 06:26 : }
+2022-09-08 06:26 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:26 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:26 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:26 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:26 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:26 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:26 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:26 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:26 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:26 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:26 :     at Generator.next (<anonymous>) {
+2022-09-08 06:26 :   code: 'EADDRINUSE',
+2022-09-08 06:26 :   errno: -98,
+2022-09-08 06:26 :   syscall: 'listen',
+2022-09-08 06:26 :   address: '::',
+2022-09-08 06:26 :   port: 8080
+2022-09-08 06:26 : }
+2022-09-08 06:27 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:27 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:27 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:27 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:27 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:27 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:27 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:27 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:27 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:27 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:27 :     at Generator.next (<anonymous>) {
+2022-09-08 06:27 :   code: 'EADDRINUSE',
+2022-09-08 06:27 :   errno: -98,
+2022-09-08 06:27 :   syscall: 'listen',
+2022-09-08 06:27 :   address: '::',
+2022-09-08 06:27 :   port: 8080
+2022-09-08 06:27 : }
+2022-09-08 06:27 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:27 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:27 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:27 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:27 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:27 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:27 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:27 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:27 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:27 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:27 :     at Generator.next (<anonymous>) {
+2022-09-08 06:27 :   code: 'EADDRINUSE',
+2022-09-08 06:27 :   errno: -98,
+2022-09-08 06:27 :   syscall: 'listen',
+2022-09-08 06:27 :   address: '::',
+2022-09-08 06:27 :   port: 8080
+2022-09-08 06:27 : }
+2022-09-08 06:27 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:27 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:27 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:27 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:27 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:27 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:27 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:27 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:27 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:27 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:27 :     at Generator.next (<anonymous>) {
+2022-09-08 06:27 :   code: 'EADDRINUSE',
+2022-09-08 06:27 :   errno: -98,
+2022-09-08 06:27 :   syscall: 'listen',
+2022-09-08 06:27 :   address: '::',
+2022-09-08 06:27 :   port: 8080
+2022-09-08 06:27 : }
+2022-09-08 06:28 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:28 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:28 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:28 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:28 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:28 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:28 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:28 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:28 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:28 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:28 :     at Generator.next (<anonymous>) {
+2022-09-08 06:28 :   code: 'EADDRINUSE',
+2022-09-08 06:28 :   errno: -98,
+2022-09-08 06:28 :   syscall: 'listen',
+2022-09-08 06:28 :   address: '::',
+2022-09-08 06:28 :   port: 8080
+2022-09-08 06:28 : }
+2022-09-08 06:28 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:28 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:28 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:28 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:28 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:28 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:28 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:28 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:28 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:28 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:28 :     at Generator.next (<anonymous>) {
+2022-09-08 06:28 :   code: 'EADDRINUSE',
+2022-09-08 06:28 :   errno: -98,
+2022-09-08 06:28 :   syscall: 'listen',
+2022-09-08 06:28 :   address: '::',
+2022-09-08 06:28 :   port: 8080
+2022-09-08 06:28 : }
+2022-09-08 06:28 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:28 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:28 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:28 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:28 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:28 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:28 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:28 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:28 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:28 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:28 :     at Generator.next (<anonymous>) {
+2022-09-08 06:28 :   code: 'EADDRINUSE',
+2022-09-08 06:28 :   errno: -98,
+2022-09-08 06:28 :   syscall: 'listen',
+2022-09-08 06:28 :   address: '::',
+2022-09-08 06:28 :   port: 8080
+2022-09-08 06:28 : }
+2022-09-08 06:29 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:29 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:29 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:29 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:29 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:29 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:29 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:29 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:29 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:29 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:29 :     at Generator.next (<anonymous>) {
+2022-09-08 06:29 :   code: 'EADDRINUSE',
+2022-09-08 06:29 :   errno: -98,
+2022-09-08 06:29 :   syscall: 'listen',
+2022-09-08 06:29 :   address: '::',
+2022-09-08 06:29 :   port: 8080
+2022-09-08 06:29 : }
+2022-09-08 06:29 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:29 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:29 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:29 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:29 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:29 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:29 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:29 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:29 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:29 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:29 :     at Generator.next (<anonymous>) {
+2022-09-08 06:29 :   code: 'EADDRINUSE',
+2022-09-08 06:29 :   errno: -98,
+2022-09-08 06:29 :   syscall: 'listen',
+2022-09-08 06:29 :   address: '::',
+2022-09-08 06:29 :   port: 8080
+2022-09-08 06:29 : }
+2022-09-08 06:29 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:29 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:29 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:29 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:29 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:29 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:29 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:29 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:29 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:29 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:29 :     at Generator.next (<anonymous>) {
+2022-09-08 06:29 :   code: 'EADDRINUSE',
+2022-09-08 06:29 :   errno: -98,
+2022-09-08 06:29 :   syscall: 'listen',
+2022-09-08 06:29 :   address: '::',
+2022-09-08 06:29 :   port: 8080
+2022-09-08 06:29 : }
+2022-09-08 06:30 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:30 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:30 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:30 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:30 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:30 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:30 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:30 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:30 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:30 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:30 :     at Generator.next (<anonymous>) {
+2022-09-08 06:30 :   code: 'EADDRINUSE',
+2022-09-08 06:30 :   errno: -98,
+2022-09-08 06:30 :   syscall: 'listen',
+2022-09-08 06:30 :   address: '::',
+2022-09-08 06:30 :   port: 8080
+2022-09-08 06:30 : }
+2022-09-08 06:30 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:30 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:30 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:30 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:30 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:30 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:30 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:30 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:30 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:30 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:30 :     at Generator.next (<anonymous>) {
+2022-09-08 06:30 :   code: 'EADDRINUSE',
+2022-09-08 06:30 :   errno: -98,
+2022-09-08 06:30 :   syscall: 'listen',
+2022-09-08 06:30 :   address: '::',
+2022-09-08 06:30 :   port: 8080
+2022-09-08 06:30 : }
+2022-09-08 06:30 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:30 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:30 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:30 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:30 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:30 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:30 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:30 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:30 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:30 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:30 :     at Generator.next (<anonymous>) {
+2022-09-08 06:30 :   code: 'EADDRINUSE',
+2022-09-08 06:30 :   errno: -98,
+2022-09-08 06:30 :   syscall: 'listen',
+2022-09-08 06:30 :   address: '::',
+2022-09-08 06:30 :   port: 8080
+2022-09-08 06:30 : }
+2022-09-08 06:31 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:31 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:31 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:31 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:31 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:31 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:31 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:31 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:31 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:31 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:31 :     at Generator.next (<anonymous>) {
+2022-09-08 06:31 :   code: 'EADDRINUSE',
+2022-09-08 06:31 :   errno: -98,
+2022-09-08 06:31 :   syscall: 'listen',
+2022-09-08 06:31 :   address: '::',
+2022-09-08 06:31 :   port: 8080
+2022-09-08 06:31 : }
+2022-09-08 06:31 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:31 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:31 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:31 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:31 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:31 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:31 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:31 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:31 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:31 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:31 :     at Generator.next (<anonymous>) {
+2022-09-08 06:31 :   code: 'EADDRINUSE',
+2022-09-08 06:31 :   errno: -98,
+2022-09-08 06:31 :   syscall: 'listen',
+2022-09-08 06:31 :   address: '::',
+2022-09-08 06:31 :   port: 8080
+2022-09-08 06:31 : }
+2022-09-08 06:31 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:31 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:31 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:31 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:31 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:31 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:31 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:31 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:31 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:31 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:31 :     at Generator.next (<anonymous>) {
+2022-09-08 06:31 :   code: 'EADDRINUSE',
+2022-09-08 06:31 :   errno: -98,
+2022-09-08 06:31 :   syscall: 'listen',
+2022-09-08 06:31 :   address: '::',
+2022-09-08 06:31 :   port: 8080
+2022-09-08 06:31 : }
+2022-09-08 06:32 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:32 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:32 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:32 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:32 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:32 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:32 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:32 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:32 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:32 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:32 :     at Generator.next (<anonymous>) {
+2022-09-08 06:32 :   code: 'EADDRINUSE',
+2022-09-08 06:32 :   errno: -98,
+2022-09-08 06:32 :   syscall: 'listen',
+2022-09-08 06:32 :   address: '::',
+2022-09-08 06:32 :   port: 8080
+2022-09-08 06:32 : }
+2022-09-08 06:32 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:32 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:32 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:32 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:32 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:32 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:32 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:32 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:32 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:32 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:32 :     at Generator.next (<anonymous>) {
+2022-09-08 06:32 :   code: 'EADDRINUSE',
+2022-09-08 06:32 :   errno: -98,
+2022-09-08 06:32 :   syscall: 'listen',
+2022-09-08 06:32 :   address: '::',
+2022-09-08 06:32 :   port: 8080
+2022-09-08 06:32 : }
+2022-09-08 06:32 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:32 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:32 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:32 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:32 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:32 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:32 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:32 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:32 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:32 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:32 :     at Generator.next (<anonymous>) {
+2022-09-08 06:32 :   code: 'EADDRINUSE',
+2022-09-08 06:32 :   errno: -98,
+2022-09-08 06:32 :   syscall: 'listen',
+2022-09-08 06:32 :   address: '::',
+2022-09-08 06:32 :   port: 8080
+2022-09-08 06:32 : }
+2022-09-08 06:33 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:33 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:33 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:33 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:33 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:33 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:33 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:33 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:33 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:33 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:33 :     at Generator.next (<anonymous>) {
+2022-09-08 06:33 :   code: 'EADDRINUSE',
+2022-09-08 06:33 :   errno: -98,
+2022-09-08 06:33 :   syscall: 'listen',
+2022-09-08 06:33 :   address: '::',
+2022-09-08 06:33 :   port: 8080
+2022-09-08 06:33 : }
+2022-09-08 06:33 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:33 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:33 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:33 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:33 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:33 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:33 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:33 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:33 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:33 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:33 :     at Generator.next (<anonymous>) {
+2022-09-08 06:33 :   code: 'EADDRINUSE',
+2022-09-08 06:33 :   errno: -98,
+2022-09-08 06:33 :   syscall: 'listen',
+2022-09-08 06:33 :   address: '::',
+2022-09-08 06:33 :   port: 8080
+2022-09-08 06:33 : }
+2022-09-08 06:33 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:33 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:33 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:33 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:33 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:33 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:33 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:33 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:33 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:33 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:33 :     at Generator.next (<anonymous>) {
+2022-09-08 06:33 :   code: 'EADDRINUSE',
+2022-09-08 06:33 :   errno: -98,
+2022-09-08 06:33 :   syscall: 'listen',
+2022-09-08 06:33 :   address: '::',
+2022-09-08 06:33 :   port: 8080
+2022-09-08 06:33 : }
+2022-09-08 06:34 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:34 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:34 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:34 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:34 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:34 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:34 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:34 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:34 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:34 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:34 :     at Generator.next (<anonymous>) {
+2022-09-08 06:34 :   code: 'EADDRINUSE',
+2022-09-08 06:34 :   errno: -98,
+2022-09-08 06:34 :   syscall: 'listen',
+2022-09-08 06:34 :   address: '::',
+2022-09-08 06:34 :   port: 8080
+2022-09-08 06:34 : }
+2022-09-08 06:34 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:34 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:34 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:34 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:34 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:34 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:34 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:34 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:34 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:34 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:34 :     at Generator.next (<anonymous>) {
+2022-09-08 06:34 :   code: 'EADDRINUSE',
+2022-09-08 06:34 :   errno: -98,
+2022-09-08 06:34 :   syscall: 'listen',
+2022-09-08 06:34 :   address: '::',
+2022-09-08 06:34 :   port: 8080
+2022-09-08 06:34 : }
+2022-09-08 06:34 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:34 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:34 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:34 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:34 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:34 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:34 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:34 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:34 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:34 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:34 :     at Generator.next (<anonymous>) {
+2022-09-08 06:34 :   code: 'EADDRINUSE',
+2022-09-08 06:34 :   errno: -98,
+2022-09-08 06:34 :   syscall: 'listen',
+2022-09-08 06:34 :   address: '::',
+2022-09-08 06:34 :   port: 8080
+2022-09-08 06:34 : }
+2022-09-08 06:35 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:35 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:35 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:35 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:35 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:35 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:35 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:35 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:35 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:35 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:35 :     at Generator.next (<anonymous>) {
+2022-09-08 06:35 :   code: 'EADDRINUSE',
+2022-09-08 06:35 :   errno: -98,
+2022-09-08 06:35 :   syscall: 'listen',
+2022-09-08 06:35 :   address: '::',
+2022-09-08 06:35 :   port: 8080
+2022-09-08 06:35 : }
+2022-09-08 06:35 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:35 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:35 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:35 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:35 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:35 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:35 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:35 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:35 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:35 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:35 :     at Generator.next (<anonymous>) {
+2022-09-08 06:35 :   code: 'EADDRINUSE',
+2022-09-08 06:35 :   errno: -98,
+2022-09-08 06:35 :   syscall: 'listen',
+2022-09-08 06:35 :   address: '::',
+2022-09-08 06:35 :   port: 8080
+2022-09-08 06:35 : }
+2022-09-08 06:35 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:35 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:35 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:35 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:35 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:35 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:35 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:35 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:35 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:35 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:35 :     at Generator.next (<anonymous>) {
+2022-09-08 06:35 :   code: 'EADDRINUSE',
+2022-09-08 06:35 :   errno: -98,
+2022-09-08 06:35 :   syscall: 'listen',
+2022-09-08 06:35 :   address: '::',
+2022-09-08 06:35 :   port: 8080
+2022-09-08 06:35 : }
+2022-09-08 06:35 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:35 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:35 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:35 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:35 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:35 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:35 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:35 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:35 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:35 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:35 :     at Generator.next (<anonymous>) {
+2022-09-08 06:35 :   code: 'EADDRINUSE',
+2022-09-08 06:35 :   errno: -98,
+2022-09-08 06:35 :   syscall: 'listen',
+2022-09-08 06:35 :   address: '::',
+2022-09-08 06:35 :   port: 8080
+2022-09-08 06:35 : }
+2022-09-08 06:36 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:36 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:36 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:36 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:36 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:36 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:36 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:36 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:36 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:36 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:36 :     at Generator.next (<anonymous>) {
+2022-09-08 06:36 :   code: 'EADDRINUSE',
+2022-09-08 06:36 :   errno: -98,
+2022-09-08 06:36 :   syscall: 'listen',
+2022-09-08 06:36 :   address: '::',
+2022-09-08 06:36 :   port: 8080
+2022-09-08 06:36 : }
+2022-09-08 06:36 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:36 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:36 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:36 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:36 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:36 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:36 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:36 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:36 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:36 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:36 :     at Generator.next (<anonymous>) {
+2022-09-08 06:36 :   code: 'EADDRINUSE',
+2022-09-08 06:36 :   errno: -98,
+2022-09-08 06:36 :   syscall: 'listen',
+2022-09-08 06:36 :   address: '::',
+2022-09-08 06:36 :   port: 8080
+2022-09-08 06:36 : }
+2022-09-08 06:36 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:36 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:36 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:36 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:36 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:36 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:36 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:36 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:36 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:36 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:36 :     at Generator.next (<anonymous>) {
+2022-09-08 06:36 :   code: 'EADDRINUSE',
+2022-09-08 06:36 :   errno: -98,
+2022-09-08 06:36 :   syscall: 'listen',
+2022-09-08 06:36 :   address: '::',
+2022-09-08 06:36 :   port: 8080
+2022-09-08 06:36 : }
+2022-09-08 06:37 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:37 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:37 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:37 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:37 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:37 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:37 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:37 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:37 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:37 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:37 :     at Generator.next (<anonymous>) {
+2022-09-08 06:37 :   code: 'EADDRINUSE',
+2022-09-08 06:37 :   errno: -98,
+2022-09-08 06:37 :   syscall: 'listen',
+2022-09-08 06:37 :   address: '::',
+2022-09-08 06:37 :   port: 8080
+2022-09-08 06:37 : }
+2022-09-08 06:37 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:37 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:37 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:37 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:37 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:37 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:37 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:37 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:37 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:37 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:37 :     at Generator.next (<anonymous>) {
+2022-09-08 06:37 :   code: 'EADDRINUSE',
+2022-09-08 06:37 :   errno: -98,
+2022-09-08 06:37 :   syscall: 'listen',
+2022-09-08 06:37 :   address: '::',
+2022-09-08 06:37 :   port: 8080
+2022-09-08 06:37 : }
+2022-09-08 06:37 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:37 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:37 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:37 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:37 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:37 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:37 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:37 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:37 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:37 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:37 :     at Generator.next (<anonymous>) {
+2022-09-08 06:37 :   code: 'EADDRINUSE',
+2022-09-08 06:37 :   errno: -98,
+2022-09-08 06:37 :   syscall: 'listen',
+2022-09-08 06:37 :   address: '::',
+2022-09-08 06:37 :   port: 8080
+2022-09-08 06:37 : }
+2022-09-08 06:38 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:38 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:38 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:38 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:38 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:38 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:38 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:38 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:38 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:38 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:38 :     at Generator.next (<anonymous>) {
+2022-09-08 06:38 :   code: 'EADDRINUSE',
+2022-09-08 06:38 :   errno: -98,
+2022-09-08 06:38 :   syscall: 'listen',
+2022-09-08 06:38 :   address: '::',
+2022-09-08 06:38 :   port: 8080
+2022-09-08 06:38 : }
+2022-09-08 06:38 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:38 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:38 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:38 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:38 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:38 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:38 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:38 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:38 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:38 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:38 :     at Generator.next (<anonymous>) {
+2022-09-08 06:38 :   code: 'EADDRINUSE',
+2022-09-08 06:38 :   errno: -98,
+2022-09-08 06:38 :   syscall: 'listen',
+2022-09-08 06:38 :   address: '::',
+2022-09-08 06:38 :   port: 8080
+2022-09-08 06:38 : }
+2022-09-08 06:38 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:38 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:38 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:38 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:38 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:38 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:38 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:38 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:38 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:38 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:38 :     at Generator.next (<anonymous>) {
+2022-09-08 06:38 :   code: 'EADDRINUSE',
+2022-09-08 06:38 :   errno: -98,
+2022-09-08 06:38 :   syscall: 'listen',
+2022-09-08 06:38 :   address: '::',
+2022-09-08 06:38 :   port: 8080
+2022-09-08 06:38 : }
+2022-09-08 06:38 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:38 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:38 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:38 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:38 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:38 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:38 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:38 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:38 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:38 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:38 :     at Generator.next (<anonymous>) {
+2022-09-08 06:38 :   code: 'EADDRINUSE',
+2022-09-08 06:38 :   errno: -98,
+2022-09-08 06:38 :   syscall: 'listen',
+2022-09-08 06:38 :   address: '::',
+2022-09-08 06:38 :   port: 8080
+2022-09-08 06:38 : }
+2022-09-08 06:39 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:39 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:39 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:39 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:39 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:39 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:39 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:39 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:39 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:39 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:39 :     at Generator.next (<anonymous>) {
+2022-09-08 06:39 :   code: 'EADDRINUSE',
+2022-09-08 06:39 :   errno: -98,
+2022-09-08 06:39 :   syscall: 'listen',
+2022-09-08 06:39 :   address: '::',
+2022-09-08 06:39 :   port: 8080
+2022-09-08 06:39 : }
+2022-09-08 06:39 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:39 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:39 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:39 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:39 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:39 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:39 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:39 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:39 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:39 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:39 :     at Generator.next (<anonymous>) {
+2022-09-08 06:39 :   code: 'EADDRINUSE',
+2022-09-08 06:39 :   errno: -98,
+2022-09-08 06:39 :   syscall: 'listen',
+2022-09-08 06:39 :   address: '::',
+2022-09-08 06:39 :   port: 8080
+2022-09-08 06:39 : }
+2022-09-08 06:39 : Error: Cannot set headers after they are sent to the client
+2022-09-08 06:39 :     at new NodeError (node:internal/errors:372:5)
+2022-09-08 06:39 :     at ServerResponse.setHeader (node:_http_outgoing:576:11)
+2022-09-08 06:39 :     at ServerResponse.header (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:794:10)
+2022-09-08 06:39 :     at ServerResponse.send (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:174:12)
+2022-09-08 06:39 :     at done (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/response.js:1035:10)
+2022-09-08 06:39 :     at tryHandleCache (/home/pi/RaspberryPI_v3/node_express/node_modules/ejs/lib/ejs.js:280:5)
+2022-09-08 06:39 :     at View.exports.renderFile [as engine] (/home/pi/RaspberryPI_v3/node_express/node_modules/ejs/lib/ejs.js:491:10)
+2022-09-08 06:39 :     at View.render (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/view.js:135:8)
+2022-09-08 06:39 :     at tryRender (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/application.js:657:10)
+2022-09-08 06:39 :     at Function.render (/home/pi/RaspberryPI_v3/node_express/node_modules/express/lib/application.js:609:3)
+2022-09-08 06:39 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:39 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:39 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:39 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:39 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:39 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:39 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:39 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:39 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:39 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:39 :     at Generator.next (<anonymous>) {
+2022-09-08 06:39 :   code: 'EADDRINUSE',
+2022-09-08 06:39 :   errno: -98,
+2022-09-08 06:39 :   syscall: 'listen',
+2022-09-08 06:39 :   address: '::',
+2022-09-08 06:39 :   port: 8080
+2022-09-08 06:39 : }
+2022-09-08 06:40 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:40 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:40 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:40 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:40 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:40 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:40 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:40 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:40 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:40 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:40 :     at Generator.next (<anonymous>) {
+2022-09-08 06:40 :   code: 'EADDRINUSE',
+2022-09-08 06:40 :   errno: -98,
+2022-09-08 06:40 :   syscall: 'listen',
+2022-09-08 06:40 :   address: '::',
+2022-09-08 06:40 :   port: 8080
+2022-09-08 06:40 : }
+2022-09-08 06:40 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:40 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:40 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:40 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:40 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:40 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:40 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:40 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:40 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:40 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:40 :     at Generator.next (<anonymous>) {
+2022-09-08 06:40 :   code: 'EADDRINUSE',
+2022-09-08 06:40 :   errno: -98,
+2022-09-08 06:40 :   syscall: 'listen',
+2022-09-08 06:40 :   address: '::',
+2022-09-08 06:40 :   port: 8080
+2022-09-08 06:40 : }
+2022-09-08 06:40 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:40 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:40 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:40 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:40 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:40 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:40 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:40 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:40 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:40 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:40 :     at Generator.next (<anonymous>) {
+2022-09-08 06:40 :   code: 'EADDRINUSE',
+2022-09-08 06:40 :   errno: -98,
+2022-09-08 06:40 :   syscall: 'listen',
+2022-09-08 06:40 :   address: '::',
+2022-09-08 06:40 :   port: 8080
+2022-09-08 06:40 : }
+2022-09-08 06:41 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:41 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:41 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:41 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:41 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:41 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:41 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:41 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:41 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:41 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:41 :     at Generator.next (<anonymous>) {
+2022-09-08 06:41 :   code: 'EADDRINUSE',
+2022-09-08 06:41 :   errno: -98,
+2022-09-08 06:41 :   syscall: 'listen',
+2022-09-08 06:41 :   address: '::',
+2022-09-08 06:41 :   port: 8080
+2022-09-08 06:41 : }
+2022-09-08 06:41 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:41 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:41 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:41 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:41 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:41 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:41 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:41 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:41 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:41 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:41 :     at Generator.next (<anonymous>) {
+2022-09-08 06:41 :   code: 'EADDRINUSE',
+2022-09-08 06:41 :   errno: -98,
+2022-09-08 06:41 :   syscall: 'listen',
+2022-09-08 06:41 :   address: '::',
+2022-09-08 06:41 :   port: 8080
+2022-09-08 06:41 : }
+2022-09-08 06:41 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:41 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:41 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:41 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:41 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:41 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:41 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:41 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:41 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:41 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:41 :     at Generator.next (<anonymous>) {
+2022-09-08 06:41 :   code: 'EADDRINUSE',
+2022-09-08 06:41 :   errno: -98,
+2022-09-08 06:41 :   syscall: 'listen',
+2022-09-08 06:41 :   address: '::',
+2022-09-08 06:41 :   port: 8080
+2022-09-08 06:41 : }
+2022-09-08 06:42 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:42 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:42 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:42 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:42 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:42 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:42 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:42 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:42 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:42 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:42 :     at Generator.next (<anonymous>) {
+2022-09-08 06:42 :   code: 'EADDRINUSE',
+2022-09-08 06:42 :   errno: -98,
+2022-09-08 06:42 :   syscall: 'listen',
+2022-09-08 06:42 :   address: '::',
+2022-09-08 06:42 :   port: 8080
+2022-09-08 06:42 : }
+2022-09-08 06:42 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:42 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:42 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:42 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:42 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:42 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:42 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:42 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:42 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:42 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:42 :     at Generator.next (<anonymous>) {
+2022-09-08 06:42 :   code: 'EADDRINUSE',
+2022-09-08 06:42 :   errno: -98,
+2022-09-08 06:42 :   syscall: 'listen',
+2022-09-08 06:42 :   address: '::',
+2022-09-08 06:42 :   port: 8080
+2022-09-08 06:42 : }
+2022-09-08 06:42 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:42 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:42 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:42 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:42 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:42 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:42 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:42 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:42 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:42 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:42 :     at Generator.next (<anonymous>) {
+2022-09-08 06:42 :   code: 'EADDRINUSE',
+2022-09-08 06:42 :   errno: -98,
+2022-09-08 06:42 :   syscall: 'listen',
+2022-09-08 06:42 :   address: '::',
+2022-09-08 06:42 :   port: 8080
+2022-09-08 06:42 : }
+2022-09-08 06:42 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:42 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:42 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:42 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:42 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:42 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:42 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:42 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:42 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:42 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:42 :     at Generator.next (<anonymous>) {
+2022-09-08 06:42 :   code: 'EADDRINUSE',
+2022-09-08 06:42 :   errno: -98,
+2022-09-08 06:42 :   syscall: 'listen',
+2022-09-08 06:42 :   address: '::',
+2022-09-08 06:42 :   port: 8080
+2022-09-08 06:42 : }
+2022-09-08 06:43 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:43 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:43 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:43 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:43 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:43 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:43 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:43 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:43 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:43 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:43 :     at Generator.next (<anonymous>) {
+2022-09-08 06:43 :   code: 'EADDRINUSE',
+2022-09-08 06:43 :   errno: -98,
+2022-09-08 06:43 :   syscall: 'listen',
+2022-09-08 06:43 :   address: '::',
+2022-09-08 06:43 :   port: 8080
+2022-09-08 06:43 : }
+2022-09-08 06:43 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:43 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:43 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:43 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:43 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:43 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:43 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:43 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:43 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:43 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:43 :     at Generator.next (<anonymous>) {
+2022-09-08 06:43 :   code: 'EADDRINUSE',
+2022-09-08 06:43 :   errno: -98,
+2022-09-08 06:43 :   syscall: 'listen',
+2022-09-08 06:43 :   address: '::',
+2022-09-08 06:43 :   port: 8080
+2022-09-08 06:43 : }
+2022-09-08 06:43 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:43 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:43 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:43 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:43 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:43 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:43 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:43 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:43 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:43 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:43 :     at Generator.next (<anonymous>) {
+2022-09-08 06:43 :   code: 'EADDRINUSE',
+2022-09-08 06:43 :   errno: -98,
+2022-09-08 06:43 :   syscall: 'listen',
+2022-09-08 06:43 :   address: '::',
+2022-09-08 06:43 :   port: 8080
+2022-09-08 06:43 : }
+2022-09-08 06:44 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:44 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:44 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:44 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:44 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:44 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:44 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:44 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:44 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:44 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:44 :     at Generator.next (<anonymous>) {
+2022-09-08 06:44 :   code: 'EADDRINUSE',
+2022-09-08 06:44 :   errno: -98,
+2022-09-08 06:44 :   syscall: 'listen',
+2022-09-08 06:44 :   address: '::',
+2022-09-08 06:44 :   port: 8080
+2022-09-08 06:44 : }
+2022-09-08 06:44 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:44 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:44 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:44 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:44 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:44 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:44 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:44 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:44 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:44 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:44 :     at Generator.next (<anonymous>) {
+2022-09-08 06:44 :   code: 'EADDRINUSE',
+2022-09-08 06:44 :   errno: -98,
+2022-09-08 06:44 :   syscall: 'listen',
+2022-09-08 06:44 :   address: '::',
+2022-09-08 06:44 :   port: 8080
+2022-09-08 06:44 : }
+2022-09-08 06:44 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:44 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:44 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:44 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:44 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:44 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:44 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:44 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:44 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:44 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:44 :     at Generator.next (<anonymous>) {
+2022-09-08 06:44 :   code: 'EADDRINUSE',
+2022-09-08 06:44 :   errno: -98,
+2022-09-08 06:44 :   syscall: 'listen',
+2022-09-08 06:44 :   address: '::',
+2022-09-08 06:44 :   port: 8080
+2022-09-08 06:44 : }
+2022-09-08 06:45 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:45 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:45 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:45 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:45 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:45 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:45 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:45 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:45 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:45 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:45 :     at Generator.next (<anonymous>) {
+2022-09-08 06:45 :   code: 'EADDRINUSE',
+2022-09-08 06:45 :   errno: -98,
+2022-09-08 06:45 :   syscall: 'listen',
+2022-09-08 06:45 :   address: '::',
+2022-09-08 06:45 :   port: 8080
+2022-09-08 06:45 : }
+2022-09-08 06:45 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:45 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:45 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:45 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:45 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:45 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:45 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:45 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:45 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:45 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:45 :     at Generator.next (<anonymous>) {
+2022-09-08 06:45 :   code: 'EADDRINUSE',
+2022-09-08 06:45 :   errno: -98,
+2022-09-08 06:45 :   syscall: 'listen',
+2022-09-08 06:45 :   address: '::',
+2022-09-08 06:45 :   port: 8080
+2022-09-08 06:45 : }
+2022-09-08 06:45 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:45 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:45 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:45 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:45 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:45 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:45 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:45 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:45 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:45 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:45 :     at Generator.next (<anonymous>) {
+2022-09-08 06:45 :   code: 'EADDRINUSE',
+2022-09-08 06:45 :   errno: -98,
+2022-09-08 06:45 :   syscall: 'listen',
+2022-09-08 06:45 :   address: '::',
+2022-09-08 06:45 :   port: 8080
+2022-09-08 06:45 : }
+2022-09-08 06:46 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:46 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:46 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:46 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:46 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:46 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:46 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:46 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:46 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:46 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:46 :     at Generator.next (<anonymous>) {
+2022-09-08 06:46 :   code: 'EADDRINUSE',
+2022-09-08 06:46 :   errno: -98,
+2022-09-08 06:46 :   syscall: 'listen',
+2022-09-08 06:46 :   address: '::',
+2022-09-08 06:46 :   port: 8080
+2022-09-08 06:46 : }
+2022-09-08 06:46 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:46 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:46 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:46 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:46 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:46 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:46 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:46 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:46 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:46 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:46 :     at Generator.next (<anonymous>) {
+2022-09-08 06:46 :   code: 'EADDRINUSE',
+2022-09-08 06:46 :   errno: -98,
+2022-09-08 06:46 :   syscall: 'listen',
+2022-09-08 06:46 :   address: '::',
+2022-09-08 06:46 :   port: 8080
+2022-09-08 06:46 : }
+2022-09-08 06:46 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:46 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:46 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:46 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:46 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:46 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:46 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:46 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:46 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:46 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:46 :     at Generator.next (<anonymous>) {
+2022-09-08 06:46 :   code: 'EADDRINUSE',
+2022-09-08 06:46 :   errno: -98,
+2022-09-08 06:46 :   syscall: 'listen',
+2022-09-08 06:46 :   address: '::',
+2022-09-08 06:46 :   port: 8080
+2022-09-08 06:46 : }
+2022-09-08 06:46 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:46 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:46 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:46 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:46 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:46 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:46 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:46 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:46 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:46 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:46 :     at Generator.next (<anonymous>) {
+2022-09-08 06:46 :   code: 'EADDRINUSE',
+2022-09-08 06:46 :   errno: -98,
+2022-09-08 06:46 :   syscall: 'listen',
+2022-09-08 06:46 :   address: '::',
+2022-09-08 06:46 :   port: 8080
+2022-09-08 06:46 : }
+2022-09-08 06:47 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:47 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:47 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:47 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:47 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:47 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:47 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:47 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:47 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:47 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:47 :     at Generator.next (<anonymous>) {
+2022-09-08 06:47 :   code: 'EADDRINUSE',
+2022-09-08 06:47 :   errno: -98,
+2022-09-08 06:47 :   syscall: 'listen',
+2022-09-08 06:47 :   address: '::',
+2022-09-08 06:47 :   port: 8080
+2022-09-08 06:47 : }
+2022-09-08 06:47 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:47 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:47 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:47 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:47 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:47 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:47 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:47 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:47 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:47 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:47 :     at Generator.next (<anonymous>) {
+2022-09-08 06:47 :   code: 'EADDRINUSE',
+2022-09-08 06:47 :   errno: -98,
+2022-09-08 06:47 :   syscall: 'listen',
+2022-09-08 06:47 :   address: '::',
+2022-09-08 06:47 :   port: 8080
+2022-09-08 06:47 : }
+2022-09-08 06:47 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:47 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:47 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:47 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:47 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:47 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:47 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:47 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:47 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:47 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:47 :     at Generator.next (<anonymous>) {
+2022-09-08 06:47 :   code: 'EADDRINUSE',
+2022-09-08 06:47 :   errno: -98,
+2022-09-08 06:47 :   syscall: 'listen',
+2022-09-08 06:47 :   address: '::',
+2022-09-08 06:47 :   port: 8080
+2022-09-08 06:47 : }
+2022-09-08 06:48 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:48 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:48 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:48 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:48 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:48 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:48 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:48 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:48 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:48 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:48 :     at Generator.next (<anonymous>) {
+2022-09-08 06:48 :   code: 'EADDRINUSE',
+2022-09-08 06:48 :   errno: -98,
+2022-09-08 06:48 :   syscall: 'listen',
+2022-09-08 06:48 :   address: '::',
+2022-09-08 06:48 :   port: 8080
+2022-09-08 06:48 : }
+2022-09-08 06:48 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:48 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:48 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:48 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:48 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:48 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:48 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:48 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:48 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:48 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:48 :     at Generator.next (<anonymous>) {
+2022-09-08 06:48 :   code: 'EADDRINUSE',
+2022-09-08 06:48 :   errno: -98,
+2022-09-08 06:48 :   syscall: 'listen',
+2022-09-08 06:48 :   address: '::',
+2022-09-08 06:48 :   port: 8080
+2022-09-08 06:48 : }
+2022-09-08 06:48 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:48 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:48 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:48 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:48 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:48 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:48 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:48 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:48 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:48 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:48 :     at Generator.next (<anonymous>) {
+2022-09-08 06:48 :   code: 'EADDRINUSE',
+2022-09-08 06:48 :   errno: -98,
+2022-09-08 06:48 :   syscall: 'listen',
+2022-09-08 06:48 :   address: '::',
+2022-09-08 06:48 :   port: 8080
+2022-09-08 06:48 : }
+2022-09-08 06:49 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:49 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:49 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:49 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:49 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:49 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:49 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:49 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:49 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:49 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:49 :     at Generator.next (<anonymous>) {
+2022-09-08 06:49 :   code: 'EADDRINUSE',
+2022-09-08 06:49 :   errno: -98,
+2022-09-08 06:49 :   syscall: 'listen',
+2022-09-08 06:49 :   address: '::',
+2022-09-08 06:49 :   port: 8080
+2022-09-08 06:49 : }
+2022-09-08 06:49 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:49 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:49 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:49 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:49 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:49 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:49 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:49 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:49 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:49 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:49 :     at Generator.next (<anonymous>) {
+2022-09-08 06:49 :   code: 'EADDRINUSE',
+2022-09-08 06:49 :   errno: -98,
+2022-09-08 06:49 :   syscall: 'listen',
+2022-09-08 06:49 :   address: '::',
+2022-09-08 06:49 :   port: 8080
+2022-09-08 06:49 : }
+2022-09-08 06:49 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:49 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:49 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:49 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:49 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:49 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:49 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:49 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:49 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:49 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:49 :     at Generator.next (<anonymous>) {
+2022-09-08 06:49 :   code: 'EADDRINUSE',
+2022-09-08 06:49 :   errno: -98,
+2022-09-08 06:49 :   syscall: 'listen',
+2022-09-08 06:49 :   address: '::',
+2022-09-08 06:49 :   port: 8080
+2022-09-08 06:49 : }
+2022-09-08 06:49 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:49 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:49 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:49 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:49 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:49 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:49 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:49 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:49 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:49 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:49 :     at Generator.next (<anonymous>) {
+2022-09-08 06:49 :   code: 'EADDRINUSE',
+2022-09-08 06:49 :   errno: -98,
+2022-09-08 06:49 :   syscall: 'listen',
+2022-09-08 06:49 :   address: '::',
+2022-09-08 06:49 :   port: 8080
+2022-09-08 06:49 : }
+2022-09-08 06:50 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:50 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:50 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:50 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:50 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:50 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:50 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:50 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:50 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:50 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:50 :     at Generator.next (<anonymous>) {
+2022-09-08 06:50 :   code: 'EADDRINUSE',
+2022-09-08 06:50 :   errno: -98,
+2022-09-08 06:50 :   syscall: 'listen',
+2022-09-08 06:50 :   address: '::',
+2022-09-08 06:50 :   port: 8080
+2022-09-08 06:50 : }
+2022-09-08 06:50 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:50 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:50 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:50 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:50 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:50 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:50 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:50 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:50 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:50 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:50 :     at Generator.next (<anonymous>) {
+2022-09-08 06:50 :   code: 'EADDRINUSE',
+2022-09-08 06:50 :   errno: -98,
+2022-09-08 06:50 :   syscall: 'listen',
+2022-09-08 06:50 :   address: '::',
+2022-09-08 06:50 :   port: 8080
+2022-09-08 06:50 : }
+2022-09-08 06:50 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:50 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:50 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:50 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:50 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:50 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:50 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:50 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:50 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:50 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:50 :     at Generator.next (<anonymous>) {
+2022-09-08 06:50 :   code: 'EADDRINUSE',
+2022-09-08 06:50 :   errno: -98,
+2022-09-08 06:50 :   syscall: 'listen',
+2022-09-08 06:50 :   address: '::',
+2022-09-08 06:50 :   port: 8080
+2022-09-08 06:50 : }
+2022-09-08 06:51 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:51 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:51 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:51 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:51 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:51 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:51 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:51 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:51 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:51 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:51 :     at Generator.next (<anonymous>) {
+2022-09-08 06:51 :   code: 'EADDRINUSE',
+2022-09-08 06:51 :   errno: -98,
+2022-09-08 06:51 :   syscall: 'listen',
+2022-09-08 06:51 :   address: '::',
+2022-09-08 06:51 :   port: 8080
+2022-09-08 06:51 : }
+2022-09-08 06:51 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:51 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:51 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:51 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:51 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:51 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:51 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:51 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:51 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:51 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:51 :     at Generator.next (<anonymous>) {
+2022-09-08 06:51 :   code: 'EADDRINUSE',
+2022-09-08 06:51 :   errno: -98,
+2022-09-08 06:51 :   syscall: 'listen',
+2022-09-08 06:51 :   address: '::',
+2022-09-08 06:51 :   port: 8080
+2022-09-08 06:51 : }
+2022-09-08 06:51 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:51 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:51 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:51 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:51 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:51 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:51 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:51 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:51 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:51 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:51 :     at Generator.next (<anonymous>) {
+2022-09-08 06:51 :   code: 'EADDRINUSE',
+2022-09-08 06:51 :   errno: -98,
+2022-09-08 06:51 :   syscall: 'listen',
+2022-09-08 06:51 :   address: '::',
+2022-09-08 06:51 :   port: 8080
+2022-09-08 06:51 : }
+2022-09-08 06:52 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:52 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:52 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:52 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:52 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:52 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:52 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:52 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:52 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:52 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:52 :     at Generator.next (<anonymous>) {
+2022-09-08 06:52 :   code: 'EADDRINUSE',
+2022-09-08 06:52 :   errno: -98,
+2022-09-08 06:52 :   syscall: 'listen',
+2022-09-08 06:52 :   address: '::',
+2022-09-08 06:52 :   port: 8080
+2022-09-08 06:52 : }
+2022-09-08 06:58 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:58 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:58 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:58 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:58 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:58 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:58 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:58 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:58 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:58 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:58 :     at Generator.next (<anonymous>) {
+2022-09-08 06:58 :   code: 'EADDRINUSE',
+2022-09-08 06:58 :   errno: -98,
+2022-09-08 06:58 :   syscall: 'listen',
+2022-09-08 06:58 :   address: '::',
+2022-09-08 06:58 :   port: 8080
+2022-09-08 06:58 : }
+2022-09-08 06:59 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 06:59 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 06:59 :     at listenInCluster (node:net:1428:12)
+2022-09-08 06:59 :     at Server.listen (node:net:1516:7)
+2022-09-08 06:59 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 06:59 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 06:59 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 06:59 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 06:59 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 06:59 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 06:59 :     at Generator.next (<anonymous>) {
+2022-09-08 06:59 :   code: 'EADDRINUSE',
+2022-09-08 06:59 :   errno: -98,
+2022-09-08 06:59 :   syscall: 'listen',
+2022-09-08 06:59 :   address: '::',
+2022-09-08 06:59 :   port: 8080
+2022-09-08 06:59 : }
+2022-09-08 07:00 : TypeError: Cannot read properties of null (reading 'on')
+2022-09-08 07:00 :     at new PacketStreamWrapper (/home/pi/RaspberryPI_v3/node_express/node_modules/castv2/lib/packet-stream-wrapper.js:16:15)
+2022-09-08 07:00 :     at TLSSocket.<anonymous> (/home/pi/RaspberryPI_v3/node_express/node_modules/castv2/lib/client.js:36:15)
+2022-09-08 07:00 :     at Object.onceWrapper (node:events:641:28)
+2022-09-08 07:00 :     at TLSSocket.emit (node:events:527:28)
+2022-09-08 07:00 :     at TLSSocket.onConnectSecure (node:_tls_wrap:1565:10)
+2022-09-08 07:00 :     at TLSSocket.emit (node:events:527:28)
+2022-09-08 07:00 :     at TLSSocket._finishInit (node:_tls_wrap:946:8)
+2022-09-08 07:00 :     at TLSWrap.ssl.onhandshakedone (node:_tls_wrap:727:12)
+2022-09-08 07:03 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:03 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:03 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:03 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:03 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:03 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:03 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:03 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:03 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:03 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:03 :     at Generator.next (<anonymous>) {
+2022-09-08 07:03 :   code: 'EADDRINUSE',
+2022-09-08 07:03 :   errno: -98,
+2022-09-08 07:03 :   syscall: 'listen',
+2022-09-08 07:03 :   address: '::',
+2022-09-08 07:03 :   port: 8080
+2022-09-08 07:03 : }
+2022-09-08 07:03 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:03 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:03 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:03 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:03 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:03 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:03 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:03 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:03 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:03 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:03 :     at Generator.next (<anonymous>) {
+2022-09-08 07:03 :   code: 'EADDRINUSE',
+2022-09-08 07:03 :   errno: -98,
+2022-09-08 07:03 :   syscall: 'listen',
+2022-09-08 07:03 :   address: '::',
+2022-09-08 07:03 :   port: 8080
+2022-09-08 07:03 : }
+2022-09-08 07:03 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:03 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:03 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:03 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:03 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:03 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:03 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:03 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:03 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:03 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:03 :     at Generator.next (<anonymous>) {
+2022-09-08 07:03 :   code: 'EADDRINUSE',
+2022-09-08 07:03 :   errno: -98,
+2022-09-08 07:03 :   syscall: 'listen',
+2022-09-08 07:03 :   address: '::',
+2022-09-08 07:03 :   port: 8080
+2022-09-08 07:03 : }
+2022-09-08 07:04 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:04 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:04 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:04 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:04 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:04 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:04 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:04 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:04 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:04 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:04 :     at Generator.next (<anonymous>) {
+2022-09-08 07:04 :   code: 'EADDRINUSE',
+2022-09-08 07:04 :   errno: -98,
+2022-09-08 07:04 :   syscall: 'listen',
+2022-09-08 07:04 :   address: '::',
+2022-09-08 07:04 :   port: 8080
+2022-09-08 07:04 : }
+2022-09-08 07:04 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:04 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:04 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:04 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:04 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:04 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:04 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:04 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:04 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:04 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:04 :     at Generator.next (<anonymous>) {
+2022-09-08 07:04 :   code: 'EADDRINUSE',
+2022-09-08 07:04 :   errno: -98,
+2022-09-08 07:04 :   syscall: 'listen',
+2022-09-08 07:04 :   address: '::',
+2022-09-08 07:04 :   port: 8080
+2022-09-08 07:04 : }
+2022-09-08 07:04 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:04 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:04 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:04 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:04 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:04 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:04 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:04 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:04 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:04 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:04 :     at Generator.next (<anonymous>) {
+2022-09-08 07:04 :   code: 'EADDRINUSE',
+2022-09-08 07:04 :   errno: -98,
+2022-09-08 07:04 :   syscall: 'listen',
+2022-09-08 07:04 :   address: '::',
+2022-09-08 07:04 :   port: 8080
+2022-09-08 07:04 : }
+2022-09-08 07:05 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:05 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:05 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:05 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:05 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:05 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:05 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:05 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:05 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:05 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:05 :     at Generator.next (<anonymous>) {
+2022-09-08 07:05 :   code: 'EADDRINUSE',
+2022-09-08 07:05 :   errno: -98,
+2022-09-08 07:05 :   syscall: 'listen',
+2022-09-08 07:05 :   address: '::',
+2022-09-08 07:05 :   port: 8080
+2022-09-08 07:05 : }
+2022-09-08 07:08 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:08 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:08 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:08 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:08 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:08 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:08 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:08 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:08 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:08 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:08 :     at Generator.next (<anonymous>) {
+2022-09-08 07:08 :   code: 'EADDRINUSE',
+2022-09-08 07:08 :   errno: -98,
+2022-09-08 07:08 :   syscall: 'listen',
+2022-09-08 07:08 :   address: '::',
+2022-09-08 07:08 :   port: 8080
+2022-09-08 07:08 : }
+2022-09-08 07:08 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:08 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:08 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:08 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:08 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:08 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:08 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:08 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:08 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:08 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:08 :     at Generator.next (<anonymous>) {
+2022-09-08 07:08 :   code: 'EADDRINUSE',
+2022-09-08 07:08 :   errno: -98,
+2022-09-08 07:08 :   syscall: 'listen',
+2022-09-08 07:08 :   address: '::',
+2022-09-08 07:08 :   port: 8080
+2022-09-08 07:08 : }
+2022-09-08 07:08 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:08 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:08 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:08 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:08 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:08 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:08 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:08 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:08 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:08 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:08 :     at Generator.next (<anonymous>) {
+2022-09-08 07:08 :   code: 'EADDRINUSE',
+2022-09-08 07:08 :   errno: -98,
+2022-09-08 07:08 :   syscall: 'listen',
+2022-09-08 07:08 :   address: '::',
+2022-09-08 07:08 :   port: 8080
+2022-09-08 07:08 : }
+2022-09-08 07:09 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:09 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:09 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:09 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:09 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:09 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:09 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:09 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:09 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:09 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:09 :     at Generator.next (<anonymous>) {
+2022-09-08 07:09 :   code: 'EADDRINUSE',
+2022-09-08 07:09 :   errno: -98,
+2022-09-08 07:09 :   syscall: 'listen',
+2022-09-08 07:09 :   address: '::',
+2022-09-08 07:09 :   port: 8080
+2022-09-08 07:09 : }
+2022-09-08 07:09 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:09 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:09 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:09 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:09 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:09 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:09 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:09 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:09 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:09 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:09 :     at Generator.next (<anonymous>) {
+2022-09-08 07:09 :   code: 'EADDRINUSE',
+2022-09-08 07:09 :   errno: -98,
+2022-09-08 07:09 :   syscall: 'listen',
+2022-09-08 07:09 :   address: '::',
+2022-09-08 07:09 :   port: 8080
+2022-09-08 07:09 : }
+2022-09-08 07:09 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:09 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:09 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:09 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:09 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:09 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:09 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:09 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:09 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:09 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:09 :     at Generator.next (<anonymous>) {
+2022-09-08 07:09 :   code: 'EADDRINUSE',
+2022-09-08 07:09 :   errno: -98,
+2022-09-08 07:09 :   syscall: 'listen',
+2022-09-08 07:09 :   address: '::',
+2022-09-08 07:09 :   port: 8080
+2022-09-08 07:09 : }
+2022-09-08 07:10 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:10 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:10 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:10 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:10 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:10 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:10 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:10 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:10 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:10 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:10 :     at Generator.next (<anonymous>) {
+2022-09-08 07:10 :   code: 'EADDRINUSE',
+2022-09-08 07:10 :   errno: -98,
+2022-09-08 07:10 :   syscall: 'listen',
+2022-09-08 07:10 :   address: '::',
+2022-09-08 07:10 :   port: 8080
+2022-09-08 07:10 : }
+2022-09-08 07:10 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:10 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:10 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:10 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:10 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:10 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:10 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:10 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:10 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:10 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:10 :     at Generator.next (<anonymous>) {
+2022-09-08 07:10 :   code: 'EADDRINUSE',
+2022-09-08 07:10 :   errno: -98,
+2022-09-08 07:10 :   syscall: 'listen',
+2022-09-08 07:10 :   address: '::',
+2022-09-08 07:10 :   port: 8080
+2022-09-08 07:10 : }
+2022-09-08 07:10 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:10 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:10 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:10 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:10 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:10 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:10 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:10 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:10 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:10 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:10 :     at Generator.next (<anonymous>) {
+2022-09-08 07:10 :   code: 'EADDRINUSE',
+2022-09-08 07:10 :   errno: -98,
+2022-09-08 07:10 :   syscall: 'listen',
+2022-09-08 07:10 :   address: '::',
+2022-09-08 07:10 :   port: 8080
+2022-09-08 07:10 : }
+2022-09-08 07:10 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:10 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:10 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:10 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:10 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:10 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:10 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:10 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:10 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:10 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:10 :     at Generator.next (<anonymous>) {
+2022-09-08 07:10 :   code: 'EADDRINUSE',
+2022-09-08 07:10 :   errno: -98,
+2022-09-08 07:10 :   syscall: 'listen',
+2022-09-08 07:10 :   address: '::',
+2022-09-08 07:10 :   port: 8080
+2022-09-08 07:10 : }
+2022-09-08 07:11 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:11 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:11 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:11 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:11 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:11 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:11 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:11 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:11 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:11 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:11 :     at Generator.next (<anonymous>) {
+2022-09-08 07:11 :   code: 'EADDRINUSE',
+2022-09-08 07:11 :   errno: -98,
+2022-09-08 07:11 :   syscall: 'listen',
+2022-09-08 07:11 :   address: '::',
+2022-09-08 07:11 :   port: 8080
+2022-09-08 07:11 : }
+2022-09-08 07:11 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:11 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:11 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:11 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:11 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:11 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:11 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:11 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:11 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:11 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:11 :     at Generator.next (<anonymous>) {
+2022-09-08 07:11 :   code: 'EADDRINUSE',
+2022-09-08 07:11 :   errno: -98,
+2022-09-08 07:11 :   syscall: 'listen',
+2022-09-08 07:11 :   address: '::',
+2022-09-08 07:11 :   port: 8080
+2022-09-08 07:11 : }
+2022-09-08 07:11 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:11 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:11 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:11 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:11 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:11 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:11 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:11 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:11 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:11 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:11 :     at Generator.next (<anonymous>) {
+2022-09-08 07:11 :   code: 'EADDRINUSE',
+2022-09-08 07:11 :   errno: -98,
+2022-09-08 07:11 :   syscall: 'listen',
+2022-09-08 07:11 :   address: '::',
+2022-09-08 07:11 :   port: 8080
+2022-09-08 07:11 : }
+2022-09-08 07:12 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:12 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:12 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:12 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:12 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:12 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:12 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:12 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:12 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:12 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:12 :     at Generator.next (<anonymous>) {
+2022-09-08 07:12 :   code: 'EADDRINUSE',
+2022-09-08 07:12 :   errno: -98,
+2022-09-08 07:12 :   syscall: 'listen',
+2022-09-08 07:12 :   address: '::',
+2022-09-08 07:12 :   port: 8080
+2022-09-08 07:12 : }
+2022-09-08 07:12 : Error: listen EADDRINUSE: address already in use :::8080
+2022-09-08 07:12 :     at Server.setupListenHandle [as _listen2] (node:net:1380:16)
+2022-09-08 07:12 :     at listenInCluster (node:net:1428:12)
+2022-09-08 07:12 :     at Server.listen (node:net:1516:7)
+2022-09-08 07:12 :     at Server.attach (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:180:17)
+2022-09-08 07:12 :     at Server.listen (/home/pi/RaspberryPI_v3/node_express/node_modules/socket.io/dist/index.js:153:21)
+2022-09-08 07:12 :     at new SocketIoConnectionManager (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:102:17)
+2022-09-08 07:12 :     at GHomeMonitor.StartIOMonitor (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:136:34)
+2022-09-08 07:12 :     at GHomeMonitor.Start (/home/pi/RaspberryPI_v3/node_express/GHomeMonitor.ts:125:14)
+2022-09-08 07:12 :     at /home/pi/RaspberryPI_v3/node_express/main_app.ts:507:13
+2022-09-08 07:12 :     at Generator.next (<anonymous>) {
+2022-09-08 07:12 :   code: 'EADDRINUSE',
+2022-09-08 07:12 :   errno: -98,
+2022-09-08 07:12 :   syscall: 'listen',
+2022-09-08 07:12 :   address: '::',
+2022-09-08 07:12 :   port: 8080
+2022-09-08 07:12 : }

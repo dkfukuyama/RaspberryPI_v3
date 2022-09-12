@@ -1,7 +1,12 @@
 import path = require('path');
 import { Slack } from '@/SlackSend';
+import { GoogleHomeController } from '@/GoogleHomeController';
+import { AppConf } from '@/AppConf';
+import * as AppFunctions from '@/AppFunctions';
 export const slk = new Slack(process.env.SLACK_WEBHOOK);
 
+import * as AppFuncs from '@/AppFunctions';
+import { PageParameters } from '@/PagesAndCommands';
 
 const express = require("express");
 const favicon = require('express-favicon');
@@ -17,3 +22,185 @@ App.use(express.json());
 
 // テンプレートエンジンの指定
 App.set("view engine", "ejs");
+
+AppFunctions.ApplyToExpress(App);
+
+const PageParams = new PageParameters
+
+PageParams.Pages.forEach(p => {
+
+    if (p.postfunc) {
+        App.post(p.path, async function (req, res, next) {
+            console.log('postfunc');
+            console.log(req.body);
+
+            let er_occurred = false;
+            const pfunc_results = await p.postfunc(req, res).catch(err => {
+                er_occurred = true;
+                return err;
+            });
+            console.log(" ----- POST pfunc_results ----- ");
+            console.log(pfunc_results);
+            if (req.body.short_return) {
+                let send_obj = null;
+                if (typeof (pfunc_results) == "object") {
+                    send_obj = pfunc_results;
+                } else {
+                    send_obj = {
+                        results: pfunc_results,
+                    }
+                }
+                res.json(pfunc_results);
+                res.end();
+            } else {
+                next();
+            }
+        });
+    }
+    if (p.getfunc) {
+        App.get(p.path, async function (req, res, next) {
+            console.log('getfunc');
+            console.log(req.query);
+
+            let er_occurred = false;
+            const pfunc_results = await p.getfunc(req, res).catch(er => {
+                er_occurred = true;
+                return JSON.stringify(er);
+            });
+            console.log(" ----- GET pfunc_results ----- ");
+            console.log(pfunc_results);
+            if (req.body.short_return) {
+                res.json(pfunc_results);
+                res.end();
+            } else {
+                next();
+            }
+        });
+    }
+    App.all(p.path, function (req, res) {
+        try {
+            let data = {
+                page: p,
+                items: null
+            };
+            // レンダリングを行う
+            PageParams.UpdateCommon();
+            res.render("./index.ejs", {
+                data: data,
+                prevPostData: req.body,
+                query: req.query,
+                pages: PageParams.Pages,
+                common: PageParams.Common
+            });
+
+        } catch (er) {
+            console.log('CATCH ERROR');
+
+            let data = {
+                title: p.title,
+                view_page: p.view_page,
+                errors: er
+            };
+
+            res.render("./ER/error.ejs", data);
+        }
+    });
+});
+
+
+// テストファイルをぞのまま出力するもの
+App.all("/__ftest__/*.*", function (req, res, next) {
+    const p = { root: path.join(__dirname, "FunctionTest") };
+    res.sendFile(req.path.replace("/__ftest__/", ""), p, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+// テストファイルをぞのまま出力するもの
+App.all("/__utest__/*.*", function (req, res, next) {
+    const p = { root: path.join(__dirname, "UnitTest") };
+    res.sendFile(req.path.replace("/__utest__/", ""), p, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+
+// 指定ファイルをぞのまま出力するもの
+App.all("*.css|*.js|*.html", function (req, res, next) {
+    const p = { root: path.join(__dirname, "views") };
+    res.sendFile(req.path, p, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+
+App.get("*.wav|*.mp3", function (req, res, next) {
+    const fs = require('fs');
+
+    const p = path.join(AppConf().saveDir0, decodeURI(req.path));
+    const query = req.query;
+    if (!query.stream) {
+        res.sendFile(p, (err) => {
+            if (err) {
+                next(err);
+            }
+        });
+    } else {
+        try {
+            fs.stat(p, (err, stat) => {
+                if (err) {
+                    next(err)
+                }
+                // ファイル名をエンコードする
+                const basename = path.basename(p);
+                const filename = encodeURIComponent(basename);
+
+                // ヘッダーセットする
+                res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
+                res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
+                res.setHeader('Connection', 'close');
+                const { spawn } = require('node:child_process');
+                //"chorus 1 1 100.0 1 5 5.0 -s"
+
+                const preset: {
+                    [key: string]: string;
+                } = {
+                    "chorus01": "chorus 1 1 100.0 1 5 5.0 -s",
+                    "chorus02": "chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s",
+                    "reverb01": "reverb",
+                    "speedx2": "speed 2",
+                    "speedx0_5": "speed 0.5",
+                }
+                let kk = `sox "${p}" -t wav - `;
+                if (preset[query.effectsPreset]) {
+                    kk += preset[query.effectsPreset];
+                } else if (query.effects) {
+                    kk += req.query.effects;
+                }
+
+                console.log(kk);
+                let sp = spawn(kk, [], { shell: true });
+                sp.on('error', (err) => {
+                    next(err);
+                })
+                sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+});
+
+App.use(function (req, res, next) {
+    console.log(`404 NOT FOUND ERROR : ${req.path}`);
+    res.status(404);
+    res.render("./ER/404.ejs", { path: req.path, pages: PageParams.Pages });
+});
+
+App.use((err, req, res, next) => {
+    res.status(err.status);
+    res.render("./ER/500.ejs", { path: req.path, pages: PageParams.Pages });
+})
