@@ -1,15 +1,11 @@
 import path = require('path');
-import { Slack } from '@/SlackSend';
 import { GoogleHomeController } from '@/GoogleHomeController';
-import { AppConf } from '@/AppConf';
-import * as AppFunctions from '@/AppFunctions';
-export const slk = new Slack(process.env.SLACK_WEBHOOK);
+import { AppConf, slk } from '@/AppConf';
+import { ApplyToExpress } from '@/AppFunctions';
 
-import * as AppFuncs from '@/AppFunctions';
 import { PageParameters } from '@/PagesAndCommands';
 
 import express from 'express';
-
 const favicon = require('express-favicon');
 const bodyParser = require('body-parser');
 
@@ -24,20 +20,20 @@ App.use(express.json());
 // テンプレートエンジンの指定
 App.set("view engine", "ejs");
 
-AppFunctions.ApplyToExpress(App);
+ApplyToExpress(App);
 
 const PageParams = new PageParameters
 
 PageParams.Pages.forEach(p => {
 
-    if (p.postfunc) {
+    if (PageParams.PageFunctions.Post[p.path]) {
         App.post(p.path, async function (req: express.Request, res: express.Response, next: express.NextFunction) {
             console.log('postfunc');
             console.log(req.body);
 
-            let er_occurred = false;
-            const pfunc_results = await p.postfunc(req, res).catch(err => {
-                er_occurred = true;
+            //t er_occurred = false;
+            const pfunc_results = await PageParams.PageFunctions.Post[p.path](req, res).catch(err => {
+                //er_occurred = true;
                 return err;
             });
             console.log(" ----- POST pfunc_results ----- ");
@@ -58,14 +54,14 @@ PageParams.Pages.forEach(p => {
             }
         });
     }
-    if (p.getfunc) {
+    if (PageParams.PageFunctions.Get[p.path]) {
         App.get(p.path, async function (req: express.Request, res: express.Response, next: express.NextFunction) {
             console.log('getfunc');
             console.log(req.query);
 
-            let er_occurred = false;
-            const pfunc_results = await p.getfunc(req, res).catch(er => {
-                er_occurred = true;
+            //let er_occurred = false;
+            const pfunc_results = await PageParams.PageFunctions.Post[p.path](req, res).catch(er => {
+                //er_occurred = true;
                 return JSON.stringify(er);
             });
             console.log(" ----- GET pfunc_results ----- ");

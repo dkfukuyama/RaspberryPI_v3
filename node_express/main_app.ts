@@ -15,8 +15,8 @@ import { GHomeMonitor } from '@/GHomeMonitor';
 
 const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
-import { AppConf } from '@/AppConf';
-import { App, slk } from '@/GlobalObj';
+import { AppConf, slk } from '@/AppConf';
+import { App } from '@/GlobalObj';
 
 
 async function npm_install(): Promise<any> {

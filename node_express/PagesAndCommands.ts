@@ -3,7 +3,7 @@
 import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 
-type IPFunc = (req: express.Request, res: express.Response) => Promise<any>;
+type IPFunc = (req: express.Request, res: express.Response) => Promise<object|string>;
 
 interface IPage
 {
@@ -14,10 +14,16 @@ interface IPage
     level?: number | undefined;
     view_page?: string | undefined;
     hidden?: boolean | undefined;
-    postfunc?: IPFunc | undefined;
-    getfunc?: IPFunc | undefined;
 };
 
+interface PreExecFunctions {
+    Post: {
+        [key: string]: IPFunc
+    };
+    Get: {
+        [key: string]: IPFunc
+    };
+}
 export class PageParameters {
     Common: {
         ghomeSpeakers: IGoogleHomeSeekResults[];
@@ -83,6 +89,11 @@ export class PageParameters {
             level: 0,
         },
     ];
+
+    PageFunctions: PreExecFunctions = {
+        Post : {},
+        Get : {},
+    }
 };
 
 
