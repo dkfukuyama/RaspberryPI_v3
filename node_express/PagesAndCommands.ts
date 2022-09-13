@@ -1,7 +1,9 @@
-﻿import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
+﻿import express from 'express';
+
+import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 
-type IPFunc = (req: any, res: any) => Promise<any>;
+type IPFunc = (req: express.Request, res: express.Response) => Promise<any>;
 
 interface IPage
 {

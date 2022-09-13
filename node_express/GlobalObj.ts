@@ -8,11 +8,12 @@ export const slk = new Slack(process.env.SLACK_WEBHOOK);
 import * as AppFuncs from '@/AppFunctions';
 import { PageParameters } from '@/PagesAndCommands';
 
-const express = require("express");
+import express from 'express';
+
 const favicon = require('express-favicon');
 const bodyParser = require('body-parser');
 
-export const App = express();
+export const App: express.Express = express();
 
 App.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 App.use(bodyParser.urlencoded({
@@ -30,7 +31,7 @@ const PageParams = new PageParameters
 PageParams.Pages.forEach(p => {
 
     if (p.postfunc) {
-        App.post(p.path, async function (req, res, next) {
+        App.post(p.path, async function (req: express.Request, res: express.Response, next: express.NextFunction) {
             console.log('postfunc');
             console.log(req.body);
 
@@ -58,7 +59,7 @@ PageParams.Pages.forEach(p => {
         });
     }
     if (p.getfunc) {
-        App.get(p.path, async function (req, res, next) {
+        App.get(p.path, async function (req: express.Request, res: express.Response, next: express.NextFunction) {
             console.log('getfunc');
             console.log(req.query);
 
@@ -109,7 +110,7 @@ PageParams.Pages.forEach(p => {
 
 
 // テストファイルをぞのまま出力するもの
-App.all("/__ftest__/*.*", function (req, res, next) {
+App.all("/__ftest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "FunctionTest") };
     res.sendFile(req.path.replace("/__ftest__/", ""), p, (err) => {
         if (err) {
@@ -118,7 +119,7 @@ App.all("/__ftest__/*.*", function (req, res, next) {
     });
 });
 // テストファイルをぞのまま出力するもの
-App.all("/__utest__/*.*", function (req, res, next) {
+App.all("/__utest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "UnitTest") };
     res.sendFile(req.path.replace("/__utest__/", ""), p, (err) => {
         if (err) {
@@ -128,7 +129,7 @@ App.all("/__utest__/*.*", function (req, res, next) {
 });
 
 // 指定ファイルをぞのまま出力するもの
-App.all("*.css|*.js|*.html", function (req, res, next) {
+App.all("*.css|*.js|*.html", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "views") };
     res.sendFile(req.path, p, (err) => {
         if (err) {
@@ -137,11 +138,21 @@ App.all("*.css|*.js|*.html", function (req, res, next) {
     });
 });
 
-App.get("*.wav|*.mp3", function (req, res, next) {
+type IQuery = {
+    stream: string;
+    effects: string;
+    effectsPreset: string;
+}
+interface ExRequest extends express.Request {
+    query: IQuery;
+}
+
+App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const fs = require('fs');
 
     const p = path.join(AppConf().saveDir0, decodeURI(req.path));
-    const query = req.query;
+    const query: IQuery = (req as ExRequest).query;
+
     if (!query.stream) {
         res.sendFile(p, (err) => {
             if (err) {
@@ -194,13 +205,13 @@ App.get("*.wav|*.mp3", function (req, res, next) {
     }
 });
 
-App.use(function (req, res, next) {
+App.use(function (req: express.Request, res: express.Response, next: express.NextFunction) {
     console.log(`404 NOT FOUND ERROR : ${req.path}`);
     res.status(404);
     res.render("./ER/404.ejs", { path: req.path, pages: PageParams.Pages });
 });
 
-App.use((err, req, res, next) => {
+App.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.status(err.status);
     res.render("./ER/500.ejs", { path: req.path, pages: PageParams.Pages });
 })
