@@ -61,6 +61,9 @@
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
     <TypeScriptCompile Include="FileListSearch.ts" />
+    <TypeScriptCompile Include="ft_GoogleSpeaker.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="GlobalObj.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
