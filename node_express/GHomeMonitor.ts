@@ -3,16 +3,16 @@ import { Socket, Server } from 'socket.io';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
 import { FileListSearch } from '@/FileListSearch';
-import { AppConf } from '@/AppConf';
+import { AppConf, slk } from '@/AppConf';
 import * as AppFunctions from '@/AppFunctions';
 
 
-type TClient = 'MusicPlayer' | 'StatusController';
-interface IStatus {
+export type TClient = 'MusicPlayer' | 'StatusController' | 'NotDetected';
+export interface IStatus {
     client_type: TClient;
-}
+};
 
-interface query {
+export interface query {
     test_mp3_path: string;
     GStatusSimType: string;
 };
@@ -31,6 +31,7 @@ export class SocketIoConnectionManager {
         this.GetStatusAll = _getStatusAll;
         this.Io = require("socket.io")();
         this.Io.on("connection", (socket: Socket) => {
+            socket = AppFunctions.ApplyToSocket(socket);
 
             let Client: {
                 ConnectionStartTime: Date;
@@ -46,22 +47,25 @@ export class SocketIoConnectionManager {
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date() });
 
+            /*
             let t: NodeJS.Timeout = setInterval(() => {
                 let rep = this.GetStatusAll(GStatusSimType);
                 socket.emit("S2C_send_status", rep);
             }, 1000);
+            */
 
             // receive a message from the client
             socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: query  }) => {
-
-                Client = {
-                    ConnectionStartTime: data.send_datetime,
-                    Type: data.client_type,
-                    TestMp3path: data.query.test_mp3_path ?? "",
+                slk.Log(data);
+                if (data) {
+                    Client = {
+                        ConnectionStartTime: data?.send_datetime ?? new Date(),
+                        Type: data?.client_type ?? 'NotDetected',
+                        TestMp3path: data?.query?.test_mp3_path ?? '',
+                    }
+                    console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
+                    GStatusSimType = data.query.GStatusSimType ?? "";
                 }
-
-                console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
-                GStatusSimType = data.query.GStatusSimType ?? "";
             });
 
             socket.on("C2S_play", (data) => {
@@ -97,10 +101,10 @@ export class SocketIoConnectionManager {
             });
 
             socket.on("disconnect", (data) => {
-                clearTimeout(t);
+                //clearTimeout(t);
             });
 
-            AppFunctions.ApplyToSocket(socket);
+           
 
         });
         this.Io.listen(this.SocketIoPort);

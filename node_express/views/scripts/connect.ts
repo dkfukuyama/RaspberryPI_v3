@@ -1,4 +1,6 @@
-﻿declare const document: any;
+﻿import { FileListSearchResults } from "@/FileListSearch";
+
+declare const document: any;
 declare const io: any;
 declare const io_port_num: number;
 declare const server_ws: string;
@@ -18,25 +20,6 @@ declare const query: {
 
 declare const client_type: any;
 declare const location: any;
-
-type EType = "File" | "Directory" | "NotDetected";
-interface FileInfo {
-	BaseName: string;
-	Ext: string;
-	Name: string;
-	ParentFullName: string;
-	Url: string;
-	FullName: string;
-	CreationTime: Date;
-	Type: EType;
-}
-
-interface FileListSearchResults {
-	FileList: FileInfo[];
-	DirList: FileInfo[];
-	PathNow: string;
-	ErrorFlag: boolean;
-}
 
 interface IMusicList {
 	[index: string]: FileListSearchResults;
@@ -90,16 +73,18 @@ function MusicSelectButtonClick(arg) {
 
 	const xmlHttpRequest = new XMLHttpRequest();
 
-	let data = {
+	let send = {
 		"mode": "play_music",
-		"speakeraddress": arg.addr,
-		"filename": arg.fullurl,
+		data: {
+			"speakeraddress": arg.addr,
+			"filename": arg.fullurl,
+		}
 	};
 
 	alert(arg.speedx2);
 
 	if (arg.speedx2) {
-		data.filename += "?stream=1&effectsPreset=speedx2";
+		send.data.filename += "?stream=1&effectsPreset=speedx2";
     }
 
 	const url = '/command';
@@ -107,7 +92,7 @@ function MusicSelectButtonClick(arg) {
 	// サーバに対して解析方法を指定する
 	xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	// データをリクエスト ボディに含めて送信する
-	xmlHttpRequest.send(EncodeHTMLForm(data));
+	xmlHttpRequest.send(EncodeHTMLForm(send));
 }
 
 function EncodeHTMLForm(data) {

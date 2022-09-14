@@ -54,6 +54,9 @@
       <TestFramework>mocha</TestFramework>
     </Content>
     <Content Include="clean_wav.sh" />
+    <Content Include="ft_socket_client.ts">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="FunctionTest\test_02.json" />
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
