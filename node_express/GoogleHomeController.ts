@@ -246,8 +246,8 @@ export class GoogleHomeController {
 
         this.PfSender.on('status', (status) => this.onStatus(status));
         this.PfSender.on('error', async (data) => {
-            console.log("ON ERROR");
-            console.log({ data });
+            console.error("ON ERROR");
+            console.error({ data });
             this.Close();
             if (this.ConnectionRetryIntervalMs > 0) {
                 this.Connect();
@@ -302,7 +302,6 @@ export class GoogleHomeController {
     }
 
     public Close(): void {
-        this.EndJoin();
         try {
             this.PfSender?.close();
         } catch (err) {
