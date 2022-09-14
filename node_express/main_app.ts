@@ -11,12 +11,9 @@ const sch = require('@/scheduler');
 
 import { delay_ms } from '@/UtilFunctions';
 
-import { GHomeMonitor } from '@/GHomeMonitor';
-
-const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
-
 import { AppConf, slk } from '@/AppConf';
 import { App } from '@/GlobalObj';
+import { Monitor } from '@/AppFunctions';
 
 
 async function npm_install(): Promise<any> {
