@@ -72,6 +72,7 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
+    <Content Include="pm2start_watch.json" />
     <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
     <TypeScriptCompile Include="PagesAndCommands.ts">
