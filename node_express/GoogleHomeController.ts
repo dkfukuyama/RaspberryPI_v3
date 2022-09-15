@@ -295,7 +295,7 @@ export class GoogleHomeController {
             });
         });
         this.PfSender.client.socket.setTimeout(1000, () => {
-            PfSender.client.socket.destroy();
+            PfSender.client.socket.end();
             this.PfSender.emit('error', 'DEVICE TIMEOUT');
         })
     }
