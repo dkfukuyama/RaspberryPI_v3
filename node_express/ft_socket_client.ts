@@ -1,4 +1,5 @@
-import { io } from 'socket.io-client';
+/*
+ * import { io } from 'socket.io-client';
 const socket = io("ws://192.168.1.231:8080", { transports: ['websocket'] });
 
 import * as AppFunctions from '@/AppFunctions'
@@ -24,4 +25,4 @@ socket.on("connect", async () => {
 });
 
 socket.connect();
-
+*/

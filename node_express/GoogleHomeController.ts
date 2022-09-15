@@ -240,19 +240,22 @@ export class GoogleHomeController {
         clearEventEmitter(this.MediaPlayer); this.MediaPlayer = null;
     }
 
-    constructor(_ipAddress: string, _connectionRetryIntervalMs?: number) {
-        this.IpAddress = _ipAddress;
-        this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
-
+    private InitPlatformSender() {
+        delete this.PfSender; 
+        this.PfSender = new this.PlatformSender();
         this.PfSender.on('status', (status) => this.onStatus(status));
         this.PfSender.on('error', async (data) => {
             console.error("ON ERROR");
             console.error({ data });
             this.Close();
-            if (this.ConnectionRetryIntervalMs > 0) {
-                this.Connect();
-            }
+            await delay_ms(this.ConnectionRetryIntervalMs <= 0 ? 1 : this.ConnectionRetryIntervalMs);
+            this.Connect();
         });
+    }
+
+    constructor(_ipAddress: string, _connectionRetryIntervalMs?: number) {
+        this.IpAddress = _ipAddress;
+        this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
         this.Connect();
     }
 
@@ -286,6 +289,9 @@ export class GoogleHomeController {
     }
 
     public Connect(): void {
+        console.log(`connect to ${this.IpAddress}`);
+
+        this.InitPlatformSender();
         this.PfSender.connect(this.IpAddress, () => {
             this.PfSender.getStatus((err, status) => {
                 if (err) {
@@ -294,10 +300,11 @@ export class GoogleHomeController {
                 } else this.onStatus(status);
             });
         });
+        /*
         this.PfSender.client.socket.setTimeout(1000, () => {
-            PfSender.client.socket.end();
-            this.PfSender.emit('error', 'DEVICE TIMEOUT');
+            this.PfSender.emit('error', "ESTABLISH CONNECTION TO SOCKET TIME OUT");
         })
+        */
     }
 
     public EndJoin() {
@@ -307,7 +314,8 @@ export class GoogleHomeController {
 
     public Close(): void {
         try {
-            this.PfSender?.close();
+            this.PfSender.close();
+            this.PfSender.client.socket.end();
             this.EndJoin();
         } catch (err) {
             console.error(err);
