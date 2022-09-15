@@ -54,6 +54,18 @@ async function main() {
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
     slk.Log({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
 
+    await new Promise((resolve, reject) => {
+        const c = 'git log -1';
+        exec(c, { windowsHide: true }, (err, stdout, stderr) => {
+            if (err) {
+                console.error(err);
+                reject(stderr);
+            } else {
+                resolve({ command: c, results: stdout });
+            }
+        });
+    });
+
     sch.setNodeCrontab();
 
     let httpServerPort = process.env.HTTP_SERVER_PORT;
