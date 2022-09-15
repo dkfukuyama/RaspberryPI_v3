@@ -47,6 +47,20 @@ async function npm_install(): Promise<any> {
     );
 }
 
+function OverWriteCompiledJsFile(filePath: string) {
+    var fs = require('fs')
+    fs.readFile(filePath, 'utf8', function (err, data) {
+        console.log(`OPEN ${filePath}`);
+        if (err) {
+            return console.log(err);
+        }
+        var result = data.replace(/(Object\.defineProperty\(exports)/g, '//$1');
+
+        fs.writeFile(filePath, result, 'utf8', function (err) {
+            if (err) return console.log(err);
+        });
+    });
+}
 
 async function main() {
     slk.Log("********************\n*** SYSTEM START ***\n********************");
@@ -54,7 +68,7 @@ async function main() {
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
     slk.Log({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
 
-    await new Promise((resolve, reject) => {
+    let sn = await new Promise<any>((resolve, reject) => {
         const c = 'git log -1';
         exec(c, { windowsHide: true }, (err, stdout, stderr) => {
             if (err) {
@@ -65,6 +79,9 @@ async function main() {
             }
         });
     });
+    slk.Log(sn);
+
+    OverWriteCompiledJsFile('views/scripts/connect.js');
 
     sch.setNodeCrontab();
 

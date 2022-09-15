@@ -64,6 +64,7 @@
     <TypeScriptCompile Include="ft_GoogleSpeaker.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="FunctionTest\ft_GoogleSpeaker.ts" />
     <TypeScriptCompile Include="GlobalObj.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

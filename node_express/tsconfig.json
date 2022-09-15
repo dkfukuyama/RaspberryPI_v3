@@ -2,7 +2,7 @@
   "compilerOptions": {
     "emitBOM": true,
     "lib": [ "es6" ],
-    "module": "commonjs",
+    "module": "CommonJS",
     "noImplicitThis": true,
     "removeComments": true,
     "sourceMap": true,
@@ -11,7 +11,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [ "./*" ]
-    },
+    }
   },
   "exclude": [
     "./node_modules/*",

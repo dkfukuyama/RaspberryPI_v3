@@ -47,12 +47,10 @@ export class SocketIoConnectionManager {
             console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
             socket.emit("hello from server", { send_datetime: new Date() });
 
-            /*
             let t: NodeJS.Timeout = setInterval(() => {
                 let rep = this.GetStatusAll(GStatusSimType);
                 socket.emit("S2C_send_status", rep);
             }, 1000);
-            */
 
             // receive a message from the client
             socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: query  }) => {
