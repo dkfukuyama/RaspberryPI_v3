@@ -1,4 +1,5 @@
 ﻿import { FileListSearchResults } from "@/FileListSearch";
+import { IPlayMusicQuery } from "@/GHomeMonitor";
 
 declare const document: any;
 declare const io: any;
@@ -13,13 +14,10 @@ declare const container_id: string;
 declare const DOMParser: any;
 declare const Node: any;
 
-declare const query: {
-	test_mp3_path: string;
-	GStatusSimType: string;
-};
-
 declare const client_type: any;
 declare const location: any;
+
+declare const query: IPlayMusicQuery;
 
 interface IMusicList {
 	[index: string]: FileListSearchResults;
@@ -90,9 +88,14 @@ function MusicSelectButtonClick(arg) {
 	const url = '/command';
 	xmlHttpRequest.open('POST', url);
 	// サーバに対して解析方法を指定する
-	xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	// データをリクエスト ボディに含めて送信する
-	xmlHttpRequest.send(EncodeHTMLForm(send));
+	//xmlHttpRequest.send(send);
+
+	// サーバに対して解析方法を指定する
+	//xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
+	// データをリクエスト ボディに含めて送信する
+	xmlHttpRequest.send(JSON.stringify(send));
 }
 
 function EncodeHTMLForm(data) {
