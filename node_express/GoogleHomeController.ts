@@ -204,10 +204,13 @@ export class GoogleHomeController {
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
+            client.socket.end();
+            clearEventEmitter(client);
         });
 
         setTimeout(() => {
             client.close();
+            client.socket.end();
             clearEventEmitter(client);
         }, 10000);
     }
@@ -225,9 +228,12 @@ export class GoogleHomeController {
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
+            client.socket.end();
+            clearEventEmitter(client);
         });
         setTimeout(() => {
             client.close();
+            client.socket.end();
             clearEventEmitter(client);
         }, 10000);
 
@@ -300,11 +306,6 @@ export class GoogleHomeController {
                 } else this.onStatus(status);
             });
         });
-        /*
-        this.PfSender.client.socket.setTimeout(1000, () => {
-            this.PfSender.emit('error', "ESTABLISH CONNECTION TO SOCKET TIME OUT");
-        })
-        */
     }
 
     public EndJoin() {

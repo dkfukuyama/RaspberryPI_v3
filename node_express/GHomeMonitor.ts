@@ -12,7 +12,7 @@ export interface IStatus {
     client_type: TClient;
 };
 
-export interface query {
+export interface IPlayMusicQuery {
     test_mp3_path: string;
     GStatusSimType: string;
 };
@@ -53,7 +53,7 @@ export class SocketIoConnectionManager {
             }, 1000);
 
             // receive a message from the client
-            socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: query  }) => {
+            socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: IPlayMusicQuery  }) => {
                 slk.Log(data);
                 if (data) {
                     Client = {

@@ -35,15 +35,20 @@ export const AppFunctions: IAppFunctions = {
     },
     'play_music': async (params: IAppFunctionData) => {
         return new Promise((resolve, reject) => {
-            let g = Monitor.GetGhObjByAddress(params.Obj.speakeraddress)?.g;
-            if (g) {
-                g.PlayList([params.Obj.filename]);
-                resolve({
-                    Args: params,
-                    CommandTerminationType: 'OK',
-                });
-            } else {
-                throw new Error(`Speaker with IP Address ${params.Obj.speakeraddress} is not Found`);
+            try {
+                console.log(JSON.stringify(params));
+                let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
+                if (g) {
+                    g.PlayList([params.filename]);
+                    resolve({
+                        Args: params,
+                        CommandTerminationType: 'OK',
+                    });
+                } else {
+                    reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+                }
+            } catch (err) {
+                reject(err);
             }
         });
     },
@@ -82,20 +87,19 @@ export const AppFunctions: IAppFunctions = {
 
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
+        await slk.Log("COMMAND MODE via HTTP");
 
         let body: IAppFunctionArgs = req.body;
-        slk.Log("COMMAND MODE via HTTP");
-
         let results: IAppFunctionResults
         if (req.body.mode && AppFunctions[body.mode]) {
-            results = await AppFunctions[body.mode](body)
+            results = await AppFunctions[body.mode](body.data)
                 .catch(err => {
-                    slk.Err(err);
+                    console.error(err);
                     let temp: IAppFunctionResults = {
                         Args: body,
                         CommandTerminationType: 'ERROR',
                         ErrorMessage: 'Internal Error',
-                        Obj: err,
+                        Obj: err.toString(),
                     };
                     return temp;
                 });
@@ -107,6 +111,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                 ErrorMessage: "Command not Exists",
             };
         }
+        slk.Log(JSON.stringify(results, null, "\t"));
         res.json(results);
     });
 
@@ -130,6 +135,7 @@ export function ApplyToSocket(socket: Socket): Socket {
                     };
                     return temp;
                 });
+            slk.Log(JSON.stringify(results, null, "\t"));
             socket.emit(p, results);
             await new Promise<void>((resolve) => setTimeout(()=>resolve(), 1000));
             socket.disconnect();
