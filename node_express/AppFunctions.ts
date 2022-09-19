@@ -94,7 +94,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
         if (req.body.mode && AppFunctions[body.mode]) {
             results = await AppFunctions[body.mode](body.data)
                 .catch(err => {
-                    console.error(err);
+                    slk.Err(err);
                     let temp: IAppFunctionResults = {
                         Args: body,
                         CommandTerminationType: 'ERROR',
@@ -111,7 +111,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                 ErrorMessage: "Command not Exists",
             };
         }
-        slk.Log(JSON.stringify(results, null, "\t"));
+        console.log(JSON.stringify(results, null, "\t"));
         res.json(results);
     });
 
@@ -135,7 +135,7 @@ export function ApplyToSocket(socket: Socket): Socket {
                     };
                     return temp;
                 });
-            slk.Log(JSON.stringify(results, null, "\t"));
+            console.log(JSON.stringify(results, null, "\t"));
             socket.emit(p, results);
             await new Promise<void>((resolve) => setTimeout(()=>resolve(), 1000));
             socket.disconnect();

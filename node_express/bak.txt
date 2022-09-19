@@ -96,7 +96,7 @@ page_path_set_index_ejs.pages = [
                     ).then((params) => {
                         let mailer = new mail.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
                         mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
+                    }).catch(err=>console.error(err)).then((d)=>Promise.resolve(d));
             }
             return;
         },
@@ -140,7 +140,7 @@ page_path_set_index_ejs.pages = [
                     ).then((params) => {
                         let mailer = new mail.NodeMailer();
                         mailer.SendTextAndAttachment('ぐーぐるだよ', req.body.text, params.outfilePath);
-                    }).catch(er=>console.log(er)).then((d)=>Promise.resolve(d));
+                    }).catch(err=>console.error(err)).then((d)=>Promise.resolve(d));
             }
             return;
         },
@@ -267,9 +267,9 @@ page_path_set_index_ejs.pages.forEach(p =>{
             console.log(req.query);
 
             let er_occurred = false;
-            const pfunc_results = await p.getfunc(req, res).catch(er=>{
+            const pfunc_results = await p.getfunc(req, res).catch(err=>{
                 er_occurred = true;
-                return JSON.stringify(er);
+                return JSON.stringify(err);
             });
             console.log(" ----- GET pfunc_results ----- ");
             console.log(pfunc_results);
@@ -297,13 +297,13 @@ page_path_set_index_ejs.pages.forEach(p =>{
                 common: page_path_set_index_ejs.common
             });
 
-        }catch(er){
+        }catch(err){
             console.log('CATCH ERROR');
 
             let data = {
                 title: p.title,
                 view_page : p.view_page,
-                errors: er
+                errors: err
             };
 
             res.render("./ER/error.ejs", data);

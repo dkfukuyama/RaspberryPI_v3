@@ -52,12 +52,15 @@ function OverWriteCompiledJsFile(filePath: string) {
     fs.readFile(filePath, 'utf8', function (err, data) {
         console.log(`OPEN ${filePath}`);
         if (err) {
-            return console.log(err);
+            return console.error(err);
         }
         var result = data.replace(/(Object\.defineProperty\(exports)/g, '//$1');
 
         fs.writeFile(filePath, result, 'utf8', function (err) {
-            if (err) return console.log(err);
+            if (err) {
+                console.error(err);
+                return;
+            }
         });
     });
 }
@@ -101,7 +104,14 @@ async function main() {
 }
 
 
-main();
+main().then(() => {
+    slk.Err("Enter into the Main->then routine");
+}).catch(err => {
+    slk.Err("Enter into the Main->catch routine");
+    slk.Err(err);
+});
+
+
 /*
  * 参考記事
 https://blog.bagooon.com/?p=1728
