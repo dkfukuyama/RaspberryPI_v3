@@ -87,7 +87,7 @@ export const AppFunctions: IAppFunctions = {
 
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        await slk.Log("COMMAND MODE via HTTP");
+        console.log("COMMAND MODE via HTTP");
 
         let body: IAppFunctionArgs = req.body;
         let results: IAppFunctionResults
@@ -120,7 +120,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
 
 export function ApplyToSocket(socket: Socket): Socket {
     Object.keys(AppFunctions).forEach(p => {
-        slk.Log("COMMAND MODE via Socket.IO");
+        console.log("COMMAND MODE via Socket.IO");
 
         socket.on(p, async (data: IAppFunctionData) => {
             console.log(p);
