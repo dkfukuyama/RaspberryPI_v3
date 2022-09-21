@@ -44,31 +44,25 @@ export class NodeMailer {
             to: this.mail_from,
             attachments: null
         }
-        console.log(this.smtpConfig);
     }
-    SendText(subject, text) {
-        let senddata = this.data;
-        senddata.subject = subject;
-        senddata.text = text;
-        console.log(senddata);
-        this.transporter.sendMail(senddata, this.sendCallBack);
+    async SendTextAsync(subject, text): Promise<object> {
+        return this.SendTextAndAttachmentsAsync(subject, text, null);
     }
-    SendTextAndAttachment(subject, text, attachments: IMailAttachments) {
-        let senddata = this.data;
-        senddata.subject = subject;
-        senddata.text = text;
-        senddata.attachments = attachments;
-        this.transporter.sendMail(senddata, this.sendCallBack);
-    }
-
-    sendCallBack(err, info){
-        if (err) {
-            console.log("send mail ERROR : ");
-            console.error(err);
-        } else {
-            console.log("send mail OK : ");
-            console.log(info);
-        }
+    async SendTextAndAttachmentsAsync(subject, text, attachments: IMailAttachments): Promise<object> {
+        const os = require("os");
+        return new Promise((resolve, reject) => {
+            let senddata = this.data;
+            senddata.subject = subject;
+            senddata.text = text;
+            senddata.attachments = attachments;
+            this.transporter.sendMail(senddata, (err, info) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(info);
+                }
+            });
+        });
     }
 };
 

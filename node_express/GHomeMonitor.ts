@@ -54,7 +54,7 @@ export class SocketIoConnectionManager {
 
             // receive a message from the client
             socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: IPlayMusicQuery  }) => {
-                slk.Log(data);
+                //slk.Log(data);
                 if (data) {
                     Client = {
                         ConnectionStartTime: data?.send_datetime ?? new Date(),

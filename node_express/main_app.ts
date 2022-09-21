@@ -105,18 +105,18 @@ async function main0() {
 async function main_wrap() {
     const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
 
-    for (; ;) {
-        //mail.SendTextAndAttachment("PI-02B boot....", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }]);
-        mail.SendText("PI-02B boot....", `${new Date()}`);
-
+    //for (; ;) {
+    mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])
+        .then(res => { console.log("SEND MAIL OK"); console.log(res); })
+        .catch(err => console.error(err));
+ 
         await main0().then(() => {
             slk.Err("Enter into the Main->then routine");
         }).catch(err => {
             slk.Err("Enter into the Main->catch routine");
             slk.Err(err);
         });
-        Monitor.End();
-    }
+    //}
 }
 main_wrap();
 

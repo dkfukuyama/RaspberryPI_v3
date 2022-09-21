@@ -3,8 +3,7 @@ const cron = require('node-cron');
 const ut = require('@/UtilFunctions');
 import gh = require('@/google_home');
 
-import { Slack } from '@/SlackSend';
-const slk = new Slack(process.env.SLACK_WEBHOOK);
+import { slk } from '@/AppConf';
 
 require('date-utils');
 
@@ -69,17 +68,8 @@ function setNodeCrontab() {
     //});
 
     cron.schedule('18 12 3 * * *', () => {
-        const command = 'curl -d \'mode=clean_wav&short_return=1\' http://localhost/command';
-        exec(command, async (err, stdout, stderr) => {
-            slk.Log(command);
-            if (err) {
-                slk.Err(err);
-                slk.Err(stderr);
-            }else{
-                console.log(`stdout: ${stdout}`)
-                slk.Log(stdout);
-            }
-        });
+        slk.Log("Scheduler Executed");
+        slk.Log(require('./clean').clean_wav(100));
     });
 
     /*

@@ -31,8 +31,6 @@
 		post_command({
 			alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
 			mode : 'update_reboot',
-			command : '',
-			short_return : true
 		});
 	}
 
@@ -40,8 +38,6 @@
 		post_command({
 			alert_text : 'ウェブサーバをさいきどうします。',
 			mode : 'reboot',
-			command : '',
-			short_return : true
 		});
 	}
 
@@ -50,7 +46,6 @@
 			alert_text : 'ログを表示します。',
 			mode : 'system_command',
 			command : 'cat out.log',
-			short_return : true
 		});
 	}
 
@@ -59,7 +54,6 @@
 			alert_text : 'バージョンを表示します。',
 			mode : 'system_command',
 			command : 'git log -1',
-			short_return : true
 		});
 	}
 

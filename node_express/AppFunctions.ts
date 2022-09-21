@@ -33,6 +33,13 @@ export const AppFunctions: IAppFunctions = {
             CommandTerminationType: 'OK',
         }));
     },
+    'clean_wav': async (params: IAppFunctionData) => {
+        return new Promise((resolve, reject) => resolve({
+            Args: params,
+            Obj: Promise.resolve(require('./clean').clean_wav(100)),
+            CommandTerminationType: 'OK',
+        }));
+    },
     'play_music': async (params: IAppFunctionData) => {
         return new Promise((resolve, reject) => {
             try {
@@ -68,6 +75,7 @@ export const AppFunctions: IAppFunctions = {
                     });
                 });
             }
+            setTimeout(() => process.exit(0), 5000);
             resolve0({
                 Args: params,
                 CommandTerminationType: 'OK',
@@ -77,6 +85,15 @@ export const AppFunctions: IAppFunctions = {
     'reboot': async (params: IAppFunctionData) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => process.exit(0), 5000);
+            resolve({
+                Args: params,
+                CommandTerminationType: 'OK',
+            });
+        });
+    },
+    'system_command': async (params: IAppFunctionData) => {
+        return new Promise((resolve, reject) => {
+            //params.command
             resolve({
                 Args: params,
                 CommandTerminationType: 'OK',

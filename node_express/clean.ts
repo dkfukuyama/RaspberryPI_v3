@@ -1,6 +1,5 @@
 const fs = require('fs');
 import path = require('path');
-const slk: any = require('@/SlackSend');
 
 import { AppConf } from '@/AppConf';
 
@@ -44,8 +43,6 @@ function clean_wav(leftnum) {
             }
         });
     });
-
-    slk.slacksend(`CLEAN WAV OK`);
 
     return { message: `CLEAN WAV OK`};
 }
