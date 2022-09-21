@@ -315,10 +315,11 @@ export class GoogleHomeController {
 
     public Close(): void {
         try {
-            this.PfSender.close();
             this.PfSender.client.socket.end();
+            this.PfSender.close();
             this.EndJoin();
         } catch (err) {
+            console.error("catch ERROR --- GoogleHomeController.ts  LINE 322");
             console.error(err);
         }
     }
