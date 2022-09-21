@@ -84,7 +84,10 @@ function MusicSelectButtonClick(arg) {
 
 	if (arg.speedx2) {
 		send.data.filename += "?stream=1&effectsPreset=speedx2";
-    }
+    }else if (arg.speedx0_5) {
+		send.data.filename += "?stream=1&effectsPreset=speed0_5";
+	}
+
 
 	// JSONデータのPOST送信
 	const url = '/command';
