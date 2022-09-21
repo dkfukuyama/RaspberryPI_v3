@@ -145,6 +145,7 @@ export class GHomeMonitor {
     public End() {
         GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
+        this.ConnectionManager
     }
 
     public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {

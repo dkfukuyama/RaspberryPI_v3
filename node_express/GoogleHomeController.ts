@@ -228,12 +228,11 @@ export class GoogleHomeController {
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
-            client.socket.end();
+            //if (client?.socket?.end) client?.socket?.end();
             clearEventEmitter(client);
         });
         setTimeout(() => {
             client.close();
-            client.socket.end();
             clearEventEmitter(client);
         }, 10000);
 

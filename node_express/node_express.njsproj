@@ -83,7 +83,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="scheduler.ts" />
-    <TypeScriptCompile Include="send_mail.ts" />
+    <TypeScriptCompile Include="NodeMailerWrapper.ts" />
     <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />

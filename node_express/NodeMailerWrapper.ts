@@ -1,4 +1,8 @@
-﻿
+﻿export interface IMailAttathment {
+    filename: string; path: any;
+}
+export type IMailAttachments = IMailAttathment[] | null;
+
 export class NodeMailer {
     private mail_from: string;
     private mail_pass: string;
@@ -16,8 +20,9 @@ export class NodeMailer {
         text: string;
         subject: string;
         from: string;
-        to: string; 
-        attachments: { filename: string; path: any; }[];    } | null;
+        to: string;
+        attachments: IMailAttachments;
+    }
 
     constructor(_mail_from: string, _mail_pass: string) {
         this.mail_from = _mail_from;
@@ -48,16 +53,11 @@ export class NodeMailer {
         console.log(senddata);
         this.transporter.sendMail(senddata, this.sendCallBack);
     }
-    SendTextAndAttachment(subject, text, att_path) {
+    SendTextAndAttachment(subject, text, attachments: IMailAttachments) {
         let senddata = this.data;
         senddata.subject = subject;
         senddata.text = text;
-        senddata.attachments = [
-            {
-                filename: 'att.wav',
-                path: att_path
-            }
-        ];
+        senddata.attachments = attachments;
         this.transporter.sendMail(senddata, this.sendCallBack);
     }
 

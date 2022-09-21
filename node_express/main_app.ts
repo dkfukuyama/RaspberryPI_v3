@@ -4,12 +4,11 @@ import path = require('path');
 const exec = require('child_process').exec;
 
 const gtts = require('@/google_home')
-const mail = require('@/send_mail');
-
 const calc = require('@/calculator')
 const sch = require('@/scheduler');
 
 import { delay_ms } from '@/UtilFunctions';
+import * as NodeMailerWrapper from '@/NodeMailerWrapper';
 
 import { AppConf, slk } from '@/AppConf';
 import { App } from '@/GlobalObj';
@@ -52,17 +51,20 @@ function OverWriteCompiledJsFile(filePath: string) {
     fs.readFile(filePath, 'utf8', function (err, data) {
         console.log(`OPEN ${filePath}`);
         if (err) {
-            return console.log(err);
+            return console.error(err);
         }
         var result = data.replace(/(Object\.defineProperty\(exports)/g, '//$1');
 
         fs.writeFile(filePath, result, 'utf8', function (err) {
-            if (err) return console.log(err);
+            if (err) {
+                console.error(err);
+                return;
+            }
         });
     });
 }
 
-async function main() {
+async function main0() {
     slk.Log("********************\n*** SYSTEM START ***\n********************");
     const date: any = new Date();
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
@@ -100,8 +102,24 @@ async function main() {
     Monitor.Start();
 }
 
+async function main_wrap() {
+    const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
 
-main();
+    for (; ;) {
+        //mail.SendTextAndAttachment("PI-02B boot....", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }]);
+        mail.SendText("PI-02B boot....", `${new Date()}`);
+
+        await main0().then(() => {
+            slk.Err("Enter into the Main->then routine");
+        }).catch(err => {
+            slk.Err("Enter into the Main->catch routine");
+            slk.Err(err);
+        });
+        Monitor.End();
+    }
+}
+main_wrap();
+
 /*
  * 参考記事
 https://blog.bagooon.com/?p=1728
