@@ -77,7 +77,7 @@ async function main0() {
                 console.error(err);
                 reject(stderr);
             } else {
-                resolve({ command: c, results: stdout });
+                resolve({ command: c, results: stdout.split("\n")});
             }
         });
     });
@@ -103,7 +103,7 @@ async function main0() {
 }
 
 async function main_wrap() {
-    const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);
+    const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);;
 
     //for (; ;) {
     mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])

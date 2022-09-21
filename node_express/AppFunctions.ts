@@ -60,24 +60,25 @@ export const AppFunctions: IAppFunctions = {
         });
     },
     'update_reboot': async (params: IAppFunctionData) => {
-        return new Promise(async (resolve0, reject0) => {
+        return new Promise(async (resolve, reject) => {
             let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
-            let k = "";
+            let k: string[] = [];
             for (let p of pr) {
-                k += await new Promise((resolve, reject) => {
+                k.push(await new Promise((resolve0, reject0) => {
                     exec(p, (err, stdout, stderr) => {
                         if (err) {
-                            reject(err);
+                            reject0(err);
                         } else {
                             console.log(`stdout: ${stdout}`)
-                            resolve(stdout);
+                            resolve0(stdout.split("\n"));
                         }
                     });
-                });
+                }));
             }
             setTimeout(() => process.exit(0), 5000);
-            resolve0({
+            resolve({
                 Args: params,
+                Obj: k,
                 CommandTerminationType: 'OK',
             });
         });
@@ -92,11 +93,29 @@ export const AppFunctions: IAppFunctions = {
         });
     },
     'system_command': async (params: IAppFunctionData) => {
-        return new Promise((resolve, reject) => {
-            //params.command
-            resolve({
-                Args: params,
-                CommandTerminationType: 'OK',
+        return new Promise(async (resolve, reject) => {
+            let p = params.command;
+            await new Promise((resolve0, reject0) => {
+                exec(p, { shell: true }, (err, stdout, stderr) => {
+                    if (err) {
+                        reject0(err);
+                    } else {
+                        console.log(`stdout: ${stdout}`)
+                        resolve0(stdout.split("\n"));
+                    }
+                });
+            }).then(k => {
+                resolve({
+                    Args: params,
+                    Obj: k,
+                    CommandTerminationType: 'OK',
+                });
+            }).catch(err => {
+                resolve({
+                    Args: params,
+                    Obj: err,
+                    CommandTerminationType: 'ERROR',
+                });
             });
         });
     },

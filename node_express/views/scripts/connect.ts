@@ -203,29 +203,23 @@ class GoogleHomeHtmlContainer {
 		if (addr in MusicList) {
 			if (MusicList[addr].ErrorFlag == false) {
 				out_html = `曲の一覧`;
-				let end_i: number;
-				MusicList[addr].FileList.forEach((f, i) => {
-					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
 
-					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
-					if (i % 3 == 2) out_html += '</div>';
-					end_i = i;
+				out_html += '<div class="row w-100">';
+				MusicList[addr].FileList.forEach(f => {
+					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
 				})
-				if (end_i % 3 != 2) out_html += '</div>';
+				out_html += '</div>';
 				out_html += "<HR/>";
 				out_html += `フォルダを移動する`;
-				if(MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
-				MusicList[addr].DirList.forEach((f, i) => {
+				if (MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
+				out_html += '<div class="row w-100">';
+				MusicList[addr].DirList.forEach(f => {
 					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-
-					if (i % 3 == 0) out_html += '<div class="row">';
-					out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}'})">${f.Name}</button></div>`;
-					if (i % 3 == 2) out_html += '</div>';
-					end_i = i;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}'})">${f.Name}</button></div>`;
 				})
-				if (end_i % 3 != 2) out_html += '</div>';
-				out_html += '<div class="row">';
+				out_html += '</div>';
+				out_html += '<div class="row w-100">';
 				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${"../"}', 'url':'../'})">上のフォルダへ</button></div>`;
 				out_html += '</div>';
 			} else {

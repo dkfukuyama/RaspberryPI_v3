@@ -145,7 +145,7 @@ export class GHomeMonitor {
     public End() {
         GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
-        this.ConnectionManager
+        //this.ConnectionManager
     }
 
     public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
@@ -171,7 +171,7 @@ export class GHomeMonitor {
                 this.GHomes[ad].lastUpdated = new Date();
             } else {
                 this.GHomes[ad] = {
-                    g: new GoogleHomeController(ad),
+                    g: new GoogleHomeController(ad, 5000),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];

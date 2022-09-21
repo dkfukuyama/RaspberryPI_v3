@@ -49,7 +49,6 @@ export class NodeMailer {
         return this.SendTextAndAttachmentsAsync(subject, text, null);
     }
     async SendTextAndAttachmentsAsync(subject, text, attachments: IMailAttachments): Promise<object> {
-        const os = require("os");
         return new Promise((resolve, reject) => {
             let senddata = this.data;
             senddata.subject = subject;
