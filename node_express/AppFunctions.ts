@@ -33,6 +33,13 @@ export const AppFunctions: IAppFunctions = {
             CommandTerminationType: 'OK',
         }));
     },
+    'clean_wav': async (params: IAppFunctionData) => {
+        return new Promise((resolve, reject) => resolve({
+            Args: params,
+            Obj: Promise.resolve(require('./clean').clean_wav(100)),
+            CommandTerminationType: 'OK',
+        }));
+    },
     'play_music': async (params: IAppFunctionData) => {
         return new Promise((resolve, reject) => {
             try {
@@ -53,23 +60,25 @@ export const AppFunctions: IAppFunctions = {
         });
     },
     'update_reboot': async (params: IAppFunctionData) => {
-        return new Promise(async (resolve0, reject0) => {
+        return new Promise(async (resolve, reject) => {
             let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
-            let k = "";
+            let k: string[] = [];
             for (let p of pr) {
-                k += await new Promise((resolve, reject) => {
+                k.push(await new Promise((resolve0, reject0) => {
                     exec(p, (err, stdout, stderr) => {
                         if (err) {
-                            reject(err);
+                            reject0(err);
                         } else {
                             console.log(`stdout: ${stdout}`)
-                            resolve(stdout);
+                            resolve0(stdout.split("\n"));
                         }
                     });
-                });
+                }));
             }
-            resolve0({
+            setTimeout(() => process.exit(0), 5000);
+            resolve({
                 Args: params,
+                Obj: k,
                 CommandTerminationType: 'OK',
             });
         });
@@ -83,11 +92,38 @@ export const AppFunctions: IAppFunctions = {
             });
         });
     },
+    'system_command': async (params: IAppFunctionData) => {
+        return new Promise(async (resolve, reject) => {
+            let p = params.command;
+            await new Promise((resolve0, reject0) => {
+                exec(p, { shell: true }, (err, stdout, stderr) => {
+                    if (err) {
+                        reject0(err);
+                    } else {
+                        console.log(`stdout: ${stdout}`)
+                        resolve0(stdout.split("\n"));
+                    }
+                });
+            }).then(k => {
+                resolve({
+                    Args: params,
+                    Obj: k,
+                    CommandTerminationType: 'OK',
+                });
+            }).catch(err => {
+                resolve({
+                    Args: params,
+                    Obj: err,
+                    CommandTerminationType: 'ERROR',
+                });
+            });
+        });
+    },
 };
 
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        await slk.Log("COMMAND MODE via HTTP");
+        console.log("COMMAND MODE via HTTP");
 
         let body: IAppFunctionArgs = req.body;
         let results: IAppFunctionResults
@@ -111,7 +147,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                 ErrorMessage: "Command not Exists",
             };
         }
-        slk.Log(JSON.stringify(results, null, "\t"));
+        console.log(JSON.stringify(results, null, "\t"));
         res.json(results);
     });
 
@@ -120,7 +156,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
 
 export function ApplyToSocket(socket: Socket): Socket {
     Object.keys(AppFunctions).forEach(p => {
-        slk.Log("COMMAND MODE via Socket.IO");
+        console.log("COMMAND MODE via Socket.IO");
 
         socket.on(p, async (data: IAppFunctionData) => {
             console.log(p);
@@ -135,7 +171,7 @@ export function ApplyToSocket(socket: Socket): Socket {
                     };
                     return temp;
                 });
-            slk.Log(JSON.stringify(results, null, "\t"));
+            console.log(JSON.stringify(results, null, "\t"));
             socket.emit(p, results);
             await new Promise<void>((resolve) => setTimeout(()=>resolve(), 1000));
             socket.disconnect();

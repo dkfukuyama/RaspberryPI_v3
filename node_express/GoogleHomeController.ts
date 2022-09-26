@@ -54,11 +54,14 @@ export class GoogleHomeController {
     private IpAddress: string = "";
     private ConnectionRetryIntervalMs: number = 100;
 
-
-
     public static init() {
         if (!this.InitializedFlag) {
             GoogleHomeController.gHomeAddresses = [];
+            let p = require('castv2-client').PlatformSender;
+            p.prototype.close = function () {
+                this.client?.socket?.end();
+                this.client?.socket?.destroy();
+            }
         }
         this.InitializedFlag = true;
     }
@@ -204,7 +207,6 @@ export class GoogleHomeController {
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
-            client.socket.end();
             clearEventEmitter(client);
         });
 
@@ -228,7 +230,6 @@ export class GoogleHomeController {
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
-            client.socket.end();
             clearEventEmitter(client);
         });
         setTimeout(() => {
@@ -316,9 +317,9 @@ export class GoogleHomeController {
     public Close(): void {
         try {
             this.PfSender.close();
-            this.PfSender.client.socket.end();
             this.EndJoin();
         } catch (err) {
+            console.error("catch ERROR --- GoogleHomeController.ts  LINE 322");
             console.error(err);
         }
     }

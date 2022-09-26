@@ -1,17 +1,38 @@
 <% let g_addr = common.ghomeSpeakers %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="clean_wav" class="btn btn-primary w-100">たまったおんせいファイルをしょうきょする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="update_reboot_webserver" class="btn btn-primary w-100">ウェブサーバをアップデートしてさいきどうする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12 py-10">
+		<p>
+			<button id="reboot_webserver" class="btn btn-primary w-100">ウェブサーバをさいきどうする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="show_log" class="btn btn-primary w-100">ログをひょうじする</button>
+		</p>
+	</div>
+	<div class="col-md-6 col-12">
+		<p>
+			<button id="show_err_log" class="btn btn-primary w-100">エラーログをひょうじする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="show_version" class="btn btn-primary w-100">バージョンをひょうじする</button>
+		</p>
+	</div>
+</div>
 
-<button id="clean_wav" class="btn btn-primary mx-2">たまったおんせいファイルをしょうきょする</button>
-<br/>
-<br/>
-<button id="update_reboot_webserver" class="btn btn-primary mx-2">ウェブサーバをアップデートしてさいきどうする</button>
-<br/>
-<button id="reboot_webserver" class="btn btn-primary mx-2">ウェブサーバをさいきどうする</button>
-<br/>
-<br/>
-<button id="show_log" class="btn btn-primary mx-2">ログをひょうじする</button>
-<br/>
-<br/>
-<button id="show_version" class="btn btn-primary mx-2">バージョンをひょうじする</button>
 
 <p>
 	<P id="resXmlHttpRequestObj"></P>
@@ -31,8 +52,6 @@
 		post_command({
 			alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
 			mode : 'update_reboot',
-			command : '',
-			short_return : true
 		});
 	}
 
@@ -40,26 +59,37 @@
 		post_command({
 			alert_text : 'ウェブサーバをさいきどうします。',
 			mode : 'reboot',
-			command : '',
-			short_return : true
 		});
 	}
 
 	document.getElementById('show_log').onclick = function(){
 		post_command({
-			alert_text : 'ログを表示します。',
+			alert_text : '標準出力ログを表示します。',
 			mode : 'system_command',
-			command : 'cat out.log',
-			short_return : true
+			data: {
+				command : 'cat out.log',
+			}
 		});
 	}
+
+	document.getElementById('show_err_log').onclick = function(){
+		post_command({
+			alert_text : 'エラーログを表示します。',
+			mode : 'system_command',
+			data: {
+				command : 'cat out.log',
+			}
+		});
+	}
+
 
 	document.getElementById('show_version').onclick = function(){
 		post_command({
 			alert_text : 'バージョンを表示します。',
 			mode : 'system_command',
-			command : 'git log -1',
-			short_return : true
+			data: {
+				command : 'git log -1',
+			}
 		});
 	}
 
@@ -77,8 +107,8 @@
 			if(xhr.readyState === XMLHttpRequest.DONE) {
 				// XMLデータ取得
 				let data = JSON.parse(xhr.responseText);
-				data = data.replace(/\n/g, "<BR />");
-	
+				//alert(data);
+				//data = data.replace(/\n/g, "<BR />");
 				try {
 					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
 				} catch (err) {

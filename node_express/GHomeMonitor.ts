@@ -54,7 +54,7 @@ export class SocketIoConnectionManager {
 
             // receive a message from the client
             socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: IPlayMusicQuery  }) => {
-                slk.Log(data);
+                //slk.Log(data);
                 if (data) {
                     Client = {
                         ConnectionStartTime: data?.send_datetime ?? new Date(),
@@ -145,6 +145,7 @@ export class GHomeMonitor {
     public End() {
         GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
+        //this.ConnectionManager
     }
 
     public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
@@ -170,7 +171,7 @@ export class GHomeMonitor {
                 this.GHomes[ad].lastUpdated = new Date();
             } else {
                 this.GHomes[ad] = {
-                    g: new GoogleHomeController(ad),
+                    g: new GoogleHomeController(ad, 5000),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];

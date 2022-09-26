@@ -1,4 +1,8 @@
-﻿
+﻿export interface IMailAttathment {
+    filename: string; path: any;
+}
+export type IMailAttachments = IMailAttathment[] | null;
+
 export class NodeMailer {
     private mail_from: string;
     private mail_pass: string;
@@ -16,8 +20,9 @@ export class NodeMailer {
         text: string;
         subject: string;
         from: string;
-        to: string; 
-        attachments: { filename: string; path: any; }[];    } | null;
+        to: string;
+        attachments: IMailAttachments;
+    }
 
     constructor(_mail_from: string, _mail_pass: string) {
         this.mail_from = _mail_from;
@@ -39,36 +44,24 @@ export class NodeMailer {
             to: this.mail_from,
             attachments: null
         }
-        console.log(this.smtpConfig);
     }
-    SendText(subject, text) {
-        let senddata = this.data;
-        senddata.subject = subject;
-        senddata.text = text;
-        console.log(senddata);
-        this.transporter.sendMail(senddata, this.sendCallBack);
+    async SendTextAsync(subject, text): Promise<object> {
+        return this.SendTextAndAttachmentsAsync(subject, text, null);
     }
-    SendTextAndAttachment(subject, text, att_path) {
-        let senddata = this.data;
-        senddata.subject = subject;
-        senddata.text = text;
-        senddata.attachments = [
-            {
-                filename: 'att.wav',
-                path: att_path
-            }
-        ];
-        this.transporter.sendMail(senddata, this.sendCallBack);
-    }
-
-    sendCallBack(err, info){
-        if (err) {
-            console.log("send mail ERROR : ");
-            console.error(err);
-        } else {
-            console.log("send mail OK : ");
-            console.log(info);
-        }
+    async SendTextAndAttachmentsAsync(subject, text, attachments: IMailAttachments): Promise<object> {
+        return new Promise((resolve, reject) => {
+            let senddata = this.data;
+            senddata.subject = subject;
+            senddata.text = text;
+            senddata.attachments = attachments;
+            this.transporter.sendMail(senddata, (err, info) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(info);
+                }
+            });
+        });
     }
 };
 
