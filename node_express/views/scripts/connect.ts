@@ -67,37 +67,44 @@ socket.on("connect_error", (err) => {
 
 //
 function MusicSelectButtonClick(arg) {
-	alert("曲を再生します");
+	alert(`${arg.file} を再生します`);
 
-	const xmlHttpRequest = new XMLHttpRequest();
+	let fullurl = `${location.protocol}//${location.host}/${arg.Url}`;
 
-	let send = {
-		"mode": "play_music",
-		data: {
-			"speakeraddress": arg.addr,
-			"filename": arg.fullurl,
-			"name": arg.file,
+	if (arg.ext == '.playlist') {
+		let send = {
+			"mode": "play_music",
+			data: {
+				"speakeraddress": arg.addr,
+				"filename": fullurl,
+				"name": arg.file,
+				"ext": arg.ext,
+			}
+		};
+	} else {
+		let send = {
+			"mode": "play_music",
+			data: {
+				"speakeraddress": arg.addr,
+				"filename": fullurl,
+				"name": arg.file,
+				"ext": arg.ext,
+			}
+		};
+
+		if (arg.speedx2) {
+			send.data.filename += "?stream=1&effectsPreset=speedx2";
+		} else if (arg.speedx0_5) {
+			send.data.filename += "?stream=1&effectsPreset=speedx0_5";
 		}
-	};
-
-	//alert(arg.speedx2);
-
-	if (arg.speedx2) {
-		send.data.filename += "?stream=1&effectsPreset=speedx2";
-    }else if (arg.speedx0_5) {
-		send.data.filename += "?stream=1&effectsPreset=speedx0_5";
 	}
 
 
 	// JSONデータのPOST送信
 	const url = '/command';
+	const xmlHttpRequest = new XMLHttpRequest();
 	xmlHttpRequest.open('POST', url);
 	// サーバに対して解析方法を指定する
-	// データをリクエスト ボディに含めて送信する
-	//xmlHttpRequest.send(send);
-
-	// サーバに対して解析方法を指定する
-	//xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
 	// データをリクエスト ボディに含めて送信する
 	xmlHttpRequest.send(JSON.stringify(send));
@@ -213,8 +220,7 @@ class GoogleHomeHtmlContainer {
 
 				out_html += '<div class="row w-100">';
 				MusicList[addr].FileList.forEach(f => {
-					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'ext':'${f.Ext}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
 				})
 				out_html += '</div>';
 				out_html += "<HR/>";
@@ -222,8 +228,8 @@ class GoogleHomeHtmlContainer {
 				if (MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
 				out_html += '<div class="row w-100">';
 				MusicList[addr].DirList.forEach(f => {
-					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}'})">${f.Name}</button></div>`;
+					//let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}'})">${f.Name}</button></div>`;
 				})
 				out_html += '</div>';
 				out_html += '<div class="row w-100">';
