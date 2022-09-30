@@ -1,0 +1,13 @@
+.env
+.env_test
+
+*.secret
+
+*.js
+*.js.map
+
+*.log
+
+
+
+

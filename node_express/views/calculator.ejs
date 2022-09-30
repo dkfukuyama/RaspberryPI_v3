@@ -1,0 +1,109 @@
+<form action="<%- data.page.path %>" method="POST">
+
+    <div class="container">
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" name="n1" id="n1" style="text-align: right; font-size: xx-large" onclick="selectText(1)"></input>    
+                    </td>
+                    <td>
+                        <input type="text" class="form-control border-0" name="n2" id="n2" style="text-align: center; font-size: xx-large" ></input>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="n3" id="n3" style="text-align: right; font-size: xx-large" onclick="selectText(3)"></input>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5">
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                <td style="width:25%"><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(7)">7</button></td>
+                <td style="width:25%"><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(8)">8</button></td>
+                <td style="width:25%"><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(9)">9</button></td>
+                <td style="width:25%"><button type="button" class="btn btn-secondary btn-lg" style="width:100%" onclick="buttonClick('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(4)">4</button></td>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(5)">5</button></td>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(6)">6</button></td>
+                <td><button type="button" class="btn btn-secondary btn-lg" style="width:100%" onclick="buttonClick('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(1)">1</button></td>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(2)">2</button></td>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(3)">3</button></td>
+                <td><button type="button" class="btn btn-secondary btn-lg" style="width:100%" onclick="buttonClick('×')">×</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick(0)">0</button></td>
+                <td><button type="button" class="btn btn-outline-primary btn-lg" style="width:100%" onclick="buttonClick('.')">.</button></td>
+                <td><button type="button" class="btn btn-dark btn-lg" style="width:100%" onclick="buttonClick('%')">÷あまり</button></td>
+                <td><button type="button" class="btn btn-secondary btn-lg" style="width:100%" onclick="buttonClick('÷')">÷</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <%- include("./send_voice.ejs", {common: common}) %>
+    </div>
+
+    <script>
+        let selectedItem;
+        let not_selectedItem;
+        function buttonClick(p){
+            switch(p){
+                case '+':
+                case '-':
+                case '×':
+                case '÷':
+                case '%':
+                    let element = document.getElementById('n2');
+                    element.value = p;
+                    selectText(3);
+                    break;
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    selectedItem.value = parseFloat(selectedItem.value + p);
+                    if(isNaN(selectedItem.value) || !isFinite(selectedItem.value)){
+                        selectedItem.value = 0;
+                    }
+                    let len = selectedItem.value.length;
+                    if(len > 5){
+                        selectedItem.value = selectedItem.value.substr(len - 5);
+                    }
+
+                    break;
+            }
+        }
+
+        function selectText(p){
+            if(p==1){
+                selectedItem = document.getElementById('n1');
+                not_selectedItem = document.getElementById('n3');
+            }
+            else if(p==3){
+                not_selectedItem = document.getElementById('n1');
+                selectedItem = document.getElementById('n3');
+            }else return;
+                selectedItem.className = "form-control-lg border-3 border-dark";
+                not_selectedItem.className = "form-control-lg";
+            return;
+        }
+        window.onload = function() {
+            selectText(1);
+        }
+    </script>
+</form>

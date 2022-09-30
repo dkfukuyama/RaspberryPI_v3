@@ -1,0 +1,104 @@
+<% let g_addr = common.ghomeSpeakers %>
+<div class="container">
+	<div class="row" id="class_row_container">
+
+	</div>
+</div>
+
+
+<p>
+	<P id="resXmlHttpRequestObj"></P>
+</p>
+
+<script type="text/javascript">
+	try{
+		const params =
+		[
+			{
+				text: 'おんせいファイルをしょうきょします。',
+				mode: 'clean_wav',
+			},
+			{
+				text: 'ウェブサーバをアップデートしてさいきどうします。',
+				mode: 'update_reboot',
+			},
+			{
+				text: 'ウェブサーバをさいきどうします。',
+				mode: 'reboot',
+			},
+			{
+				text : '標準出力ログを表示します。',
+				mode : 'system_command',
+				data: {
+					command : 'cat out.log',
+				}
+			},
+			{
+				text : 'エラーログを表示します。',
+				mode : 'system_command',
+				data: {
+					command : 'cat out.log',
+				}
+			},
+			{
+				text : 'PM2ログを表示します。',
+				mode : 'system_command',
+				data: {
+					command : 'cat /home/pi/.pm2/pm2.log',
+				}
+			},
+			{
+				text : 'バージョンを表示します。',
+				mode : 'system_command',
+				data: {
+					command : 'git log -1',
+				}
+			}
+		];
+		let row_container = document.getElementById("class_row_container");
+		params.forEach(p=>{
+			let div = document.createElement("div");
+			div.className = "col col-md-6 col-12";
+			let id = p.mode + Math.floor( Math.random() * 10000 );
+			div.innerHTML = `
+				<div class="my-1">
+					<button class="btn btn-primary w-100"id=${id}>${p.text}</button>
+				</div>
+			`;
+			row_container.append(div);
+
+			const e = document.getElementById(id);
+			e.onclick = () => {
+				post_command(p);
+			};
+		});
+	}catch(err){
+		alert(err);
+	}
+
+	let xhr = new XMLHttpRequest();
+	function post_command(command_param) {
+		alert(command_param.text);
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/command');
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.responseType = 'text';
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === XMLHttpRequest.DONE) {
+				// XMLデータ取得
+				let data = JSON.parse(xhr.responseText);
+				//alert(data);
+				//data = data.replace(/\n/g, "<BR />");
+				try {
+					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
+				} catch (err) {
+					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(err,null," ")}</pre>`;
+				}
+			}
+		}
+		xhr.send(JSON.stringify(command_param));
+	}
+	
+</script>

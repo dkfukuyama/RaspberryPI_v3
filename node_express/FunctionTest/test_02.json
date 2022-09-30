@@ -1,0 +1,345 @@
+﻿[
+	{
+		"Key": "192.168.1.24",
+		"Value": {
+			"Vol": null,
+			"Self": {
+			    "address": "192.168.1.24",
+				"friendlyName": "123456789",
+				"speakerName": "２階のリビング"
+			},
+			"Status": {
+				"applications": [
+					{
+						"appId": "CC1AD845",
+						"appType": "WEB",
+						"displayName": "Default Media Receiver",
+						"iconUrl": "",
+						"isIdleScreen": false,
+						"launchedFromCloud": false,
+						"namespaces": [
+							{
+								"name": "urn:x-cast:com.google.cast.cac"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.debugoverlay"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.broadcast"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.media"
+							}
+						],
+						"sessionId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"statusText": "キャストしています: No Title",
+						"transportId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"universalAppId": "CC1AD845"
+					}
+				],
+				"userEq": {
+					"high_shelf": {
+						"frequency": 4500,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"low_shelf": {
+						"frequency": 150,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"max_peaking_eqs": 0,
+					"peaking_eqs": []
+				},
+				"volume": {
+					"controlType": "master",
+					"level": 0.44999998807907104,
+					"muted": false,
+					"stepInterval": 0.019999999552965164
+				}
+			},
+			"PlayerStatus": {
+				"mediaSessionId": 2,
+				"playbackRate": 1,
+				"playerState": "PAUSED",
+				"currentTime": 2.813549,
+				"supportedMediaCommands": 12303,
+				"volume": {
+					"level": 1,
+					"muted": false
+				},
+				"activeTrackIds": [],
+				"media": {
+					"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+					"contentType": "audio/wav",
+					"streamType": "BUFFERED",
+					"metadata": {
+						"type": 0,
+						"metadataType": 0,
+						"title": "No Title"
+					},
+					"mediaCategory": "AUDIO",
+					"duration": 4.305,
+					"tracks": [],
+					"breakClips": [],
+					"breaks": []
+				},
+				"queueData": {
+					"repeatMode": "REPEAT_ALL",
+					"shuffle": false,
+					"startIndex": 0,
+					"startTime": 0
+				},
+				"currentItemId": 2,
+				"items": [
+					{
+						"itemId": 2,
+						"media": {
+							"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+							"contentType": "audio/wav",
+							"streamType": "BUFFERED",
+							"metadata": {
+								"type": 0,
+								"metadataType": 0,
+								"title": "No Title"
+							},
+							"mediaCategory": "AUDIO",
+							"duration": 4.305
+						},
+						"orderId": 0
+					}
+				],
+				"repeatMode": "REPEAT_ALL"
+			}
+		}
+	},
+	{
+		"Key": "192.168.1.99",
+		"Value": {
+			"Vol": null,
+			"Self": {
+				"address": "192.168.1.99",
+				"friendlyName": "123456789",
+				"speakerName": "青色グーグル"
+			},
+			"Status": {
+				"applications": [
+					{
+						"appId": "CC1AD845",
+						"appType": "WEB",
+						"displayName": "Default Media Receiver",
+						"iconUrl": "",
+						"isIdleScreen": false,
+						"launchedFromCloud": false,
+						"namespaces": [
+							{
+								"name": "urn:x-cast:com.google.cast.cac"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.debugoverlay"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.broadcast"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.media"
+							}
+						],
+						"sessionId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"statusText": "キャストしています: No Title",
+						"transportId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"universalAppId": "CC1AD845"
+					}
+				],
+				"userEq": {
+					"high_shelf": {
+						"frequency": 4500,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"low_shelf": {
+						"frequency": 150,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"max_peaking_eqs": 0,
+					"peaking_eqs": []
+				},
+				"volume": {
+					"controlType": "master",
+					"level": 0.44999998807907104,
+					"muted": false,
+					"stepInterval": 0.019999999552965164
+				}
+			},
+			"PlayerStatus": {
+				"mediaSessionId": 2,
+				"playbackRate": 1,
+				"playerState": "PAUSED",
+				"currentTime": 2.813549,
+				"supportedMediaCommands": 12303,
+				"volume": {
+					"level": 1,
+					"muted": false
+				},
+				"activeTrackIds": [],
+				"media": {
+					"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+					"contentType": "audio/wav",
+					"streamType": "BUFFERED",
+					"metadata": {
+						"type": 0,
+						"metadataType": 0,
+						"title": "No Title"
+					},
+					"mediaCategory": "AUDIO",
+					"duration": 4.305,
+					"tracks": [],
+					"breakClips": [],
+					"breaks": []
+				},
+				"queueData": {
+					"repeatMode": "REPEAT_ALL",
+					"shuffle": false,
+					"startIndex": 0,
+					"startTime": 0
+				},
+				"currentItemId": 2,
+				"items": [
+					{
+						"itemId": 2,
+						"media": {
+							"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+							"contentType": "audio/wav",
+							"streamType": "BUFFERED",
+							"metadata": {
+								"type": 0,
+								"metadataType": 0,
+								"title": "No Title"
+							},
+							"mediaCategory": "AUDIO",
+							"duration": 4.305
+						},
+						"orderId": 0
+					}
+				],
+				"repeatMode": "REPEAT_ALL"
+			}
+		}
+	},
+	{
+		"Key": "192.168.1.241",
+		"Value": {
+			"Vol": null,
+			"Self": {
+				"address": "192.168.1.241",
+				"friendlyName": "123456789",
+				"speakerName": "パオーン"
+			},
+			"Status": {
+				"applications": [
+					{
+						"appId": "CC1AD845",
+						"appType": "WEB",
+						"displayName": "Default Media Receiver",
+						"iconUrl": "",
+						"isIdleScreen": false,
+						"launchedFromCloud": false,
+						"namespaces": [
+							{
+								"name": "urn:x-cast:com.google.cast.cac"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.debugoverlay"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.broadcast"
+							},
+							{
+								"name": "urn:x-cast:com.google.cast.media"
+							}
+						],
+						"sessionId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"statusText": "キャストしています: No Title",
+						"transportId": "0c8985d3-ee6c-4cca-9e43-c367ff5ae3e3",
+						"universalAppId": "CC1AD845"
+					}
+				],
+				"userEq": {
+					"high_shelf": {
+						"frequency": 4500,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"low_shelf": {
+						"frequency": 150,
+						"gain_db": 0,
+						"quality": 0.707
+					},
+					"max_peaking_eqs": 0,
+					"peaking_eqs": []
+				},
+				"volume": {
+					"controlType": "master",
+					"level": 0.44999998807907104,
+					"muted": false,
+					"stepInterval": 0.019999999552965164
+				}
+			},
+			"PlayerStatus": {
+				"mediaSessionId": 2,
+				"playbackRate": 1,
+				"playerState": "PAUSED",
+				"currentTime": 2.813549,
+				"supportedMediaCommands": 12303,
+				"volume": {
+					"level": 1,
+					"muted": false
+				},
+				"activeTrackIds": [],
+				"media": {
+					"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+					"contentType": "audio/wav",
+					"streamType": "BUFFERED",
+					"metadata": {
+						"type": 0,
+						"metadataType": 0,
+						"title": "No Title"
+					},
+					"mediaCategory": "AUDIO",
+					"duration": 4.305,
+					"tracks": [],
+					"breakClips": [],
+					"breaks": []
+				},
+				"queueData": {
+					"repeatMode": "REPEAT_ALL",
+					"shuffle": false,
+					"startIndex": 0,
+					"startTime": 0
+				},
+				"currentItemId": 2,
+				"items": [
+					{
+						"itemId": 2,
+						"media": {
+							"contentId": "http://192.168.1.200/g_dlfile/2022-05-08_11-45-37_109.wav",
+							"contentType": "audio/wav",
+							"streamType": "BUFFERED",
+							"metadata": {
+								"type": 0,
+								"metadataType": 0,
+								"title": "No Title"
+							},
+							"mediaCategory": "AUDIO",
+							"duration": 4.305
+						},
+						"orderId": 0
+					}
+				],
+				"repeatMode": "REPEAT_ALL"
+			}
+		}
+	}
+
+]

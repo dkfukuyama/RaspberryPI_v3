@@ -1,0 +1,26 @@
+<HR>
+<ol>
+    <%_ let level_pre = 0 _%>
+    <%_ pages.forEach((page)=> { _%>
+
+        <%_ if(page.hidden){ return; } _%>
+
+        <%_ let level_def = page.level - level_pre _%>
+        <%_ if(level_def < 0){ _%>
+            <%_ for(let i = 0; i < -level_def; i++){ _%>
+    </ol>
+            <%_ } _%>
+        <%_ }else if(level_def > 0){ _%>
+    <ol>
+	<%_ } _%>
+		
+        <%_ if(page.path) { _%>
+			<li><a href="<%- page.path %>" class="btn btn-outline-secondary py-0"><%- page.title _%></a></li>
+        <%_ }else{ _%>
+			<li><%- page.title _%></li>
+        <%_ } _%>
+        
+        <%_ level_pre = page.level _%>
+    <%_ }); _%>
+
+</ol>
