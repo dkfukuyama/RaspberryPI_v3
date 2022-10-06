@@ -117,7 +117,7 @@ async function main_wrap() {
 
 	setInterval(() => {
 		slk.Log(new Date());
-	}, 3600000);
+	}, 7200000);
 
 	await main0().then(async (res) => {
 		await slk.Log(res);
