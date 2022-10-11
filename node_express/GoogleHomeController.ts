@@ -212,7 +212,6 @@ export class GoogleHomeController {
 
         setTimeout(() => {
             client.close();
-            client.socket.end();
             clearEventEmitter(client);
         }, 10000);
     }
@@ -234,7 +233,6 @@ export class GoogleHomeController {
         });
         setTimeout(() => {
             client.close();
-            client.socket.end();
             clearEventEmitter(client);
         }, 10000);
 
