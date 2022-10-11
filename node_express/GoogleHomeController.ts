@@ -139,18 +139,16 @@ export class GoogleHomeController {
         }
     }
     
-    private BuildMediaData(media_info: Imedia_info | string): Imedia {
+    private BuildMediaData(media_info: Imedia_info | { filename: string, name: string } ): Imedia {
         let media_info_temp: Imedia_info;
 
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
+       media_info_temp = {
+                playUrl: media_info.filename,
                 contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
-        }
+                title: media_info.name,
+       }
+        //media_info_temp = media_info;
+    
 
         return {
             contentId: media_info_temp.playUrl,
@@ -165,35 +163,14 @@ export class GoogleHomeController {
         };
     }
 
-    private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
-        let media_info_temp: Imedia_info;
-
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
-                contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
+	private BuildMediaData2(media_info: Imedia_info | { filename: string, name: string }): Imedia2 {
+        return {
+            media: this.BuildMediaData(media_info),
         }
 
-        return {
-            media: {
-                contentId: media_info_temp.playUrl,
-                contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
-                streamType: 'BUFFERED', // or LIVE
-
-                metadata: {
-                    type: 0,
-                    metadataType: 0,
-                    title: media_info_temp.title ?? 'No Title',
-                }
-            }
-        };
     }
 
-    public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
+	public async PlayUrl(media_info: Imedia_info | { filename: string, name: string }): Promise<void> {
 
         let media = this.BuildMediaData(media_info);
 
@@ -216,7 +193,7 @@ export class GoogleHomeController {
         }, 10000);
     }
 
-    public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+	public async PlayList(media_info_list: (Imedia_info | { filename: string, name: string })[]): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 

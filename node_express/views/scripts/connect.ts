@@ -1,5 +1,6 @@
 ﻿import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
+import { IAppFunctionArgs } from "@/AppFunctions";
 
 declare const document: any;
 declare const io: any;
@@ -69,10 +70,12 @@ socket.on("connect_error", (err) => {
 function MusicSelectButtonClick(arg) {
 	alert(`${arg.file} を再生します`);
 
-	let fullurl = `${location.protocol}//${location.host}/${arg.Url}`;
+	let fullurl = `${location.protocol}//${location.host}/${arg.url}`;
+
+	let send: IAppFunctionArgs;
 
 	if (arg.ext == '.playlist') {
-		let send = {
+		send = {
 			"mode": "play_music",
 			data: {
 				"speakeraddress": arg.addr,
@@ -82,7 +85,7 @@ function MusicSelectButtonClick(arg) {
 			}
 		};
 	} else {
-		let send = {
+		send = {
 			"mode": "play_music",
 			data: {
 				"speakeraddress": arg.addr,

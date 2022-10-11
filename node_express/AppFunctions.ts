@@ -1,4 +1,4 @@
-﻿import { Socket, Server } from 'socket.io';
+import { Socket, Server } from 'socket.io';
 import express from 'express';
 import { slk } from '@/AppConf';
 
@@ -46,7 +46,7 @@ export const AppFunctions: IAppFunctions = {
                 console.log(JSON.stringify(params));
                 let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
                 if (g) {
-                    g.PlayList([params.filename]);
+                    g.PlayList([{ filename: params.filename, name:params.name} ]);
                     resolve({
                         Args: params,
                         CommandTerminationType: 'OK',
