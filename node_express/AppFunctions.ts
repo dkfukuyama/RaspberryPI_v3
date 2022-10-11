@@ -1,8 +1,10 @@
-﻿import { Socket, Server } from 'socket.io';
+import { Socket, Server } from 'socket.io';
 import express from 'express';
 import { slk } from '@/AppConf';
 
 import { GHomeMonitor } from '@/GHomeMonitor';
+import { Imedia_info } from '@/GoogleHomeController';
+
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;
@@ -14,11 +16,18 @@ export type IAppFunctionArgs = {
     data: IAppFunctionData;
 } 
 
-export type IAppFunctionResults ={
+export type IAppFunctionResults = {
     Args: object,
     CommandTerminationType: 'OK' | 'ERROR',
     ErrorMessage?: string,
     Obj?: any,
+}
+
+export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
+	data: {
+		SpeakerAddress: string;
+		Media: Imedia_info[]
+	}
 }
 
 export interface IAppFunctions_0 {
@@ -40,25 +49,25 @@ export const AppFunctions: IAppFunctions = {
             CommandTerminationType: 'OK',
         }));
     },
-    'play_music': async (params: IAppFunctionData) => {
-        return new Promise((resolve, reject) => {
-            try {
-                console.log(JSON.stringify(params));
-                let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
-                if (g) {
-                    g.PlayList([params.filename]);
-                    resolve({
-                        Args: params,
-                        CommandTerminationType: 'OK',
-                    });
-                } else {
-                    reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
-                }
-            } catch (err) {
-                reject(err);
-            }
-        });
-    },
+	'play_music': async (params: IAppFunctionData) => {
+		return new Promise((resolve, reject) => {
+			try {
+				console.log(JSON.stringify(params));
+				let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
+				if (g) {
+					g.PlayList(params.media);
+					resolve({
+						Args: params,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+				}
+			} catch (err) {
+				reject(err);
+			}
+		});
+	},
     'update_reboot': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
             let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];

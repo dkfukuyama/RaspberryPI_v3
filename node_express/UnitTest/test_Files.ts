@@ -1,4 +1,4 @@
-﻿import assert = require('assert');
+import assert = require('assert');
 import path = require('path');
 
 import { FileListSearch, FileListSearchResults } from '@/FileListSearch';
@@ -7,6 +7,11 @@ require('dotenv').config({ path: ".env_test" });
 import { AppConf } from '@/AppConf';
 
 describe("FileListSearch", () => {
+	it("get_path_func", () => {
+		console.log(path.basename("basename.mp3"));
+		console.log(path.basename("aaa/basename.mp3"));
+	});
+
     it("get_path_01", () => {
         console.debug("--------------------- get_path_01");
         let FSearch: FileListSearch = new FileListSearch(AppConf().saveDir0);
@@ -110,7 +115,7 @@ describe("FileListSearch", () => {
         assert.equal(results.FileList.length, 3);
         assert.equal(results.FileList[0].BaseName, 'file_example_MP3_1.mp3');
         assert.equal(results.FileList[1].BaseName, 'file_example_MP3_2.mp3');
-        assert.equal(results.FileList[2].BaseName, '����������.mp3');
+        assert.equal(results.FileList[2].BaseName, 'あいうえお.mp3');
         assert.equal(results.DirList.length, 2);
         assert.equal(results.DirList[0].BaseName, 'g_dlfile');
         assert.equal(results.DirList[1].BaseName, 'stream');

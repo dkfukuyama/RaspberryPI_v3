@@ -8,7 +8,7 @@ export interface IGoogleHomeSeekResults {
     speakerName: string;
 }
 
-interface Imedia_info {
+export interface Imedia_info {
     playUrl: string;
     contentType: string | null;
     title: string | null
@@ -24,9 +24,6 @@ interface Imedia {
 interface Imedia2 {
     media: Imedia;
 }
-
-//{ Key: string, Value: { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } };
-
 
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
@@ -120,7 +117,7 @@ export class GoogleHomeController {
         });
     }
 
-    public static getProperContentType(url) {
+    public static getProperContentType(url: string) {
         let extType = url.substr(-4);
         const contentTypes = {
             '.wav': 'audio/wav',
@@ -129,6 +126,10 @@ export class GoogleHomeController {
         };
         return contentTypes[extType];
     }
+
+	public static getTitleName(url) {
+		return path.basename(url);
+	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
 
@@ -139,18 +140,19 @@ export class GoogleHomeController {
         }
     }
     
-    private BuildMediaData(media_info: Imedia_info | string): Imedia {
-        let media_info_temp: Imedia_info;
+	private BuildMediaData(media_info: Imedia_info | string ): Imedia {
+		let media_info_temp: Imedia_info;
 
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
-                contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
-        }
+		if (typeof (media_info) != 'string') {
+			media_info_temp = media_info;
+		}
+		else {
+			media_info_temp = {
+				playUrl: media_info,
+				contentType: GoogleHomeController.getProperContentType(media_info),
+				title: GoogleHomeController.getTitleName(media_info),
+			}
+		}
 
         return {
             contentId: media_info_temp.playUrl,
@@ -165,35 +167,14 @@ export class GoogleHomeController {
         };
     }
 
-    private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
-        let media_info_temp: Imedia_info;
-
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
-                contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
+	private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
+        return {
+            media: this.BuildMediaData(media_info),
         }
 
-        return {
-            media: {
-                contentId: media_info_temp.playUrl,
-                contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
-                streamType: 'BUFFERED', // or LIVE
-
-                metadata: {
-                    type: 0,
-                    metadataType: 0,
-                    title: media_info_temp.title ?? 'No Title',
-                }
-            }
-        };
     }
 
-    public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
+	public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
 
         let media = this.BuildMediaData(media_info);
 
@@ -216,7 +197,7 @@ export class GoogleHomeController {
         }, 10000);
     }
 
-    public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+	public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 
