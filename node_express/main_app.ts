@@ -109,11 +109,9 @@ async function main0(): Promise<string> {
 async function main_wrap() {
     const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);;
 
-	/*
 	mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }, { filename: "pm2.log", path: "/home/pi/.pm2/pm2.log" }])
         .then(res => { console.log("SEND MAIL OK"); console.log(res); })
         .catch(err => console.error(err));
-	*/
 
 	setInterval(() => {
 		slk.Log(new Date());
