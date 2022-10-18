@@ -69,40 +69,32 @@ socket.on("connect_error", (err) => {
 
 //
 function MusicSelectButtonClick(arg) {
-	alert(`${arg.file} を再生します`);
+	alert(`${arg.title} を再生します`);
 
-	let fullurl = `${location.protocol}//${location.host}/${arg.url}`;
+	//let fullurl = `${location.protocol}//${location.host}/${arg.url}`;
 
 	let send: IAppFunctionArgs_PlayMusic;
 
-	if (arg.ext == '.playlist') {
-		send = {
-			"mode": "play_music",
-			data: {
-				"SpeakerAddress": arg.addr,
-				"filename": fullurl,
-				"name": arg.file,
-				"ext": arg.ext,
-			}
-		};
-	} else {
-		send = {
-			"mode": "play_music",
-			data: {
-				"SpeakerAddress": arg.addr,
-				"filename": fullurl,
-				"name": arg.file,
-				"ext": arg.ext,
-			}
-		};
-
-		if (arg.speedx2) {
-			send.data.filename += "?stream=1&effectsPreset=speedx2";
-		} else if (arg.speedx0_5) {
-			send.data.filename += "?stream=1&effectsPreset=speedx0_5";
+	send = {
+		"mode": "play_music",
+		data: {
+			"SpeakerAddress": arg.addr,
+			Media: [
+				{
+					filePath: arg.filePath,
+					title: arg.title,
+				}
+			]
 		}
-	}
+	};
 
+	/*
+	if (arg.speedx2) {
+		send.data.filename += "?stream=1&effectsPreset=speedx2";
+	} else if (arg.speedx0_5) {
+		send.data.filename += "?stream=1&effectsPreset=speedx0_5";
+	}
+	*/
 
 	// JSONデータのPOST送信
 	const url = '/command';
@@ -224,7 +216,7 @@ class GoogleHomeHtmlContainer {
 
 				out_html += '<div class="row w-100">';
 				MusicList[addr].FileList.forEach(f => {
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'ext':'${f.Ext}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'title': '${f.Name}', 'filePath':'${f.Url}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
 				})
 				out_html += '</div>';
 				out_html += "<HR/>";
@@ -232,12 +224,11 @@ class GoogleHomeHtmlContainer {
 				if (MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
 				out_html += '<div class="row w-100">';
 				MusicList[addr].DirList.forEach(f => {
-					//let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}'})">${f.Name}</button></div>`;
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}'})">${f.Name}</button></div>`;
 				})
 				out_html += '</div>';
 				out_html += '<div class="row w-100">';
-				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${"../"}', 'url':'../'})">上のフォルダへ</button></div>`;
+				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${"../"}'})">上のフォルダへ</button></div>`;
 				out_html += '</div>';
 			} else {
 				out_html = `<b><font color="red">よみこんでいます</font></b>`;

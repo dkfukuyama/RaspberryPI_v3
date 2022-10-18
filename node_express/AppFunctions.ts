@@ -23,11 +23,12 @@ export type IAppFunctionResults = {
     Obj?: any,
 }
 
+export interface IAppFunctionArgs_PlayMusicData {
+	SpeakerAddress: string;
+	Media: Imedia_info[]
+}
 export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
-	data: {
-		SpeakerAddress: string;
-		Media: Imedia_info[]
-	}
+	data: IAppFunctionArgs_PlayMusicData
 }
 
 export interface IAppFunctions_0 {
@@ -52,10 +53,12 @@ export const AppFunctions: IAppFunctions = {
 	'play_music': async (params: IAppFunctionData) => {
 		return new Promise((resolve, reject) => {
 			try {
-				console.log(JSON.stringify(params));
-				let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
+				let params_cast: IAppFunctionArgs_PlayMusicData = params as IAppFunctionArgs_PlayMusicData;
+				console.log(JSON.stringify(params_cast));
+				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress).g;
 				if (g) {
-					g.PlayList(params.media);
+					let media_ar: Imedia_info[] = params.Media as Imedia_info[];
+					g.PlayList(params_cast.Media);
 					resolve({
 						Args: params,
 						CommandTerminationType: 'OK',

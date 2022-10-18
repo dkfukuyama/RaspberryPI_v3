@@ -9,9 +9,11 @@ export interface IGoogleHomeSeekResults {
 }
 
 export interface Imedia_info {
-    playUrl: string;
-    contentType: string | null;
-    title: string | null
+	playUrl?: string;
+	filePath?: string;
+	ext?: string;	
+	contentType?: string;
+	title?: string
 }
 
 interface Imedia {
@@ -145,6 +147,9 @@ export class GoogleHomeController {
 
 		if (typeof (media_info) != 'string') {
 			media_info_temp = media_info;
+			if (!media_info_temp.playUrl && media_info_temp.filePath) {
+				/////////
+			}
 		}
 		else {
 			media_info_temp = {
