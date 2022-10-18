@@ -36,7 +36,7 @@ export function AppConf(): IGL {
             console.log("LOAD VAL");
             GL_VARS.errorFlag = true;
             GL_VARS.httpServerPort = (parseInt(process.env.HTTP_SERVER_PORT) || GL_VARS.httpServerPort);
-            GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
+            GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'nas_music/g_dlfile');
 
             console.log({ TEST_MODE : process.env.TEST_IPV4 });
             if (process.env.TEST_IPV4) {
@@ -62,7 +62,7 @@ export function AppConf(): IGL {
                 case 'PI_ZERO_01':
                 case 'PI_2B_01':
                 default:
-                    GL_VARS.saveDir0 = "/mnt/nas_music";
+                    GL_VARS.saveDir0 = "/mnt";
                     break;
             }
             GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
