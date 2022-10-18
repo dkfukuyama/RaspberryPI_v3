@@ -73,6 +73,8 @@ function MusicSelectButtonClick(arg) {
 
 	let fullurl = `${location.protocol}//${location.host}/${arg.url}`;
 
+	let send: IAppFunctionArgs;
+
 	let send: IAppFunctionArgs_PlayMusic;
 
 	if (arg.ext == '.playlist') {
