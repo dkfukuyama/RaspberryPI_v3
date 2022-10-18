@@ -1,4 +1,4 @@
-﻿import path = require('path')
+import path = require('path')
 import fs = require('fs');
 
 
@@ -53,17 +53,21 @@ export class FileListSearch {
             PathNow: this.DirNow.Url,
             ErrorFlag: true,
         }
-        try {
-            if (this.InitializeOK) {
-                fs.readdirSync(this.DirNow.FullName).sort((a, b) => (a < b) ? -1 : (a > b) ? 1 : 0)
-                    .map(file => path.join(this.DirNow.FullName, file)).forEach((fullname) => {
-                        let info: FileInfo = FileListSearch.GetInfo_sub(fullname, this.DirBaseFullPath);
-                        if (info.Type == 'File') ret_val.FileList.push(info);
-                        else if (info.Type == 'Directory') ret_val.DirList.push(info);
-                    });
-                ret_val.ErrorFlag = false;
-            }
-        } catch (err) {
+	try {
+		if (this.InitializeOK) {
+			fs.readdirSync(this.DirNow.FullName).sort((a, b) => (a < b) ? -1 : (a > b) ? 1 : 0)
+				.map(file => path.join(this.DirNow.FullName, file)).forEach((fullname) => {
+					let info: FileInfo = FileListSearch.GetInfo_sub(fullname, this.DirBaseFullPath);
+					if (info.Type == 'File') {
+						if (info.Ext == '.mp3' || info.Ext == '.wav') {
+							ret_val.FileList.push(info);
+						}
+					}
+					else if (info.Type == 'Directory') ret_val.DirList.push(info);
+				});
+			ret_val.ErrorFlag = false;
+		}
+    } catch (err) {
             console.error(err);
             ret_val.ErrorFlag = true;
             this.InitializeOK = false;
