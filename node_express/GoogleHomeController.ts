@@ -1,5 +1,4 @@
 import path = require('path');
-
 import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
 
 export interface IGoogleHomeSeekResults {
@@ -37,6 +36,7 @@ export class GoogleHomeController {
     static gHomeSeekFlag_timeout: NodeJS.Timeout | null = null;
     static secondsCount: number = 0;
 
+	public UrlBaseString: string = "";
     public SelfStatus: IGoogleHomeSeekResults;
 
     public Status: any;
@@ -119,15 +119,21 @@ export class GoogleHomeController {
         });
     }
 
+	private static readonly contentTypes = {
+		'.wav': 'audio/wav',
+		'.mp3': 'audio/mpeg',
+		'.mp4': 'video/mp4',
+	};
+
+
     public static getProperContentType(url: string) {
         let extType = url.substr(-4);
-        const contentTypes = {
-            '.wav': 'audio/wav',
-            '.mp3': 'audio/mpeg',
-            '.mp4': 'video/mp4',
-        };
-        return contentTypes[extType];
-    }
+        return GoogleHomeController.contentTypes[extType];
+	}
+	public static getAveilableExtentions(): string[] {
+		return Object.keys(GoogleHomeController.contentTypes);
+	}
+	
 
 	public static getTitleName(url) {
 		return path.basename(url);
@@ -148,8 +154,10 @@ export class GoogleHomeController {
 		if (typeof (media_info) != 'string') {
 			media_info_temp = media_info;
 			if (!media_info_temp.playUrl && media_info_temp.filePath) {
-				/////////
+				media_info_temp.playUrl = media_info_temp.filePath;
 			}
+			media_info_temp.contentType = GoogleHomeController.getProperContentType(media_info_temp.playUrl),
+
 		}
 		else {
 			media_info_temp = {
@@ -158,6 +166,13 @@ export class GoogleHomeController {
 				title: GoogleHomeController.getTitleName(media_info),
 			}
 		}
+
+		const slash: string = '/';
+		if (!media_info_temp.playUrl.startsWith(this.UrlBaseString)) {
+			if (this.UrlBaseString.endsWith(slash)) this.UrlBaseString = this.UrlBaseString.substring(0, this.UrlBaseString.length - 1);
+			if (media_info_temp.playUrl.startsWith(slash)) media_info_temp.playUrl = media_info_temp.playUrl.substring(1, media_info_temp.playUrl.length - 1);
+			media_info_temp.playUrl = this.UrlBaseString + slash + media_info_temp.playUrl;
+		};
 
         return {
             contentId: media_info_temp.playUrl,
