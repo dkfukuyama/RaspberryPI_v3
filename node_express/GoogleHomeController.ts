@@ -156,8 +156,7 @@ export class GoogleHomeController {
 			if (!media_info_temp.playUrl && media_info_temp.filePath) {
 				media_info_temp.playUrl = media_info_temp.filePath;
 			}
-			media_info_temp.contentType = GoogleHomeController.getProperContentType(media_info_temp.playUrl),
-
+			media_info_temp.contentType = GoogleHomeController.getProperContentType(media_info_temp.playUrl);
 		}
 		else {
 			media_info_temp = {
@@ -220,6 +219,8 @@ export class GoogleHomeController {
 	public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
+
+		console.log(items);
 
         const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
