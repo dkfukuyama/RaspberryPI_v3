@@ -7,6 +7,13 @@ export interface IGoogleHomeSeekResults {
     speakerName: string;
 }
 
+export interface ISendMusicCommand {
+	addr: string;
+	title?: string;
+	dir?: string;
+	filePath?: string;
+}
+
 export interface Imedia_info {
 	playUrl?: string;
 	filePath?: string;
