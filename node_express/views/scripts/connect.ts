@@ -69,9 +69,45 @@ socket.on("connect_error", (err) => {
 
 //
 function MusicSelectButtonClick(arg) {
-	alert(`${arg.title} を再生します`);
+	const elem1 = document.getElementById(arg.addr);
 
-	//let fullurl = `${location.protocol}//${location.host}/${arg.url}`;
+	let PlayOptions: {
+		Num: {
+			[Key: string]: number;
+		}
+		Str: {
+			[Key: string]: string;
+		}
+	} = {
+		Num: {
+			pitch: 0,
+			tempo: 1,
+		},
+		Str: {
+			effects: "",
+			playConf: "",
+		}
+	}
+	let tx_temp: string = "";
+
+	Object.keys(PlayOptions.Num).forEach(t => {
+		let ea = elem1.getElementsByClassName(t);
+		PlayOptions.Num[t] = (ea?.length > 0 ? ea[0] : null)?.value;
+	});
+	Object.keys(PlayOptions.Str).forEach(t => {
+		let ea = elem1.getElementsByClassName(t);
+		PlayOptions.Str[t] = (ea?.length > 0 ? ea[0] : null)?.value;
+	});
+
+	let txt: string = "";
+	Object.keys(PlayOptions.Num).forEach(t => {
+		if (PlayOptions.Num[t]) txt += `\r\n${t} : ${PlayOptions.Num[t]}`;
+	});
+	Object.keys(PlayOptions.Str).forEach(t => {
+		if (PlayOptions.Str[t]) txt += `\r\n${t} : ${PlayOptions.Str[t]}`;
+	});
+
+	alert(`${arg.title} を再生します\r\n\r\n${txt}`);
 
 	let send: IAppFunctionArgs_PlayMusic;
 
@@ -79,6 +115,12 @@ function MusicSelectButtonClick(arg) {
 		"mode": "play_music",
 		data: {
 			"SpeakerAddress": arg.addr,
+			Sox: {
+				pitch: PlayOptions.Num["pitch"],
+				tempo: PlayOptions.Num["tempo"],
+				effectsPreset: PlayOptions.Str["effects"],
+			},
+			Repeat : "REPEAT_ALL",
 			Media: [
 				{
 					filePath: arg.filePath,
@@ -87,14 +129,6 @@ function MusicSelectButtonClick(arg) {
 			]
 		}
 	};
-
-	/*
-	if (arg.speedx2) {
-		send.data.filename += "?stream=1&effectsPreset=speedx2";
-	} else if (arg.speedx0_5) {
-		send.data.filename += "?stream=1&effectsPreset=speedx0_5";
-	}
-	*/
 
 	// JSONデータのPOST送信
 	const url = '/command';
@@ -200,6 +234,7 @@ class GoogleHomeHtmlContainer {
 			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
 		}
 
+		/*
 		let checks1: any;
 		let speedx2: boolean = false
 		let checks0 = elem1.getElementsByClassName('check');
@@ -209,7 +244,7 @@ class GoogleHomeHtmlContainer {
 		let speedx0_5: boolean = false
 		checks1 = Object.keys(checks0).map(e => checks0[e]).filter(e => e.checked && e.value == 'speedx0_5');
 		if (checks1.length > 0) speedx0_5 = true; 
-
+		*/
 
 		if (addr in MusicList) {
 		} else {

@@ -25,7 +25,14 @@ export type IAppFunctionResults = {
 
 export interface IAppFunctionArgs_PlayMusicData {
 	SpeakerAddress: string;
-	Media: Imedia_info[]
+	Media: Imedia_info[];
+	Repeat?: "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
+	Sox?: {
+		pitch: number;
+		tempo: number;
+		effectsString?: string;
+		effectsPreset?: string;
+	}
 }
 export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
 	data: IAppFunctionArgs_PlayMusicData
