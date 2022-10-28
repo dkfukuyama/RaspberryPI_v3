@@ -1,4 +1,4 @@
-﻿import path = require('path');
+import path = require('path');
 import { Slack } from '@/SlackSend';
 export const slk = new Slack(process.env.SLACK_WEBHOOK);
 
@@ -32,26 +32,29 @@ let GL_VARS: IGL = {
 let firstTry = true;
 
 export function AppConf(): IGL {
-    try {
-        if (firstTry || GL_VARS.errorFlag) {
-            console.log("LOAD VAL");
-            GL_VARS.errorFlag = true;
-            GL_VARS.httpServerPort = (parseInt(process.env.HTTP_SERVER_PORT) || GL_VARS.httpServerPort);
-            GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
+	try {
+		if (firstTry || GL_VARS.errorFlag) {
+			console.log("LOAD VAL");
+			GL_VARS.errorFlag = true;
+			GL_VARS.httpServerPort = (parseInt(process.env.HTTP_SERVER_PORT) || GL_VARS.httpServerPort);
+			GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
 
-            console.log({ TEST_MODE : process.env.TEST_IPV4 });
-            if (process.env.TEST_IPV4) {
-                GL_VARS.httpDir0 = `${process.env.TEST_IPV4}`;
-            } else {
-                const ipv4 = getLocalAddress().ipv4;
-                if (!ipv4.length) throw new Error('Http Addr cannot be detected');
-                GL_VARS.httpDir0 = `${ipv4[0].address}`;
-            }
-            if (GL_VARS.httpServerPort != httpServerPort_Default) GL_VARS.httpDir0 += `:${GL_VARS.httpServerPort}`;
+			console.log({ TEST_MODE : process.env.TEST_IPV4 });
+			if (process.env.TEST_IPV4) {
+				GL_VARS.httpDir0 = `${process.env.TEST_IPV4}`;
+			} else {
+				const ipv4 = getLocalAddress().ipv4;
+				if (!ipv4.length) throw new Error('Http Addr cannot be detected');
+				GL_VARS.httpDir0 = `${ipv4[0].address}`;
+			}
+			if (GL_VARS.httpServerPort != httpServerPort_Default) GL_VARS.httpDir0 += `:${GL_VARS.httpServerPort}`;
 
-            GL_VARS.httpDir_music = "http://" + GL_VARS.httpDir0;
-            GL_VARS.httpDir = "http://" + path.posix.join(GL_VARS.httpDir0, GL_VARS.voiceSubDir);
+			GL_VARS.httpDir_music = "http://" + GL_VARS.httpDir0;
+			GL_VARS.httpDir = "http://" + path.posix.join(GL_VARS.httpDir0, GL_VARS.voiceSubDir);
+			GL_VARS.saveDir0 = process.env.SAVE_DIR_0;
+			if (process.env.SAVE_DIR_0_IS_RELPATH) GL_VARS.saveDir0 = path.join(__dirname, GL_VARS.saveDir0);
 
+			/*
             switch (process.env.COMPUTERNAME) {
                 case 'FUKU333_DESKTOP':
                 case 'FUKU333-PC':
@@ -66,6 +69,8 @@ export function AppConf(): IGL {
                     GL_VARS.saveDir0 = "/mnt/nas_music";
                     break;
             }
+			*/
+			
             GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
 
             firstTry = false;

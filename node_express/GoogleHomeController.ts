@@ -58,6 +58,15 @@ export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
 	data: IAppFunctionArgs_PlayMusicData
 }
 
+const SoxEffectsPreset =
+[
+	{ value: "none", show_name: "なし", command: ""},
+	{ value: "yamabiko", show_name: "やまびこ", command: "chorus 1 1 100.0 1 5 5.0 -s"},
+	{ value: "reverb", show_name: "リバーブ", command: "reverb"},
+	{ value: "kimoi", show_name: "きもい", command: "reverb" },
+];
+
+
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
 
@@ -171,15 +180,14 @@ export class GoogleHomeController {
 	}
 
 	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
-		let ret: string = `sox "${filepath}" -t wav - `;
-		if (sox.pitch) ret += `pitch ${sox.pitch}`;
-		if (sox.tempo) ret += `tempo ${sox.tempo}`;
-		//if (sox.effectsPreset) ret +=
-
+		let ret: string = `sox "${filepath}" -t wav -`;
+		if (sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
+		if (sox.tempo) ret += ` tempo ${sox.tempo}`;
 		return ret;
 	}
 
 	static SoxConfUrlEncode(sox: ISoxConfig): string {
+		sox.sox = true;
 		return (new URLSearchParams(sox as any)).toString();
 	}
 

@@ -150,6 +150,7 @@ function MusicSelectButtonClick(arg) {
 	xmlHttpRequest.send(JSON.stringify(send));
 }
 
+/*
 function EncodeHTMLForm(data) {
 	var params = [];
 
@@ -162,6 +163,7 @@ function EncodeHTMLForm(data) {
 
 	return params.join('&').replace(/%20/g, '+');
 }
+*/
 
 function DirSelectButtonClick(arg) {
 	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
@@ -243,18 +245,6 @@ class GoogleHomeHtmlContainer {
 			elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime ?? "";
 			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
 		}
-
-		/*
-		let checks1: any;
-		let speedx2: boolean = false
-		let checks0 = elem1.getElementsByClassName('check');
-		checks1 = Object.keys(checks0).map(e=>checks0[e]).filter(e => e.checked && e.value == 'speedx2');
-		if (checks1.length > 0) speedx2 = true; 
-
-		let speedx0_5: boolean = false
-		checks1 = Object.keys(checks0).map(e => checks0[e]).filter(e => e.checked && e.value == 'speedx0_5');
-		if (checks1.length > 0) speedx0_5 = true; 
-		*/
 
 		if (addr in MusicList) {
 		} else {

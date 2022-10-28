@@ -84,6 +84,7 @@
     <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="UnitTest\test_Others.ts" />
     <TypeScriptCompile Include="UtilFunctions.ts" />
     <TypeScriptCompile Include="AppConf.ts" />
     <Content Include="views\calculator.ejs" />
