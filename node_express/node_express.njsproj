@@ -102,6 +102,7 @@
     <Content Include="views\quiz.ejs" />
     <Content Include="views\quiz_0.ejs" />
     <Content Include="views\quiz_1.ejs" />
+    <Content Include="views\scripts\.editorconfig" />
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />

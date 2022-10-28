@@ -1,7 +1,6 @@
 import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
-import { IAppFunctionArgs, IAppFunctionArgs_PlayMusic } from "@/AppFunctions";
-import { Imedia_info, ISendMusicCommand } from "@/GoogleHomeController";
+import { IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -66,8 +65,18 @@ socket.on("connect_error", (err) => {
 	}, 1000);
 });
 
+function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
+	let return_value: IPlayOption = {
+		RepeatMode: "REPEAT_ALL",
+	};
+	switch (Str["playConf"]) {
+		case "immediately":
+			return_value.RepeatMode = "REPEAT_OFF";
+		break;
+	}
+	return return_value;
+}
 
-//
 function MusicSelectButtonClick(arg) {
 	const elem1 = document.getElementById(arg.addr);
 
@@ -108,19 +117,20 @@ function MusicSelectButtonClick(arg) {
 	});
 
 	alert(`${arg.title} を再生します\r\n\r\n${txt}`);
+	let play_option: IPlayOption = BuildPlayOption(PlayOptions.Str)
 
-	let send: IAppFunctionArgs_PlayMusic;
-
-	send = {
+	let send: IAppFunctionArgs_PlayMusic = {
 		"mode": "play_music",
 		data: {
 			"SpeakerAddress": arg.addr,
-			Sox: {
-				pitch: PlayOptions.Num["pitch"],
-				tempo: PlayOptions.Num["tempo"],
-				effectsPreset: PlayOptions.Str["effects"],
-			},
-			Repeat : "REPEAT_ALL",
+			SoxConfig: [
+				{
+					pitch: PlayOptions.Num["pitch"],
+					tempo: PlayOptions.Num["tempo"],
+					effectsPreset: PlayOptions.Str["effects"],
+				},
+			],
+			PlayOption: play_option,
 			Media: [
 				{
 					filePath: arg.filePath,

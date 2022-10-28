@@ -1,5 +1,6 @@
 import path = require('path');
 import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
+import { IAppFunctionArgs } from './AppFunctions';
 
 export interface IGoogleHomeSeekResults {
     address: string;
@@ -31,6 +32,30 @@ interface Imedia {
 
 interface Imedia2 {
     media: Imedia;
+}
+
+type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
+
+export interface IPlayOption {
+	RepeatMode: ERepeatMode;
+};
+
+interface ISoxConfig {
+	sox?: boolean;
+	pitch: number;
+	tempo: number;
+	effectsString?: string;
+	effectsPreset?: string;
+};
+
+export interface IAppFunctionArgs_PlayMusicData {
+	SpeakerAddress: string;
+	Media: Imedia_info[];
+	PlayOption?: IPlayOption;
+	SoxConfig?: ISoxConfig[];
+}
+export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
+	data: IAppFunctionArgs_PlayMusicData
 }
 
 export class GoogleHomeController {
@@ -140,10 +165,32 @@ export class GoogleHomeController {
 	public static getAveilableExtentions(): string[] {
 		return Object.keys(GoogleHomeController.contentTypes);
 	}
-	
 
 	public static getTitleName(url) {
 		return path.basename(url);
+	}
+
+	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
+		let ret: string = `sox "${filepath}" -t wav - `;
+		if (sox.pitch) ret += `pitch ${sox.pitch}`;
+		if (sox.tempo) ret += `tempo ${sox.tempo}`;
+		//if (sox.effectsPreset) ret +=
+
+		return ret;
+	}
+
+	static SoxConfUrlEncode(sox: ISoxConfig): string {
+		return (new URLSearchParams(sox as any)).toString();
+	}
+
+	static ConcatSoxConfUrlAr(items: Imedia2[], Sox?: ISoxConfig[]): Imedia2[] {
+		if (Sox?.length == items.length) {
+			for (let i = 0; i < items.length; i++) {
+				items[i].media.contentId += GoogleHomeController.SoxConfUrlEncode(Sox[i]);
+			}
+		} else {
+			return items;
+		}
 	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
@@ -223,17 +270,18 @@ export class GoogleHomeController {
         }, 10000);
     }
 
-	public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+	public async PlayList(media_info_list: (Imedia_info | string)[], Sox: ISoxConfig[] | null, playOption: IPlayOption): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
+		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
 		console.log(items);
 
         const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
-            client.launch(this.DefaultMediaReceiver, (err, player) => {
-                player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => { });
-            });
+			client.launch(this.DefaultMediaReceiver, (err, player) => {
+				player.queueLoad(items, { autoplay: true, repeatMode: playOption.RepeatMode }, (err, status) => { });
+			});
         });
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
@@ -246,6 +294,7 @@ export class GoogleHomeController {
         }, 10000);
 
     }
+
     private Media_onStatus(status) {
         this.PlayerStatus = status;
     };

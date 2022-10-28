@@ -3,7 +3,7 @@ import express from 'express';
 import { slk } from '@/AppConf';
 
 import { GHomeMonitor } from '@/GHomeMonitor';
-import { Imedia_info } from '@/GoogleHomeController';
+import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -21,21 +21,6 @@ export type IAppFunctionResults = {
     CommandTerminationType: 'OK' | 'ERROR',
     ErrorMessage?: string,
     Obj?: any,
-}
-
-export interface IAppFunctionArgs_PlayMusicData {
-	SpeakerAddress: string;
-	Media: Imedia_info[];
-	Repeat?: "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
-	Sox?: {
-		pitch: number;
-		tempo: number;
-		effectsString?: string;
-		effectsPreset?: string;
-	}
-}
-export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
-	data: IAppFunctionArgs_PlayMusicData
 }
 
 export interface IAppFunctions_0 {
@@ -62,10 +47,9 @@ export const AppFunctions: IAppFunctions = {
 			try {
 				let params_cast: IAppFunctionArgs_PlayMusicData = params as IAppFunctionArgs_PlayMusicData;
 				console.log(JSON.stringify(params_cast));
-				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress).g;
+				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress)?.g;
 				if (g) {
-					let media_ar: Imedia_info[] = params.Media as Imedia_info[];
-					g.PlayList(params_cast.Media);
+					g.PlayList(params_cast.Media, params_cast.SoxConfig, params_cast.PlayOption);
 					resolve({
 						Args: params,
 						CommandTerminationType: 'OK',

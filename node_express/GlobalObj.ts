@@ -17,7 +17,7 @@ App.use(bodyParser.urlencoded({
 }));
 App.use(express.json());
 
-// ƒeƒ“ƒvƒŒ[ƒgƒGƒ“ƒWƒ“‚Ìw’è
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ã®æŒ‡å®š
 App.set("view engine", "ejs");
 
 ApplyToExpress(App);
@@ -80,7 +80,7 @@ PageParams.Pages.forEach(p => {
                 page: p,
                 items: null
             };
-            // ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ğs‚¤
+            // ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’è¡Œã†
             PageParams.UpdateCommon();
             res.render("./index.ejs", {
                 data: data,
@@ -105,7 +105,7 @@ PageParams.Pages.forEach(p => {
 });
 
 
-// ƒeƒXƒgƒtƒ@ƒCƒ‹‚ğ‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// ãƒ†ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("/__ftest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "FunctionTest") };
     res.sendFile(req.path.replace("/__ftest__/", ""), p, (err) => {
@@ -114,7 +114,7 @@ App.all("/__ftest__/*.*", function (req: express.Request, res: express.Response,
         }
     });
 });
-// ƒeƒXƒgƒtƒ@ƒCƒ‹‚ğ‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// ãƒ†ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("/__utest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "UnitTest") };
     res.sendFile(req.path.replace("/__utest__/", ""), p, (err) => {
@@ -124,7 +124,7 @@ App.all("/__utest__/*.*", function (req: express.Request, res: express.Response,
     });
 });
 
-// w’èƒtƒ@ƒCƒ‹‚ğ‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// æŒ‡å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("*.css|*.js|*.html", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "views") };
     res.sendFile(req.path, p, (err) => {
@@ -135,7 +135,7 @@ App.all("*.css|*.js|*.html", function (req: express.Request, res: express.Respon
 });
 
 type IQuery = {
-    stream: string;
+    sox: string;
     effects: string;
     effectsPreset: string;
 }
@@ -149,7 +149,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
     const p = path.join(AppConf().saveDir0, decodeURI(req.path));
     const query: IQuery = (req as ExRequest).query;
 
-    if (!query.stream) {
+    if (!query.sox) {
         res.sendFile(p, (err) => {
             if (err) {
                 next(err);
@@ -161,12 +161,13 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
                 if (err) {
                     next(err)
                 }
-                // ƒtƒ@ƒCƒ‹–¼‚ğƒGƒ“ƒR[ƒh‚·‚é
+                // ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
                 const basename = path.basename(p);
                 const filename = encodeURIComponent(basename);
 
-                // ƒwƒbƒ_[ƒZƒbƒg‚·‚é
-                res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
+                // ãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒƒãƒˆã™ã‚‹
+                //res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
+				res.setHeader('Content-Type', 'audio/wav');
                 res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
                 res.setHeader('Connection', 'close');
                 const { spawn } = require('node:child_process');
@@ -190,8 +191,9 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 
                 console.log(kk);
                 let sp = spawn(kk, [], { shell: true });
-                sp.on('error', (err) => {
-                    next(err);
+				sp.on('error', (err) => {
+					next(err);
+					sp.kill();
                 })
                 sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
             });
