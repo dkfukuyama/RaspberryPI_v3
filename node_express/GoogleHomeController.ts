@@ -235,7 +235,7 @@ export class GoogleHomeController {
 			media_info_temp.playUrl = this.UrlBaseString + slash + media_info_temp.playUrl;
 		};
 
-        return {
+        const return_val = {
             contentId: media_info_temp.playUrl,
             contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
             streamType: 'BUFFERED', // or LIVE
@@ -245,7 +245,9 @@ export class GoogleHomeController {
                 metadataType: 0,
                 title: media_info_temp.title ?? 'No Title',
             }
-        };
+		};
+		console.log({ return_val });
+		return return_val;
     }
 
 	private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
@@ -281,9 +283,10 @@ export class GoogleHomeController {
 	public async PlayList(media_info_list: (Imedia_info | string)[], Sox: ISoxConfig[] | null, playOption: IPlayOption): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
+		//console.log({ items });
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
-		console.log(items);
+		console.log({ items });
 
         const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
@@ -324,11 +327,12 @@ export class GoogleHomeController {
         });
     }
 
-    constructor(_ipAddress: string, _connectionRetryIntervalMs?: number) {
-        this.IpAddress = _ipAddress;
-        this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
-        this.Connect();
-    }
+	constructor(_ipAddress: string, _connectionRetryIntervalMs?: number, urlBase?: string) {
+		this.IpAddress = _ipAddress;
+		this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
+		this.UrlBaseString = urlBase;
+		this.Connect();
+	}
 
     private onStatus(status) {
         this.Status = status;

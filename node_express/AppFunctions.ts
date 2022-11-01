@@ -46,7 +46,6 @@ export const AppFunctions: IAppFunctions = {
 		return new Promise((resolve, reject) => {
 			try {
 				let params_cast: IAppFunctionArgs_PlayMusicData = params as IAppFunctionArgs_PlayMusicData;
-				console.log(JSON.stringify(params_cast));
 				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress)?.g;
 				if (g) {
 					g.PlayList(params_cast.Media, params_cast.SoxConfig, params_cast.PlayOption);
