@@ -6,6 +6,7 @@ export const slk = new Slack(process.env.SLACK_WEBHOOK);
 const httpServerPort_Default = 80;
 
 interface IGL {
+    SoxCommandPath?: string;
     errorFlag: boolean;
     httpServerPort: number;
     voiceSubDir: string;
@@ -71,7 +72,9 @@ export function AppConf(): IGL {
             }
 			*/
 			
-            GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
+			GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
+
+			GL_VARS.SoxCommandPath = process.env.SOX;
 
             firstTry = false;
         }

@@ -86,13 +86,13 @@ export class GoogleHomeController {
 
     static InitializedFlag: boolean = false;
 
-
     private PfSender = new this.PlatformSender();
     private JoinedAppId: string | null = null;
     private MediaPlayer = null;
 
     private IpAddress: string = "";
     private ConnectionRetryIntervalMs: number = 100;
+	private Sox: string = 'sox';
 
     public static init() {
         if (!this.InitializedFlag) {
@@ -181,7 +181,7 @@ export class GoogleHomeController {
 	}
 
 	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
-		let ret: string = `sox "${filepath}" -t wav -`;
+		let ret: string = `sox.exe "${filepath}" -t wav -`;
 		if (sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
 		if (sox.tempo) ret += ` tempo ${sox.tempo}`;
 		return ret;
@@ -220,9 +220,8 @@ export class GoogleHomeController {
 			for (let i = 0; i < items.length; i++) {
 				items[i].media.contentId += GoogleHomeController.SoxConfUrlEncode(Sox[i]);
 			}
-		} else {
-			return items;
-		}
+		} 
+		return items;
 	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
@@ -307,7 +306,6 @@ export class GoogleHomeController {
 	public async PlayList(media_info_list: (Imedia_info | string)[], Sox: ISoxConfig[] | null, playOption: IPlayOption): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
-		//console.log({ items });
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
 		const client = new (require('castv2-client').Client)();
@@ -349,10 +347,11 @@ export class GoogleHomeController {
         });
     }
 
-	constructor(_ipAddress: string, _connectionRetryIntervalMs?: number, urlBase?: string) {
+	constructor(_ipAddress: string, _connectionRetryIntervalMs?: number, urlBase?: string, sox_command?: string) {
 		this.IpAddress = _ipAddress;
 		this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
 		this.UrlBaseString = urlBase;
+		this.Sox = sox_command ?? this.Sox;
 		this.Connect();
 	}
 

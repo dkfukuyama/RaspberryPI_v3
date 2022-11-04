@@ -157,7 +157,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 
 	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
 	const query: IQuery = (req as ExRequest).query;
-	
+
 	if (!query.sox) {
 		res.sendFile(p, (err) => {
 			if (err) {
@@ -179,7 +179,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				res.setHeader('Content-Type', 'audio/wav');
 				//res.setHeader('Content-Type', 'audio/mpeg');
 				res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
-				res.setHeader('Connection', 'close');
+				res.setHeader('Connection', 'Keep-Alive');
 				const { spawn } = require('node:child_process');
 				/*
                 const preset: {
@@ -207,10 +207,10 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				sp.on('error', (err) => {
 					next(err);
 					sp.kill();
-				})
+				});
 				sp.on('close', (err) => {
 					console.log('spawn close');
-				})
+				});
 				sp.stdout.pipe(res).on('error', (err) => {
 					sp.kill();
 					slk.Err(err);
@@ -219,7 +219,6 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 					console.log('the response has been sent');
 					sp.kill();
 				});
-				
             });
         } catch (err) {
             next(err);

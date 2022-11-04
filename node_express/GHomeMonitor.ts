@@ -171,7 +171,7 @@ export class GHomeMonitor {
 				this.GHomes[ad].lastUpdated = new Date();
 			} else {
 				this.GHomes[ad] = {
-					g: new GoogleHomeController(ad, 5000, AppConf().httpDir_music),
+					g: new GoogleHomeController(ad, 5000, AppConf().httpDir_music, AppConf().SoxCommandPath),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
