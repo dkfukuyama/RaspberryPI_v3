@@ -3,6 +3,8 @@ import express from 'express';
 import { slk } from '@/AppConf';
 
 import { GHomeMonitor } from '@/GHomeMonitor';
+import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;
@@ -14,7 +16,7 @@ export type IAppFunctionArgs = {
     data: IAppFunctionData;
 } 
 
-export type IAppFunctionResults ={
+export type IAppFunctionResults = {
     Args: object,
     CommandTerminationType: 'OK' | 'ERROR',
     ErrorMessage?: string,
@@ -40,46 +42,42 @@ export const AppFunctions: IAppFunctions = {
             CommandTerminationType: 'OK',
         }));
     },
-    'play_music': async (params: IAppFunctionData) => {
-        return new Promise((resolve, reject) => {
-            try {
-                console.log(JSON.stringify(params));
-                let g = Monitor.GetGhObjByAddress(params.speakeraddress).g;
-                if (g) {
-                    g.PlayList([params.filename]);
-                    resolve({
-                        Args: params,
-                        CommandTerminationType: 'OK',
-                    });
-                } else {
-                    reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
-                }
-            } catch (err) {
-                reject(err);
-            }
-        });
-    },
-	'update_reboot': async (params: IAppFunctionData) => {
-		return new Promise(async (resolve, reject) => {
-			let pr = ["git checkout master", "git fetch origin master --depth 1", "git reset --hard origin/master", "npm install", "tsc --build"];
-            let k: string[] = [];
-			for (let p of pr) {
-				console.log(`command ${p}`);
-
-				let ret: string = await new Promise<string>((resolve0, reject0) => {
-					exec(p, (err, stdout, stderr) => {
-						if (err) {
-							reject0(err);
-						} else {
-							resolve0(stdout.split("\n"));
-						}
+	'play_music': async (params: IAppFunctionData) => {
+		return new Promise((resolve, reject) => {
+			try {
+				let params_cast: IAppFunctionArgs_PlayMusicData = params as IAppFunctionArgs_PlayMusicData;
+				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList(params_cast.Media, params_cast.SoxConfig, params_cast.PlayOption);
+					resolve({
+						Args: params,
+						CommandTerminationType: 'OK',
 					});
-				}).catch(err0 => `ERROR:  ${err0}`)
-				k.push(ret);
+				} else {
+					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+				}
+			} catch (err) {
+				reject(err);
 			}
-
-			setTimeout(() => process.exit(0), 5000);
-			console.log("resolve");
+		});
+	},
+    'update_reboot': async (params: IAppFunctionData) => {
+        return new Promise(async (resolve, reject) => {
+            let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
+            let k: string[] = [];
+            for (let p of pr) {
+                k.push(await new Promise((resolve0, reject0) => {
+                    exec(p, (err, stdout, stderr) => {
+                        if (err) {
+                            reject0(err);
+                        } else {
+                            console.log(`stdout: ${stdout}`)
+                            resolve0(stdout.split("\n"));
+                        }
+                    });
+                }));
+            }
+            setTimeout(() => process.exit(0), 5000);
             resolve({
                 Args: params,
                 Obj: k,
@@ -127,7 +125,7 @@ export const AppFunctions: IAppFunctions = {
 
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        //console.log("COMMAND MODE via HTTP");
+        console.log("COMMAND MODE via HTTP");
 
         let body: IAppFunctionArgs = req.body;
         let results: IAppFunctionResults
@@ -151,7 +149,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                 ErrorMessage: "Command not Exists",
             };
         }
-        console.log(JSON.stringify(results, null, 2));
+        console.log(JSON.stringify(results, null, "\t"));
         res.json(results);
     });
 
@@ -160,10 +158,10 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
 
 export function ApplyToSocket(socket: Socket): Socket {
     Object.keys(AppFunctions).forEach(p => {
-        //console.log("COMMAND MODE via Socket.IO");
+        console.log("COMMAND MODE via Socket.IO");
 
         socket.on(p, async (data: IAppFunctionData) => {
-			//console.log(p);
+            console.log(p);
             let results: IAppFunctionResults = await AppFunctions[p](data)
                 .catch(err => {
                     slk.Err(err);
@@ -175,9 +173,10 @@ export function ApplyToSocket(socket: Socket): Socket {
                     };
                     return temp;
                 });
-            console.log(JSON.stringify(results, null, 2));
+            console.log(JSON.stringify(results, null, "\t"));
             socket.emit(p, results);
-			socket.disconnect();
+            await new Promise<void>((resolve) => setTimeout(()=>resolve(), 1000));
+            socket.disconnect();
         });
     })
     return socket;

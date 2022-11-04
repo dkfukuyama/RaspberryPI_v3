@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env' });
+﻿require('dotenv').config({ path: '.env' });
 import path = require('path');
 
 const exec = require('child_process').exec;
@@ -64,11 +64,11 @@ function OverWriteCompiledJsFile(filePath: string) {
     });
 }
 
-async function main0(): Promise<string> {
-    await slk.Log("********************\n*** SYSTEM START ***\n********************");
+async function main0() {
+    slk.Log("********************\n*** SYSTEM START ***\n********************");
     const date: any = new Date();
     const currentTime = date.toFormat('YYYY-MM-DD HH24:MI:SS');
-	await slk.Log({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
+    slk.Log({ current_time: currentTime, computer_name: process.env.COMPUTERNAME });
 
     let sn = await new Promise<any>((resolve, reject) => {
         const c = 'git log -1';
@@ -81,7 +81,7 @@ async function main0(): Promise<string> {
             }
         });
     });
-	await slk.Log(sn);
+    slk.Log(sn);
 
     OverWriteCompiledJsFile('views/scripts/connect.js');
 
@@ -89,7 +89,7 @@ async function main0(): Promise<string> {
 
     let httpServerPort = process.env.HTTP_SERVER_PORT;
 
-    await slk.Log({
+    slk.Log({
         httpDir0: AppConf().httpDir0,
         httpDir: AppConf().httpDir,
         httpDir_music: AppConf().httpDir_music,
@@ -98,33 +98,25 @@ async function main0(): Promise<string> {
     });
 
 
-	Monitor.Start();
-
-	return new Promise<string>(
-		(resolve, reject) => App.listen(httpServerPort, () => resolve(`http server port No. ${httpServerPort}`))
-		.on('error', (err) => reject(`......PORT LISTEN ERROR 80...${err}`))
-	);
+    App.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
+    Monitor.Start();
 }
 
 async function main_wrap() {
     const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);;
 
-	mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }, { filename: "pm2.log", path: "/home/pi/.pm2/pm2.log" }])
+    //for (; ;) {
+    mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])
         .then(res => { console.log("SEND MAIL OK"); console.log(res); })
         .catch(err => console.error(err));
-
-	setInterval(() => {
-		slk.Log(new Date());
-	}, 7200000);
-
-	await main0().then(async (res) => {
-		await slk.Log(res);
-		await slk.Log("Enter into the Main->then routine");
-	}).catch(async err => {
-		await slk.Err("Enter into the Main->catch routine");
-		await slk.Err(err);
-	});
-	await slk.Log("....................");
+ 
+        await main0().then(() => {
+            slk.Err("Enter into the Main->then routine");
+        }).catch(err => {
+            slk.Err("Enter into the Main->catch routine");
+            slk.Err(err);
+        });
+    //}
 }
 main_wrap();
 

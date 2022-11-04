@@ -1,5 +1,6 @@
-﻿import { FileListSearchResults } from "@/FileListSearch";
+import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
+import { IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -64,45 +65,92 @@ socket.on("connect_error", (err) => {
 	}, 1000);
 });
 
+function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
+	let return_value: IPlayOption = {
+		RepeatMode: "REPEAT_ALL",
+	};
+	switch (Str["playConf"]) {
+		case "immediately":
+			return_value.RepeatMode = "REPEAT_OFF";
+		break;
+	}
+	return return_value;
+}
 
-//
 function MusicSelectButtonClick(arg) {
-	alert("曲を再生します");
+	const elem1 = document.getElementById(arg.addr);
 
-	const xmlHttpRequest = new XMLHttpRequest();
+	let PlayOptions: {
+		Num: {
+			[Key: string]: number;
+		}
+		Str: {
+			[Key: string]: string;
+		}
+	} = {
+		Num: {
+			pitch: 0,
+			tempo: 1,
+		},
+		Str: {
+			effects: "",
+			playConf: "",
+		}
+	}
+	let tx_temp: string = "";
 
-	let send = {
+	Object.keys(PlayOptions.Num).forEach(t => {
+		let ea = elem1.getElementsByClassName(t);
+		PlayOptions.Num[t] = (ea?.length > 0 ? ea[0] : null)?.value;
+	});
+	Object.keys(PlayOptions.Str).forEach(t => {
+		let ea = elem1.getElementsByClassName(t);
+		PlayOptions.Str[t] = (ea?.length > 0 ? ea[0] : null)?.value;
+	});
+
+	let txt: string = "";
+	Object.keys(PlayOptions.Num).forEach(t => {
+		if (PlayOptions.Num[t]) txt += `\r\n${t} : ${PlayOptions.Num[t]}`;
+	});
+	Object.keys(PlayOptions.Str).forEach(t => {
+		if (PlayOptions.Str[t]) txt += `\r\n${t} : ${PlayOptions.Str[t]}`;
+	});
+
+	alert(`${arg.title} を再生します\r\n\r\n${txt}`);
+	let play_option: IPlayOption = BuildPlayOption(PlayOptions.Str)
+
+	let send: IAppFunctionArgs_PlayMusic = {
 		"mode": "play_music",
 		data: {
-			"speakeraddress": arg.addr,
-			"filename": arg.fullurl,
-			"name": arg.file,
+			"SpeakerAddress": arg.addr,
+			SoxConfig: [
+				{
+					pitch: PlayOptions.Num["pitch"],
+					tempo: PlayOptions.Num["tempo"],
+					effectsPreset: PlayOptions.Str["effects"],
+				},
+			],
+			PlayOption: play_option,
+			Media: [
+				{
+					filePath: arg.filePath,
+					title: arg.title,
+				}
+			]
 		}
 	};
 
-	//alert(arg.speedx2);
-
-	if (arg.speedx2) {
-		send.data.filename += "?stream=1&effectsPreset=speedx2";
-    }else if (arg.speedx0_5) {
-		send.data.filename += "?stream=1&effectsPreset=speedx0_5";
-	}
-
-
 	// JSONデータのPOST送信
 	const url = '/command';
+	const xmlHttpRequest = new XMLHttpRequest();
 	xmlHttpRequest.open('POST', url);
 	// サーバに対して解析方法を指定する
-	// データをリクエスト ボディに含めて送信する
-	//xmlHttpRequest.send(send);
-
-	// サーバに対して解析方法を指定する
-	//xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
 	// データをリクエスト ボディに含めて送信する
 	xmlHttpRequest.send(JSON.stringify(send));
 }
 
+/*
 function EncodeHTMLForm(data) {
 	var params = [];
 
@@ -115,6 +163,7 @@ function EncodeHTMLForm(data) {
 
 	return params.join('&').replace(/%20/g, '+');
 }
+*/
 
 function DirSelectButtonClick(arg) {
 	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
@@ -174,6 +223,17 @@ class GoogleHomeHtmlContainer {
 			elem1 = document.getElementById(addr);
 
 			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });
+
+			["pitch", "tempo"].forEach(t => {
+				let ea = elem1.getElementsByClassName(t);
+				let e = (ea?.length > 0 ? ea[0] : null);
+				if (e) {
+					e.onchange = () => {
+						elem1.getElementsByClassName(t + "Text")[0].innerText = e.value;
+					};
+					e.onchange();
+				}
+			});
 		}
 
 		const v = g.Value;
@@ -185,17 +245,6 @@ class GoogleHomeHtmlContainer {
 			elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime ?? "";
 			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
 		}
-
-		let checks1: any;
-		let speedx2: boolean = false
-		let checks0 = elem1.getElementsByClassName('check');
-		checks1 = Object.keys(checks0).map(e=>checks0[e]).filter(e => e.checked && e.value == 'speedx2');
-		if (checks1.length > 0) speedx2 = true; 
-
-		let speedx0_5: boolean = false
-		checks1 = Object.keys(checks0).map(e => checks0[e]).filter(e => e.checked && e.value == 'speedx0_5');
-		if (checks1.length > 0) speedx0_5 = true; 
-
 
 		if (addr in MusicList) {
 		} else {
@@ -213,21 +262,35 @@ class GoogleHomeHtmlContainer {
 
 				out_html += '<div class="row w-100">';
 				MusicList[addr].FileList.forEach(f => {
-					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick({'addr': '${addr}', 'file': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}', 'speedx2':${speedx2}, 'speedx0_5':${speedx0_5} })">${f.Name}</button></div>`;
-				})
+					let parameters: ISendMusicCommand = {
+						addr: addr,
+						title: f.Name,
+						filePath: f.Url,
+					};
+					let txt: string = JSON.stringify(parameters).replace(/"/g, '\'');
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-info py-0 my-2 w-100" onclick="MusicSelectButtonClick(${txt})">${f.Name}</button></div>`;
+				});
 				out_html += '</div>';
 				out_html += "<HR/>";
 				out_html += `フォルダを移動する`;
 				if (MusicList[addr].PathNow) out_html += `( 今のフォルダ⇒　${MusicList[addr].PathNow} )`;
 				out_html += '<div class="row w-100">';
 				MusicList[addr].DirList.forEach(f => {
-					let fullurl = `${location.protocol}//${location.host}/${f.Url}`;
-					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${f.Name}', 'url':'${f.Url}', 'fullurl':'${fullurl}'})">${f.Name}</button></div>`;
+					let parameters: ISendMusicCommand = {
+						addr: addr,
+						dir: f.Name,
+					}
+					let txt: string = JSON.stringify(parameters).replace(/"/g, '\'');
+					out_html += `<div class="col-md-4 col-sm-6"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick(${txt})">${f.Name}</button></div>`;
 				})
 				out_html += '</div>';
 				out_html += '<div class="row w-100">';
-				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick({'addr': '${addr}', 'dir': '${"../"}', 'url':'../'})">上のフォルダへ</button></div>`;
+				let parameters: ISendMusicCommand = {
+					addr: addr,
+					dir: "../",
+				}
+				let txt: string = JSON.stringify(parameters).replace(/"/g, '\'');
+				out_html += `<div class="col"><button class="btn btn-outline-success py-0 my-2 w-100" onclick="DirSelectButtonClick(${txt})">上のフォルダへ</button></div>`;
 				out_html += '</div>';
 			} else {
 				out_html = `<b><font color="red">よみこんでいます</font></b>`;

@@ -18,10 +18,10 @@ export interface IPlayMusicQuery {
 };
 
 export class SocketIoConnectionManager {
-	private Io: Server;
-	public GetIo(): Server { return this.Io };
+    private Io: Server;
     private SocketIoPort: number = 3000;
-	private Status: IStatus;
+
+    private Status: IStatus;
 
     GetStatusAll: (test_json?:string) => object;
 
@@ -90,25 +90,22 @@ export class SocketIoConnectionManager {
             });
 
 
-			socket.on("error", (err) => {
-				console.log(`socket.on("error", (err) => {   ${socket.handshake.address}`);
-				console.log(err);
-				clearTimeout(t);
-			});
-
-			socket.on("connect_error", (err) => {
-				console.log(`socket.on("connect_error", (err) => {   ${socket.handshake.address}`);
-				console.log(err);
-				clearTimeout(t);
-			});
-
-			socket.on("disconnect", () => {
-				console.log(`socket.on("disconnect", () => {   ${socket.handshake.address}`);
-				clearTimeout(t);
+            socket.on("error", (err) => {
+                console.log(err);
             });
 
+            socket.on("connect_error", (err) => {
+                console.log(err);
+            });
+
+            socket.on("disconnect", (data) => {
+                //clearTimeout(t);
+            });
+
+           
+
         });
-		this.Io.listen(this.SocketIoPort);
+        this.Io.listen(this.SocketIoPort);
     }
 }
 
@@ -121,11 +118,8 @@ export class GHomeMonitor {
     };
 
     private SocketIoPort: number = 3000;
-	private ConnectionManager: SocketIoConnectionManager;
-	public GetConnectionManager(): SocketIoConnectionManager { return this.ConnectionManager; };
-
+    private ConnectionManager: SocketIoConnectionManager;
     private MonitoringLoopInt: NodeJS.Timeout | null = null;
-	private SpeakerMonitorInt: NodeJS.Timeout | null = null;
 
     constructor(socket_io_port: number) {
         GoogleHomeController.init();
@@ -139,7 +133,7 @@ export class GHomeMonitor {
 
     public StartSpeakerMonitor() {
         GoogleHomeController.startSeekGoogleLoop();
-		this.SpeakerMonitorInt = setInterval(async () => {
+        setInterval(async () => {
             await this.Monitoring();
         }, 999);
     }
@@ -149,9 +143,9 @@ export class GHomeMonitor {
     }
 
     public End() {
-		GoogleHomeController.stopSeekGoogleLoop();
-		if (this.SpeakerMonitorInt) clearInterval(this.SpeakerMonitorInt);
+        GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
+        //this.ConnectionManager
     }
 
     public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {
@@ -169,24 +163,22 @@ export class GHomeMonitor {
         return null;
     }
 
-    private CreateOrOverWriteObjects() {
-        let addrs: string[] | null = GoogleHomeController.gHomeAddresses?.map(a => a.address);
-        addrs?.forEach((ad: string) => {
-            if (ad in this.GHomes) {
-                this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
-                this.GHomes[ad].lastUpdated = new Date();
-            } else {
-                this.GHomes[ad] = {
-                    g: new GoogleHomeController(ad, 5000),
+	private CreateOrOverWriteObjects() {
+		let addrs: string[] | null = GoogleHomeController.gHomeAddresses?.map(a => a.address);
+		addrs?.forEach((ad: string) => {
+			if (ad in this.GHomes) {
+				this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
+				this.GHomes[ad].lastUpdated = new Date();
+			} else {
+				this.GHomes[ad] = {
+					g: new GoogleHomeController(ad, 5000, AppConf().httpDir_music, AppConf().SoxCommandPath),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
             }
         })
         for (const key in this.GHomes) {
-			if (addSeconds(this.GHomes[key].lastUpdated, 15) < new Date()) {
-				console.log(key);
-				console.log(this.GHomes[key].g);
+            if (addSeconds(this.GHomes[key].lastUpdated, 30) < new Date()) {
                 this.GHomes[key].g.Finalize();
                 delete this.GHomes[key];
             }

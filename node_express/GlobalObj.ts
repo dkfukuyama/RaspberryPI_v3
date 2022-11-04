@@ -1,5 +1,5 @@
 import path = require('path');
-import { GoogleHomeController } from '@/GoogleHomeController';
+import { GoogleHomeController, ISoxConfig } from '@/GoogleHomeController';
 import { AppConf, slk } from '@/AppConf';
 import { ApplyToExpress } from '@/AppFunctions';
 
@@ -17,7 +17,7 @@ App.use(bodyParser.urlencoded({
 }));
 App.use(express.json());
 
-// ƒeƒ“ƒvƒŒ[ƒgƒGƒ“ƒWƒ“‚ÌŽw’è
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ã®æŒ‡å®š
 App.set("view engine", "ejs");
 
 ApplyToExpress(App);
@@ -80,7 +80,7 @@ PageParams.Pages.forEach(p => {
                 page: p,
                 items: null
             };
-            // ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðs‚¤
+            // ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’è¡Œã†
             PageParams.UpdateCommon();
             res.render("./index.ejs", {
                 data: data,
@@ -105,7 +105,7 @@ PageParams.Pages.forEach(p => {
 });
 
 
-// ƒeƒXƒgƒtƒ@ƒCƒ‹‚ð‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// ãƒ†ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãžã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("/__ftest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "FunctionTest") };
     res.sendFile(req.path.replace("/__ftest__/", ""), p, (err) => {
@@ -114,7 +114,7 @@ App.all("/__ftest__/*.*", function (req: express.Request, res: express.Response,
         }
     });
 });
-// ƒeƒXƒgƒtƒ@ƒCƒ‹‚ð‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// ãƒ†ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãžã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("/__utest__/*.*", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "UnitTest") };
     res.sendFile(req.path.replace("/__utest__/", ""), p, (err) => {
@@ -124,7 +124,7 @@ App.all("/__utest__/*.*", function (req: express.Request, res: express.Response,
     });
 });
 
-// Žw’èƒtƒ@ƒCƒ‹‚ð‚¼‚Ì‚Ü‚Üo—Í‚·‚é‚à‚Ì
+// æŒ‡å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãžã®ã¾ã¾å‡ºåŠ›ã™ã‚‹ã‚‚ã®
 App.all("*.css|*.js|*.html", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const p = { root: path.join(__dirname, "views") };
     res.sendFile(req.path, p, (err) => {
@@ -135,7 +135,7 @@ App.all("*.css|*.js|*.html", function (req: express.Request, res: express.Respon
 });
 
 type IQuery = {
-    stream: string;
+    sox: string;
     effects: string;
     effectsPreset: string;
 }
@@ -143,35 +143,45 @@ interface ExRequest extends express.Request {
     query: IQuery;
 }
 
+App.get("*.mp4|*.wma", function (req: express.Request, res: express.Response, next: express.NextFunction) {
+	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
+	res.sendFile(p, (err) => {
+		if (err) {
+			next(err);
+		}
+	});
+});
+
 App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, next: express.NextFunction) {
-    const fs = require('fs');
+	const fs = require('fs');
 
-    const p = path.join(AppConf().saveDir0, decodeURI(req.path));
-    const query: IQuery = (req as ExRequest).query;
+	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
+	const query: IQuery = (req as ExRequest).query;
 
-    if (!query.stream) {
-        res.sendFile(p, (err) => {
-            if (err) {
-                next(err);
-            }
-        });
-    } else {
-        try {
-            fs.stat(p, (err, stat) => {
-                if (err) {
-                    next(err)
-                }
-                // ƒtƒ@ƒCƒ‹–¼‚ðƒGƒ“ƒR[ƒh‚·‚é
-                const basename = path.basename(p);
-                const filename = encodeURIComponent(basename);
+	if (!query.sox) {
+		res.sendFile(p, (err) => {
+			if (err) {
+				next(err);
+			}
+		});
+	} else {
+		try {
+			fs.stat(p, (err, stat) => {
+				if (err) {
+					next(err)
+				}
+				// ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+				const basename = path.basename(p);
+				const filename = encodeURIComponent(basename);
 
-                // ƒwƒbƒ_[ƒZƒbƒg‚·‚é
-                res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
-                res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
-                res.setHeader('Connection', 'close');
-                const { spawn } = require('node:child_process');
-                //"chorus 1 1 100.0 1 5 5.0 -s"
-
+				// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒƒãƒˆã™ã‚‹
+				//res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
+				res.setHeader('Content-Type', 'audio/wav');
+				//res.setHeader('Content-Type', 'audio/mpeg');
+				res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
+				res.setHeader('Connection', 'Keep-Alive');
+				const { spawn } = require('node:child_process');
+				/*
                 const preset: {
                     [key: string]: string;
                 } = {
@@ -181,19 +191,34 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
                     "speedx2": "speed 2",
                     "speedx0_5": "speed 0.5",
                 }
-                let kk = `sox "${p}" -t wav - `;
+				
+				let kk = `sox "${p}" -t wav - `;
                 if (preset[query.effectsPreset]) {
                     kk += preset[query.effectsPreset];
                 } else if (query.effects) {
                     kk += req.query.effects;
                 }
-
-                console.log(kk);
-                let sp = spawn(kk, [], { shell: true });
-                sp.on('error', (err) => {
-                    next(err);
-                })
-                sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
+				console.log(kk);
+				*/
+				const soxConf: ISoxConfig = GoogleHomeController.SoxConfUrlDecode(query);
+				const command = GoogleHomeController.BuildSoxCommand(p, soxConf);
+				console.log(command);
+				let sp = spawn(command, [], { shell: true });
+				sp.on('error', (err) => {
+					next(err);
+					sp.kill();
+				});
+				sp.on('close', (err) => {
+					console.log('spawn close');
+				});
+				sp.stdout.pipe(res).on('error', (err) => {
+					sp.kill();
+					slk.Err(err);
+				});
+				res.on('close', ()=> {
+					console.log('the response has been sent');
+					sp.kill();
+				});
             });
         } catch (err) {
             next(err);

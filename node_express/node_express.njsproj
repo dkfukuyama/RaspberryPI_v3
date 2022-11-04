@@ -84,6 +84,7 @@
     <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="UnitTest\test_Others.ts" />
     <TypeScriptCompile Include="UtilFunctions.ts" />
     <TypeScriptCompile Include="AppConf.ts" />
     <Content Include="views\calculator.ejs" />
@@ -102,6 +103,7 @@
     <Content Include="views\quiz.ejs" />
     <Content Include="views\quiz_0.ejs" />
     <Content Include="views\quiz_1.ejs" />
+    <Content Include="views\scripts\.editorconfig" />
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />

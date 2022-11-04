@@ -1,6 +1,6 @@
 import path = require('path');
-
 import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
+import { IAppFunctionArgs } from './AppFunctions';
 
 export interface IGoogleHomeSeekResults {
     address: string;
@@ -8,10 +8,19 @@ export interface IGoogleHomeSeekResults {
     speakerName: string;
 }
 
-interface Imedia_info {
-    playUrl: string;
-    contentType: string | null;
-    title: string | null
+export interface ISendMusicCommand {
+	addr: string;
+	title?: string;
+	dir?: string;
+	filePath?: string;
+}
+
+export interface Imedia_info {
+	playUrl?: string;
+	filePath?: string;
+	ext?: string;	
+	contentType?: string;
+	title?: string
 }
 
 interface Imedia {
@@ -25,6 +34,39 @@ interface Imedia2 {
     media: Imedia;
 }
 
+type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
+
+export interface IPlayOption {
+	RepeatMode: ERepeatMode;
+};
+
+export interface ISoxConfig {
+	sox?: boolean;
+	pitch: number;
+	tempo: number;
+	effectsString?: string;
+	effectsPreset?: string;
+};
+
+export interface IAppFunctionArgs_PlayMusicData {
+	SpeakerAddress: string;
+	Media: Imedia_info[];
+	PlayOption?: IPlayOption;
+	SoxConfig?: ISoxConfig[];
+}
+export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
+	data: IAppFunctionArgs_PlayMusicData
+}
+
+const SoxEffectsPreset =
+[
+	{ value: "none", show_name: "なし", command: ""},
+	{ value: "yamabiko", show_name: "やまびこ", command: "chorus 1 1 100.0 1 5 5.0 -s"},
+	{ value: "reverb", show_name: "リバーブ", command: "reverb"},
+	{ value: "kimoi", show_name: "きもい", command: "reverb" },
+];
+
+
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
 
@@ -35,6 +77,7 @@ export class GoogleHomeController {
     static gHomeSeekFlag_timeout: NodeJS.Timeout | null = null;
     static secondsCount: number = 0;
 
+	public UrlBaseString: string = "";
     public SelfStatus: IGoogleHomeSeekResults;
 
     public Status: any;
@@ -43,13 +86,13 @@ export class GoogleHomeController {
 
     static InitializedFlag: boolean = false;
 
-
     private PfSender = new this.PlatformSender();
     private JoinedAppId: string | null = null;
     private MediaPlayer = null;
 
     private IpAddress: string = "";
     private ConnectionRetryIntervalMs: number = 100;
+	static Sox: string = 'sox';
 
     public static init() {
         if (!this.InitializedFlag) {
@@ -117,15 +160,69 @@ export class GoogleHomeController {
         });
     }
 
-    public static getProperContentType(url) {
+	private static readonly contentTypes = {
+		'.wav': 'audio/wav',
+		'.mp3': 'audio/mpeg',
+		'.mp4': 'video/mp4',
+		'.wma': 'audio/x-ms-wma',
+	};
+
+
+    public static getProperContentType(url: string) {
         let extType = url.substr(-4);
-        const contentTypes = {
-            '.wav': 'audio/wav',
-            '.mp3': 'audio/mpeg',
-            '.mp4': 'video/mp4',
-        };
-        return contentTypes[extType];
-    }
+        return GoogleHomeController.contentTypes[extType];
+	}
+	public static getAveilableExtentions(): string[] {
+		return Object.keys(GoogleHomeController.contentTypes);
+	}
+
+	public static getTitleName(url) {
+		return path.basename(url);
+	}
+
+	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
+		let ret: string = `${this.Sox} "${filepath}" -t wav -`;
+		if (sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
+		if (sox.tempo) ret += ` tempo ${sox.tempo}`;
+		return ret;
+	}
+
+	static SoxConfInitial(): ISoxConfig {
+		return {
+			sox: true,
+			pitch: 0,
+			tempo: 1,
+			effectsPreset: "",
+			effectsString: "",
+		}
+	}
+
+	static SoxConfUrlEncode(sox: ISoxConfig): string {
+		sox.sox = true;
+		var keys = Object.keys(sox);
+		return '?' + keys.sort().map(k => `${k}=${sox[k]}`).join('&');
+	}
+
+	static SoxConfUrlDecode(inp: object): ISoxConfig {
+		let return_val: ISoxConfig = GoogleHomeController.SoxConfInitial();
+		var keys_i = Object.keys(inp);
+		var keys_s = Object.keys(return_val);
+		keys_i.forEach(k => {
+			if (inp[k] && keys_s.includes(k)) {
+				return_val[k] = inp[k];
+			}
+		})
+		return return_val;
+	}
+
+	static ConcatSoxConfUrlAr(items: Imedia2[], Sox?: ISoxConfig[]): Imedia2[] {
+		if (Sox?.length == items.length) {
+			for (let i = 0; i < items.length; i++) {
+				items[i].media.contentId += GoogleHomeController.SoxConfUrlEncode(Sox[i]);
+			}
+		} 
+		return items;
+	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
 
@@ -136,20 +233,32 @@ export class GoogleHomeController {
         }
     }
     
-    private BuildMediaData(media_info: Imedia_info | string): Imedia {
-        let media_info_temp: Imedia_info;
+	private BuildMediaData(media_info: Imedia_info | string ): Imedia {
+		let media_info_temp: Imedia_info;
 
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
-                contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
-        }
+		if (typeof (media_info) != 'string') {
+			media_info_temp = media_info;
+			if (!media_info_temp.playUrl && media_info_temp.filePath) {
+				media_info_temp.playUrl = media_info_temp.filePath;
+			}
+			media_info_temp.contentType = GoogleHomeController.getProperContentType(media_info_temp.playUrl);
+		}
+		else {
+			media_info_temp = {
+				playUrl: media_info,
+				contentType: GoogleHomeController.getProperContentType(media_info),
+				title: GoogleHomeController.getTitleName(media_info),
+			}
+		}
 
-        return {
+		const slash: string = '/';
+		if (!media_info_temp.playUrl.startsWith(this.UrlBaseString)) {
+			if (this.UrlBaseString.endsWith(slash)) this.UrlBaseString = this.UrlBaseString.substring(0, this.UrlBaseString.length - 1);
+			if (media_info_temp.playUrl.startsWith(slash)) media_info_temp.playUrl = media_info_temp.playUrl.substring(1, media_info_temp.playUrl.length - 1);
+			media_info_temp.playUrl = this.UrlBaseString + slash + media_info_temp.playUrl;
+		};
+
+        const return_val = {
             contentId: media_info_temp.playUrl,
             contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
             streamType: 'BUFFERED', // or LIVE
@@ -159,38 +268,19 @@ export class GoogleHomeController {
                 metadataType: 0,
                 title: media_info_temp.title ?? 'No Title',
             }
-        };
+		};
+		console.log({ return_val });
+		return return_val;
     }
 
-    private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
-        let media_info_temp: Imedia_info;
-
-        if (typeof (media_info) == "string") {
-            media_info_temp = {
-                playUrl: media_info,
-                contentType: null,
-                title: null
-            }
-        } else {
-            media_info_temp = media_info;
+	private BuildMediaData2(media_info: Imedia_info | string): Imedia2 {
+        return {
+            media: this.BuildMediaData(media_info),
         }
 
-        return {
-            media: {
-                contentId: media_info_temp.playUrl,
-                contentType: media_info_temp.contentType ?? GoogleHomeController.getProperContentType(media_info_temp.playUrl),
-                streamType: 'BUFFERED', // or LIVE
-
-                metadata: {
-                    type: 0,
-                    metadataType: 0,
-                    title: media_info_temp.title ?? 'No Title',
-                }
-            }
-        };
     }
 
-    public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
+	public async PlayUrl(media_info: Imedia_info | string): Promise<void> {
 
         let media = this.BuildMediaData(media_info);
 
@@ -209,20 +299,20 @@ export class GoogleHomeController {
 
         setTimeout(() => {
             client.close();
-            //client.socket.end();
             clearEventEmitter(client);
         }, 10000);
     }
 
-    public async PlayList(media_info_list: (Imedia_info | string)[]): Promise<void> {
+	public async PlayList(media_info_list: (Imedia_info | string)[], Sox: ISoxConfig[] | null, playOption: IPlayOption): Promise<void> {
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
+		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
-        const client = new (require('castv2-client').Client)();
+		const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
-            client.launch(this.DefaultMediaReceiver, (err, player) => {
-                player.queueLoad(items, { autoplay: true, repeatMode: 'REPEAT_ALL' }, (err, status) => { });
-            });
+			client.launch(this.DefaultMediaReceiver, (err, player) => {
+				player.queueLoad(items, { autoplay: true, repeatMode: playOption.RepeatMode }, (err, status) => { });
+			});
         });
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
@@ -231,11 +321,11 @@ export class GoogleHomeController {
         });
         setTimeout(() => {
             client.close();
-            //client.socket.end();
             clearEventEmitter(client);
         }, 10000);
 
     }
+
     private Media_onStatus(status) {
         this.PlayerStatus = status;
     };
@@ -257,11 +347,13 @@ export class GoogleHomeController {
         });
     }
 
-    constructor(_ipAddress: string, _connectionRetryIntervalMs?: number) {
-        this.IpAddress = _ipAddress;
-        this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
-        this.Connect();
-    }
+	constructor(_ipAddress: string, _connectionRetryIntervalMs?: number, urlBase?: string, sox_command?: string) {
+		this.IpAddress = _ipAddress;
+		this.ConnectionRetryIntervalMs = _connectionRetryIntervalMs ?? this.ConnectionRetryIntervalMs;
+		this.UrlBaseString = urlBase;
+		GoogleHomeController.Sox = sox_command ?? GoogleHomeController.Sox;
+		this.Connect();
+	}
 
     private onStatus(status) {
         this.Status = status;
@@ -321,7 +413,7 @@ export class GoogleHomeController {
         }
     }
 
-	public Finalize(): void {
-		console.log("Finalize");
-	}
+    public Finalize(): void {
+
+    }
 }

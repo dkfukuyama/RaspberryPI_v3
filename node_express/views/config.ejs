@@ -1,7 +1,35 @@
 <% let g_addr = common.ghomeSpeakers %>
 <div class="container">
-	<div class="row" id="class_row_container">
-
+  <div class="row">
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="clean_wav" class="btn btn-primary w-100">たまったおんせいファイルをしょうきょする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="update_reboot_webserver" class="btn btn-primary w-100">ウェブサーバをアップデートしてさいきどうする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12 py-10">
+		<p>
+			<button id="reboot_webserver" class="btn btn-primary w-100">ウェブサーバをさいきどうする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="show_log" class="btn btn-primary w-100">ログをひょうじする</button>
+		</p>
+	</div>
+	<div class="col-md-6 col-12">
+		<p>
+			<button id="show_err_log" class="btn btn-primary w-100">エラーログをひょうじする</button>
+		</p>
+	</div>
+    <div class="col-md-6 col-12">
+		<p>
+			<button id="show_version" class="btn btn-primary w-100">バージョンをひょうじする</button>
+		</p>
 	</div>
 </div>
 
@@ -11,74 +39,64 @@
 </p>
 
 <script type="text/javascript">
-	try{
-		const params =
-		[
-			{
-				text: 'おんせいファイルをしょうきょします。',
-				mode: 'clean_wav',
-			},
-			{
-				text: 'ウェブサーバをアップデートしてさいきどうします。',
-				mode: 'update_reboot',
-			},
-			{
-				text: 'ウェブサーバをさいきどうします。',
-				mode: 'reboot',
-			},
-			{
-				text : '標準出力ログを表示します。',
-				mode : 'system_command',
-				data: {
-					command : 'cat out.log',
-				}
-			},
-			{
-				text : 'エラーログを表示します。',
-				mode : 'system_command',
-				data: {
-					command : 'cat out.log',
-				}
-			},
-			{
-				text : 'PM2ログを表示します。',
-				mode : 'system_command',
-				data: {
-					command : 'cat /home/pi/.pm2/pm2.log',
-				}
-			},
-			{
-				text : 'バージョンを表示します。',
-				mode : 'system_command',
-				data: {
-					command : 'git log -1',
-				}
-			}
-		];
-		let row_container = document.getElementById("class_row_container");
-		params.forEach(p=>{
-			let div = document.createElement("div");
-			div.className = "col col-md-6 col-12";
-			let id = p.mode + Math.floor( Math.random() * 10000 );
-			div.innerHTML = `
-				<div class="my-1">
-					<button class="btn btn-primary w-100"id=${id}>${p.text}</button>
-				</div>
-			`;
-			row_container.append(div);
 
-			const e = document.getElementById(id);
-			e.onclick = () => {
-				post_command(p);
-			};
+	document.getElementById('clean_wav').onclick = function() {
+		post_command({
+			alert_text : 'おんせいファイルをしょうきょします。',
+			mode : 'clean_wav',
+			short_return : true
 		});
-	}catch(err){
-		alert(err);
 	}
+
+	document.getElementById('update_reboot_webserver').onclick = function(){
+		post_command({
+			alert_text : 'ウェブサーバをアップデートしてさいきどうします。',
+			mode : 'update_reboot',
+		});
+	}
+
+	document.getElementById('reboot_webserver').onclick = function(){
+		post_command({
+			alert_text : 'ウェブサーバをさいきどうします。',
+			mode : 'reboot',
+		});
+	}
+
+	document.getElementById('show_log').onclick = function(){
+		post_command({
+			alert_text : '標準出力ログを表示します。',
+			mode : 'system_command',
+			data: {
+				command : 'cat out.log',
+			}
+		});
+	}
+
+	document.getElementById('show_err_log').onclick = function(){
+		post_command({
+			alert_text : 'エラーログを表示します。',
+			mode : 'system_command',
+			data: {
+				command : 'cat out.log',
+			}
+		});
+	}
+
+
+	document.getElementById('show_version').onclick = function(){
+		post_command({
+			alert_text : 'バージョンを表示します。',
+			mode : 'system_command',
+			data: {
+				command : 'git log -1',
+			}
+		});
+	}
+
 
 	let xhr = new XMLHttpRequest();
 	function post_command(command_param) {
-		alert(command_param.text);
+		alert(command_param.alert_text);
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/command');
