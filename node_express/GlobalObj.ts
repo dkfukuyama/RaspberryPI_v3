@@ -1,5 +1,5 @@
 import path = require('path');
-import { GoogleHomeController } from '@/GoogleHomeController';
+import { GoogleHomeController, ISoxConfig } from '@/GoogleHomeController';
 import { AppConf, slk } from '@/AppConf';
 import { ApplyToExpress } from '@/AppFunctions';
 
@@ -153,35 +153,34 @@ App.get("*.mp4|*.wma", function (req: express.Request, res: express.Response, ne
 });
 
 App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, next: express.NextFunction) {
-    const fs = require('fs');
+	const fs = require('fs');
 
-    const p = path.join(AppConf().saveDir0, decodeURI(req.path));
-    const query: IQuery = (req as ExRequest).query;
+	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
+	const query: IQuery = (req as ExRequest).query;
+	
+	if (!query.sox) {
+		res.sendFile(p, (err) => {
+			if (err) {
+				next(err);
+			}
+		});
+	} else {
+		try {
+			fs.stat(p, (err, stat) => {
+				if (err) {
+					next(err)
+				}
+				// ファイル名をエンコードする
+				const basename = path.basename(p);
+				const filename = encodeURIComponent(basename);
 
-    if (!query.sox) {
-        res.sendFile(p, (err) => {
-            if (err) {
-                next(err);
-            }
-        });
-    } else {
-        try {
-            fs.stat(p, (err, stat) => {
-                if (err) {
-                    next(err)
-                }
-                // ファイル名をエンコードする
-                const basename = path.basename(p);
-                const filename = encodeURIComponent(basename);
-
-                // ヘッダーセットする
-                //res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
+				// ヘッダーセットする
+				//res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
 				res.setHeader('Content-Type', 'audio/wav');
-                res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
-                res.setHeader('Connection', 'close');
-                const { spawn } = require('node:child_process');
-                //"chorus 1 1 100.0 1 5 5.0 -s"
-
+				res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
+				res.setHeader('Connection', 'close');
+				const { spawn } = require('node:child_process');
+				/*
                 const preset: {
                     [key: string]: string;
                 } = {
@@ -191,20 +190,25 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
                     "speedx2": "speed 2",
                     "speedx0_5": "speed 0.5",
                 }
-                let kk = `sox "${p}" -t wav - `;
+				
+				let kk = `sox "${p}" -t wav - `;
                 if (preset[query.effectsPreset]) {
                     kk += preset[query.effectsPreset];
                 } else if (query.effects) {
                     kk += req.query.effects;
                 }
-
-                console.log(kk);
-                let sp = spawn(kk, [], { shell: true });
+				console.log(kk);
+				*/
+				const soxConf: ISoxConfig = GoogleHomeController.SoxConfUrlDecode(query);
+				const command = GoogleHomeController.BuildSoxCommand(p, soxConf);
+				console.log(command);
+				let sp = spawn(command, [], { shell: true });
 				sp.on('error', (err) => {
 					next(err);
 					sp.kill();
                 })
-                sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
+				sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
+				// here, kill the spwaned process
             });
         } catch (err) {
             next(err);

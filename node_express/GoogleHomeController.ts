@@ -40,7 +40,7 @@ export interface IPlayOption {
 	RepeatMode: ERepeatMode;
 };
 
-interface ISoxConfig {
+export interface ISoxConfig {
 	sox?: boolean;
 	pitch: number;
 	tempo: number;
@@ -187,9 +187,32 @@ export class GoogleHomeController {
 		return ret;
 	}
 
+	static SoxConfInitial(): ISoxConfig {
+		return {
+			sox: true,
+			pitch: 0,
+			tempo: 1,
+			effectsPreset: "",
+			effectsString: "",
+		}
+	}
+
 	static SoxConfUrlEncode(sox: ISoxConfig): string {
 		sox.sox = true;
-		return (new URLSearchParams(sox as any)).toString();
+		var keys = Object.keys(sox);
+		return '?' + keys.sort().map(k => `${k}=${sox[k]}`).join('&');
+	}
+
+	static SoxConfUrlDecode(inp: object): ISoxConfig {
+		let return_val: ISoxConfig = GoogleHomeController.SoxConfInitial();
+		var keys_i = Object.keys(inp);
+		var keys_s = Object.keys(return_val);
+		keys_i.forEach(k => {
+			if (inp[k] && keys_s.includes(k)) {
+				return_val[k] = inp[k];
+			}
+		})
+		return return_val;
 	}
 
 	static ConcatSoxConfUrlAr(items: Imedia2[], Sox?: ISoxConfig[]): Imedia2[] {
@@ -284,9 +307,7 @@ export class GoogleHomeController {
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
-		console.log(items);
-
-        const client = new (require('castv2-client').Client)();
+		const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
 				player.queueLoad(items, { autoplay: true, repeatMode: playOption.RepeatMode }, (err, status) => { });
