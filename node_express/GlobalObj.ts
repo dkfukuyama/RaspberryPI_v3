@@ -177,6 +177,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				// ヘッダーセットする
 				//res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
 				res.setHeader('Content-Type', 'audio/wav');
+				//res.setHeader('Content-Type', 'audio/mpeg');
 				res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
 				res.setHeader('Connection', 'close');
 				const { spawn } = require('node:child_process');
@@ -206,9 +207,19 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				sp.on('error', (err) => {
 					next(err);
 					sp.kill();
-                })
-				sp.stdout.pipe(res).on('error', (err) => slk.Err(err));
-				// here, kill the spwaned process
+				})
+				sp.on('close', (err) => {
+					console.log('spawn close');
+				})
+				sp.stdout.pipe(res).on('error', (err) => {
+					sp.kill();
+					slk.Err(err);
+				});
+				res.on('close', ()=> {
+					console.log('the response has been sent');
+					sp.kill();
+				});
+				
             });
         } catch (err) {
             next(err);
