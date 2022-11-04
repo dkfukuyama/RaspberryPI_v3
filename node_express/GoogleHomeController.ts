@@ -164,6 +164,7 @@ export class GoogleHomeController {
 		'.wav': 'audio/wav',
 		'.mp3': 'audio/mpeg',
 		'.mp4': 'video/mp4',
+		'.wma': 'audio/x-ms-wma',
 	};
 
 

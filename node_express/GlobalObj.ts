@@ -143,6 +143,15 @@ interface ExRequest extends express.Request {
     query: IQuery;
 }
 
+App.get("*.mp4|*.wma", function (req: express.Request, res: express.Response, next: express.NextFunction) {
+	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
+	res.sendFile(p, (err) => {
+		if (err) {
+			next(err);
+		}
+	});
+});
+
 App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, next: express.NextFunction) {
     const fs = require('fs');
 
