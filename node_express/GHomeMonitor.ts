@@ -1,4 +1,4 @@
-﻿import { addMinutes, addSeconds } from 'date-fns';
+import { addMinutes, addSeconds } from 'date-fns';
 import { Socket, Server } from 'socket.io';
 
 import { GoogleHomeController } from '@/GoogleHomeController';
@@ -163,15 +163,15 @@ export class GHomeMonitor {
         return null;
     }
 
-    private CreateOrOverWriteObjects() {
-        let addrs: string[] | null = GoogleHomeController.gHomeAddresses?.map(a => a.address);
-        addrs?.forEach((ad: string) => {
-            if (ad in this.GHomes) {
-                this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
-                this.GHomes[ad].lastUpdated = new Date();
-            } else {
-                this.GHomes[ad] = {
-                    g: new GoogleHomeController(ad, 5000),
+	private CreateOrOverWriteObjects() {
+		let addrs: string[] | null = GoogleHomeController.gHomeAddresses?.map(a => a.address);
+		addrs?.forEach((ad: string) => {
+			if (ad in this.GHomes) {
+				this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
+				this.GHomes[ad].lastUpdated = new Date();
+			} else {
+				this.GHomes[ad] = {
+					g: new GoogleHomeController(ad, 5000, AppConf().httpDir_music),
                     lastUpdated: new Date(),
                 }
                 this.GHomes[ad].g.SelfStatus = GoogleHomeController.gHomeAddresses.filter(gha => gha.address == ad)[0];
