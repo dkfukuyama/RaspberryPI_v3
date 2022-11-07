@@ -198,9 +198,25 @@ export class GoogleHomeController {
 	}
 
 	static SoxConfUrlEncode(sox: ISoxConfig): string {
-		sox.sox = true;
-		var keys = Object.keys(sox);
-		return '?' + keys.sort().map(k => `${k}=${sox[k]}`).join('&');
+		if (GoogleHomeController.IsSoxDefaultValue(sox)) {
+			return "";
+		} else {
+			sox.sox = true;
+			const keys = Object.keys(sox);
+			return '?' + keys.sort().map(k => `${k}=${sox[k]}`).join('&');
+		}
+	}
+
+	static IsSoxDefaultValue(sox: ISoxConfig): boolean {
+		var sox_ini = GoogleHomeController.SoxConfInitial();
+		const keys = Object.keys(sox_ini);
+		for (let k in keys) {
+			if (k == 'sox') continue;
+			if (sox_ini[k] != (sox[k] ?? "")){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	static SoxConfUrlDecode(inp: object): ISoxConfig {

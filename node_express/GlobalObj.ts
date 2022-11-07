@@ -203,7 +203,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				const soxConf: ISoxConfig = GoogleHomeController.SoxConfUrlDecode(query);
 				const command = GoogleHomeController.BuildSoxCommand(p, soxConf);
 				console.log(command);
-				let sp = spawn(command, [], { shell: true });
+				let sp = spawn(command, [], { shell: true, timeout: 30000 });
 				sp.on('error', (err) => {
 					next(err);
 					sp.kill();
