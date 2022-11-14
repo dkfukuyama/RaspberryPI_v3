@@ -1,6 +1,6 @@
 import { ISoxConfig } from "./GoogleHomeController";
 
-class GoogleTTS {
+export class GoogleTTS {
 
 	static readonly textToSpeech = require('@google-cloud/text-to-speech');
 	static readonly client = new GoogleTTS.textToSpeech.TextToSpeechClient();
@@ -24,7 +24,8 @@ class GoogleTTS {
 		voiceTypeId: number,
 		outfilePath: string,
 		text: string,
-		sox: ISoxConfig,
+		speakingRate?: number,
+		pitch?: number,
 	}) {
 		return new Promise<void>(async (resolve, reject) => {
 
@@ -46,6 +47,8 @@ class GoogleTTS {
 				// select the type of audio encoding
 				audioConfig: {
 					audioEncoding: enc,
+					speakingRate: params.speakingRate ?? 1,
+					pitch: params.pitch ?? 0,
 				},
 			};
 
