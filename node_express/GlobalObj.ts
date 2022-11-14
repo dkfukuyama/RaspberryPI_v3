@@ -175,31 +175,10 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				const filename = encodeURIComponent(basename);
 
 				// ヘッダーセットする
-				//res.setHeader('Content-Type', GoogleHomeController.getProperContentType(basename));
 				res.setHeader('Content-Type', 'audio/wav');
-				//res.setHeader('Content-Type', 'audio/mpeg');
 				res.setHeader('Content-disposition', `inline; filename*=utf-8''${filename}`);
-				res.setHeader('Connection', 'Keep-Alive');
 				const { spawn } = require('node:child_process');
-				/*
-                const preset: {
-                    [key: string]: string;
-                } = {
-                    "chorus01": "chorus 1 1 100.0 1 5 5.0 -s",
-                    "chorus02": "chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s",
-                    "reverb01": "reverb",
-                    "speedx2": "speed 2",
-                    "speedx0_5": "speed 0.5",
-                }
-				
-				let kk = `sox "${p}" -t wav - `;
-                if (preset[query.effectsPreset]) {
-                    kk += preset[query.effectsPreset];
-                } else if (query.effects) {
-                    kk += req.query.effects;
-                }
-				console.log(kk);
-				*/
+
 				const soxConf: ISoxConfig = GoogleHomeController.SoxConfUrlDecode(query);
 				const command = GoogleHomeController.BuildSoxCommand(p, soxConf);
 				console.log(command);
@@ -217,7 +196,9 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 				});
 				res.on('close', ()=> {
 					console.log('the response has been sent');
-					sp.kill();
+					setTimeout(() => {
+						if (sp) if (!sp.killed) { sp?.kill(); }
+					}, 30000);
 				});
             });
         } catch (err) {

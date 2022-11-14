@@ -143,8 +143,7 @@ export class GoogleHomeController {
     }
 
     public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
-
-        return new Promise((resolve, _) => {
+					        return new Promise((resolve, _) => {
             let return_val: IGoogleHomeSeekResults[] = [];
             const browser = GoogleHomeController.bonjour.find({ type: 'googlecast' },
                 function (service) {
@@ -160,13 +159,31 @@ export class GoogleHomeController {
         });
     }
 
+	
+	private static readonly effectsPresetReplaceString: string = "0_A_0";
+
+	private static readonly effectsPreset: { [key: string]: { Name: string, Command: string }; } = {
+		"chorus01": {
+			Name: "コーラス",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 1 1 100.0 1 5 5.0 -s`,
+		},
+		"chorus02": {
+			Name: "やまびこ",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s`,
+		},
+		"reverb01": {
+			Name: "リバーブ",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} reverb`,
+		}
+    };
+	
+
 	private static readonly contentTypes = {
 		'.wav': 'audio/wav',
 		'.mp3': 'audio/mpeg',
 		'.mp4': 'video/mp4',
 		'.wma': 'audio/x-ms-wma',
 	};
-
 
     public static getProperContentType(url: string) {
         let extType = url.substr(-4);

@@ -67,7 +67,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="GoogleHomeController.ts" />
     <TypeScriptCompile Include="google_home.ts" />
-    <TypeScriptCompile Include="google_tts.ts" />
+    <TypeScriptCompile Include="GoogleTTS.ts" />
     <Content Include=".env.common">
       <SubType>Code</SubType>
     </Content>
