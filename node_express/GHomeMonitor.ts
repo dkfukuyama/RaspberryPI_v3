@@ -17,109 +17,120 @@ export interface IPlayMusicQuery {
     GStatusSimType: string;
 };
 
+
+interface IGHomes {
+	[Key: string]: {
+		g: GoogleHomeController;
+		lastUpdated: Date;
+	}
+}
+
 export class SocketIoConnectionManager {
-    private Io: Server;
-    private SocketIoPort: number = 3000;
+	private Io: Server;
+	private SocketIoPort: number = 3000;
 
-    private Status: IStatus;
+	private Status: IStatus;
+	//private ConnectedSocketsList: { [index: number]: Socket } = {};
 
-    GetStatusAll: (test_json?:string) => object;
+	GetStatusAll: (test_json?: string) => object;
+	GetGHomes: () => IGHomes;
+	
+	constructor(portnum: number, _getStatusAll: (a?:string) => object, _getGHomes: () => IGHomes) {
 
-    constructor(portnum: number, _getStatusAll: () => object) {
+		this.SocketIoPort = portnum;
+		this.GetStatusAll = _getStatusAll;
+		this.GetGHomes = _getGHomes;
+		this.Io = require("socket.io")();
+		this.Io.on("connection", (socket: Socket) => {
+			let socket_index: number[];
+			socket = AppFunctions.ApplyToSocket(socket);
+			let Client: {
+				ConnectionStartTime: Date;
+				Type: TClient;
+				TestMp3path: string;
+			};
 
-        this.SocketIoPort = portnum;
-        this.GetStatusAll = _getStatusAll;
-        this.Io = require("socket.io")();
-        this.Io.on("connection", (socket: Socket) => {
-            socket = AppFunctions.ApplyToSocket(socket);
+			let FSearch: {
+				[Key: string]: FileListSearch;
+			} = {};
+			let GStatusSimType: string | null = "";
+			console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
+			socket.emit("hello from server", { send_datetime: new Date() });
 
-            let Client: {
-                ConnectionStartTime: Date;
-                Type: TClient;
-                TestMp3path: string;
-            };
+			let update_func = () => {
+				let rep = this.GetStatusAll(GStatusSimType);
+				socket.emit("S2C_send_status", rep);
+			}
+			let t: NodeJS.Timeout = setInterval(() => {
+				update_func();
+			}, 1000);
+			socket.on('update', () => update_func());
 
-            let FSearch: {
-                [Key: string]: FileListSearch;
-            } = {};
-
-            let GStatusSimType: string | null = "";
-            console.log(`Connected to the client whose IP address is ${socket.handshake.address}`);
-            socket.emit("hello from server", { send_datetime: new Date() });
-
-            let t: NodeJS.Timeout = setInterval(() => {
-                let rep = this.GetStatusAll(GStatusSimType);
-                socket.emit("S2C_send_status", rep);
-            }, 1000);
-
-            // receive a message from the client
-            socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: IPlayMusicQuery  }) => {
-                //slk.Log(data);
-                if (data) {
-                    Client = {
-                        ConnectionStartTime: data?.send_datetime ?? new Date(),
-                        Type: data?.client_type ?? 'NotDetected',
-                        TestMp3path: data?.query?.test_mp3_path ?? '',
-                    }
-                    console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
-                    GStatusSimType = data.query.GStatusSimType ?? "";
-                }
-            });
-
-            socket.on("C2S_play", (data) => {
-                socket.emit("S2C_play_OK", null);
-            });
-            socket.on("C2S_stop", (data) => {
-                socket.emit("S2C_stop_OK", null);
-            });
-
-            socket.on("C2S_request_musiclist", (data) => {
-                let list_arg: string = data.dir;
-                console.log(`C2S_request_musiclist :: ${data.addr} :: ${list_arg}`);
-
-                if (Object.keys(FSearch).indexOf(data.addr) == -1)
-                    if (Client.TestMp3path) {
-                        FSearch[data.addr] = new FileListSearch(Client.TestMp3path);
-                } else {
-                        FSearch[data.addr] = new FileListSearch(AppConf().saveDir0);
-                }
-                if (list_arg) FSearch[data.addr].GetInfo(list_arg);
-
-                // Send FileList
-                socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch[data.addr].GetList() });
-            });
+			// receive a message from the client
+			socket.on("hello from client", (data: { send_datetime: Date; client_type: TClient; query: IPlayMusicQuery  }) => {
+				//slk.Log(data);
+				if (data) {
+					Client = {
+						ConnectionStartTime: data?.send_datetime ?? new Date(),
+						Type: data?.client_type ?? 'NotDetected',
+						TestMp3path: data?.query?.test_mp3_path ?? '',
+					}
+					console.log(`hello from client :: ${Client.ConnectionStartTime} / TYPE :: ${Client.Type} `);
+					GStatusSimType = data.query.GStatusSimType ?? "";
+					Object.keys(this.GetGHomes()).map(gh => this.GetGHomes()[gh].g.AddUpdateList(socket));
+				}
+			});
 
 
-            socket.on("error", (err) => {
-                console.log(err);
-            });
+			socket.on("C2S_play", (data) => {
+				socket.emit("S2C_play_OK", null);
+			});
+			socket.on("C2S_stop", (data) => {
+				socket.emit("S2C_stop_OK", null);
+			});
 
-            socket.on("connect_error", (err) => {
-                console.log(err);
-            });
+			socket.on("C2S_request_musiclist", (data) => {
+				let list_arg: string = data.dir;
+				console.log(`C2S_request_musiclist :: ${data.addr} :: ${list_arg}`);
 
-            socket.on("disconnect", (data) => {
-                //clearTimeout(t);
-            });
+				if (Object.keys(FSearch).indexOf(data.addr) == -1)
+				if (Client.TestMp3path) {
+					FSearch[data.addr] = new FileListSearch(Client.TestMp3path);
+				} else {
+					FSearch[data.addr] = new FileListSearch(AppConf().saveDir0);
+				}
+				if (list_arg) FSearch[data.addr].GetInfo(list_arg);
 
-           
+				// Send FileList
+				socket.emit("S2C_reply_musiclist", { ack: data, data: FSearch[data.addr].GetList() });
+			});
 
-        });
-        this.Io.listen(this.SocketIoPort);
-    }
+			socket.on("error", (err) => {
+				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
+				console.log(err);
+			});
+
+			socket.on("connect_error", (err) => {
+				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
+				console.log(err);
+			});
+
+			socket.on("disconnect", (data) => {
+				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
+				//console.log(Object.keys(this.ConnectedSocketsList).map(f => parseInt(f)));
+			});
+		});
+		this.Io.listen(this.SocketIoPort);
+	}
 }
 
 export class GHomeMonitor {
-    GHomes: {
-        [Key: string]: {
-            g: GoogleHomeController;
-            lastUpdated: Date;
-        }
-    };
+	GHomes: IGHomes;
 
     private SocketIoPort: number = 3000;
     private ConnectionManager: SocketIoConnectionManager;
-    private MonitoringLoopInt: NodeJS.Timeout | null = null;
+	private MonitoringLoopInt: NodeJS.Timeout | null = null;
+	private GetGHomes(): IGHomes { return this.GHomes; }
 
     constructor(socket_io_port: number) {
         GoogleHomeController.init();
@@ -138,14 +149,13 @@ export class GHomeMonitor {
         }, 999);
     }
 
-    public StartIOMonitor() {
-        this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a ?: string) => this.GetStatusAll(a));
+	public StartIOMonitor() {
+		this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?: string) => this.GetStatusAll(a), () => this.GetGHomes());
     }
 
     public End() {
         GoogleHomeController.stopSeekGoogleLoop();
         if (this.MonitoringLoopInt) clearInterval(this.MonitoringLoopInt);
-        //this.ConnectionManager
     }
 
     public GetGhObjByName(name: string): {g: GoogleHomeController; lastUpdated: Date;} | null {

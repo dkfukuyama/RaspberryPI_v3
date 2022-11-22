@@ -1,6 +1,7 @@
 import path = require('path');
 import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
 import { IAppFunctionArgs } from './AppFunctions';
+import { Socket } from 'socket.io';
 
 export interface IGoogleHomeSeekResults {
     address: string;
@@ -83,6 +84,7 @@ export class GoogleHomeController {
     public Status: any;
     public PlayerStatus: any;
 
+	public UpdateSocketList: { [i: string]: Socket } = {};
 
     static InitializedFlag: boolean = false;
 
@@ -163,20 +165,27 @@ export class GoogleHomeController {
 	private static readonly effectsPresetReplaceString: string = "0_A_0";
 
 	private static readonly effectsPreset: { [key: string]: { Name: string, Command: string }; } = {
+		"none": {
+			Name: "なし",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} echos 0.8 0.7 40.0 0.25 63.0 0.3`,
+		},
 		"chorus01": {
 			Name: "コーラス",
-			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 1 1 100.0 1 5 5.0 -s`,
+			Command: `${GoogleHomeController.effectsPresetReplaceString} echos 0.8 0.7 40.0 0.25 63.0 0.3`,
 		},
 		"chorus02": {
 			Name: "やまびこ",
 			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s`,
 		},
+		"robot": {
+			Name: "ロボット",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 1 1 100.0 1 5 5.0 -s`,
+		},
 		"reverb01": {
-			Name: "リバーブ",
-			Command: `${GoogleHomeController.effectsPresetReplaceString} reverb`,
+			Name: "はんきょう",
+			Command: `${GoogleHomeController.effectsPresetReplaceString} reverb 50 50 100`,
 		}
     };
-	
 
 	private static readonly contentTypes = {
 		'.wav': 'audio/wav',
@@ -346,7 +355,7 @@ export class GoogleHomeController {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
 				player.queueLoad(items, { autoplay: true, repeatMode: playOption.RepeatMode }, (err, status) => { });
 			});
-        });
+		});
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
@@ -359,8 +368,19 @@ export class GoogleHomeController {
 
     }
 
-    private Media_onStatus(status) {
-        this.PlayerStatus = status;
+	public AddUpdateList(socket: Socket) {
+		this.UpdateSocketList[socket.id] = socket;
+	}
+
+	private UpdateClientSocket(): void {
+		for (let i: number = 0; i < Object.keys(this.UpdateSocketList).length; i++) {
+
+		}
+	}
+
+	private Media_onStatus(status) {
+		this.PlayerStatus = status;
+		this.UpdateClientSocket();
     };
 
     private InitMediaPlayer(): void {
@@ -388,8 +408,9 @@ export class GoogleHomeController {
 		this.Connect();
 	}
 
-    private onStatus(status) {
-        this.Status = status;
+	private onStatus(status) {
+		this.Status = status;
+		// 
 
         let app = (status.applications || []);
         if (app.length > 0) {
@@ -441,7 +462,7 @@ export class GoogleHomeController {
             this.PfSender.close();
             this.EndJoin();
         } catch (err) {
-            console.error("catch ERROR --- GoogleHomeController.ts  LINE 322");
+            console.error(`catch ERROR --- GoogleHomeController.ts  LINE ${465}`);
             console.error(err);
         }
     }
