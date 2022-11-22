@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /node_express/mochawesome-report
 /node_express/report.html
+
+express_key/*

@@ -9,7 +9,17 @@ import express from 'express';
 const favicon = require('express-favicon');
 const bodyParser = require('body-parser');
 
-export const App: express.Express = express();
+const App: express.Express = express();
+
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
+const options = {
+	key: fs.readFileSync('../express_key/ca.key'),
+	cert: fs.readFileSync('../express_key/ca.crt')
+};
+export const HttpsServer = https.createServer(options, App);
+export const HttpServer = http.createServer(App);
 
 App.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 App.use(bodyParser.urlencoded({

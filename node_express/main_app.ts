@@ -1,4 +1,4 @@
-﻿require('dotenv').config({ path: '.env' });
+require('dotenv').config({ path: '.env' });
 import path = require('path');
 
 const exec = require('child_process').exec;
@@ -11,7 +11,7 @@ import { delay_ms } from '@/UtilFunctions';
 import * as NodeMailerWrapper from '@/NodeMailerWrapper';
 
 import { AppConf, slk } from '@/AppConf';
-import { App } from '@/GlobalObj';
+import { HttpServer, HttpsServer } from '@/GlobalObj';
 import { Monitor } from '@/AppFunctions';
 
 
@@ -97,26 +97,24 @@ async function main0() {
         voiceSubDir: AppConf().voiceSubDir
     });
 
-
-    App.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
+	HttpsServer.listen(443);
+	HttpServer.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
     Monitor.Start();
 }
 
 async function main_wrap() {
     const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);;
 
-    //for (; ;) {
-    mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])
-        .then(res => { console.log("SEND MAIL OK"); console.log(res); })
-        .catch(err => console.error(err));
- 
-        await main0().then(() => {
-            slk.Err("Enter into the Main->then routine");
-        }).catch(err => {
-            slk.Err("Enter into the Main->catch routine");
-            slk.Err(err);
-        });
-    //}
+	mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])
+		.then(res => { console.log("SEND MAIL OK"); console.log(res); })
+		.catch(err => console.error(err));
+
+	await main0().then(() => {
+        slk.Err("Enter into the Main->then routine");
+    }).catch(err => {
+        slk.Err("Enter into the Main->catch routine");
+        slk.Err(err);
+    });
 }
 main_wrap();
 
