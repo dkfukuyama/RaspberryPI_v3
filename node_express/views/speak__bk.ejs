@@ -7,17 +7,22 @@
     <BR>
 
 
+	<!--
     <% let cx = prevPostData?.voice_type ?? 0 %>
     <% let special = page?.specialParams ?? 0 %>
-    こえのしゅるい
-    <select name="example">
-	<% const vt = special.voiceTypes %>
-	<% const vlen = vt.length %>
-	<% for(let i=0; i<vlen; i++){ %>
-		<option value="<%- vt[i].languageCode %>"><%- vt[i].show_name %></option>
-	<%} %>
-	</div>
-    </select>
+    <div class="container bg-light border border-primary">
+        こえのしゅるい
+        <% const vt = special.voiceTypes %>
+        <% const vlen = vt.length %>
+        <% for(let i=0; i<vlen; i++){ %>
+            <%- i%4==0 ? '<div class="row">' : '' %>
+            <div class="col">
+            <input type="radio" name="voice_type" id="rb1" value="<%= i %>" <%- cx==i?'checked':'' %>><%- vt[i].show_name %></input>
+            </div>
+            <%- i%4==3 ? '</div>' : '' %>
+        <%} %>
+        </div>
+    </div>
 
     <div class="container bg-light border border-primary mt-2">
     <% let sp = prevPostData?.speed ?? 1 %>
