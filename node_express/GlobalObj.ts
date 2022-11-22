@@ -158,7 +158,7 @@ App.get("*.wav|*.mp3", function (req: express.Request, res: express.Response, ne
 	const p = path.join(AppConf().saveDir0, decodeURI(req.path));
 	const query: IQuery = (req as ExRequest).query;
 
-	if (!query.sox) {
+	if (!GoogleHomeController.SoxCommandAvailable(query.sox)) {
 		res.sendFile(p, (err) => {
 			if (err) {
 				next(err);
