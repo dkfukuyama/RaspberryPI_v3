@@ -222,6 +222,7 @@ class GoogleHomeHtmlContainer {
 			document.getElementById(this.container).appendChild(elem);
 			elem1 = document.getElementById(addr);
 
+			//alert();
 			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });
 
 			["pitch", "tempo"].forEach(t => {
