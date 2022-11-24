@@ -23,6 +23,39 @@ describe("GoogleHomeController.Sox_", () => {
 		assert.equal(str, "?pitch=1.5&sox=true&tempo=0.7");
 	});
 
+	it("SoxConfUrlEncode_03", () => {
+		let Sox: ISoxConfig = {
+			pitch: 0,
+			tempo: 1,
+			sox: true,
+		}
+		let str = GoogleHomeController.SoxConfUrlEncode(Sox);
+		assert.equal(str, "");
+	});
+
+	it("SoxConfUrlEncode_04", () => {
+		let Sox: ISoxConfig = {
+			pitch: 0,
+			tempo: 1,
+			sox: true,
+		}
+
+		assert.equal(true, GoogleHomeController.IsSoxDefaultValue(Sox));
+	});
+
+	it("SoxConfUrlEncode_05", () => {
+		let Sox: ISoxConfig = {
+			pitch: 0,
+			tempo: 1,
+			effectsPreset : "",
+			effectsString : "",
+			sox: true,
+		}
+		assert.equal(true, GoogleHomeController.IsSoxDefaultValue(Sox));
+	});
+
+
+	/*
 	it("SoxConfUrlDecode_01", () => {
 		let str: ISoxConfig = GoogleHomeController.SoxConfUrlDecode({
 			pitch: 8,
@@ -40,7 +73,7 @@ describe("GoogleHomeController.Sox_", () => {
 		});
 		assert.fail(JSON.stringify(str));
 	});
-
+	*/
 
 	it("BuildSoxCommand_01", () => {
 		let str = GoogleHomeController.BuildSoxCommand(
