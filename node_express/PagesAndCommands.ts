@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
+import { GenPlayOptionSelectorHtml, GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
 
@@ -50,6 +50,9 @@ export class PageParameters {
 			title: 'おんがくをかける',
 			view_page: './play_music.ejs',
 			level: 0,
+			specialParams: {
+				PlayOptionSelectorHtml: GenPlayOptionSelectorHtml()
+			}
 		},
 		{
 			path: '/speak',

@@ -20,6 +20,9 @@ declare const location: any;
 
 declare const query: IPlayMusicQuery;
 
+declare const special: any;
+
+
 interface IMusicList {
 	[index: string]: FileListSearchResults;
 }
@@ -64,14 +67,17 @@ socket.on("connect_error", (err) => {
 		socket.connect();
 	}, 1000);
 });
-
+//alert(JSON.stringify(special));
 function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
 	let return_value: IPlayOption = {
 		RepeatMode: "REPEAT_ALL",
+		PlayOrder: "CLEAR_OTHERS",
 	};
 	switch (Str["playConf"]) {
 		case "immediately":
 			return_value.RepeatMode = "REPEAT_OFF";
+		case "addToList":
+			return_value.RepeatMode = "REPEAT_SINGLE";
 		break;
 	}
 	return return_value;
