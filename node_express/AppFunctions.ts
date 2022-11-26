@@ -93,7 +93,39 @@ export const AppFunctions: IAppFunctions = {
                 CommandTerminationType: 'OK',
             });
         });
-    },
+	},
+	'rec': async (params: IAppFunctionData) => {
+		return new Promise(async (resolve, reject) => {
+			// temporary
+			const OutFileName = "a.wav";
+			const RecCommand = 'arecord -D "plughw:CARD=Device,DEV=0" [filename] -d20 -f cd';
+			let p = RecCommand.replace("[filename]", OutFileName);
+			await new Promise((resolve0, reject0) => {
+				exec(p, { shell: true }, (err, stdout, stderr) => {
+					if (err) {
+						reject0(err);
+					} else {
+						console.log(`stdout: ${stdout}`)
+						resolve0(stdout.split("\n"));
+					}
+				});
+			}).then(k => {
+				resolve({
+					Args: params,
+					Obj: {
+						message: k, OutFileName: OutFileName
+					},
+					CommandTerminationType: 'OK',
+				});
+			}).catch(err => {
+				resolve({
+					Args: params,
+					Obj: err,
+					CommandTerminationType: 'ERROR',
+				});
+			});
+		});
+	},
     'system_command': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
             let p = params.command;
