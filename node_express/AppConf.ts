@@ -7,11 +7,15 @@ const httpServerPort_Default = 80;
 const httpsServerPort_Default = 443;
 
 interface IGL {
-    SoxCommandPath?: string;
+	SoxCommandPath?: string;
+	RecCommandLine: string;
+	RecCommandLineReplacer: { outfile: string, length: string }|null;
+
     errorFlag: boolean;
     httpServerPort: number;
 	httpsServerPort: number;
     voiceSubDir: string;
+    recDir: string;
 
     httpDir0: string;
     httpDir_music: string;
@@ -26,11 +30,15 @@ interface IGL {
 }
 
 let GL_VARS: IGL = {
-    errorFlag: false,
+	RecCommandLine: "",
+	RecCommandLineReplacer: null,
+
+	errorFlag: false,
     httpServerPort: httpServerPort_Default,
 	httpsServerPort: httpsServerPort_Default,
 
 	voiceSubDir: '',
+	recDir: '',
 
 	httpDir0: '',
     httpDir_music: '',
@@ -78,8 +86,15 @@ export function AppConf(): IGL {
 			if (process.env.SAVE_DIR_0_IS_RELPATH) GL_VARS.saveDir0 = path.join(__dirname, GL_VARS.saveDir0);
 
 			GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
+			GL_VARS.recDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
 
 			GL_VARS.SoxCommandPath = process.env.SOX;
+
+			GL_VARS.RecCommandLine = process.env.REC_COMMAND_LINE;
+			GL_VARS.RecCommandLineReplacer = {
+				outfile: process.env.REPLACE_OUTFILE,
+				length: process.env.REPLACE_LENGTH,
+			};
 
             firstTry = false;
         }
@@ -119,4 +134,15 @@ export function getLocalAddress() {
     return ifacesObj;
 };
 
-
+export function GetStandardFileName(ext: ".wav"|".mp3" = ".wav"): string {
+	let dt: any = new Date();
+	let y = dt.getFullYear();
+	let m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	let d = ("00" + dt.getDate()).slice(-2);
+	let h = ("00" + dt.getHours()).slice(-2);
+	let min = ("00" + dt.getMinutes()).slice(-2);
+	let sec = ("00" + dt.getSeconds()).slice(-2);
+	let ms = ("000" + dt.getMilliseconds()).slice(-3);
+	let result = `${y}-${m}-${d}_${h}-${min}-${sec}_${ms}${ext}`;
+	return result;
+}

@@ -1,6 +1,6 @@
 import { Socket, Server } from 'socket.io';
 import express from 'express';
-import { slk } from '@/AppConf';
+import { AppConf, slk } from '@/AppConf';
 
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
@@ -97,9 +97,11 @@ export const AppFunctions: IAppFunctions = {
 	'rec': async (params: IAppFunctionData) => {
 		return new Promise(async (resolve, reject) => {
 			// temporary
-			const OutFileName = "a.wav";
-			const RecCommand = 'arecord -D "plughw:CARD=Device,DEV=0" [filename] -d20 -f cd';
-			let p = RecCommand.replace("[filename]", OutFileName);
+			const RecCommand = AppConf().RecCommandLine;
+			const Replace = AppConf().RecCommandLineReplacer;
+			const OutFile = "";
+			const Length = "";
+			let p = RecCommand.replace(new RegExp(Replace.outfile, "g"), OutFile).replace(new RegExp(Replace.length, "g"), Length);
 			await new Promise((resolve0, reject0) => {
 				exec(p, { shell: true }, (err, stdout, stderr) => {
 					if (err) {
