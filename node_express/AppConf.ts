@@ -92,8 +92,8 @@ export function AppConf(): IGL {
 
 			GL_VARS.RecCommandLine = process.env.REC_COMMAND_LINE;
 			GL_VARS.RecCommandLineReplacer = {
-				outfile: process.env.REPLACE_OUTFILE,
-				length: process.env.REPLACE_LENGTH,
+				outfile: process.env.REC_REPLACE_OUTFILE,
+				length: process.env.REC_REPLACE_LENGTH,
 			};
 
             firstTry = false;
@@ -134,7 +134,14 @@ export function getLocalAddress() {
     return ifacesObj;
 };
 
-export function GetStandardFileName(ext: ".wav"|".mp3" = ".wav"): string {
+export function GetStandardFileName(param:{
+	dir?: string,
+	ext?: ".wav" | ".mp3"
+} | null): string {
+
+	const ext = param?.ext ?? ".wav";
+	const dir = param?.dir ?? "";
+
 	let dt: any = new Date();
 	let y = dt.getFullYear();
 	let m = ("00" + (dt.getMonth() + 1)).slice(-2);
@@ -144,5 +151,5 @@ export function GetStandardFileName(ext: ".wav"|".mp3" = ".wav"): string {
 	let sec = ("00" + dt.getSeconds()).slice(-2);
 	let ms = ("000" + dt.getMilliseconds()).slice(-3);
 	let result = `${y}-${m}-${d}_${h}-${min}-${sec}_${ms}${ext}`;
-	return result;
+	return path.join(dir, result);
 }
