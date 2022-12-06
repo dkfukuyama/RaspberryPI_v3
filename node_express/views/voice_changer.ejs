@@ -36,30 +36,29 @@
 		<% } else g_addr.forEach(e=> {%>
        	<button class="btn btn-primary" type="submit" id="google|<%- e.speakerName %>" value="google|<%- e.speakerName %>" name="submit" onclick=>ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
 		<script>
-			let button = document.getElementById("google|<%- e.speakerName %>");
-			button.onclick=()=>{
+			document.getElementById("google|<%- e.speakerName %>").onclick=()=>{
 				post_command({
 					alert_text : 'ボイスチェンジャー',
 					mode : 'rec_voice',
 					data : {
 						output : 'speaker',
 						SpeakerAddress : '<%- e.speakerAddress %>',
+						length : 5,
 					},
 					short_return : true
 				});
 			};
 		</script>
     <% }) %>
-        <button class="btn btn-secondary" type="submit" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
-
+        <button class="btn btn-secondary" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
 		<script>
-			let button = document.getElementById("otosan");
-			button.onclick=()=>{
+			document.getElementById("otosan").onclick=()=>{
 				post_command({
 					alert_text : 'おとうさんにろくおんしたおんせいをおくります',
 					mode : 'rec_voice',
 					data : {
 						output : 'send_mail',
+						length : 5,
 					},
 					short_return : true
 				});
