@@ -106,6 +106,7 @@
     <Content Include="views\quiz_1.ejs" />
     <Content Include="views\scripts\.editorconfig" />
     <Content Include="views\send_voice.ejs" />
+    <Content Include="views\speak__bk.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
   </ItemGroup>

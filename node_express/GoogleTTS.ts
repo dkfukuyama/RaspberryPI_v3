@@ -8,21 +8,28 @@ export class GoogleTTS {
 	static readonly util = require('util');
 
 	static readonly VoiceType: { languageCode: string, name: string, show_name: string }[] = [
-		{ languageCode: 'ja-JP', 'name': 'ja-JP-Standard-A', show_name: 'にほんご1' },
-		{ languageCode: 'ja-JP', 'name': 'ja-JP-Standard-B', show_name: 'にほんご2' },
-		{ languageCode: 'ja-JP', 'name': 'ja-JP-Standard-C', show_name: 'にほんご3' },
-		{ languageCode: 'ja-JP', 'name': 'ja-JP-Standard-D', show_name: 'にほんご4' },
-		{ languageCode: 'ta-IN', 'name': 'ta-IN-Wavenet-A', show_name: 'タミルご(インド)1' },
-		{ languageCode: 'en-US', 'name': 'en-US-Standard-A', show_name: 'えいご（アメリカ）1' },
-		{ languageCode: 'yue-HK', 'name': 'yue-HK-Standard-A', show_name: 'ちゅうごくご（ほんこん）1' },
-		{ languageCode: 'cs-CZ', 'name': 'cs-CZ-Standard-A', show_name: 'チェコご1' },
-		{ languageCode: 'fr-FR', 'name': 'fr-FR-Standard-A', show_name: 'フランスご1' },
-		{ languageCode: 'ko-KR', 'name': 'ko-KR-Standard-A', show_name: 'かんこくご1' },
+		{ languageCode: 'ja-JP', name: 'ja-JP-Standard-A', show_name: 'にほんご1' },
+		{ languageCode: 'ja-JP', name: 'ja-JP-Standard-B', show_name: 'にほんご2' },
+		{ languageCode: 'ja-JP', name: 'ja-JP-Standard-C', show_name: 'にほんご3' },
+		{ languageCode: 'ja-JP', name: 'ja-JP-Standard-D', show_name: 'にほんご4' },
+		{ languageCode: 'ta-IN', name: 'ta-IN-Wavenet-A', show_name: 'タミルご(インド)1' },
+		{ languageCode: 'en-US', name: 'en-US-Standard-A', show_name: 'えいご（アメリカ）1' },
+		{ languageCode: 'yue-HK', name: 'yue-HK-Standard-A', show_name: 'ちゅうごくご（ほんこん）1' },
+		{ languageCode: 'cs-CZ', name: 'cs-CZ-Standard-A', show_name: 'チェコご1' },
+		{ languageCode: 'fr-FR', name: 'fr-FR-Standard-A', show_name: 'フランスご1' },
+		{ languageCode: 'ko-KR', name: 'ko-KR-Standard-A', show_name: 'かんこくご1' },
+		{ languageCode: 'ar-XA', name: 'ar-XA-Standard-B', show_name: 'アラビア語' },
+		{ languageCode: 'bn-IN', name: 'bn-IN-Wavenet-A', show_name: 'ベンガル語１' },
+		{ languageCode: 'bn-IN', name: 'bn-IN-Wavenet-B', show_name: 'ベンガル語２' },
+		{ languageCode: 'ru-RU', name: 'ru-RU-Standard-D', show_name: 'ロシア語１' },
+		{ languageCode: 'ru-RU', name: 'ru-RU-Standard-E', show_name: 'ロシア語２' },
 	];
 
 	static async GetTtsAudioData(params: {
 		voiceTypeId: number,
 		outfilePath: string,
+		speaking_rate?: number, // 0.25 --- 4.0
+		pitch?: number, // -20.0, 20.0
 		text: string,
 		speakingRate?: number,
 		pitch?: number,

@@ -423,19 +423,19 @@ body {
                     <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
                 </ul>
                 <ul class="mocha-stats">
-                    <li class="passes">passes: <em>14</em></li>
+                    <li class="passes">passes: <em>16</em></li>
                     <li class="pending">pending: <em>0</em></li>
-                    <li class="failures">failures: <em>2</em></li>
-                    <li class="duration">duration: <em>78ms</em></li>
+                    <li class="failures">failures: <em>0</em></li>
+                    <li class="duration">duration: <em>30ms</em></li>
                 </ul>
             </div>
-            <ul id="report"><li class="suite"><h1>date-fns_testcode</h1><ul><li class="test pass fast"><h2>formatted_output_01<span class="duration">3ms</span></h2><pre><code>const DATE_FORMAT = &#x27;yyyy-MM-dd&#x27;;
+            <ul id="report"><li class="suite"><h1>date-fns_testcode</h1><ul><li class="test pass fast"><h2>formatted_output_01<span class="duration">5ms</span></h2><pre><code>const DATE_FORMAT = &#x27;yyyy-MM-dd&#x27;;
 const lastMonth = () =&#x3E; (0, date_fns_1.subMonths)(new Date(), 1);
 const defaultDateStringFrom = () =&#x3E; (0, date_fns_1.format)((0, date_fns_1.startOfMonth)(lastMonth()), DATE_FORMAT);
 const defaultDateStringTo = () =&#x3E; (0, date_fns_1.format)((0, date_fns_1.endOfMonth)(lastMonth()), DATE_FORMAT);
 console.log(defaultDateStringFrom());
-console.log(defaultDateStringTo());</code></pre></li></ul></li><li class="suite"><h1>FileListSearch</h1><ul><li class="test pass fast"><h2>get_path_func<span class="duration">0ms</span></h2><pre><code>console.log(path.basename(&#x22;basename.mp3&#x22;));
-console.log(path.basename(&#x22;aaa/basename.mp3&#x22;));</code></pre></li><li class="test pass fast"><h2>get_path_01<span class="duration">2ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_01&#x22;);
+console.log(defaultDateStringTo());</code></pre></li></ul></li><li class="suite"><h1>FileListSearch</h1><ul><li class="test pass fast"><h2>get_path_func<span class="duration">1ms</span></h2><pre><code>console.log(path.basename(&#x22;basename.mp3&#x22;));
+console.log(path.basename(&#x22;aaa/basename.mp3&#x22;));</code></pre></li><li class="test pass fast"><h2>get_path_01<span class="duration">3ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_01&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch((0, AppConf_1.AppConf)().saveDir0);
 assert.equal(FSearch.GetDirBaseFullPath(), path.resolve(path.join(__dirname, &#x22;../test_mp3&#x22;)));
 const results = FSearch.GetDirNow();
@@ -443,14 +443,14 @@ assert.equal(results.BaseName, &#x27;test_mp3&#x27;);
 assert.equal(results.FullName, FSearch.GetDirBaseFullPath());
 assert.equal(results.Ext, &#x27;&#x27;);
 assert.equal(results.Name, &#x27;test_mp3&#x27;);
-assert.equal(results.Type, &#x27;Directory&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_02<span class="duration">0ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_02&#x22;);
+assert.equal(results.Type, &#x27;Directory&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_02<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_02&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch((0, AppConf_1.AppConf)().saveDir0);
 const results = FSearch.GetInfo(&#x22;file_example_MP3_1.mp3&#x22;);
 assert.equal(results.FullName, path.join(FSearch.GetDirBaseFullPath(), &#x27;file_example_MP3_1.mp3&#x27;));
 assert.equal(results.BaseName, &#x27;file_example_MP3_1.mp3&#x27;);
 assert.equal(results.Ext, &#x27;.mp3&#x27;);
 assert.equal(results.Name, &#x27;file_example_MP3_1&#x27;);
-assert.equal(results.Type, &#x27;File&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_05<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_05&#x22;);
+assert.equal(results.Type, &#x27;File&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_05<span class="duration">2ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_05&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
 assert.equal(FSearch.GetDirBaseFullPath(), path.resolve(path.join(__dirname, &#x22;../test_mp3&#x22;)));
 let results = FSearch.GetList();
@@ -469,7 +469,7 @@ assert.equal(results.FileList[0].BaseName, &#x27;1.mp3&#x27;);
 assert.equal(results.FileList[1].BaseName, &#x27;2.mp3&#x27;);
 assert.equal(results.FileList[2].BaseName, &#x27;file_example_MP3_1.mp3&#x27;);
 assert.equal(results.FileList[3].BaseName, &#x27;file_example_MP3_2.mp3&#x27;);
-assert.equal(results.DirList.length, 1);</code></pre></li><li class="test pass fast"><h2>get_path_07<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_07&#x22;);
+assert.equal(results.DirList.length, 1);</code></pre></li><li class="test pass fast"><h2>get_path_07<span class="duration">2ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_07&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
 let results;
 FSearch.GetInfo(&#x22;stream&#x22;);
@@ -488,7 +488,7 @@ assert.equal(results.FileList[1].BaseName, &#x27;file_example_MP3_2.mp3&#x27;);
 assert.equal(results.FileList[2].BaseName, &#x27;&#x3042;&#x3044;&#x3046;&#x3048;&#x304A;.mp3&#x27;);
 assert.equal(results.DirList.length, 2);
 assert.equal(results.DirList[0].BaseName, &#x27;g_dlfile&#x27;);
-assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_07_2<span class="duration">1ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_07_2&#x22;);
+assert.equal(results.DirList[1].BaseName, &#x27;stream&#x27;);</code></pre></li><li class="test pass fast"><h2>get_path_07_2<span class="duration">2ms</span></h2><pre><code>console.debug(&#x22;--------------------- get_path_07_2&#x22;);
 let FSearch = new FileListSearch_1.FileListSearch(&#x27;test_mp3&#x27;);
 let results;
 FSearch.GetInfo(&#x22;stream&#x22;);
@@ -513,39 +513,36 @@ let results;
 FSearch.GetInfo(&#x22;stream&#x22;);
 results = FSearch.GetList();
 assert.equal(results.FileList[3].Url, &#x27;stream/file_example_MP3_2.mp3&#x27;);
-assert.equal(results.DirList.length, 1);</code></pre></li></ul></li><li class="suite"><h1>GoogleTTS</h1><ul><li class="test pass fast"><h2>get_file_01<span class="duration">1ms</span></h2><pre><code>const output_dir = path.join(__dirname, &#x22;TEST_RESULTS&#x22;);
-GoogleTTS_1.GoogleTTS.GetTtsAudioData({
-    outfilePath: path.join(output_dir, &#x27;get_file_01.mp3&#x27;),
-    text: &#x27;&#x30C6;&#x30B9;&#x30C8;&#x30C7;&#x30FC;&#x30BF;&#x3060;&#x3088;&#x27;,
-    speakingRate: 1,
-    pitch: 0,
-    voiceTypeId: 0,
-});</code></pre></li></ul></li><li class="suite"><h1>GoogleHomeController.Sox_</h1><ul><li class="test pass fast"><h2>SoxConfUrlEncode_01<span class="duration">0ms</span></h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlEncode({
+assert.equal(results.DirList.length, 1);</code></pre></li></ul></li><li class="suite"><h1>GoogleHomeController.Sox_</h1><ul><li class="test pass fast"><h2>SoxConfUrlEncode_01<span class="duration">1ms</span></h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlEncode({
     pitch: 8,
     tempo: 1.8
 });
-assert.equal(str, &#x22;?pitch=8&#x26;sox=true&#x26;tempo=1.8&#x22;);</code></pre></li><li class="test pass fast"><h2>SoxConfUrlEncode_02<span class="duration">0ms</span></h2><pre><code>let Sox = {
+assert.equal(str, &#x22;?pitch=8&#x26;sox=true&#x26;tempo=1.8&#x22;);</code></pre></li><li class="test pass fast"><h2>SoxConfUrlEncode_02<span class="duration">1ms</span></h2><pre><code>let Sox = {
     pitch: 1.5,
     tempo: 0.7,
     sox: true,
 };
 let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlEncode(Sox);
-assert.equal(str, &#x22;?pitch=1.5&#x26;sox=true&#x26;tempo=0.7&#x22;);</code></pre></li><li class="test fail"><h2>SoxConfUrlDecode_01</h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlDecode({
-    pitch: 8,
-    tempo: 1.8,
-    po: 23,
-    e: 3,
-});
-assert.fail(JSON.stringify(str));</code></pre><pre class="error">AssertionError [ERR_ASSERTION]: {&#x22;sox&#x22;:true,&#x22;pitch&#x22;:8,&#x22;tempo&#x22;:1.8,&#x22;effectsPreset&#x22;:&#x22;&#x22;,&#x22;effectsString&#x22;:&#x22;&#x22;}
-    at Context.&#x3C;anonymous&#x3E; (UnitTest\test_Others.ts:33:10)
-    at processImmediate (node:internal/timers:471:21)</pre></li><li class="test fail"><h2>SoxConfUrlDecode_02</h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlDecode({
-    po: 23,
-    e: 3,
-});
-assert.fail(JSON.stringify(str));</code></pre><pre class="error">AssertionError [ERR_ASSERTION]: {&#x22;sox&#x22;:true,&#x22;pitch&#x22;:0,&#x22;tempo&#x22;:1,&#x22;effectsPreset&#x22;:&#x22;&#x22;,&#x22;effectsString&#x22;:&#x22;&#x22;}
-    at Context.&#x3C;anonymous&#x3E; (UnitTest\test_Others.ts:41:10)
-    at processImmediate (node:internal/timers:471:21)</pre></li><li class="test pass fast"><h2>BuildSoxCommand_01<span class="duration">0ms</span></h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.BuildSoxCommand(&#x22;path.mp3&#x22;, { pitch: 300, tempo: 0.5 });
-assert.equal(str, &#x60;sox &#x22;path.mp3&#x22; -t wav - pitch 300 tempo 0.5&#x60;);</code></pre></li></ul></li><li class="suite"><h1>variables</h1><ul><li class="test pass fast"><h2>globalVars_01<span class="duration">0ms</span></h2><pre><code>console.log({ TEST_MODE: process.env.TEST_MODE });
+assert.equal(str, &#x22;?pitch=1.5&#x26;sox=true&#x26;tempo=0.7&#x22;);</code></pre></li><li class="test pass fast"><h2>SoxConfUrlEncode_03<span class="duration">1ms</span></h2><pre><code>let Sox = {
+    pitch: 0,
+    tempo: 1,
+    sox: true,
+};
+let str = GoogleHomeController_1.GoogleHomeController.SoxConfUrlEncode(Sox);
+assert.equal(str, &#x22;&#x22;);</code></pre></li><li class="test pass fast"><h2>SoxConfUrlEncode_04<span class="duration">1ms</span></h2><pre><code>let Sox = {
+    pitch: 0,
+    tempo: 1,
+    sox: true,
+};
+assert.equal(true, GoogleHomeController_1.GoogleHomeController.IsSoxDefaultValue(Sox));</code></pre></li><li class="test pass fast"><h2>SoxConfUrlEncode_05<span class="duration">0ms</span></h2><pre><code>let Sox = {
+    pitch: 0,
+    tempo: 1,
+    effectsPreset: &#x22;&#x22;,
+    effectsString: &#x22;&#x22;,
+    sox: true,
+};
+assert.equal(true, GoogleHomeController_1.GoogleHomeController.IsSoxDefaultValue(Sox));</code></pre></li><li class="test pass fast"><h2>BuildSoxCommand_01<span class="duration">0ms</span></h2><pre><code>let str = GoogleHomeController_1.GoogleHomeController.BuildSoxCommand(&#x22;path.mp3&#x22;, { pitch: 300, tempo: 0.5 });
+assert.equal(str, &#x60;sox &#x22;path.mp3&#x22; -t wav - pitch 300 tempo 0.5&#x60;);</code></pre></li></ul></li><li class="suite"><h1>variables</h1><ul><li class="test pass fast"><h2>globalVars_01<span class="duration">1ms</span></h2><pre><code>console.log({ TEST_MODE: process.env.TEST_MODE });
 assert.equal(false, (0, AppConf_1.AppConf)().errorFlag);
 assert.equal(&#x27;192.168.100.100:9000&#x27;, (0, AppConf_1.AppConf)().httpDir0);
 assert.equal(9000, (0, AppConf_1.AppConf)().httpServerPort);

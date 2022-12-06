@@ -4,16 +4,22 @@ export const slk = new Slack(process.env.SLACK_WEBHOOK);
 
 
 const httpServerPort_Default = 80;
+const httpsServerPort_Default = 443;
 
 interface IGL {
     SoxCommandPath?: string;
     errorFlag: boolean;
     httpServerPort: number;
+	httpsServerPort: number;
     voiceSubDir: string;
 
     httpDir0: string;
     httpDir_music: string;
     httpDir: string;
+
+	httpsDir0: string;
+	httpsDir_music: string;
+	httpsDir: string;
 
     saveDir0: string;
     saveDir: string;
@@ -22,10 +28,18 @@ interface IGL {
 let GL_VARS: IGL = {
     errorFlag: false,
     httpServerPort: httpServerPort_Default,
-    voiceSubDir: '',
-    httpDir0: '',
+	httpsServerPort: httpsServerPort_Default,
+
+	voiceSubDir: '',
+
+	httpDir0: '',
     httpDir_music: '',
     httpDir: '',
+
+	httpsDir0: '',
+	httpsDir_music: '',
+	httpsDir: '',
+
     saveDir0: '',
     saveDir: '',
 };
@@ -38,40 +52,31 @@ export function AppConf(): IGL {
 			console.log("LOAD VAL");
 			GL_VARS.errorFlag = true;
 			GL_VARS.httpServerPort = (parseInt(process.env.HTTP_SERVER_PORT) || GL_VARS.httpServerPort);
+			GL_VARS.httpsServerPort = (parseInt(process.env.HTTPS_SERVER_PORT) || GL_VARS.httpsServerPort);
 			GL_VARS.voiceSubDir = (process.env.VOICE_SUBDIR ?? 'g_dlfile');
 
 			console.log({ TEST_MODE : process.env.TEST_IPV4 });
 			if (process.env.TEST_IPV4) {
 				GL_VARS.httpDir0 = `${process.env.TEST_IPV4}`;
+				GL_VARS.httpsDir0 = `${process.env.TEST_IPV4}`;
 			} else {
 				const ipv4 = getLocalAddress().ipv4;
 				if (!ipv4.length) throw new Error('Http Addr cannot be detected');
 				GL_VARS.httpDir0 = `${ipv4[0].address}`;
+				GL_VARS.httpsDir0 = `${ipv4[0].address}`;
 			}
 			if (GL_VARS.httpServerPort != httpServerPort_Default) GL_VARS.httpDir0 += `:${GL_VARS.httpServerPort}`;
+			if (GL_VARS.httpsServerPort != httpsServerPort_Default) GL_VARS.httpsDir0 += `:${GL_VARS.httpsServerPort}`;
 
 			GL_VARS.httpDir_music = "http://" + GL_VARS.httpDir0;
 			GL_VARS.httpDir = "http://" + path.posix.join(GL_VARS.httpDir0, GL_VARS.voiceSubDir);
+
+			GL_VARS.httpsDir_music = "http://" + GL_VARS.httpsDir0;
+			GL_VARS.httpsDir = "http://" + path.posix.join(GL_VARS.httpsDir0, GL_VARS.voiceSubDir);
+
 			GL_VARS.saveDir0 = process.env.SAVE_DIR_0;
 			if (process.env.SAVE_DIR_0_IS_RELPATH) GL_VARS.saveDir0 = path.join(__dirname, GL_VARS.saveDir0);
 
-			/*
-            switch (process.env.COMPUTERNAME) {
-                case 'FUKU333_DESKTOP':
-                case 'FUKU333-PC':
-                    GL_VARS.saveDir0 = "\\\\LANDISK-201129\\disk1\\RaspberryPI_FILES\\Accessible_From_Raspberrypi";
-                    break;
-                case 'FUKUYAMA':
-                    GL_VARS.saveDir0 = path.join(__dirname, "test_mp3");
-                    break;
-                case 'PI_ZERO_01':
-                case 'PI_2B_01':
-                default:
-                    GL_VARS.saveDir0 = "/mnt/nas_music";
-                    break;
-            }
-			*/
-			
 			GL_VARS.saveDir = path.join(GL_VARS.saveDir0, GL_VARS.voiceSubDir);
 
 			GL_VARS.SoxCommandPath = process.env.SOX;

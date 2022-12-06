@@ -209,8 +209,8 @@ export class GoogleHomeController {
 			sox: true,
 			pitch: 0,
 			tempo: 1,
-			effectsPreset: "",
-			effectsString: "",
+			effectsPreset: '',
+			effectsString: '',
 		}
 	}
 
@@ -226,8 +226,10 @@ export class GoogleHomeController {
 
 	static IsSoxDefaultValue(sox: ISoxConfig): boolean {
 		var sox_ini = GoogleHomeController.SoxConfInitial();
+		if (sox.effectsPreset = 'none') delete sox.effectsPreset;
 		const keys = Object.keys(sox_ini);
-		for (let k in keys) {
+		for (let i = 0; i < keys.length; i++) {
+			const k = keys[i];
 			if (k == 'sox') continue;
 			if (sox_ini[k] != (sox[k] ?? "")){
 				return false;
