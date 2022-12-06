@@ -156,21 +156,6 @@ function MusicSelectButtonClick(arg) {
 	xmlHttpRequest.send(JSON.stringify(send));
 }
 
-/*
-function EncodeHTMLForm(data) {
-	var params = [];
-
-	for (var name in data) {
-		var value = data[name];
-		var param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
-
-		params.push(param);
-	}
-
-	return params.join('&').replace(/%20/g, '+');
-}
-*/
-
 function DirSelectButtonClick(arg) {
 	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
 }
@@ -203,7 +188,8 @@ class GoogleHomeHtmlContainer {
 			xhr.send();
 			xhr.onload = ()=> {
 				this.load_html = xhr.response;
-				resolve(this.load_html)
+				this.load_html = this.load_html.replace(new RegExp('<!--特殊効果-->', 'g'), special.HtmlSoxEffectsPreset);
+				resolve(this.load_html);
 			};
 		});
     }

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { GenPlayOptionSelectorHtml, GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
+import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
 
@@ -51,8 +51,16 @@ export class PageParameters {
 			view_page: './play_music.ejs',
 			level: 0,
 			specialParams: {
-				PlayOptionSelectorHtml: GenPlayOptionSelectorHtml()
+				GenHtmlRepeatModeFunc: PlayOptionSelector.GenHtmlRepeatMode,
+				GenHtmlPlayOrderFunc: PlayOptionSelector.GenHtmlPlayOrder,
+				HtmlSoxEffectsPreset: PlayOptionSelector.GenHtmlSoxEffectsPreset('effects'),
 			}
+		},
+		{
+			path: '/voice_changer',
+			title: 'ボイスチェンジャー',
+			view_page: './voice_changer.ejs',
+			level: 0,
 		},
 		{
 			path: '/speak',

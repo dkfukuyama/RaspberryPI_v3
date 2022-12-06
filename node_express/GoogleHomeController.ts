@@ -35,11 +35,11 @@ interface Imedia2 {
 }
 
 type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
-type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST" | "ADD_FIRST";
+type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
 
 export interface IPlayOption {
-	RepeatMode: ERepeatMode;
-	PlayOrder: EPlayOrder;
+	RepeatMode?: ERepeatMode;
+	PlayOrder?: EPlayOrder;
 };
 
 export interface IPlayOptionSelectorHtml {
@@ -56,7 +56,7 @@ export interface IPlayOptionSelectorHtml {
 	SoxEffectsPreset:
 	{
 		value: string;
-		show_name: string;
+		ShowName: string;
 		command: string;
 		command_replace?: string;
 	}[];
@@ -78,13 +78,13 @@ export class PlayOptionSelector {
 			{ Order: 'ADD_LAST', ShowName: '最後に追加', },
 		],
 		SoxEffectsPreset: [
-			{ value: "none", show_name: "なし", command: "" },
-			{ value: "yamabiko", show_name: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
-			{ value: "reverb", show_name: "リバーブ", command: "reverb" },
-			{ value: "kimoi", show_name: "ロボット", command: " echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
+			{ value: "none", ShowName: "なし", command: "" },
+			{ value: "yamabiko", ShowName: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
+			{ value: "reverb", ShowName: "リバーブ", command: "reverb" },
+			{ value: "kimoi", ShowName: "ロボット", command: " echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
 			{
 				value: "kimoi",
-				show_name: "きもい",
+				ShowName: "きもい",
 				command: ` sox -m -t sox "|sox REPLACE -p pitch -190 echo 0.8 0.9 50 0.5" -t sox "|sox REPLACE -p pitch 270 echo 0.8 0.9 60 0.8`,
 				command_replace: "REPLACE",
 			}
@@ -100,12 +100,17 @@ export class PlayOptionSelector {
 		return return_value;
 	}
 	public static GenHtmlPlayOrder(className: string): string {
-
+		return '';
 	}
 	public static GenHtmlSoxEffectsPreset(className: string): string {
-
+		let return_value: string = `<label for="${className}">特殊効果</label><select class="${className}">`;
+		const s = PlayOptionSelector.Parameters.SoxEffectsPreset;
+		for (let i: number = 0; i < s.length; i++) {
+			return_value += `<option value="${s[i].value}">${s[i].ShowName}</option>`
+		}
+		return_value += "</select>";
+		return return_value;
 	}
-
 }
 
 export interface ISoxConfig {
