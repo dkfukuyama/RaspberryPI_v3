@@ -11,7 +11,3 @@ export function getRandomInt(max) {
 export function clearEventEmitter(emitter){
     emitter?.removeAllListeners(emitter.eventNames());
 }
-
-
-
-

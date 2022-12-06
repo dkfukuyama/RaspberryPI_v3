@@ -97,6 +97,7 @@
     <Content Include="views\index.ejs" />
     <Content Include="views\item.ejs" />
     <Content Include="views\menu.ejs" />
+    <Content Include="views\voice_changer.ejs" />
     <Content Include="views\music.ejs" />
     <Content Include="views\parts\SpeakerStatus.html" />
     <Content Include="views\play_music.ejs" />

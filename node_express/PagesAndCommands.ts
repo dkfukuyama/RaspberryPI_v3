@@ -55,6 +55,12 @@ export class PageParameters {
 			}
 		},
 		{
+			path: '/voice_changer',
+			title: 'ボイスチェンジャー',
+			view_page: './voice_changer.ejs',
+			level: 0,
+		},
+		{
 			path: '/speak',
 			title: 'しゃべらせたいとき',
 			view_page: './speak.ejs',
