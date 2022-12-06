@@ -1,6 +1,7 @@
 import { Socket, Server } from 'socket.io';
 import express from 'express';
-import { AppConf, slk } from '@/AppConf';
+import { AppConf, GetStandardFileName, slk } from '@/AppConf';
+import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
@@ -92,16 +93,17 @@ export const AppFunctions: IAppFunctions = {
                 Args: params,
                 CommandTerminationType: 'OK',
             });
-        });
+		});
 	},
-	'rec': async (params: IAppFunctionData) => {
+	'rec_voice': async (params: IAppFunctionData) => {
 		return new Promise(async (resolve, reject) => {
-			// temporary
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
-			const OutFile = "";
-			const Length = "";
-			let p = RecCommand.replace(new RegExp(Replace.outfile, "g"), OutFile).replace(new RegExp(Replace.length, "g"), Length);
+			const OutFile = GetStandardFileName({ dir: AppConf().recDir, ext: ".wav" });
+			const Length = params.data.length;
+			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFile).replace(new RegExp(Replace.length), Length);
+			console.log('rec_voice');
+			console.log(p);
 			await new Promise((resolve0, reject0) => {
 				exec(p, { shell: true }, (err, stdout, stderr) => {
 					if (err) {
@@ -112,10 +114,18 @@ export const AppFunctions: IAppFunctions = {
 					}
 				});
 			}).then(k => {
+				let g = Monitor.GetGhObjByAddress(params.data.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList([OutFile], null, { RepeatMode: 'REPEAT_OFF' });
+				} else {
+					throw new Error(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+				}
+				return k;
+			}).then(k => {
 				resolve({
 					Args: params,
 					Obj: {
-						message: k, OutFileName: OutFileName
+						message: k, OutFileName: OutFile
 					},
 					CommandTerminationType: 'OK',
 				});
