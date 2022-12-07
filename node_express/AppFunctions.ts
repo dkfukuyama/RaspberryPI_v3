@@ -96,13 +96,15 @@ export const AppFunctions: IAppFunctions = {
 		});
 	},
 	'rec_voice': async (params: IAppFunctionData) => {
+		console.log('rec_voice');
 		return new Promise(async (resolve, reject) => {
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
 			const OutFile = GetStandardFileName({ dir: AppConf().recDir, ext: ".wav" });
-			const Length = params.data.length;
+			//const Length = params.data.length;
+			const Length = '5';
 			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFile).replace(new RegExp(Replace.length), Length);
-
+			console.log(p);
 			await new Promise((resolve0, reject0) => {
 				exec(p, { shell: true }, (err, stdout, stderr) => {
 					if (err) {

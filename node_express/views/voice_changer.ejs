@@ -43,13 +43,14 @@
 					data : {
 						output : 'speaker',
 						SpeakerAddress : '<%- e.speakerAddress %>',
+						length : 5,
 					},
 					short_return : true
 				});
 			};
 		</script>
     <% }) %>
-        <button class="btn btn-secondary py-0 my-2 w-100" type="submit" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
+        <button class="btn btn-secondary py-0 my-2 w-100" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
 
 		<script>
 			document.getElementById("otosan").onclick=()=>{
@@ -58,6 +59,7 @@
 					mode : 'rec_voice',
 					data : {
 						output : 'send_mail',
+						length : 5,
 					},
 					short_return : true
 				});
