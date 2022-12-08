@@ -371,6 +371,9 @@ export class GoogleHomeController {
 	public AddUpdateList(socket: Socket) {
 		this.UpdateSocketList[socket.id] = socket;
 	}
+	public RemoveUpdateList(socket: Socket) {
+		delete this.UpdateSocketList[socket.id];
+	}
 
 	public RemoveUpdateList(socket: Socket) {
 		delete this.UpdateSocketList[socket.id];
