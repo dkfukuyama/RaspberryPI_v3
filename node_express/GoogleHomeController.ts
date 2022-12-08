@@ -34,79 +34,71 @@ interface Imedia2 {
     media: Imedia;
 }
 
-type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
-type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
+
+export type EPlayOptionIdName = "RepeatMode" | "PlayOrder" | "SoxEffectsPreset";
+export type EPlayOptionShowName = "くりかえし" | "じゅんばん" | "とくしゅこうか";
+
+export type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
+export type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
 
 export interface IPlayOption {
 	RepeatMode?: ERepeatMode;
 	PlayOrder?: EPlayOrder;
 };
 
-export interface IPlayOptionSelectorHtml {
-	RepeatMode:
-	{
-		Mode: ERepeatMode;
-		ShowName: string;
-	}[];
-	PlayOrder:
-	{
-		Order: EPlayOrder;
-		ShowName: string;
-	}[];
-	SoxEffectsPreset:
-	{
-		value: string;
-		ShowName: string;
-		command: string;
-		command_replace?: string;
-	}[];
+export interface IPlayOptionSelectorHtmlElement {
+	Value: string;
+	ShowName: string;
+	command?: string;
+	command_replace?: string;
 }
+interface IPlayOptionSelectorHtmlElement_X_RE extends IPlayOptionSelectorHtmlElement {
+	Value: ERepeatMode;
+}
+type IPlayOptionSelectorHtml = {
+	[index in EPlayOptionIdName]: IPlayOptionSelectorHtmlElement[];
+};
+
+export interface IPlayOptionSelectorHtmlExt extends IPlayOptionSelectorHtml {
+	'RepeatMode': IPlayOptionSelectorHtmlElement_X_RE[];
+	'PlayOrder': IPlayOptionSelectorHtmlElement[];
+	'SoxEffectsPreset': IPlayOptionSelectorHtmlElement[];
+};
+
 
 export class PlayOptionSelector {
-	public static readonly Parameters: IPlayOptionSelectorHtml = {
-		RepeatMode: [
-			{ Mode: 'REPEAT_ALL', ShowName: '全曲リピート', },
-			{ Mode: 'REPEAT_ALL_AND_SHUFFLE', ShowName: 'ランダムリピート', },
-			{ Mode: 'REPEAT_SINGLE', ShowName: '1曲リピート', },
-			{ Mode: 'REPEAT_OFF', ShowName: 'リピートなし', },
+	public static readonly Parameters: IPlayOptionSelectorHtmlExt = {
+		'RepeatMode': [
+			{ Value: 'REPEAT_OFF', ShowName: 'リピートなし', },
+			{ Value: 'REPEAT_SINGLE', ShowName: '1曲リピート', },
+			{ Value: 'REPEAT_ALL', ShowName: '全曲リピート', },
+			{ Value: 'REPEAT_ALL_AND_SHUFFLE', ShowName: 'ランダムリピート', },
 		],
-		PlayOrder: [
-			{ Order: 'CLEAR_OTHERS', ShowName: 'すぐに再生', },
-			{ Order: 'INTERRUPT', ShowName: '割り込み再生', },
-			{ Order: 'ADD_AFTER_PLAYING', ShowName: 'この後に再生', },
-			{ Order: 'ADD_FIRST', ShowName: '最初に追加', },
-			{ Order: 'ADD_LAST', ShowName: '最後に追加', },
+		'PlayOrder': [
+			{ Value: 'CLEAR_OTHERS', ShowName: 'すぐに再生', },
+			{ Value: 'INTERRUPT', ShowName: '割り込み再生', },
+			{ Value: 'ADD_AFTER_PLAYING', ShowName: 'この後に再生', },
+			{ Value: 'ADD_FIRST', ShowName: '最初に追加', },
+			{ Value: 'ADD_LAST', ShowName: '最後に追加', },
 		],
-		SoxEffectsPreset: [
-			{ value: "none", ShowName: "なし", command: "" },
-			{ value: "yamabiko", ShowName: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
-			{ value: "reverb", ShowName: "リバーブ", command: "reverb" },
-			{ value: "kimoi", ShowName: "ロボット", command: " echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
+		'SoxEffectsPreset': [
+			{ Value: "None", ShowName: "なし", command: "" },
+			{ Value: "Yamabiko", ShowName: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
+			{ Value: "Reverb", ShowName: "リバーブ", command: "reverb" },
+			{ Value: "Robot", ShowName: "ロボット", command: " echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
 			{
-				value: "kimoi",
+				Value: "Kimoi",
 				ShowName: "きもい",
 				command: ` sox -m -t sox "|sox REPLACE -p pitch -190 echo 0.8 0.9 50 0.5" -t sox "|sox REPLACE -p pitch 270 echo 0.8 0.9 60 0.8`,
 				command_replace: "REPLACE",
 			}
-		]
+		],
 	}
-	public static GenHtmlRepeatMode(className: string, title: string): string {
+	public static GenHtml(className: EPlayOptionIdName, title: EPlayOptionShowName): string {
 		let return_value: string = `<label for="${className}">${title}</label><select class="${className}">`;
-		const r = PlayOptionSelector.Parameters.RepeatMode;
+		const r = PlayOptionSelector.Parameters[className];
 		for (let i: number = 0; i < r.length; i++) {
-			return_value += `<option value="${r[i].Mode}">${r[i].ShowName}</option>`
-		}
-		return_value += "</select>";
-		return return_value;
-	}
-	public static GenHtmlPlayOrder(className: string): string {
-		return '';
-	}
-	public static GenHtmlSoxEffectsPreset(className: string): string {
-		let return_value: string = `<label for="${className}">特殊効果</label><select class="${className}">`;
-		const s = PlayOptionSelector.Parameters.SoxEffectsPreset;
-		for (let i: number = 0; i < s.length; i++) {
-			return_value += `<option value="${s[i].value}">${s[i].ShowName}</option>`
+			return_value += `<option value="${r[i].Value}">${r[i].ShowName}</option>`
 		}
 		return_value += "</select>";
 		return return_value;

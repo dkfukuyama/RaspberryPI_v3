@@ -1,6 +1,6 @@
 import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
-import { IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
+import { EPlayOptionIdName, ERepeatMode, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -21,7 +21,6 @@ declare const location: any;
 declare const query: IPlayMusicQuery;
 
 declare const special: any;
-
 
 interface IMusicList {
 	[index: string]: FileListSearchResults;
@@ -67,19 +66,13 @@ socket.on("connect_error", (err) => {
 		socket.connect();
 	}, 1000);
 });
-//alert(JSON.stringify(special));
-function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
+
+function BuildPlayOption(Str: { [Key in EPlayOptionIdName]: string; }): IPlayOption {
 	let return_value: IPlayOption = {
-		RepeatMode: "REPEAT_ALL",
+		RepeatMode: "REPEAT_SINGLE",
 		PlayOrder: "CLEAR_OTHERS",
 	};
-	switch (Str["playConf"]) {
-		case "immediately":
-			return_value.RepeatMode = "REPEAT_OFF";
-		case "addToList":
-			return_value.RepeatMode = "REPEAT_SINGLE";
-		break;
-	}
+	return_value.RepeatMode = Str['RepeatMode'] as ERepeatMode ?? 'REPEAT_OFF';
 	return return_value;
 }
 
@@ -91,7 +84,7 @@ function MusicSelectButtonClick(arg) {
 			[Key: string]: number;
 		}
 		Str: {
-			[Key: string]: string;
+			[Key in EPlayOptionIdName]: string;
 		}
 	} = {
 		Num: {
@@ -99,8 +92,9 @@ function MusicSelectButtonClick(arg) {
 			tempo: 1,
 		},
 		Str: {
-			effects: "",
-			playConf: "",
+			SoxEffectsPreset: '',
+			RepeatMode: '',
+			PlayOrder: '',
 		}
 	}
 	let tx_temp: string = "";
@@ -188,7 +182,9 @@ class GoogleHomeHtmlContainer {
 			xhr.send();
 			xhr.onload = ()=> {
 				this.load_html = xhr.response;
-				this.load_html = this.load_html.replace(new RegExp('<!--特殊効果-->', 'g'), special.HtmlSoxEffectsPreset);
+				this.load_html = this.load_html.replace(new RegExp('<!--とくしゅこうか-->', 'g'), special.HtmlSoxEffectsPreset);
+				this.load_html = this.load_html.replace(new RegExp('<!--くりかえし-->', 'g'), special.HtmlPlayOrder);
+				this.load_html = this.load_html.replace(new RegExp('<!--じゅんばん-->', 'g'), special.HtmlRepeatMode);
 				resolve(this.load_html);
 			};
 		});

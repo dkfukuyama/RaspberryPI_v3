@@ -54,27 +54,6 @@ describe("GoogleHomeController.Sox_", () => {
 		assert.equal(true, GoogleHomeController.IsSoxDefaultValue(Sox));
 	});
 
-
-	/*
-	it("SoxConfUrlDecode_01", () => {
-		let str: ISoxConfig = GoogleHomeController.SoxConfUrlDecode({
-			pitch: 8,
-			tempo: 1.8,
-			po: 23,
-			e: 3,
-		});
-		assert.fail(JSON.stringify(str));
-	});
-
-	it("SoxConfUrlDecode_02", () => {
-		let str: ISoxConfig = GoogleHomeController.SoxConfUrlDecode({
-			po: 23,
-			e: 3,
-		});
-		assert.fail(JSON.stringify(str));
-	});
-	*/
-
 	it("BuildSoxCommand_01", () => {
 		let str = GoogleHomeController.BuildSoxCommand(
 			"path.mp3",

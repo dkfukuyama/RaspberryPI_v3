@@ -51,9 +51,9 @@ export class PageParameters {
 			view_page: './play_music.ejs',
 			level: 0,
 			specialParams: {
-				GenHtmlRepeatModeFunc: PlayOptionSelector.GenHtmlRepeatMode,
-				GenHtmlPlayOrderFunc: PlayOptionSelector.GenHtmlPlayOrder,
-				HtmlSoxEffectsPreset: PlayOptionSelector.GenHtmlSoxEffectsPreset('effects'),
+				HtmlRepeatMode: PlayOptionSelector.GenHtml('RepeatMode', 'くりかえし'),
+				HtmlPlayOrder: PlayOptionSelector.GenHtml('PlayOrder', 'じゅんばん'),
+				HtmlSoxEffectsPreset: PlayOptionSelector.GenHtml('SoxEffectsPreset', 'とくしゅこうか'),
 			}
 		},
 		{

@@ -32,7 +32,6 @@ export class GoogleTTS {
 		pitch?: number, // -20.0, 20.0
 		text: string,
 		speakingRate?: number,
-		pitch?: number,
 	}) {
 		return new Promise<void>(async (resolve, reject) => {
 
