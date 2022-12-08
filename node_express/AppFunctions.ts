@@ -101,7 +101,6 @@ export const AppFunctions: IAppFunctions = {
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
 			const OutFile = GetStandardFileName({ dir: AppConf().recDir, ext: ".wav" });
-			//const Length = params.data.length;
 			const Length = '5';
 			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFile).replace(new RegExp(Replace.length), Length);
 			console.log(p);
