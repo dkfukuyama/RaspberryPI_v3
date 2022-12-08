@@ -20,6 +20,9 @@ declare const location: any;
 
 declare const query: IPlayMusicQuery;
 
+declare const special: any;
+
+
 interface IMusicList {
 	[index: string]: FileListSearchResults;
 }
@@ -64,14 +67,17 @@ socket.on("connect_error", (err) => {
 		socket.connect();
 	}, 1000);
 });
-
+//alert(JSON.stringify(special));
 function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
 	let return_value: IPlayOption = {
 		RepeatMode: "REPEAT_ALL",
+		PlayOrder: "CLEAR_OTHERS",
 	};
 	switch (Str["playConf"]) {
 		case "immediately":
 			return_value.RepeatMode = "REPEAT_OFF";
+		case "addToList":
+			return_value.RepeatMode = "REPEAT_SINGLE";
 		break;
 	}
 	return return_value;
@@ -150,21 +156,6 @@ function MusicSelectButtonClick(arg) {
 	xmlHttpRequest.send(JSON.stringify(send));
 }
 
-/*
-function EncodeHTMLForm(data) {
-	var params = [];
-
-	for (var name in data) {
-		var value = data[name];
-		var param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
-
-		params.push(param);
-	}
-
-	return params.join('&').replace(/%20/g, '+');
-}
-*/
-
 function DirSelectButtonClick(arg) {
 	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
 }
@@ -197,7 +188,8 @@ class GoogleHomeHtmlContainer {
 			xhr.send();
 			xhr.onload = ()=> {
 				this.load_html = xhr.response;
-				resolve(this.load_html)
+				this.load_html = this.load_html.replace(new RegExp('<!--特殊効果-->', 'g'), special.HtmlSoxEffectsPreset);
+				resolve(this.load_html);
 			};
 		});
     }

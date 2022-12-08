@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { GoogleHomeController, IGoogleHomeSeekResults } from "@/GoogleHomeController";
+import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
 
@@ -50,6 +50,11 @@ export class PageParameters {
 			title: 'おんがくをかける',
 			view_page: './play_music.ejs',
 			level: 0,
+			specialParams: {
+				GenHtmlRepeatModeFunc: PlayOptionSelector.GenHtmlRepeatMode,
+				GenHtmlPlayOrderFunc: PlayOptionSelector.GenHtmlPlayOrder,
+				HtmlSoxEffectsPreset: PlayOptionSelector.GenHtmlSoxEffectsPreset('effects'),
+			}
 		},
 		{
 			path: '/voice_changer',
