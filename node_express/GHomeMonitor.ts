@@ -30,7 +30,6 @@ export class SocketIoConnectionManager {
 	private SocketIoPort: number = 3000;
 
 	private Status: IStatus;
-	//private ConnectedSocketsList: { [index: number]: Socket } = {};
 
 	GetStatusAll: (test_json?: string) => object;
 	GetGHomes: () => IGHomes;
@@ -81,7 +80,6 @@ export class SocketIoConnectionManager {
 				}
 			});
 
-
 			socket.on("C2S_play", (data) => {
 				socket.emit("S2C_play_OK", null);
 			});
@@ -106,18 +104,17 @@ export class SocketIoConnectionManager {
 			});
 
 			socket.on("error", (err) => {
-				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
+				Object.keys(this.GetGHomes()).map(gh => this.GetGHomes()[gh].g.RemoveUpdateList(socket));
 				console.log(err);
 			});
 
 			socket.on("connect_error", (err) => {
-				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
+				Object.keys(this.GetGHomes()).map(gh => this.GetGHomes()[gh].g.RemoveUpdateList(socket));
 				console.log(err);
 			});
 
 			socket.on("disconnect", (data) => {
-				//if (this.ConnectedSocketsList[index]) delete this.ConnectedSocketsList[index];
-				//console.log(Object.keys(this.ConnectedSocketsList).map(f => parseInt(f)));
+				Object.keys(this.GetGHomes()).map(gh => this.GetGHomes()[gh].g.RemoveUpdateList(socket));
 			});
 		});
 		this.Io.listen(this.SocketIoPort);
