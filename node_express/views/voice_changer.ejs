@@ -34,7 +34,7 @@
 		<% if(g_addr.length == 0){ %>
 			<%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
 		<% } else g_addr.forEach(e=> {%>
-       	<button class="btn btn-primary" type="submit" id="google|<%- e.speakerName %>" value="google|<%- e.speakerName %>" name="submit" onclick=>ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
+       	<button class="btn btn-primary py-0 my-2 w-100" type="submit" id="google|<%- e.speakerName %>" value="google|<%- e.speakerName %>" name="submit" onclick=>ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
 		<script>
 			document.getElementById("google|<%- e.speakerName %>").onclick=()=>{
 				post_command({
@@ -50,7 +50,8 @@
 			};
 		</script>
     <% }) %>
-        <button class="btn btn-secondary" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
+        <button class="btn btn-secondary py-0 my-2 w-100" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
+
 		<script>
 			document.getElementById("otosan").onclick=()=>{
 				post_command({
