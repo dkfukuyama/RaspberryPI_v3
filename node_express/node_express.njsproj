@@ -87,6 +87,7 @@
     <TypeScriptCompile Include="UnitTest\test_Others.ts" />
     <TypeScriptCompile Include="UtilFunctions.ts" />
     <TypeScriptCompile Include="AppConf.ts" />
+    <Content Include="UnitTest\test_GTTS.ts" />
     <Content Include="views\calculator.ejs" />
     <Content Include="views\config.ejs" />
     <Content Include="views\css\base0.css" />

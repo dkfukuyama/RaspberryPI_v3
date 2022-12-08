@@ -279,8 +279,6 @@ export class GoogleHomeController {
 	}
 
 	static SoxConfUrlEncode(sox: ISoxConfig): string {
-		console.log(sox);
-		console.log(GoogleHomeController.IsSoxDefaultValue(sox));
 		if (GoogleHomeController.IsSoxDefaultValue(sox)) {
 			return "";
 		} else {
