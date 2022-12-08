@@ -372,9 +372,14 @@ export class GoogleHomeController {
 		this.UpdateSocketList[socket.id] = socket;
 	}
 
-	private UpdateClientSocket(): void {
-		for (let i: number = 0; i < Object.keys(this.UpdateSocketList).length; i++) {
+	public RemoveUpdateList(socket: Socket) {
+		delete this.UpdateSocketList[socket.id];
+	}
 
+	private UpdateClientSocket(): void {
+		let keys = Object.keys(this.UpdateSocketList);
+		for (let i: number = 0; i < keys.length; i++) {
+			this.UpdateSocketList[keys[i]].emit('update');
 		}
 	}
 
@@ -433,7 +438,8 @@ export class GoogleHomeController {
                     });
                 });
             }
-        } else {
+		} else {
+			UpdateClientSocket();
             this.EndJoin();
         }
     }
