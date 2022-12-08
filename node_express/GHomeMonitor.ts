@@ -14,7 +14,13 @@ export interface IStatus {
 
 export interface IPlayMusicQuery {
     test_mp3_path: string;
-    GStatusSimType: string;
+	GStatusSimType: string;
+	Speaker: {
+		[id: string]: {
+			Path?: string;
+			IsOpen?: boolean;
+		};
+	}
 };
 
 

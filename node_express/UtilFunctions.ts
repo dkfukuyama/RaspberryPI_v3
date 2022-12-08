@@ -12,6 +12,4 @@ export function clearEventEmitter(emitter){
     emitter?.removeAllListeners(emitter.eventNames());
 }
 
-
-
-
+export function __LINE__() { return (new Error()).stack.split('\n')[2].split(':').reverse()[1]; };

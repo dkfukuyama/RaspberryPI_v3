@@ -1,6 +1,6 @@
 import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
-import { IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
+import { EPlayOptionIdName, ERepeatMode, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -19,6 +19,8 @@ declare const client_type: any;
 declare const location: any;
 
 declare const query: IPlayMusicQuery;
+
+declare const special: any;
 
 interface IMusicList {
 	[index: string]: FileListSearchResults;
@@ -65,15 +67,12 @@ socket.on("connect_error", (err) => {
 	}, 1000);
 });
 
-function BuildPlayOption(Str: { [Key: string]: string; }): IPlayOption {
+function BuildPlayOption(Str: { [Key in EPlayOptionIdName]: string; }): IPlayOption {
 	let return_value: IPlayOption = {
-		RepeatMode: "REPEAT_ALL",
+		RepeatMode: "REPEAT_SINGLE",
+		PlayOrder: "CLEAR_OTHERS",
 	};
-	switch (Str["playConf"]) {
-		case "immediately":
-			return_value.RepeatMode = "REPEAT_OFF";
-		break;
-	}
+	return_value.RepeatMode = Str['RepeatMode'] as ERepeatMode ?? 'REPEAT_OFF';
 	return return_value;
 }
 
@@ -85,7 +84,7 @@ function MusicSelectButtonClick(arg) {
 			[Key: string]: number;
 		}
 		Str: {
-			[Key: string]: string;
+			[Key in EPlayOptionIdName]: string;
 		}
 	} = {
 		Num: {
@@ -93,8 +92,9 @@ function MusicSelectButtonClick(arg) {
 			tempo: 1,
 		},
 		Str: {
-			effects: "",
-			playConf: "",
+			SoxEffectsPreset: '',
+			RepeatMode: '',
+			PlayOrder: '',
 		}
 	}
 	let tx_temp: string = "";
@@ -150,21 +150,6 @@ function MusicSelectButtonClick(arg) {
 	xmlHttpRequest.send(JSON.stringify(send));
 }
 
-/*
-function EncodeHTMLForm(data) {
-	var params = [];
-
-	for (var name in data) {
-		var value = data[name];
-		var param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
-
-		params.push(param);
-	}
-
-	return params.join('&').replace(/%20/g, '+');
-}
-*/
-
 function DirSelectButtonClick(arg) {
 	socket.emit("C2S_request_musiclist", { addr: arg.addr, dir: arg.dir });
 }
@@ -197,7 +182,10 @@ class GoogleHomeHtmlContainer {
 			xhr.send();
 			xhr.onload = ()=> {
 				this.load_html = xhr.response;
-				resolve(this.load_html)
+				this.load_html = this.load_html.replace(new RegExp('<!--とくしゅこうか-->', 'g'), special.HtmlSoxEffectsPreset);
+				this.load_html = this.load_html.replace(new RegExp('<!--くりかえし-->', 'g'), special.HtmlPlayOrder);
+				this.load_html = this.load_html.replace(new RegExp('<!--じゅんばん-->', 'g'), special.HtmlRepeatMode);
+				resolve(this.load_html);
 			};
 		});
     }
@@ -221,6 +209,7 @@ class GoogleHomeHtmlContainer {
 			let elem = this.load_doc.getElementById(addr);
 			document.getElementById(this.container).appendChild(elem);
 			elem1 = document.getElementById(addr);
+
 
 			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });
 

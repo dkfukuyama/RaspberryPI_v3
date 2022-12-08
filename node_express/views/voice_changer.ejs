@@ -1,0 +1,72 @@
+<script>
+	let xhr = new XMLHttpRequest();
+	function post_command(command_param) {
+		alert(command_param.alert_text);
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/command');
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.responseType = 'text';
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === XMLHttpRequest.DONE) {
+				// XMLデータ取得
+				let data = JSON.parse(xhr.responseText);
+				//alert(data);
+				//data = data.replace(/\n/g, "<BR />");
+				try {
+					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
+				} catch (err) {
+					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(err,null," ")}</pre>`;
+				}
+			}
+		}
+		xhr.send(JSON.stringify(command_param));
+	}
+</script>
+
+
+<% let special = page?.specialParams ?? [] %>
+
+<div class="container">
+    <% let g_addr = common.ghomeSpeakers %>
+	<div class="row mt-2">
+		<% if(g_addr.length == 0){ %>
+			<%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
+		<% } else g_addr.forEach(e=> {%>
+       	<button class="btn btn-primary py-0 my-2 w-100" type="submit" id="google|<%- e.speakerName %>" value="google|<%- e.speakerName %>" name="submit" onclick=>ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
+		<script>
+			document.getElementById("google|<%- e.speakerName %>").onclick=()=>{
+				post_command({
+					alert_text : 'ボイスチェンジャー',
+					mode : 'rec_voice',
+					data : {
+						output : 'speaker',
+						SpeakerAddress : '<%- e.speakerAddress %>',
+						length : 5,
+					},
+					short_return : true
+				});
+			};
+		</script>
+    <% }) %>
+        <button class="btn btn-secondary py-0 my-2 w-100" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
+
+		<script>
+			document.getElementById("otosan").onclick=()=>{
+				post_command({
+					alert_text : 'おとうさんにろくおんしたおんせいをおくります',
+					mode : 'rec_voice',
+					data : {
+						output : 'send_mail',
+						length : 5,
+					},
+					short_return : true
+				});
+			};
+		</script>
+
+		<div class="row mt-2"><p id="resXmlHttpRequestObj"></p></div>
+    </div>
+</div>
+
