@@ -263,9 +263,10 @@ export class GoogleHomeController {
 	}
 
 	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
+		let init_sox = GoogleHomeController.SoxConfInitial();
 		let ret: string = `${this.Sox} "${filepath}" -t wav -`;
-		if (sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
-		if (sox.tempo) ret += ` tempo ${sox.tempo}`;
+		if (sox.pitch && sox.pitch != init_sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
+		if (sox.tempo && sox.tempo != init_sox.tempo) ret += ` tempo ${sox.tempo}`;
 		return ret;
 	}
 
