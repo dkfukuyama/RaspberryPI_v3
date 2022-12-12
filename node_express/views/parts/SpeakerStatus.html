@@ -9,89 +9,85 @@
     <div class="alert alert-success">
      状態一覧
     </div>
-     <table class="table">
-      <tbody>
-       <tr>
-        <td>IPアドレス</td>
-        <td><span class="IpAddress"></span></td>
-       </tr>
-       <tr>
-        <td><span>音量</span></td>
-        <td><span class="Volume"></span></td>
-       </tr>
-       <tr>
-        <td>
-         <input type="range" class="__volume" name="volume" min="0" max="100" value="0" step="1">
-        </td>
-       </tr>
+    <table class="table">
+    <tbody>
+    <tr>
+    <td>IPアドレス</td>
+    <td><span class="IpAddress"></span></td>
+    </tr>
+    <tr>
+    <td><span>音量</span></td>
+    <td><span class="Volume"></span></td>
+    </tr>
+    <tr>
+    <td>
+        <input type="range" class="__volume" name="volume" min="0" max="100" value="0" step="1">
+    </td>
+    </tr>
 
-       <tr>
-        <td>状態</td>
-        <td><span class="statusText"></span></td>
-       </tr>
-       <tr>
-        <td>曲名</td>
-        <td><span class="title"></span></td>
-       </tr>
-       <tr>
-        <td>再生中の時間</td>
-        <td><span class="currentTime"></span></td>
-       </tr>
-       <tr>
-        <td>曲の長さ</td>
-        <td><span class="duration"></span></td>
-       </tr>
-      </tbody>
-     </table>
+    <tr>
+    <td>状態</td>
+    <td><span class="statusText"></span></td>
+    </tr>
+    <tr>
+    <td>曲名</td>
+    <td><span class="title"></span></td>
+    </tr>
+    <tr>
+    <td>再生中の時間</td>
+    <td><span class="currentTime"></span></td>
+    </tr>
+    <tr>
+    <td>曲の長さ</td>
+    <td><span class="duration"></span></td>
+    </tr>
+    </tbody>
+    </table>
     
-     <div class="alert alert-info">
-      再生設定
-     </div>
-     <table class="table">
-      <tbody>
-       <tr>
-        <td>
-         <div class="w-100">
-          <label for="pitch">たかさ</label><input type="range" class="pitch" name="pitch" min="-1200" max="1200" value="0" step="100">
-          <label for="pitchText" class="pitchText"></label>
-         </div>
-        </td>
-       </tr>
-       <tr>
-        <td>
-         <div class="w-100">
-          <label for="tempo">はやさ</label><input type="range" class="tempo" name="tempo" min="0.5" max="2" value="1" step="0.1">
-          <label for="tempoText" class="tempoText"></label>
-         </div>
-        </td>
-       </tr>
-       <tr>
-        <td>
-         <label for="effects">特殊効果</label>
-         <select class="effects">
-          <option value="none">なし</option>
-          <option value="yamabiko">やまびこ</option>
-          <option value="robot">ロボット</option>
-          <option value="reverb">リバーブ</option>
-          <option value="kimoi">きもい</option>
-         </select>
-        </td>
-       </tr>
-       <tr>
-        <td>
-         <label for="playConf">再生設定</label>
-         <select class="playConf">
-          <option value="immediatelyRepeat">すぐに再生(繰り返し)</option>
-          <option value="immediately">すぐに再生(1回で終わる)</option>
-          <option value="addToList">リストに追加</option>
-         </select>
-        </td>
-       </tr>
-      </tbody>
-     </table>
-    
+    <div class="alert alert-info">
+    再生設定
+    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="w-100">
+                        <label for="pitch">たかさ</label><input type="range" class="pitch" name="pitch" min="-1200" max="1200" value="0" step="100">
+                        <label for="pitchText" class="pitchText"></label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="w-100">
+                        <label for="tempo">はやさ</label>
+                        <input type="range" class="tempo" name="tempo" min="0.5" max="2" value="1" step="0.1">
+                        <label for="tempoText" class="tempoText"></label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <!--くりかえし-->
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <!--じゅんばん-->
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <!--とくしゅこうか-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
    </div>
-
 
    <div class="col-xs-12 col-lg-8">
     <div class="music_selection"></div>

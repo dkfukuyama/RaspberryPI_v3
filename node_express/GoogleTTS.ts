@@ -31,7 +31,7 @@ export class GoogleTTS {
 		speaking_rate?: number, // 0.25 --- 4.0
 		pitch?: number, // -20.0, 20.0
 		text: string,
-		sox: ISoxConfig,
+		speakingRate?: number,
 	}) {
 		return new Promise<void>(async (resolve, reject) => {
 
@@ -53,8 +53,8 @@ export class GoogleTTS {
 				// select the type of audio encoding
 				audioConfig: {
 					audioEncoding: enc,
-					speaking_rate: params.speaking_rate,
-					pitch: params.pitch,
+					speakingRate: params.speakingRate ?? 1,
+					pitch: params.pitch ?? 0,
 				},
 			};
 

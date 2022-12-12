@@ -96,6 +96,7 @@ export const AppFunctions: IAppFunctions = {
 		});
 	},
 	'rec_voice': async (params: IAppFunctionData) => {
+		console.log('rec_voice');
 		return new Promise(async (resolve, reject) => {
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
