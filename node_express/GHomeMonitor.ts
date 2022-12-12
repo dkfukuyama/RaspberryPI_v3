@@ -161,12 +161,17 @@ export class GHomeMonitor {
         return null;
     }
 
-    public GetGhObjByAddress(name: string): { g: GoogleHomeController; lastUpdated: Date; } | null {
-        let names = name.replace(/_/g, "\.");
-        for (let key in this.GHomes) {
-            if (key == names) return this.GHomes[key];
-        }
-        return null;
+	public GetGhObjByAddress(name: string): { g: GoogleHomeController; lastUpdated: Date; } | null {
+		try {
+			let names = name?.replace(/_/g, "\.") ?? '';
+			for (let key in this.GHomes) {
+				console.log(key);
+				if (key == names) return this.GHomes[key];
+			}
+		} catch (err) {
+			console.log(err);
+		}
+		return null;
     }
 
 	private CreateOrOverWriteObjects() {

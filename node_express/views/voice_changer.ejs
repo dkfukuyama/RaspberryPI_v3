@@ -26,7 +26,7 @@
 </script>
 
 <% let special = page?.specialParams ?? [] %>
-<% if(!query?.TEST){ 
+<% if(query?.TEST){ 
 	common.ghomeSpeakers = [
 		{speakerName : "りびんぐ", speakerAddress : "192_168_1_150" },
 		{speakerName : "あおいろ", speakerAddress : "192_168_1_160" },
@@ -35,6 +35,16 @@
 	
 <div class="container">
 	<div class="row mt-2">
+		<label>ろくおんするじかんをえらんでね</label>
+	<select class="form-select" id="RecTime" aria-label="ろくおんするじかんをえらんでね">
+		<option value="2">2秒</option>
+		<option value="5" selected>5秒</option>
+		<option value="10">10秒</option>
+		<option value="20">20秒</option>
+		<option value="60">1分</option>
+	</select>
+	
+		
 	<% let g_addr = common.ghomeSpeakers %>
 		<% if(g_addr.length == 0){ %>
 			<%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
@@ -42,13 +52,14 @@
        	<button class="btn btn-primary my-2" type="submit" id="<%- e.speakerAddress %>" value="google|<%- e.speakerName %>" name="submit">ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
 		<script>
 			document.getElementById("<%- e.speakerAddress %>").onclick=()=>{
+				let t = document.getElementById("RecTime").value;
 				post_command({
 					alert_text : 'ボイスチェンジャー',
 					mode : 'rec_voice',
 					data : {
 						output : 'speaker',
 						SpeakerAddress : '<%- e.speakerAddress %>',
-						length: "5",
+						length: t,
 					},
 					short_return : true
 				});
@@ -59,12 +70,13 @@
 
 		<script>
 			document.getElementById("otosan").onclick=()=>{
+				let t = document.getElementById("RecTime").value;
 				post_command({
 					alert_text : 'おとうさんにろくおんしたおんせいをおくります',
 					mode : 'rec_voice',
 					data : {
 						output : 'send_mail',
-						length: "5",
+						length: t,
 					},
 					short_return : true
 				});

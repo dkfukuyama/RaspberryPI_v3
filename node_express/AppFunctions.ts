@@ -100,7 +100,7 @@ export const AppFunctions: IAppFunctions = {
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
 			const OutFile = GetStandardFileName({ dir: AppConf().recDir, ext: ".wav" });
-			const Length = params.data.length;
+			const Length = params.length ?? "5";
 			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFile).replace(new RegExp(Replace.length), Length);
 			console.log('rec_voice');
 			console.log(p);
@@ -114,11 +114,11 @@ export const AppFunctions: IAppFunctions = {
 					}
 				});
 			}).then(k => {
-				let g = Monitor.GetGhObjByAddress(params.data.SpeakerAddress)?.g;
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
 					g.PlayList([OutFile], null, { RepeatMode: 'REPEAT_OFF' });
 				} else {
-					throw new Error(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+					throw `Speaker with IP Address ${params.speakeraddress} is not Found`;
 				}
 				return k;
 			}).then(k => {
@@ -132,8 +132,9 @@ export const AppFunctions: IAppFunctions = {
 			}).catch(err => {
 				resolve({
 					Args: params,
-					Obj: err,
+					Obj: { OutFileName: OutFile },
 					CommandTerminationType: 'ERROR',
+					ErrorMessage: err
 				});
 			});
 		});
