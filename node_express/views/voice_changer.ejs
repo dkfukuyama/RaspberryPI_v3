@@ -1,7 +1,7 @@
 <script>
-	let xhr = new XMLHttpRequest();
 	function post_command(command_param) {
 		alert(command_param.alert_text);
+		let xhr = new XMLHttpRequest();
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/command');
@@ -9,11 +9,11 @@
 		xhr.responseType = 'text';
 
 		xhr.onreadystatechange = function(){
-			if(xhr.readyState === XMLHttpRequest.DONE) {
-				// XMLデータ取得
-				let data = JSON.parse(xhr.responseText);
-				//alert(data);
-				//data = data.replace(/\n/g, "<BR />");
+		if(xhr.readyState === XMLHttpRequest.DONE) {
+		// XMLデータ取得
+		let data = JSON.parse(xhr.responseText);
+		//alert(data);
+		//data = data.replace(/\n/g, "<BR />");
 				try {
 					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
 				} catch (err) {
@@ -25,9 +25,12 @@
 	}
 </script>
 
-
 <% let special = page?.specialParams ?? [] %>
-
+<% if(query.TEST){common.ghomeSpeakers= { %>
+<%	speakerName : "りびんぐ", speakerAddress : "192_168_1_150", %>
+<%	speakerName : "あおいろ", speakerAddress : "192_168_1_160", %>
+<% } %>
+	
 <div class="container">
     <% let g_addr = common.ghomeSpeakers %>
 	<div class="row mt-2">
