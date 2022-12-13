@@ -1,28 +1,9 @@
+<script src="/scripts/form_parts.js"></script>
+
 <script>
-	let xhr = new XMLHttpRequest();
-	function post_command(command_param) {
-		alert(command_param.alert_text);
-
-		const xhr = new XMLHttpRequest();
-		xhr.open('POST', '/command');
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.responseType = 'text';
-
-		xhr.onreadystatechange = function(){
-		if(xhr.readyState === XMLHttpRequest.DONE) {
-		// XMLデータ取得
-		let data = JSON.parse(xhr.responseText);
-		//alert(data);
-		//data = data.replace(/\n/g, "<BR />");
-				try {
-					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
-				} catch (err) {
-					document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(err,null," ")}</pre>`;
-				}
-			}
-		}
-		xhr.send(JSON.stringify(command_param));
-	}
+function show_results(data){
+	document.getElementById=("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
+}
 </script>
 
 <% let special = page?.specialParams ?? [] %>
@@ -53,7 +34,7 @@
 		<script>
 			document.getElementById("<%- e.speakerAddress %>").onclick=()=>{
 				let t = document.getElementById("RecTime").value;
-				post_command({
+				post_command('/command', {
 					alert_text : 'ボイスチェンジャー',
 					mode : 'rec_voice',
 					data : {
@@ -62,7 +43,7 @@
 						length: t,
 					},
 					short_return : true
-				});
+				}, show_results);
 			};
 		</script>
     <% }) %>
@@ -71,7 +52,7 @@
 		<script>
 			document.getElementById("otosan").onclick=()=>{
 				let t = document.getElementById("RecTime").value;
-				post_command({
+				post_command('/command',{
 					alert_text : 'おとうさんにろくおんしたおんせいをおくります',
 					mode : 'rec_voice',
 					data : {
@@ -79,7 +60,7 @@
 						length: t,
 					},
 					short_return : true
-				});
+				}, show_results);
 			};
 		</script>
 

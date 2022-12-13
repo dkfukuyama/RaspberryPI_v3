@@ -109,6 +109,9 @@
     <Content Include="views\speak__bk.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
+    <TypeScriptCompile Include="views\scripts\form_parts.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
