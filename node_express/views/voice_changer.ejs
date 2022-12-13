@@ -13,7 +13,10 @@ function show_results(data){
 		{speakerName : "あおいろ", speakerAddress : "192_168_1_160" },
 	];
 } %>
-	
+
+<!--
+<%- JSON.stringify(common.ghomeSpeakers, null, '\t') %>
+-->
 <div class="container">
 	<div class="row mt-2">
 		<label>ろくおんするじかんをえらんでね</label>
@@ -30,16 +33,16 @@ function show_results(data){
 		<% if(g_addr.length == 0){ %>
 			<%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
     <% } else g_addr.forEach(e=> {%>
-       	<button class="btn btn-primary my-2" type="submit" id="<%- e.speakerAddress %>" value="google|<%- e.speakerName %>" name="submit">ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
+       	<button class="btn btn-primary my-2" type="submit" id="<%- e.address %>" value="google|<%- e.speakerName %>" name="submit">ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
 		<script>
-			document.getElementById("<%- e.speakerAddress %>").onclick=()=>{
+			document.getElementById("<%- e.address %>").onclick=()=>{
 				let t = document.getElementById("RecTime").value;
 				post_command('/command', {
 					alert_text : 'ボイスチェンジャー',
 					mode : 'rec_voice',
 					data : {
 						output : 'speaker',
-						SpeakerAddress : '<%- e.speakerAddress %>',
+						SpeakerAddress : '<%- e.address %>',
 						length: t,
 					},
 					short_return : true

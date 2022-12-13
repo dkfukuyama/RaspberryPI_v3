@@ -396,6 +396,9 @@ export class GoogleHomeController {
 
 	public async PlayList(media_info_list: (Imedia_info | string)[], Sox: ISoxConfig[] | null, playOption: IPlayOption): Promise<void> {
 
+		console.log({ media_info_list });
+		console.log({ playOption });
+
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
