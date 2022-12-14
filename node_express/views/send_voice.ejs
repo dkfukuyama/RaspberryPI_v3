@@ -1,13 +1,16 @@
 <div>
-    <% let g_addr = common.ghomeSpeakers %>
-    <% if(g_addr.length == 0){ %>
-        <%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
-    <% } else g_addr.forEach(e=> {%>
+	<% let g_addr = common.ghomeSpeakers %>
+	<% if(g_addr.length == 0){ %>
+	<%- '<P>
+		ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
+		<% } else g_addr.forEach(e=> {%>
 	<div class="row mt-2">
-       	<button class="btn btn-primary " type="submit" value="google|<%- e.speakerName %>" name="submit">ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
-	</div>
-    <% }) %>
+			<button class="btn btn-primary " type="submit" value="google|"
+				<%- e.speakerName="" %>
+					" name="submit">ぐーぐるさん(<%- e.speakerName="" %>)がしゃべる</button>
+		</div>
+		<% }) %>
     <div class="row mt-2">
-        <button class="btn btn-secondary" type="submit" value="otosan" name="submit">おとうさんにおくる</button>
-    </div>
+		<button class="btn btn-secondary" type="submit" value="otosan" name="submit">おとうさんにおくる</button>
+	</div>
 </div>

@@ -153,3 +153,23 @@ export function GetStandardFileName(param:{
 	let result = `${y}-${m}-${d}_${h}-${min}-${sec}_${ms}${ext}`;
 	return path.join(dir, result);
 }
+
+export function GetStandardFileNames(param: {
+	dir?: string[],
+	ext?: ".wav" | ".mp3"
+} | null): string[] {
+
+	const ext = param?.ext ?? ".wav";
+	const dir = param?.dir ?? [];
+
+	let dt: any = new Date();
+	let y = dt.getFullYear();
+	let m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	let d = ("00" + dt.getDate()).slice(-2);
+	let h = ("00" + dt.getHours()).slice(-2);
+	let min = ("00" + dt.getMinutes()).slice(-2);
+	let sec = ("00" + dt.getSeconds()).slice(-2);
+	let ms = ("000" + dt.getMilliseconds()).slice(-3);
+	let result = `${y}-${m}-${d}_${h}-${min}-${sec}_${ms}${ext}`;
+	return dir.map(d=>path.join(d, result));
+}

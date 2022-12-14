@@ -1,6 +1,6 @@
 import { Socket, Server } from 'socket.io';
 import express from 'express';
-import { AppConf, GetStandardFileName, slk } from '@/AppConf';
+import { AppConf, GetStandardFileName, GetStandardFileNames, slk } from '@/AppConf';
 import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
@@ -14,7 +14,7 @@ type IAppFunctionData = any;
 
 export type IAppFunctionArgs = {
     mode: string;
-    data: IAppFunctionData;
+	data: IAppFunctionData;
 } 
 
 export type IAppFunctionResults = {
@@ -100,9 +100,9 @@ export const AppFunctions: IAppFunctions = {
 		return new Promise(async (resolve, reject) => {
 			const RecCommand = AppConf().RecCommandLine;
 			const Replace = AppConf().RecCommandLineReplacer;
-			const OutFile = GetStandardFileName({ dir: AppConf().recDir, ext: ".wav" });
+			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
 			const Length = params.length ?? "5";
-			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFile).replace(new RegExp(Replace.length), Length);
+			let p = RecCommand.replace(new RegExp(Replace.outfile), OutFiles[0]).replace(new RegExp(Replace.length), Length);
 			console.log('rec_voice');
 			console.log(p);
 			await new Promise((resolve0, reject0) => {
@@ -117,7 +117,7 @@ export const AppFunctions: IAppFunctions = {
 			}).then(k => {
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
-					g.PlayList([OutFile], null, { RepeatMode: 'REPEAT_OFF' });
+					g.PlayList([`${AppConf().httpDir}/${OutFiles[1]}`], null, { RepeatMode: 'REPEAT_OFF' });
 				} else {
 					throw `Speaker with IP Address ${params.speakeraddress} is not Found`;
 				}
@@ -126,14 +126,14 @@ export const AppFunctions: IAppFunctions = {
 				resolve({
 					Args: params,
 					Obj: {
-						message: k, OutFileName: OutFile
+						message: k, OutFileName: OutFiles
 					},
 					CommandTerminationType: 'OK',
 				});
 			}).catch(err => {
 				resolve({
 					Args: params,
-					Obj: { OutFileName: OutFile },
+					Obj: { OutFileName: OutFiles },
 					CommandTerminationType: 'ERROR',
 					ErrorMessage: err
 				});
@@ -147,8 +147,8 @@ export const AppFunctions: IAppFunctions = {
                 exec(p, { shell: true }, (err, stdout, stderr) => {
                     if (err) {
                         reject0(err);
-                    } else {
-                        console.log(`stdout: ${stdout}`)
+					} else {
+						if (!params.log_output_off) console.log(`stdout: ${stdout}`);
                         resolve0(stdout.split("\n"));
                     }
                 });

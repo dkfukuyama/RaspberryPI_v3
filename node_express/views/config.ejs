@@ -68,6 +68,7 @@
 			mode : 'system_command',
 			data: {
 				command : 'cat out.log',
+				log_output_off: 'true',
 			}
 		});
 	}
@@ -77,7 +78,8 @@
 			alert_text : 'エラーログを表示します。',
 			mode : 'system_command',
 			data: {
-				command : 'cat out.log',
+				command : 'cat error.log',
+				log_output_off: 'true',
 			}
 		});
 	}
@@ -89,6 +91,7 @@
 			mode : 'system_command',
 			data: {
 				command : 'git log -1',
+				log_output_off: 'true',
 			}
 		});
 	}
