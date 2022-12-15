@@ -4,7 +4,7 @@ import { AppConf, GetStandardFileName, GetStandardFileNames, slk } from '@/AppCo
 import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
-import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+import { IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -52,6 +52,28 @@ export const AppFunctions: IAppFunctions = {
 					g.PlayList(params_cast.Media, params_cast.SoxConfig, params_cast.PlayOption);
 					resolve({
 						Args: params,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+				}
+			} catch (err) {
+				reject(err);
+			}
+		});
+	},
+	'ghome_cnt_volume': async (params: IAppFunctionData) => {
+		return new Promise((resolve, reject) => {
+			try {
+				let params_cast: IAppFunctionArgs_GHomeCntData = params as IAppFunctionArgs_GHomeCntData;
+				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress)?.g;
+				console.log(params_cast);
+				if (g) {
+					let cb_results: string;
+					g.SetVolume(params_cast.Volume_0_100, (d) => cb_results = JSON.stringify(d));
+					resolve({
+						Args: params,
+						Obj: cb_results,
 						CommandTerminationType: 'OK',
 					});
 				} else {

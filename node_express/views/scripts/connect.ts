@@ -1,6 +1,6 @@
 import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
-import { EPlayOptionIdName, ERepeatMode, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
+import { EPlayOptionIdName, ERepeatMode, IAppFunctionArgs_GHomeCnt, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -228,11 +228,39 @@ class GoogleHomeHtmlContainer {
 		const v = g.Value;
 		elem1.getElementsByClassName("speakerName")[0].innerText = v.Self.speakerName;
 		elem1.getElementsByClassName('IpAddress')[0].innerText = v.Self.address;
-		elem1.getElementsByClassName('Volume')[0].innerText = Math.round((v.Status?.volume?.level ?? 0) * 100);
+
+		let vol0_100: number = Math.round((v.Status?.volume?.level ?? 0) * 100);
+		elem1.getElementsByClassName('Volume')[0].innerText = vol0_100;
+		elem1.getElementsByClassName('volume_slider')[0].value = vol0_100;
+		elem1.getElementsByClassName('volume_slider')[0].oninput = () => {
+			elem1.getElementsByClassName('Volume')[0].innerText = elem1.getElementsByClassName('volume_slider')[0].value;
+		}
+
+		elem1.getElementsByClassName('volume_slider')[0].onchange = () => {
+			let send: IAppFunctionArgs_GHomeCnt =
+			{
+				"mode": "ghome_cnt_volume",
+				data: {
+					"SpeakerAddress": v.Self.address,
+					Volume_0_100: elem1.getElementsByClassName('volume_slider')[0].value,
+				}
+			};
+			// JSONデータのPOST送信
+			const url = '/command';
+			const xmlHttpRequest = new XMLHttpRequest();
+			xmlHttpRequest.open('POST', url);
+			// サーバに対して解析方法を指定する
+			xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
+			// データをリクエスト ボディに含めて送信する
+
+			xmlHttpRequest.send(JSON.stringify(send));
+		}
+
 		if (v.Status?.applications && v.Status?.applications.length > 0) {
-			elem1.getElementsByClassName('statusText')[0].innerText = v.Status?.applications[0]?.statusText ?? "";
-			elem1.getElementsByClassName('currentTime')[0].innerText = v.PlayerStatus?.currentTime ?? "";
-			elem1.getElementsByClassName('duration')[0].innerText = v.PlayerStatus?.media?.duration ?? "";
+			elem1.getElementsByClassName('statusText')[0].innerText =
+				v.PlayerStatus?.media?.metadata?.title ?? v.Status?.applications[0]?.statusText ?? "";
+			elem1.getElementsByClassName('currentTime')[0].innerText = parseInt(v.PlayerStatus?.currentTime ?? "0");
+			elem1.getElementsByClassName('duration')[0].innerText = parseInt(v.PlayerStatus?.media?.duration ?? "0");
 		}
 
 		if (addr in MusicList) {

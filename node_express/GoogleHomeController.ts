@@ -119,9 +119,21 @@ export interface IAppFunctionArgs_PlayMusicData {
 	PlayOption?: IPlayOption;
 	SoxConfig?: ISoxConfig[];
 }
+
 export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
 	data: IAppFunctionArgs_PlayMusicData
 }
+
+export interface IAppFunctionArgs_GHomeCntData {
+	SpeakerAddress: string;
+	Volume_0_100: number;
+}
+
+export interface IAppFunctionArgs_GHomeCnt extends IAppFunctionArgs {
+	data: IAppFunctionArgs_GHomeCntData
+}
+
+
 
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
@@ -198,8 +210,8 @@ export class GoogleHomeController {
         }
     }
 
-    public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
-					        return new Promise((resolve, _) => {
+	public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
+		return new Promise((resolve, _) => {
             let return_val: IGoogleHomeSeekResults[] = [];
             const browser = GoogleHomeController.bonjour.find({ type: 'googlecast' },
                 function (service) {
@@ -232,7 +244,6 @@ export class GoogleHomeController {
 			Command: `${GoogleHomeController.effectsPresetReplaceString} reverb`,
 		}
     };
-	
 
 	private static readonly contentTypes = {
 		'.wav': 'audio/wav',
@@ -316,7 +327,6 @@ export class GoogleHomeController {
 	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
-
         return {
             Self: this.SelfStatus,
             Status: this.Status,
@@ -398,10 +408,99 @@ export class GoogleHomeController {
 
 		console.log({ media_info_list });
 		console.log({ playOption });
+		/*
+			"RepeatMode": "REPEAT_OFF",
+			"PlayOrder": "CLEAR_OTHERS"
+		*/
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
+		let prm = new Promise<void>((resolve, reject) => {
+			let app = (this.Status.applications || []);
+			if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
+				this.InitMediaPlayer();
+				this.PfSender.launch(this.DefaultMediaReceiver, (err, player) =>
+				{
+					if (err) {
+						console.error(err);
+						return;
+					}
+					player.on('status', (status) => this.Media_onStatus(status));
+					this.MediaPlayer = player;
+					this.JoinedAppId = this.DefaultMediaReceiver.appId;
+
+					player.getStatus((err, status) => {
+						if (err) {
+							reject(err);
+						} else this.Media_onStatus(status);
+					});
+
+					resolve();
+				});
+			} else {
+				this.PfSender.join(app[0], this.DefaultMediaReceiver, (err, player) =>
+				{
+					if (err) {
+						console.error(err);
+						return;
+					}
+					player.on('status', (status) => this.Media_onStatus(status));
+					this.MediaPlayer = player;
+					this.JoinedAppId = app[0].appId;
+
+					player.getStatus((err, status) => {
+						if (err) {
+							reject(err);
+						} else this.Media_onStatus(status);
+					});
+
+					resolve();
+				});
+			}
+		}).then(() =>
+		{
+			switch (playOption.PlayOrder) {
+				case 'ADD_AFTER_PLAYING':
+					this.MediaPlayer.queueInsert(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+
+					break;
+				case 'CLEAR_OTHERS':
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+					break;
+				default:
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+			}
+		})
+		.catch(err => console.error(err));
+		let res = await prm;
+		/*
 		const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
@@ -417,8 +516,13 @@ export class GoogleHomeController {
             client.close();
             clearEventEmitter(client);
         }, 10000);
-
+		*/
     }
+	
+	public SetVolume(vol_0_100: number, callback:(obj:any)=>void): void {
+		this.PfSender.setVolume({ level: vol_0_100 / 100.0 }, callback);
+		return;
+	}
 
     private Media_onStatus(status) {
         this.PlayerStatus = status;
@@ -452,7 +556,7 @@ export class GoogleHomeController {
     private onStatus(status) {
         this.Status = status;
 
-        let app = (status.applications || []);
+        let app = (this.Status.applications || []);
         if (app.length > 0) {
             if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
                 this.InitMediaPlayer();
