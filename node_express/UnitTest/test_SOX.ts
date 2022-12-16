@@ -47,7 +47,7 @@ describe("GoogleHomeController.Sox_", () => {
 		let Sox: ISoxConfig = {
 			pitch: 0,
 			tempo: 1,
-			effectsPreset : "",
+			effectsPreset: 'None',
 			effectsString : "",
 			sox: true,
 		}
@@ -60,4 +60,27 @@ describe("GoogleHomeController.Sox_", () => {
 			{ pitch: 300, tempo: 0.5 });
 		assert.equal(str, `sox "path.mp3" -t wav - pitch 300 tempo 0.5`);
 	});
+
+	it("BuildSoxCommand_02", () => {
+		let str = GoogleHomeController.BuildSoxCommand(
+			"path.mp3",
+			{ pitch: 300, tempo: 0.5, effectsPreset: 'Reverb' });
+		assert.equal(str, `sox "path.mp3" -t wav - pitch 300 tempo 0.5 reverb`);
+	});
+
+	it("BuildSoxCommand_03", () => {
+		let str = GoogleHomeController.BuildSoxCommand(
+			"path.mp3",
+			{ pitch: 300, tempo: 0.5, effectsPreset: 'Robot' });
+		assert.equal(str, `sox "path.mp3" -t wav - pitch 300 tempo 0.5 echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5`);
+	});
+
+	it("BuildSoxCommand_04", () => {
+		let str = GoogleHomeController.BuildSoxCommand(
+			"path.mp3",
+			{ pitch: 300, tempo: 0.5, effectsPreset: 'Kimoi' });
+		assert.equal(str, '');
+	});
+
+
 });

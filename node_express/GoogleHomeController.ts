@@ -40,6 +40,7 @@ export type EPlayOptionShowName = "くりかえし" | "じゅんばん" | "と�
 
 export type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
 export type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
+export type ESoxEffectsPresetKey = "None" | "Yamabiko" | "Reverb" | "Robot" | "Kimoi" | "Random";
 
 export interface IPlayOption {
 	RepeatMode?: ERepeatMode;
@@ -55,6 +56,9 @@ export interface IPlayOptionSelectorHtmlElement {
 interface IPlayOptionSelectorHtmlElement_X_RE extends IPlayOptionSelectorHtmlElement {
 	Value: ERepeatMode;
 }
+interface IPlayOptionSelectorHtmlElement_X_SOX extends IPlayOptionSelectorHtmlElement {
+	Value: ESoxEffectsPresetKey;
+}
 type IPlayOptionSelectorHtml = {
 	[index in EPlayOptionIdName]: IPlayOptionSelectorHtmlElement[];
 };
@@ -62,7 +66,7 @@ type IPlayOptionSelectorHtml = {
 export interface IPlayOptionSelectorHtmlExt extends IPlayOptionSelectorHtml {
 	'RepeatMode': IPlayOptionSelectorHtmlElement_X_RE[];
 	'PlayOrder': IPlayOptionSelectorHtmlElement[];
-	'SoxEffectsPreset': IPlayOptionSelectorHtmlElement[];
+	'SoxEffectsPreset': IPlayOptionSelectorHtmlElement_X_SOX[];
 };
 
 
@@ -85,13 +89,14 @@ export class PlayOptionSelector {
 			{ Value: "None", ShowName: "なし", command: "" },
 			{ Value: "Yamabiko", ShowName: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
 			{ Value: "Reverb", ShowName: "リバーブ", command: "reverb" },
-			{ Value: "Robot", ShowName: "ロボット", command: " echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
+			{ Value: "Robot", ShowName: "ロボット", command: "echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
 			{
 				Value: "Kimoi",
 				ShowName: "きもい",
-				command: ` sox -m -t sox "|sox REPLACE -p pitch -190 echo 0.8 0.9 50 0.5" -t sox "|sox REPLACE -p pitch 270 echo 0.8 0.9 60 0.8`,
+				command: `-m -t sox "|sox REPLACE pitch -190 echo 0.8 0.9 50 0.5" -t sox "|sox REPLACE pitch 270 echo 0.8 0.9 60 0.8" -t wav -`,
 				command_replace: "REPLACE",
-			}
+			},
+			{ Value: "Random", ShowName: "らんだむ", command: "" },
 		],
 	}
 	public static GenHtml(className: EPlayOptionIdName, title: EPlayOptionShowName): string {
@@ -110,7 +115,7 @@ export interface ISoxConfig {
 	pitch: number;
 	tempo: number;
 	effectsString?: string;
-	effectsPreset?: string;
+	effectsPreset?: ESoxEffectsPresetKey;
 };
 
 export interface IAppFunctionArgs_PlayMusicData {
@@ -119,9 +124,21 @@ export interface IAppFunctionArgs_PlayMusicData {
 	PlayOption?: IPlayOption;
 	SoxConfig?: ISoxConfig[];
 }
+
 export interface IAppFunctionArgs_PlayMusic extends IAppFunctionArgs {
 	data: IAppFunctionArgs_PlayMusicData
 }
+
+export interface IAppFunctionArgs_GHomeCntData {
+	SpeakerAddress: string;
+	Volume_0_100: number;
+}
+
+export interface IAppFunctionArgs_GHomeCnt extends IAppFunctionArgs {
+	data: IAppFunctionArgs_GHomeCntData
+}
+
+
 
 export class GoogleHomeController {
     static bonjour = require('bonjour')();
@@ -198,8 +215,8 @@ export class GoogleHomeController {
         }
     }
 
-    public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
-					        return new Promise((resolve, _) => {
+	public static async seekGoogleHomes(timeout: number, repeatType: number): Promise<IGoogleHomeSeekResults[]> {
+		return new Promise((resolve, _) => {
             let return_val: IGoogleHomeSeekResults[] = [];
             const browser = GoogleHomeController.bonjour.find({ type: 'googlecast' },
                 function (service) {
@@ -214,25 +231,6 @@ export class GoogleHomeController {
             }, timeout);
         });
     }
-
-	
-	private static readonly effectsPresetReplaceString: string = "0_A_0";
-
-	private static readonly effectsPreset: { [key: string]: { Name: string, Command: string }; } = {
-		"chorus01": {
-			Name: "コーラス",
-			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 1 1 100.0 1 5 5.0 -s`,
-		},
-		"chorus02": {
-			Name: "やまびこ",
-			Command: `${GoogleHomeController.effectsPresetReplaceString} chorus 0.5 0.9 50 0.4 0.25 2 -t 60 0.32 0.4 2.3 -t 40 0.3 0.3 1.3 -s`,
-		},
-		"reverb01": {
-			Name: "リバーブ",
-			Command: `${GoogleHomeController.effectsPresetReplaceString} reverb`,
-		}
-    };
-	
 
 	private static readonly contentTypes = {
 		'.wav': 'audio/wav',
@@ -254,10 +252,32 @@ export class GoogleHomeController {
 	}
 
 	static BuildSoxCommand(filepath: string, sox: ISoxConfig): string {
-		let ret: string = `${this.Sox} "${filepath}" -t wav -`;
+		const T_WAV: string = ` -t wav -`;
+		const T_SOX: string = ` -t sox -`;
+
+		let ret: string = `"${filepath}"`;
+		ret += T_WAV
 		if (sox.pitch) ret += ` pitch ${Math.floor(sox.pitch)}`;
 		if (sox.tempo) ret += ` tempo ${sox.tempo}`;
-		return ret;
+
+		if (sox.effectsPreset && sox.effectsPreset != 'None')
+		{
+			let x: IPlayOptionSelectorHtmlElement_X_SOX | null = null;
+			const ar = PlayOptionSelector.Parameters['SoxEffectsPreset'].filter(a => a.Value != 'None' && a.Value != 'Random');
+			if (sox.effectsPreset != 'Random') {
+				x = ar.filter(a => a.Value == sox.effectsPreset)[0];
+			} else {
+				x = ar[Math.floor(Math.random() * ar.length)];
+			}
+			if (x.command_replace) {
+				ret = ret.replace(T_WAV, T_SOX);
+				ret = ret.replace(new RegExp('"', 'g'), '""');
+				ret = x.command.replace(new RegExp(x.command_replace, 'g'), ret);
+			} else {
+				ret += ` ${x.command}`;
+			}
+		}
+		return `${this.Sox} ${ret}`;
 	}
 
 	static SoxConfInitial(): ISoxConfig {
@@ -265,7 +285,7 @@ export class GoogleHomeController {
 			sox: true,
 			pitch: 0,
 			tempo: 1,
-			effectsPreset: '',
+			effectsPreset: 'None',
 			effectsString: '',
 		}
 	}
@@ -275,6 +295,7 @@ export class GoogleHomeController {
 			return "";
 		} else {
 			sox.sox = true;
+			if (sox.effectsPreset == 'None' || !sox.effectsPreset) delete sox.effectsPreset;
 			const keys = Object.keys(sox);
 			return '?' + keys.sort().map(k => `${k}=${sox[k]}`).join('&');
 		}
@@ -282,7 +303,7 @@ export class GoogleHomeController {
 
 	static IsSoxDefaultValue(sox: ISoxConfig): boolean {
 		var sox_ini = GoogleHomeController.SoxConfInitial();
-		if (sox.effectsPreset = 'none') delete sox.effectsPreset;
+		if (!sox.effectsPreset) sox.effectsPreset = 'None';
 		const keys = Object.keys(sox_ini);
 		for (let i = 0; i < keys.length; i++) {
 			const k = keys[i];
@@ -316,7 +337,6 @@ export class GoogleHomeController {
 	}
 
     public GetAllStatus(): { Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } {
-
         return {
             Self: this.SelfStatus,
             Status: this.Status,
@@ -398,10 +418,100 @@ export class GoogleHomeController {
 
 		console.log({ media_info_list });
 		console.log({ playOption });
+		/*
+			"RepeatMode": "REPEAT_OFF",
+			"PlayOrder": "CLEAR_OTHERS"
+		*/
 
         let items: Imedia2[] = media_info_list.map(media_info => this.BuildMediaData2(media_info));
 		items = GoogleHomeController.ConcatSoxConfUrlAr(items, Sox);
 
+		/*
+		let prm = new Promise<void>((resolve, reject) => {
+			let app = (this.Status.applications || []);
+			if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
+				this.InitMediaPlayer();
+				this.PfSender.launch(this.DefaultMediaReceiver, (err, player) =>
+				{
+					if (err) {
+						console.error(err);
+						return;
+					}
+					player.on('status', (status) => this.Media_onStatus(status));
+					this.MediaPlayer = player;
+					this.JoinedAppId = this.DefaultMediaReceiver.appId;
+
+					player.getStatus((err, status) => {
+						if (err) {
+							reject(err);
+						} else this.Media_onStatus(status);
+					});
+
+					resolve();
+				});
+			} else {
+				this.PfSender.join(app[0], this.DefaultMediaReceiver, (err, player) =>
+				{
+					if (err) {
+						console.error(err);
+						return;
+					}
+					player.on('status', (status) => this.Media_onStatus(status));
+					this.MediaPlayer = player;
+					this.JoinedAppId = app[0].appId;
+
+					player.getStatus((err, status) => {
+						if (err) {
+							reject(err);
+						} else this.Media_onStatus(status);
+					});
+
+					resolve();
+				});
+			}
+		}).then(() =>
+		{
+			switch (playOption.PlayOrder) {
+				case 'ADD_AFTER_PLAYING':
+					this.MediaPlayer.queueInsert(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+
+					break;
+				case 'CLEAR_OTHERS':
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+					break;
+				default:
+					this.MediaPlayer.queueLoad(
+						items, { autoplay: true, repeatMode: playOption.RepeatMode },
+						(err, status) => {
+							if (err) throw err;
+							else return status;
+						}
+					);
+			}
+		})
+		.catch(err => console.error(err));
+		let res = await prm;
+		*/
 		const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
@@ -417,8 +527,13 @@ export class GoogleHomeController {
             client.close();
             clearEventEmitter(client);
         }, 10000);
-
+		
     }
+	
+	public SetVolume(vol_0_100: number, callback:(obj:any)=>void): void {
+		this.PfSender.setVolume({ level: vol_0_100 / 100.0 }, callback);
+		return;
+	}
 
     private Media_onStatus(status) {
         this.PlayerStatus = status;
@@ -452,7 +567,7 @@ export class GoogleHomeController {
     private onStatus(status) {
         this.Status = status;
 
-        let app = (status.applications || []);
+        let app = (this.Status.applications || []);
         if (app.length > 0) {
             if ((this.JoinedAppId && this.JoinedAppId != app[0].appId) || !this.JoinedAppId) {
                 this.InitMediaPlayer();
