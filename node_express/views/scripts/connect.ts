@@ -1,6 +1,6 @@
 import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
-import { EPlayOptionIdName, ERepeatMode, IAppFunctionArgs_GHomeCnt, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
+import { EPlayOptionIdName, ERepeatMode, ESoxEffectsPresetKey, IAppFunctionArgs_GHomeCnt, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
 declare const document: any;
 declare const io: any;
@@ -127,7 +127,7 @@ function MusicSelectButtonClick(arg) {
 				{
 					pitch: PlayOptions.Num["pitch"],
 					tempo: PlayOptions.Num["tempo"],
-					effectsPreset: PlayOptions.Str["effects"],
+					effectsPreset: PlayOptions.Str["SoxEffectsPreset"] as ESoxEffectsPresetKey,
 				},
 			],
 			PlayOption: play_option,

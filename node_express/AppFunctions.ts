@@ -4,7 +4,7 @@ import { AppConf, GetStandardFileName, GetStandardFileNames, slk } from '@/AppCo
 import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
-import { IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
