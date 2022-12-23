@@ -9,8 +9,8 @@ function show_results(data){
 <% let special = page?.specialParams ?? [] %>
 <% if(query?.TEST){ 
 	common.ghomeSpeakers = [
-		{speakerName : "りびんぐ", speakerAddress : "192_168_1_150" },
-		{speakerName : "あおいろ", speakerAddress : "192_168_1_160" },
+		{speakerName : "りびんぐ", address : "192_168_1_150" },
+		{speakerName : "あおいろ", address : "192_168_1_160" },
 	];
 } %>
 
@@ -40,7 +40,7 @@ function show_results(data){
 			document.getElementById("<%- e.address %>").onclick=()=>{
 				let t = document.getElementById("RecTime").value;
 				post_command('/command', {
-					alert_text : 'ボイスチェンジャー',
+					alert_text : 'ボイスチェンジャー ⇒ <%- e.speakerName %>で再生',
 					mode : 'rec_voice',
 					data : {
 						output : 'speaker',

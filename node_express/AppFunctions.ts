@@ -162,6 +162,9 @@ export const AppFunctions: IAppFunctions = {
 			});
 		});
 	},
+	'text_to_speech': async (params: IAppFunctionData) => {
+		console.log('rec_voice');
+	},
     'system_command': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
             let p = params.command;

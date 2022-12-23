@@ -1,14 +1,31 @@
-<form action="<%- data.page.path %>" method="POST">
-    <div class="container">
+<script src="/scripts/form_parts.js"></script>
+
+<script>
+function show_results(data){
+	document.getElementById("resXmlHttpRequestObj").innerHTML=`<pre>${JSON.stringify(data,null," ")}</pre>`;
+}
+</script>
+
+<% let special = page?.specialParams ?? [] %>
+<% if(query?.TEST){ 
+	common.ghomeSpeakers = [
+		{speakerName : "りびんぐ", address : "192_168_1_150" },
+		{speakerName : "あおいろ", address : "192_168_1_160" },
+	];
+} %>
+
+<!--
+<%- JSON.stringify(common.ghomeSpeakers, null, '\t') %>
+-->
+
+
+<div class="container">
     <div class="mb-3">
         <textarea name="text" class="form-control form-control-lg" rows="5" placeholder="しゃべらせたいないようをにゅうりょくしてね" aria-label=".form-control-lg example"><%- prevPostData.text %></textarea>
     </div>
     </div>
     <BR>
 
-
-    <% let cx = prevPostData?.voice_type ?? 0 %>
-    <% let special = page?.specialParams ?? 0 %>
     こえのしゅるい
     <select name="example">
 	<% const vt = special.voiceTypes %>
@@ -20,21 +37,19 @@
     </select>
 
     <div class="container bg-light border border-primary mt-2">
-    <% let sp = prevPostData?.speed ?? 1 %>
-    <% let pt = prevPostData?.pitch ?? 0 %>
-    <% let vol = prevPostData?.volume ?? 30 %>
+
     <P>こえのはやさ
         <input id="speed_slider" type="range" name="speed" min="0.25" max="4.00" step="0.01" 
-            value="<%- sp %>"><div id="speed_value"><%- sp %></div>
+            value="1"><div id="speed_value">1</div>
     </P>
     <P>こえのたかさ
         <input id="pitch_slider" type="range" name="pitch" min="-20" max="20" step="0.01" 
-            value="<%- pt %>"><div id="pitch_value"><%- pt %></div>
+            value="0"><div id="pitch_value">0</div>
     </P>
 
     <P>おとのおおきさ
         <input id="volume_slider" type="range" name="volume" min="0" max="100" step="5" 
-            value="<%- vol %>"><div id="volume_value"><%- vol %></div>
+            value="50"><div id="volume_value">50</div>
     </P>
     <P><input type="checkbox" name="reverse_play" value="true" <%- prevPostData?.reverse_play ? 'checked' : '' %>>はんたいことば</P>
     </div>
@@ -56,34 +71,66 @@
         </div>
     </div>
 
-    <div class="container">
-        <%- include("./send_voice.ejs", {common: common}) %>
-    </div>
-</form>
+	<% let g_addr = common.ghomeSpeakers %>
+		<% if(g_addr.length == 0){ %>
+			<%- '<P>ねっとわーくのなかに、ぐーぐるさんがみつかりません</p>' %>
+    <% } else g_addr.forEach(e=> {%>
+       	<button class="btn btn-primary my-2 w-100" type="submit" id="<%- e.address %>" value="google|<%- e.speakerName %>" name="submit">ぐーぐるさん(<%- e.speakerName %>)がしゃべる</button>
+		<script>
+			document.getElementById("<%- e.address %>").onclick=()=>{
+				post_command('/command', {
+					alert_text : 'テキストスピーチ ⇒ <%- e.speakerName %>で再生',
+					mode : 'text_to_speech',
+					data : {
+						output : 'speaker',
+						SpeakerAddress : '<%- e.address %>',
+					},
+					short_return : true
+				}, show_results);
+			};
+		</script>
+    <% }) %>
 
 
-<script>
-    function inputChange0(event){
-        val0.innerText = speed_slider.value;
-    }    
-    function inputChange1(event){
-        val1.innerText = pitch_slider.value;
-    }    
-    function inputChange2(event){
-        val2.innerText = volume_slider.value;
-    }    
+		<button class="btn btn-secondary my-2 w-100" type="submit" id="otosan" value="otosan" name="submit">おとうさんにおくる</button>
 
-    let element0 = document.getElementById('speed_slider');
-    element0.addEventListener('change', inputChange0);
-    let val0 = document.getElementById('speed_value');
+		<script>
+			document.getElementById("otosan").onclick=()=>{
+				post_command('/command',{
+					alert_text : 'おとうさんにおんせいをおくります',
+					mode : 'rec_voice',
+					data : {
+						output : 'send_mail',
+					},
+					short_return : true
+				}, show_results);
+			};
+		</script>
 
-    let element1 = document.getElementById('pitch_slider');
-    element1.addEventListener('change', inputChange1);
-    let val1 = document.getElementById('pitch_value');
+	<script>
+		function inputChange0(event){
+			val0.innerText = speed_slider.value;
+		}    
+		function inputChange1(event){
+			val1.innerText = pitch_slider.value;
+		}    
+		function inputChange2(event){
+			val2.innerText = volume_slider.value;
+		}    
 
-    let element2 = document.getElementById('volume_slider');
-    element2.addEventListener('change', inputChange2);
-    let val2 = document.getElementById('volume_value');
+		let element0 = document.getElementById('speed_slider');
+		element0.addEventListener('change', inputChange0);
+		let val0 = document.getElementById('speed_value');
 
-</script>
+		let element1 = document.getElementById('pitch_slider');
+		element1.addEventListener('change', inputChange1);
+		let val1 = document.getElementById('pitch_value');
+
+		let element2 = document.getElementById('volume_slider');
+		element2.addEventListener('change', inputChange2);
+		let val2 = document.getElementById('volume_value');
+
+	</script>
+
+</div>
 
