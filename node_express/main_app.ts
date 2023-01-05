@@ -1,3 +1,5 @@
+import { InitEnv } from '@/UtilFunctions';
+InitEnv();
 require('dotenv').config({ path: '.env' });
 import path = require('path');
 
@@ -7,7 +9,6 @@ const gtts = require('@/google_home')
 const calc = require('@/calculator')
 const sch = require('@/scheduler');
 
-import { delay_ms } from '@/UtilFunctions';
 import * as NodeMailerWrapper from '@/NodeMailerWrapper';
 
 import { AppConf, slk } from '@/AppConf';
@@ -47,7 +48,7 @@ async function npm_install(): Promise<any> {
 }
 
 function OverWriteCompiledJsFile(filePath: string) {
-    var fs = require('fs')
+    const fs = require('fs')
     fs.readFile(filePath, 'utf8', function (err, data) {
         console.log(`OPEN ${filePath}`);
         if (err) {
