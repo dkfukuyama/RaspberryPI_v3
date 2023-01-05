@@ -1,6 +1,7 @@
 import path = require('path');
-import { delay_ms, clearEventEmitter } from '@/UtilFunctions';
+import { delay_ms, clearEventEmitter, __LINE__ } from '@/UtilFunctions';
 import { IAppFunctionArgs } from './AppFunctions';
+import { Socket } from 'socket.io';
 
 export interface IGoogleHomeSeekResults {
     address: string;
@@ -156,6 +157,7 @@ export class GoogleHomeController {
     public Status: any;
     public PlayerStatus: any;
 
+	public UpdateSocketList: { [i: string]: Socket } = {};
 
     static InitializedFlag: boolean = false;
 
@@ -517,7 +519,7 @@ export class GoogleHomeController {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
 				player.queueLoad(items, { autoplay: true, repeatMode: playOption.RepeatMode }, (err, status) => { });
 			});
-        });
+		});
         client.once('error', function (err) {
             console.log('Error: %s', err.message);
             client.close();
@@ -526,17 +528,33 @@ export class GoogleHomeController {
         setTimeout(() => {
             client.close();
             clearEventEmitter(client);
-        }, 10000);
+		}, 10000);
+
 		
     }
-	
+
+	public AddUpdateList(socket: Socket) {
+		this.UpdateSocketList[socket.id] = socket;
+	}
+	public RemoveUpdateList(socket: Socket) {
+		delete this.UpdateSocketList[socket.id];
+	}
+
+	private UpdateClientSocket(): void {
+		let keys = Object.keys(this.UpdateSocketList);
+		for (let i: number = 0; i < keys.length; i++) {
+			this.UpdateSocketList[keys[i]].emit('update');
+		}
+	}
+
 	public SetVolume(vol_0_100: number, callback:(obj:any)=>void): void {
 		this.PfSender.setVolume({ level: vol_0_100 / 100.0 }, callback);
 		return;
 	}
 
-    private Media_onStatus(status) {
-        this.PlayerStatus = status;
+	private Media_onStatus(status) {
+		this.PlayerStatus = status;
+		this.UpdateClientSocket();
     };
 
     private InitMediaPlayer(): void {
@@ -564,8 +582,9 @@ export class GoogleHomeController {
 		this.Connect();
 	}
 
-    private onStatus(status) {
-        this.Status = status;
+	private onStatus(status) {
+		this.Status = status;
+		// 
 
         let app = (this.Status.applications || []);
         if (app.length > 0) {
@@ -588,7 +607,8 @@ export class GoogleHomeController {
                     });
                 });
             }
-        } else {
+		} else {
+			this.UpdateClientSocket();
             this.EndJoin();
         }
     }
@@ -617,7 +637,7 @@ export class GoogleHomeController {
             this.PfSender.close();
             this.EndJoin();
         } catch (err) {
-            console.error("catch ERROR --- GoogleHomeController.ts  LINE 322");
+			console.error(`catch ERROR --- GoogleHomeController.ts  LINE ${__LINE__()}`);
             console.error(err);
         }
     }
