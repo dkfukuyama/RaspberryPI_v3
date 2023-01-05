@@ -164,6 +164,9 @@ export const AppFunctions: IAppFunctions = {
 	},
 	'text_to_speech': async (params: IAppFunctionData) => {
 		console.log('rec_voice');
+		return await new Promise((resolve0, reject0) => {
+			resolve0(null);
+		});
 	},
     'system_command': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
