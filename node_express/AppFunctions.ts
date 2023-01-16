@@ -86,7 +86,7 @@ export const AppFunctions: IAppFunctions = {
 	},
     'update_reboot': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
-            let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
+            let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "cd node_express" ,"npm install", "npm run build"];
             let k: string[] = [];
             for (let p of pr) {
                 k.push(await new Promise((resolve0, reject0) => {

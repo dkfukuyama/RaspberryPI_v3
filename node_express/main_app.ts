@@ -1,5 +1,3 @@
-import { InitEnv } from '@/UtilFunctions';
-InitEnv();
 require('dotenv').config({ path: '.env' });
 import path = require('path');
 
