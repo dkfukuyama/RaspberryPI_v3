@@ -1,9 +1,17 @@
 export function InitEnv() {
+	const fs = require('fs');
 	const envDestFileName = '.env';
 	const envInpFileNames = ['.env.common', '.env.secret'];
 	const enc = 'utf8';
-	envInpFileNames.map(f => require('fs').readFileSync(f, enc)).forEach((t, i) => {
-		require('fs').writeFileSync(envDestFileName, t, { flag: i == 0 ? 'w' : 'a' });
+	envInpFileNames.map(f => {
+		console.log(f);
+		if (fs.existsSync(f)) {
+			return fs.readFileSync(f, enc);
+		}
+		console.log("NOT FOUND")
+		return `#  NOT FOUND ${f}`;
+	}).forEach((t, i) => {
+		fs.writeFileSync(envDestFileName, t + '\r\n', { flag: i == 0 ? 'w' : 'a', encoding: enc});
 	});
 };
 

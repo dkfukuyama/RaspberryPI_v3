@@ -1,5 +1,5 @@
 console.log('Pre Build START!')
-import { InitEnv } from '@/UtilFunctions';
+import { InitEnv } from '../node_express/UtilFunctions';
 import { execSync } from 'child_process';
 import fs = require('fs');
 

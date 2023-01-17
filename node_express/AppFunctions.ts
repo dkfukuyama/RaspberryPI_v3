@@ -28,6 +28,21 @@ export interface IAppFunctions_0 {
     [key: string]: (params: IAppFunctionData) => Promise<IAppFunctionResults>;
 };
 
+/*
+ POWERSHELL SEND
+$url = "http://192.168.1.231/command";
+$postdata = @{
+mode='ghome_cnt_volume';
+data=@{
+Volume_0_100= "20";
+SpeakerAddress="192.168.1.20";
+}
+};
+$body = [System.Text.Encoding]::UTF8.GetBytes(($postdata|ConvertTo-Json));
+Invoke-WebRequest -Method POST -Uri $url -Body $body -ContentType 'application/json';
+ 
+*/
+
 export type IAppFunctions = IAppFunctions_0 | null;
 export const AppFunctions: IAppFunctions = {
     'test00': async (params: IAppFunctionData) => {
@@ -77,7 +92,7 @@ export const AppFunctions: IAppFunctions = {
 						CommandTerminationType: 'OK',
 					});
 				} else {
-					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+					reject(`Speaker with IP Address ${params_cast.SpeakerAddress} is not Found`);
 				}
 			} catch (err) {
 				reject(err);
@@ -86,7 +101,7 @@ export const AppFunctions: IAppFunctions = {
 	},
     'update_reboot': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
-            let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "cd node_express" ,"npm install", "npm run build"];
+			let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "cd node_express", "npm install", "npm run build"];
             let k: string[] = [];
             for (let p of pr) {
                 k.push(await new Promise((resolve0, reject0) => {

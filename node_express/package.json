@@ -9,10 +9,10 @@
 	"scripts": {
 		"build": "ts-node -r tsconfig-paths/register _prebuild.ts",
 		"clean": "ts-node -r tsconfig-paths/register _prebuild.ts CLEAN",
-		"test": "ts-node -r tsconfig-paths/register _prebuild.ts | ts-mocha -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=UnitTest/report.html",
-		"test_w": "ts-node -r tsconfig-paths/register _prebuild.ts | ts-mocha -w --watch-files '**/*.ts' -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=UnitTest/report.html",
-		"exec": "ts-node -r tsconfig-paths/register _prebuild.ts | node -r tsconfig-paths/register main_app.js",
-		"exects": "ts-node -r tsconfig-paths/register _prebuild.ts | ts-node -r tsconfig-paths/register main_app.ts"
+		"test": "npm run build | ts-mocha -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=UnitTest/report.html",
+		"test_w": "npm run build | ts-mocha -w --watch-files '**/*.ts' -r tsconfig-paths/register UnitTest/*.ts --recursive --reporter node_modules/mocha-simple-html-reporter --reporter-options output=UnitTest/report.html",
+		"exec": "npm run build | node -r tsconfig-paths/register main_app.js",
+		"exects": "npm run build | ts-node -r tsconfig-paths/register main_app.ts"
 	},
   "devDependencies": {
     "@types/express": "^4.17.13",
