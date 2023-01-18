@@ -5,6 +5,7 @@ import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+import { GoogleTTS } from '@/GoogleTTS';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -163,10 +164,15 @@ export const AppFunctions: IAppFunctions = {
 		});
 	},
 	'text_to_speech': async (params: IAppFunctionData) => {
-		console.log('rec_voice');
-		return await new Promise((resolve0, reject0) => {
-			resolve0(null);
+		console.log('text_to_speech');
+		return await new Promise(async (resolve0, reject0) => {
+			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
+			await GoogleTTS.GetTtsAudioData({
+                outfilePath: OutFiles[0], text: 'テスト',
+				voiceTypeId: 0
+			}).then(() => resolve0).catch(err => reject0(err));
 		});
+
 	},
     'system_command': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
