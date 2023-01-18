@@ -1,5 +1,9 @@
 {
   "name": "slack_hubot",
+  "scripts": {
+    "build": "ts-node -r tsconfig-paths/register _prebuild.ts",
+    "clean": "ts-node -r tsconfig-paths/register _prebuild.ts CLEAN"
+  },
   "version": "0.0.0",
   "private": true,
   "author": "dfukuyama_ISPC <d.fukuyama@gmail.com>",
@@ -18,6 +22,7 @@
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.1",
     "hubot-slack": "^4.10.0",
+    "tsconfig-paths": "^4.1.2",
     "xmlhttprequest": "^1.8.0"
   },
   "engines": {

@@ -1,4 +1,4 @@
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+﻿const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 function getLocalAddress() {
     let ifacesObj = {};
     ifacesObj.ipv4 = [];
@@ -28,11 +28,9 @@ function getLocalAddress() {
 module.exports = (robot) => {
     robot.hear(/__slack_hubot__(\s*)(.+)/i, (res) => {
         const url = 'http://' + getLocalAddress().ipv4[0].address + '/command';
-        // JSONデータのPOST送信
         const xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.open('POST', url);
         xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
-        // データをリクエスト ボディに含めて送信する
         const sendString = res.match[2];
         console.log(sendString);
         var parseResults;
