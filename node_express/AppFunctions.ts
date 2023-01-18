@@ -157,7 +157,7 @@ export const AppFunctions: IAppFunctions = {
 				if (g) {
 					g.PlayList([`${AppConf().httpDir}/${OutFiles[1]}`], null, { RepeatMode: 'REPEAT_OFF' });
 				} else {
-					throw `Speaker with IP Address ${params.speakeraddress} is not Found`;
+					throw `Speaker with IP Address ${params.SpeakerAddress} is not Found`;
 				}
 				return k;
 			}).then(k => {
@@ -180,14 +180,34 @@ export const AppFunctions: IAppFunctions = {
 	},
 	'text_to_speech': async (params: IAppFunctionData) => {
 		console.log('text_to_speech');
-		return await new Promise(async (resolve0, reject0) => {
+		return new Promise(async (resolve, reject) => {
 			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
+			console.log(OutFiles);
 			await GoogleTTS.GetTtsAudioData({
-                outfilePath: OutFiles[0], text: 'テスト',
+				outfilePath: OutFiles[0], text: params.Text ?? '入力エラー',
 				voiceTypeId: 0
-			}).then(() => resolve0).catch(err => reject0(err));
+			}).then(() => {
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList([`${AppConf().httpDir}/${OutFiles[1]}`], null, { RepeatMode: 'REPEAT_OFF' });
+				} else {
+					throw `Speaker with IP Address ${params.SpeakerAddress} is not Found`;
+				}
+			}).then(() => {
+				resolve({
+					Args: params,
+					Obj: {
+						OutFileName: OutFiles
+					},
+					CommandTerminationType: 'OK',
+				})
+			}).catch(err => resolve({
+				Args: params,
+				Obj: { OutFileName: OutFiles },
+				CommandTerminationType: 'ERROR',
+				ErrorMessage: err
+			}));
 		});
-
 	},
     'system_command': async (params: IAppFunctionData) => {
         return new Promise(async (resolve, reject) => {
