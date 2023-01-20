@@ -103,12 +103,21 @@ export const AppFunctions: IAppFunctions = {
 	},
     'update_reboot': async (params: IAppFunctionData) => {
 		return new Promise(async (resolve, reject) => {
-			let k = await ExecChain(["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "npm run build", () => { process.chdir('../slack_hubot'); return "dir : slack_hubot" }, 'tsc --build']);
+			let k = await ExecChain([
+				"git checkout master",
+				"git fetch origin master",
+				"git reset --hard origin/master",
+				() => { process.chdir('../slack_hubot'); return "dir : slack_hubot" },
+				'tsc --build', () => { process.chdir('../node_express'); return "dir : slack_hubot" },
+				"npm install",
+				"npm run build"
+			]);
+			setTimeout(() => process.exit(0), 5000);
 			resolve({
                 Args: params,
                 Obj: k,
                 CommandTerminationType: 'OK',
-            });
+			});
         });
     },
     'reboot': async (params: IAppFunctionData) => {
