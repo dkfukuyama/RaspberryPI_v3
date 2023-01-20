@@ -6,6 +6,7 @@ import path = require('path');
 import { GHomeMonitor } from '@/GHomeMonitor';
 import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
 import { GoogleTTS } from '@/GoogleTTS';
+import { ExecChain } from '@/UtilFunctions';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -101,23 +102,9 @@ export const AppFunctions: IAppFunctions = {
 		});
 	},
     'update_reboot': async (params: IAppFunctionData) => {
-        return new Promise(async (resolve, reject) => {
-			let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "cd node_express", "npm install", "npm run build"];
-            let k: string[] = [];
-            for (let p of pr) {
-                k.push(await new Promise((resolve0, reject0) => {
-                    exec(p, (err, stdout, stderr) => {
-                        if (err) {
-                            reject0(err);
-                        } else {
-                            console.log(`stdout: ${stdout}`)
-                            resolve0(stdout.split("\n"));
-                        }
-                    });
-                }));
-            }
-            setTimeout(() => process.exit(0), 5000);
-            resolve({
+		return new Promise(async (resolve, reject) => {
+			let k = await ExecChain(["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "npm run build", () => { process.chdir('../slack_hubot'); return "dir : slack_hubot" }, 'tsc --build']);
+			resolve({
                 Args: params,
                 Obj: k,
                 CommandTerminationType: 'OK',
@@ -184,7 +171,7 @@ export const AppFunctions: IAppFunctions = {
 			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
 			console.log(OutFiles);
 			await GoogleTTS.GetTtsAudioData({
-				outfilePath: OutFiles[0], text: params.Text ?? '入力エラー',
+				outfilePath: OutFiles[0], text: params.Text ?? '���̓G���[',
 				voiceTypeId: 0
 			}).then(() => {
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
