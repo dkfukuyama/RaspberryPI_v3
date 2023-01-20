@@ -42,9 +42,6 @@
     <Content Include=".env_test.common" />
     <Content Include=".env_test.secret" />
     <Content Include=".gitignore" />
-    <Content Include="bak.txt">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="BuildAndExec.ps1" />
     <TypeScriptCompile Include="AppFunctions.ts">
       <SubType>Code</SubType>
@@ -106,7 +103,6 @@
     <Content Include="views\quiz_0.ejs" />
     <Content Include="views\quiz_1.ejs" />
     <Content Include="views\send_voice.ejs" />
-    <Content Include="views\speak__bk.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
     <TypeScriptCompile Include="views\scripts\form_parts.ts">
