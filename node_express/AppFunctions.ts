@@ -4,7 +4,9 @@ import { AppConf, GetStandardFileName, GetStandardFileNames, slk } from '@/AppCo
 import path = require('path');
 
 import { GHomeMonitor } from '@/GHomeMonitor';
-import { IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_PlayMusicData } from '@/GoogleHomeController';
+import { GoogleTTS } from '@/GoogleTTS';
+import { ExecChain } from '@/UtilFunctions';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -27,6 +29,21 @@ export type IAppFunctionResults = {
 export interface IAppFunctions_0 {
     [key: string]: (params: IAppFunctionData) => Promise<IAppFunctionResults>;
 };
+
+/*
+ POWERSHELL SEND
+$url = "http://192.168.1.231/command";
+$postdata = @{
+mode='ghome_cnt_volume';
+data=@{
+Volume_0_100= "20";
+SpeakerAddress="192.168.1.20";
+}
+};
+$body = [System.Text.Encoding]::UTF8.GetBytes(($postdata|ConvertTo-Json));
+Invoke-WebRequest -Method POST -Uri $url -Body $body -ContentType 'application/json';
+ 
+*/
 
 export type IAppFunctions = IAppFunctions_0 | null;
 export const AppFunctions: IAppFunctions = {
@@ -62,28 +79,45 @@ export const AppFunctions: IAppFunctions = {
 			}
 		});
 	},
+	'ghome_cnt_volume': async (params: IAppFunctionData) => {
+		return new Promise((resolve, reject) => {
+			try {
+				let params_cast: IAppFunctionArgs_GHomeCntData = params as IAppFunctionArgs_GHomeCntData;
+				let g = Monitor.GetGhObjByAddress(params_cast.SpeakerAddress)?.g;
+				console.log(params_cast);
+				if (g) {
+					let cb_results: string;
+					g.SetVolume(params_cast.Volume_0_100, (d) => cb_results = JSON.stringify(d));
+					resolve({
+						Args: params,
+						Obj: cb_results,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject(`Speaker with IP Address ${params_cast.SpeakerAddress} is not Found`);
+				}
+			} catch (err) {
+				reject(err);
+			}
+		});
+	},
     'update_reboot': async (params: IAppFunctionData) => {
-        return new Promise(async (resolve, reject) => {
-            let pr = ["git checkout master", "git fetch origin master", "git reset --hard origin/master", "npm install", "tsc --build"];
-            let k: string[] = [];
-            for (let p of pr) {
-                k.push(await new Promise((resolve0, reject0) => {
-                    exec(p, (err, stdout, stderr) => {
-                        if (err) {
-                            reject0(err);
-                        } else {
-                            console.log(`stdout: ${stdout}`)
-                            resolve0(stdout.split("\n"));
-                        }
-                    });
-                }));
-            }
-            setTimeout(() => process.exit(0), 5000);
-            resolve({
+		return new Promise(async (resolve, reject) => {
+			let k = await ExecChain([
+				"git checkout master",
+				"git fetch origin master",
+				"git reset --hard origin/master",
+				() => { process.chdir('../slack_hubot'); return "dir : slack_hubot" },
+				'tsc --build', () => { process.chdir('../node_express'); return "dir : slack_hubot" },
+				"npm install",
+				"npm run build"
+			]);
+			setTimeout(() => process.exit(0), 5000);
+			resolve({
                 Args: params,
                 Obj: k,
                 CommandTerminationType: 'OK',
-            });
+			});
         });
     },
     'reboot': async (params: IAppFunctionData) => {
@@ -119,7 +153,7 @@ export const AppFunctions: IAppFunctions = {
 				if (g) {
 					g.PlayList([`${AppConf().httpDir}/${OutFiles[1]}`], null, { RepeatMode: 'REPEAT_OFF' });
 				} else {
-					throw `Speaker with IP Address ${params.speakeraddress} is not Found`;
+					throw `Speaker with IP Address ${params.SpeakerAddress} is not Found`;
 				}
 				return k;
 			}).then(k => {
@@ -138,6 +172,37 @@ export const AppFunctions: IAppFunctions = {
 					ErrorMessage: err
 				});
 			});
+		});
+	},
+	'text_to_speech': async (params: IAppFunctionData) => {
+		console.log('text_to_speech');
+		return new Promise(async (resolve, reject) => {
+			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
+			console.log(OutFiles);
+			await GoogleTTS.GetTtsAudioData({
+				outfilePath: OutFiles[0], text: params.Text ?? '���̓G���[',
+				voiceTypeId: 0
+			}).then(() => {
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList([`${AppConf().httpDir}/${OutFiles[1]}`], null, { RepeatMode: 'REPEAT_OFF' });
+				} else {
+					throw `Speaker with IP Address ${params.SpeakerAddress} is not Found`;
+				}
+			}).then(() => {
+				resolve({
+					Args: params,
+					Obj: {
+						OutFileName: OutFiles
+					},
+					CommandTerminationType: 'OK',
+				})
+			}).catch(err => resolve({
+				Args: params,
+				Obj: { OutFileName: OutFiles },
+				CommandTerminationType: 'ERROR',
+				ErrorMessage: err
+			}));
 		});
 	},
     'system_command': async (params: IAppFunctionData) => {

@@ -71,7 +71,6 @@
     <Content Include="package.json" />
     <Content Include="pm2start.json" />
     <Content Include="pm2start_watch.json" />
-    <Content Include="prebuild.ps1" />
     <Content Include="README.md" />
     <TypeScriptCompile Include="PagesAndCommands.ts">
       <SubType>Code</SubType>
@@ -81,7 +80,7 @@
     <TypeScriptCompile Include="sqlite_lib.ts" />
     <Content Include="test_google_calender_access.ts" />
     <Content Include="tsconfig.json" />
-    <TypeScriptCompile Include="UnitTest\test_Others.ts" />
+    <TypeScriptCompile Include="UnitTest\test_SOX.ts" />
     <TypeScriptCompile Include="UtilFunctions.ts" />
     <TypeScriptCompile Include="AppConf.ts" />
     <Content Include="UnitTest\test_GTTS.ts" />
@@ -108,6 +107,7 @@
     <TypeScriptCompile Include="views\scripts\form_parts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="_prebuild.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="FunctionTest\ft_sendSlack.ts">
