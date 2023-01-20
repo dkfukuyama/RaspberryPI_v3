@@ -98,6 +98,12 @@ export class PageParameters {
 			level: 1
 		},
 		{
+			path: '/controler_config',
+			title: 'コントローラ設定',
+			view_page: './controler_config.ejs',
+			level: 0
+		},
+		{
 			path: '/config',
 			title: 'かんり、せってい',
 			view_page: './config.ejs',
