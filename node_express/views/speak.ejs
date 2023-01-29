@@ -21,7 +21,7 @@ function show_results(data){
 
 <div class="container">
     <div class="mb-3">
-        <textarea name="text" class="form-control form-control-lg" rows="5" placeholder="しゃべらせたいないようをにゅうりょくしてね" aria-label=".form-control-lg example"><%- prevPostData.text %></textarea>
+        <textarea id="text" name="text" class="form-control form-control-lg" rows="5" placeholder="しゃべらせたいないようをにゅうりょくしてね" aria-label=".form-control-lg example"><%- prevPostData.text %></textarea>
     </div>
     </div>
     <BR>
@@ -79,11 +79,12 @@ function show_results(data){
 		<script>
 			document.getElementById("<%- e.address %>").onclick=()=>{
 				post_command('/command', {
-					alert_text : 'テキストスピーチ ⇒ <%- e.speakerName %>で再生',
-					mode : 'text_to_speech',
-					data : {
+					alert_text : 'テキストスピーチ ⇒ <%- e.speakerName %>で再生...',
+						mode : 'text_to_speech',
+						data : {
 						output : 'speaker',
 						SpeakerAddress : '<%- e.address %>',
+						Text: document.getElementById("text").value.toString(),
 					},
 					short_return : true
 				}, show_results);

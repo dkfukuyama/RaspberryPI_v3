@@ -168,6 +168,7 @@ export class GoogleHomeController {
     private IpAddress: string = "";
     private ConnectionRetryIntervalMs: number = 100;
 	static Sox: string = 'sox';
+    Interval_t: NodeJS.Timeout | null = null;
 
     public static init() {
         if (!this.InitializedFlag) {
@@ -514,6 +515,7 @@ export class GoogleHomeController {
 		.catch(err => console.error(err));
 		let res = await prm;
 		*/
+
 		const client = new (require('castv2-client').Client)();
         client.connect(this.SelfStatus.address, () => {
 			client.launch(this.DefaultMediaReceiver, (err, player) => {
@@ -558,7 +560,7 @@ export class GoogleHomeController {
     };
 
     private InitMediaPlayer(): void {
-        clearEventEmitter(this.MediaPlayer); this.MediaPlayer = null;
+		clearEventEmitter(this.MediaPlayer); this.MediaPlayer = null;
     }
 
     private InitPlatformSender() {
@@ -571,7 +573,9 @@ export class GoogleHomeController {
             this.Close();
             await delay_ms(this.ConnectionRetryIntervalMs <= 0 ? 1 : this.ConnectionRetryIntervalMs);
             this.Connect();
-        });
+		});
+		//if (this.Interval_t) clearInterval(this.Interval_t);
+		//this.Interval_t = setInterval(() => this.UpdateClientSocket(), 1000);
     }
 
 	constructor(_ipAddress: string, _connectionRetryIntervalMs?: number, urlBase?: string, sox_command?: string) {
@@ -643,6 +647,7 @@ export class GoogleHomeController {
     }
 
     public Finalize(): void {
-
+		if (this.Interval_t) clearInterval(this.Interval_t);
+		this.Interval_t = null;
     }
 }
