@@ -40,12 +40,12 @@ export class SocketIoConnectionManager {
 	GetStatusAll: (test_json?: string) => object;
 	GetGHomes: () => IGHomes;
 	
-	constructor(portnum: number, _getStatusAll: (a?:string) => object, _getGHomes: () => IGHomes) {
+	constructor(portnum: number, _getStatusAll: (a?: string) => object, _getGHomes: () => IGHomes, http_server: any, https_server: any) {
 
 		this.SocketIoPort = portnum;
 		this.GetStatusAll = _getStatusAll;
 		this.GetGHomes = _getGHomes;
-		this.Io = require("socket.io")();
+		this.Io = require("socket.io")(http_server);
 		this.Io.on("connection", (socket: Socket) => {
 			let socket_index: number[];
 			socket = AppFunctions.ApplyToSocket(socket);
@@ -140,9 +140,9 @@ export class GHomeMonitor {
         this.GHomes = {};
         this.SocketIoPort = socket_io_port;
     }
-    public Start() {
+	public Start(http_server: any, https_server: any) {
         this.StartSpeakerMonitor();
-        this.StartIOMonitor();
+		this.StartIOMonitor(http_server, https_server);
     }
 
     public StartSpeakerMonitor() {
@@ -152,8 +152,8 @@ export class GHomeMonitor {
         }, 999);
     }
 
-	public StartIOMonitor() {
-		this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?: string) => this.GetStatusAll(a), () => this.GetGHomes());
+	public StartIOMonitor(http_server: any, https_server: any) {
+		this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?: string) => this.GetStatusAll(a), () => this.GetGHomes(), http_server, https_server);
     }
 
     public End() {
