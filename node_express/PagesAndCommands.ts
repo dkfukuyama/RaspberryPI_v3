@@ -57,6 +57,12 @@ export class PageParameters {
 			}
 		},
 		{
+			path: '/conf_remocon',
+			title: 'リモコンのせってい',
+			view_page: './conf_remocon.ejs',
+			level: 0,
+		},
+		{
 			path: '/voice_changer',
 			title: 'ボイスチェンジャー',
 			view_page: './voice_changer.ejs',
