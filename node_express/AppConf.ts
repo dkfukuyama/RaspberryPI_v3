@@ -11,6 +11,8 @@ interface IGL {
 	RecCommandLine: string;
 	RecCommandLineReplacer: { outfile: string, length: string }|null;
 
+	UseSocketIoExpress?: boolean;
+
     errorFlag: boolean;
     httpServerPort: number;
 	httpsServerPort: number;
@@ -95,6 +97,8 @@ export function AppConf(): IGL {
 				outfile: process.env.REC_REPLACE_OUTFILE,
 				length: process.env.REC_REPLACE_LENGTH,
 			};
+
+			GL_VARS.UseSocketIoExpress = process.env.USE_SOCKET_IO_EXPRESS ? true : false;
 
             firstTry = false;
         }

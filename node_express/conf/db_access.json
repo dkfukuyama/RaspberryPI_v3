@@ -1,0 +1,7 @@
+{
+	"user": "pi_admin",
+	"password": "raspberrypi",
+	"host": "192.168.1.201",
+	"database": "google_home_db",
+	"port": 5432
+}

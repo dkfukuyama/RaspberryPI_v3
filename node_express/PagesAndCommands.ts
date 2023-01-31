@@ -30,12 +30,14 @@ export class PageParameters {
 	Common: {
 		ghomeSpeakers: IGoogleHomeSeekResults[];
 		server_ws: string;
+		useSocketIoExpress: boolean;
 	};
 
 	UpdateCommon() {
 		this.Common = {
 			ghomeSpeakers: GoogleHomeController.gHomeAddresses,
-			server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`
+			server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`,
+			useSocketIoExpress: AppConf().UseSocketIoExpress,
 		}
 	};
 
