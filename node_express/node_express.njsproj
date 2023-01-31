@@ -105,6 +105,7 @@
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
+    <TypeScriptCompile Include="views\scripts\connect_2.ts" />
     <TypeScriptCompile Include="views\scripts\form_parts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
