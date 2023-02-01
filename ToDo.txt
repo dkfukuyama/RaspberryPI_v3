@@ -1,2 +1,6 @@
-・
-・
+・play_musicはスピーカ一覧を静的に読み込む。
+・play_musicの音楽データの階層移動の指示はURLに含めて送信する。
+・controller_configで読み込むフォルダの設定
+・設定データをPostGresqlに保存する
+・SocketIOをSSLありなしの双方に対応する
+・ShortCutListの設定画面

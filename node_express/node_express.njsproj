@@ -57,6 +57,7 @@
     <Content Include="FunctionTest\test_02.json" />
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
+    <TypeScriptCompile Include="DataBaseOperation.ts" />
     <TypeScriptCompile Include="FileListSearch.ts" />
     <TypeScriptCompile Include="FunctionTest\ft_GoogleSpeaker.ts" />
     <TypeScriptCompile Include="GlobalObj.ts">
