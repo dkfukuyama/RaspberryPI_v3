@@ -35,6 +35,8 @@ socket.on("connect", () => {
 	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type, query: query });
 });
 
+setInterval(()=>socket.emit("update"), 1000);
+
 // receive a message from the server
 socket.on("hello from server", (data) => {
 	AddToList(`hello from server :: ${JSON.stringify(data, null, "\t")}`);
