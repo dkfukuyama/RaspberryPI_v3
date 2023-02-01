@@ -40,12 +40,12 @@ export class SocketIoConnectionManager {
 	GetStatusAll: (test_json?: string) => object;
 	GetGHomes: () => IGHomes;
 	
-	constructor(portnum: number, _getStatusAll: (a?:string) => object, _getGHomes: () => IGHomes) {
+	constructor(portnum: number, _getStatusAll: (a?:string) => object, _getGHomes: () => IGHomes, http:any, https:any) {
 
 		this.SocketIoPort = portnum;
 		this.GetStatusAll = _getStatusAll;
 		this.GetGHomes = _getGHomes;
-		this.Io = require("socket.io")();
+		this.Io = require("socket.io")(http);
 		this.Io.on("connection", (socket: Socket) => {
 			let socket_index: number[];
 			socket = AppFunctions.ApplyToSocket(socket);
@@ -123,7 +123,6 @@ export class SocketIoConnectionManager {
 				Object.keys(this.GetGHomes()).map(gh => this.GetGHomes()[gh].g.RemoveUpdateList(socket));
 			});
 		});
-		this.Io.listen(this.SocketIoPort);
 	}
 }
 
@@ -134,13 +133,17 @@ export class GHomeMonitor {
     private ConnectionManager: SocketIoConnectionManager;
 	private MonitoringLoopInt: NodeJS.Timeout | null = null;
 	private GetGHomes(): IGHomes { return this.GHomes; }
+	private Http: any;
+	private Https: any;
 
-    constructor(socket_io_port: number) {
+	constructor(socket_io_port: number) {
         GoogleHomeController.init();
         this.GHomes = {};
-        this.SocketIoPort = socket_io_port;
+		this.SocketIoPort = socket_io_port;
     }
-    public Start() {
+	public Start(http: any, https: any) {
+		this.Http = http;
+		this.Https = https;
         this.StartSpeakerMonitor();
         this.StartIOMonitor();
     }
@@ -153,7 +156,7 @@ export class GHomeMonitor {
     }
 
 	public StartIOMonitor() {
-		this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?: string) => this.GetStatusAll(a), () => this.GetGHomes());
+		this.ConnectionManager = new SocketIoConnectionManager(this.SocketIoPort, (a?: string) => this.GetStatusAll(a), () => this.GetGHomes(), this.Http, this.Https);
     }
 
     public End() {

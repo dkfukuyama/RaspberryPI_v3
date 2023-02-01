@@ -13,7 +13,6 @@ import { AppConf, slk } from '@/AppConf';
 import { HttpServer, HttpsServer } from '@/GlobalObj';
 import { Monitor } from '@/AppFunctions';
 
-
 async function npm_install(): Promise<any> {
 
     let command: string[] = [];
@@ -98,7 +97,7 @@ async function main0() {
 
 	HttpsServer.listen(443);
 	HttpServer.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
-    Monitor.Start();
+	Monitor.Start(HttpServer, HttpsServer);
 }
 
 async function main_wrap() {

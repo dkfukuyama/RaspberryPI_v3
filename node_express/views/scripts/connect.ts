@@ -28,7 +28,7 @@ interface IMusicList {
 let MusicList: IMusicList = {};
 
 // サーバーへ接続
-const socket = io(server_ws, { transports: ['websocket'] });
+const socket = io();
 socket.on("connect", () => {
 	AddToList("connection OK");
 	// send a message to the server
