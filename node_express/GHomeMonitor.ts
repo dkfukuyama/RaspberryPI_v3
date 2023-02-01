@@ -145,7 +145,7 @@ export class GHomeMonitor {
 		this.Http = http;
 		this.Https = https;
         this.StartSpeakerMonitor();
-        this.StartIOMonitor();
+		this.StartIOMonitor();
     }
 
     public StartSpeakerMonitor() {

@@ -8,6 +8,8 @@ import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_P
 import { GoogleTTS } from '@/GoogleTTS';
 import { ExecChain } from '@/UtilFunctions';
 
+import { HttpServer, HttpsServer } from '@/GlobalObj';
+
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;

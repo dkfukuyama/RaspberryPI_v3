@@ -3,7 +3,6 @@ import path = require('path');
 
 const exec = require('child_process').exec;
 
-//const gtts = require('@/google_home')
 const calc = require('@/calculator')
 const sch = require('@/scheduler');
 
