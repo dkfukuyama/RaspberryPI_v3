@@ -3,6 +3,8 @@ import express from 'express';
 import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from "@/GoogleHomeController";
 import { AppConf } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
+import { FileListSearch } from '@/FileListSearch';
+import path from 'path';
 
 type IPFunc = (req: express.Request, res: express.Response) => Promise<object|string>;
 
@@ -26,6 +28,7 @@ interface PreExecFunctions {
         [key: string]: IPFunc
     };
 }
+
 export class PageParameters {
 	Common: {
 		ghomeSpeakers: IGoogleHomeSeekResults[];
@@ -38,6 +41,15 @@ export class PageParameters {
 			ghomeSpeakers: GoogleHomeController.gHomeAddresses,
 			server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`,
 			useSocketIoExpress: AppConf().UseSocketIoExpress,
+		}
+	};
+
+	
+	UpdateSpecialParams: { [key: string]: (obj?: any | null) => (any | null); } = {
+		'/conf_remocon' : () => {
+			const f = new FileListSearch(AppConf().saveDir0, AppConf().httpDir_music);
+			f.GetInfo(path.join(AppConf().saveDir0, AppConf().music_shortcut_dir));
+			return f.GetList().FileList;
 		}
 	};
 
@@ -59,10 +71,13 @@ export class PageParameters {
 			}
 		},
 		{
-			path: '/conf_remocon',
+			path: '/controler_config',
 			title: 'リモコンのせってい',
-			view_page: './conf_remocon.ejs',
+			view_page: './controler_config.ejs',
 			level: 0,
+			specialParams: {
+				GetFunc: ()=>this.UpdateSpecialParams['/conf_remocon'](),
+			}
 		},
 		{
 			path: '/voice_changer',
@@ -104,12 +119,6 @@ export class PageParameters {
 			title2: 'クイズゲームをつくる',
 			view_page: './quiz.ejs',
 			level: 1
-		},
-		{
-			path: '/controler_config',
-			title: 'コントローラ設定',
-			view_page: './controler_config.ejs',
-			level: 0
 		},
 		{
 			path: '/config',

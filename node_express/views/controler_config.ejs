@@ -1,29 +1,24 @@
 <% let g_addr = common.ghomeSpeakers %>
+<% let special = page?.specialParams ?? [] %>
 
-
-<% if(useSocketIoExpress){ %>
-	<script src="/socket.io/socket.io.js"></script>
-<% }else{ %>
-	<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
-<% } %>
-
+<!--
+<%
+	const files = special.GetFunc().filter(f=>f.Type == "File");
+%>
+-->
 <div class="container">
 	<div class="row">
-		<% for(let i=0; i<9; i++){ %>
+		<% for(let i=1; i<=9; i++){ %>
 			<div class="col-md-4 col-12">
-				<div>i</div>
-					<Select class="form-select">
-						<option>てすと</option>
-					</Select>
+				<div><%- i %>番</div>
+				<Select class="form-select" id="SELECT_<%- i %>">
+					<option>設定なし</option>
+					<% for(let k=0; k<files.length; k++){ %>
+						<option><%- files[k].Name %></option>
+					<% } %>
+				</Select>
 			</div>
 		<% } %>
 	</div>
 </div>
 
-<script>
-	const server_ws = "<%- common.server_ws %>";
-	const container_id = "gs-container";
-	const query = <%- JSON.stringify(query) %>
-	const client_type = 'MusicPlayer';
-	const special = <%- JSON.stringify(page?.specialParams ?? {}) %>
-</script>

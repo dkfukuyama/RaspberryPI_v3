@@ -32,7 +32,6 @@ export class FileListSearch {
         const path_to_resolve: string = baseDir ?? __dirname;
         try {
             this.InitializeOK = true;
-
             this.RootUrl = rootUrl ?? "";
             this.DirBaseFullPath = path.resolve(path_to_resolve);
             this.FileNow = this.GetInfo(this.DirBaseFullPath);
@@ -56,7 +55,7 @@ export class FileListSearch {
 			if (this.InitializeOK) {
 				fs.readdirSync(this.DirNow.FullName).sort((a, b) => (a < b) ? -1 : (a > b) ? 1 : 0)
 					.map(file => path.join(this.DirNow.FullName, file)).forEach((fullname) => {
-						let info: FileInfo = FileListSearch.GetInfo_sub(fullname, this.DirBaseFullPath);
+						let info: FileInfo = FileListSearch.GetInfo_sub(fullname, this.DirBaseFullPath, this.RootUrl);
 						if (info.Type == 'File') {
 							if (GoogleHomeController.getAveilableExtentions().includes(info.Ext)) {
 								ret_val.FileList.push(info);
@@ -79,7 +78,8 @@ export class FileListSearch {
         let ps = path.parse(inp_fullpath);
 
         let tp: EType = stat.isDirectory() ? 'Directory' : stat.isFile() ? 'File' : 'NotDetected';
-        let url: string = "";
+		let url: string = "";
+
         if (base_fullpath) {
             url = path.relative(base_fullpath, inp_fullpath).split(path.sep).join(path.posix.sep);;
             if (rootUrl) url = `${rootUrl}/${url}`;
@@ -122,7 +122,7 @@ export class FileListSearch {
             if (this.FileNow.Type == 'Directory') {
                 this.DirNow = this.FileNow;
             } else if (this.FileNow.Type == 'File') {
-                this.DirNow = FileListSearch.GetInfo_sub(this.FileNow.ParentFullName);
+				this.DirNow = FileListSearch.GetInfo_sub(this.FileNow.ParentFullName, this.RootUrl);
             } else {
                 throw new Error('Type must not be NotDetected!!');
             }
