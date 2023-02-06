@@ -112,6 +112,9 @@
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
+    <TypeScriptCompile Include="views\scripts\controller_config_register.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="views\scripts\form_parts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
