@@ -1,22 +1,26 @@
 <% let g_addr = common.ghomeSpeakers %>
 <% let special = page?.specialParams ?? [] %>
 
-<script type="text/javascript" src="scripts/form_parts.js">
+
+<script type="text/javascript" src="/scripts/form_parts.js">
 </script>
-<script type="text/javascript" src="scripts/controller_config_register.js">
+<script type="text/javascript" src="/scripts/controller_config_register.js">
 </script>
 
 
 <script type="text/javascript">
-	function selector_Load(e){
-		// from scripts/controller_config_register.js
-	}
-
+	const __debug = true;
 
 	function selector_change(e){
 		// from scripts/controller_config_register.js
-		musicShortCutRegister(this.num, e.currentTarget.value);
+		MusicShortCutRegister(this.num, e.currentTarget.value, __debug);
 	}
+
+	async function buttonClick(){
+		await Save(__debug);
+	}
+
+	LoadAll(__debug);
 </script>
 
 <!--
@@ -43,6 +47,8 @@
 				s.addEventListener('change', {handleEvent:selector_change, num: <%- i %>});
 			</script>
 		<% } %>
+		<button type="button" class="btn btn-primary col-6" onclick="buttonClick()">きろく</button>
+		<button type="button" class="btn btn-primary col-6" onclick="buttonClick()">リセット</button>
 	</div>
 </div>
 

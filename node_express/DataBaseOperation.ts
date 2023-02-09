@@ -9,21 +9,33 @@ interface db
     rows: any;
 }
 
-async function read_all() {
+export async function read_all(tableName: string) {
 	try {
 		const client = new Client(DB_conf);
-		await client.connect()
-			.then(()=>client.query('SELECT * from t_musicshortcut'))
-			.then(res=>console.log(res.rows)) // Hello world!
-			.then(()=>client.end());
+		var t = await client.connect()
+			.then(() => client.query(`SELECT * from ${tableName}`))
+			.then((res) => {
+				client.end();
+				return res.rows;
+			})
+		return Promise.resolve(t);
 	} catch (err) {
 		console.error("ERROR DETECTED");
-		console.error(err);
+		return Promise.reject(err);
 	}
 }
 
+type ETableNames = "t_musicshortcut" ;
 
-async function insert(sortkey: number, fullpath: string) {
+const update_seed: { [tname in ETableNames]: (rows: object[]) => Promise<any>; } = {
+	"t_musicshortcut": insert_musicshortcut,
+};
+
+export async function update(tname: ETableNames, rows: object[]): Promise<any> {
+	return update_seed[tname](rows);
+}
+
+async function insert_musicshortcut(rows : { sortkey: number, fullpath: string }[]) {
 	try {
 		const client = new Client(DB_conf);
 		await client.connect()
@@ -36,13 +48,11 @@ async function insert(sortkey: number, fullpath: string) {
 		console.error("ERROR DETECTED");
 		console.error(err);
 	}
+	return Promise.resolve();
 }
 
-
 async function main() {
-	await read_all();
-	await insert(999, "AHOAHO");
-	await read_all();
+	await read_all('t_musicshortcut');
 }
 
 main();
