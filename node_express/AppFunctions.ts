@@ -140,7 +140,7 @@ export const AppFunctions: IAppFunctions = {
 				"git fetch origin master",
 				"git reset --hard origin/master",
 				() => { process.chdir('../slack_hubot'); return "dir : slack_hubot" },
-				'tsc --build', () => { process.chdir('../node_express'); return "dir : slack_hubot" },
+				'tsc --build', () => { process.chdir('../node_express'); return "dir : node_express" },
 				"npm install",
 				"npm run build"
 			]);
