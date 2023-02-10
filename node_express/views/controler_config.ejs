@@ -16,11 +16,18 @@
 		MusicShortCutRegister(this.num, e.currentTarget.value, __debug);
 	}
 
-	async function buttonClick(){
-		await Save(__debug);
+	async function saveButtonClick(){
+		let array = {};
+		for(let i=1; i<=9; i++){
+			let e = document.getElementById(`SELECT_${i}`).value.toString();
+			array[i] = e;
+		}
+		let data_to_save = buildSaveData(array);
+		await Save(data_to_save, __debug);
 	}
 
-	LoadAll(__debug);
+	let loadedata = LoadAll(__debug);
+	
 </script>
 
 <!--
@@ -45,10 +52,11 @@
 			<script type="text/javascript">
 				var s = document.getElementById("<%- selector_id %>");
 				s.addEventListener('change', {handleEvent:selector_change, num: <%- i %>});
+				s.value = loadedata[<%- i %>] ? '設定なし';
 			</script>
 		<% } %>
-		<button type="button" class="btn btn-primary col-6" onclick="buttonClick()">きろく</button>
-		<button type="button" class="btn btn-primary col-6" onclick="buttonClick()">リセット</button>
+		<button type="button" class="btn btn-primary col-6" onclick="saveButtonClick()">きろく</button>
+		<button type="button" class="btn btn-primary col-6" onclick="saveButtonClick()">リセット</button>
 	</div>
 </div>
 

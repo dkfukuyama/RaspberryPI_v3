@@ -26,7 +26,6 @@ export async function post_command(path: string, command_param: ICommand, respon
 				// XMLデータ取得
 				let data = JSON.parse(xhr.responseText);
 				try {
-					alert(JSON.stringify(data));
 					response_func ?? response_func(data);
 					resolve(data);
 				} catch (err) {

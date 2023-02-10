@@ -14,10 +14,22 @@ export async function read_all(tableName: string) {
 		const client = new Client(DB_conf);
 		var t = await client.connect()
 			.then(() => client.query(`SELECT * from ${tableName}`))
-			.then((res) => {
-				client.end();
-				return res.rows;
-			})
+			.then((res) => res.rows)
+			.finally((res) => { client.end(); return res });
+		return Promise.resolve(t);
+	} catch (err) {
+		console.error("ERROR DETECTED");
+		return Promise.reject(err);
+	}
+}
+
+export async function delete_all(tableName: string) {
+	try {
+		const client = new Client(DB_conf);
+		var t = await client.connect()
+			.then(() => client.query(`TRUNCATE ${tableName}`))
+			.then((res) => res.rows)
+			.finally((res) => { client.end(); return res });
 		return Promise.resolve(t);
 	} catch (err) {
 		console.error("ERROR DETECTED");
@@ -27,28 +39,42 @@ export async function read_all(tableName: string) {
 
 type ETableNames = "t_musicshortcut" ;
 
-const update_seed: { [tname in ETableNames]: (rows: object[]) => Promise<any>; } = {
-	"t_musicshortcut": insert_musicshortcut,
+const update_seed: { [tname in ETableNames]: (rows: { [id: number]: object }) => Promise<any>; } = {
+	"t_musicshortcut": update_musicshortcut,
 };
 
-export async function update(tname: ETableNames, rows: object[]): Promise<any> {
+export async function update(tname: ETableNames, rows: { [id: number]: object }): Promise<any> {
 	return update_seed[tname](rows);
 }
 
-async function insert_musicshortcut(rows : { sortkey: number, fullpath: string }[]) {
+function BuildValuesSql_musicshortcut(data: { [id: number]: { sorkey: number, fullname: string }; }): string {
+	const return_val = Object.keys(data).map(key => {
+		let v = data[key];
+		return `(${key},${v.sortkey},'${v.fullpath}')`;
+	}).join(',');
+	console.log(return_val);
+	return return_val;
+}
+
+async function update_musicshortcut(data: { [id: number]: { sorkey: number, fullname: string } }): Promise<any> {
+	const tname = 't_musicshortcut';
+
+	console.log("-------SAVE-------");
+	console.log(data);
+
 	try {
+		await delete_all(tname);
+
 		const client = new Client(DB_conf);
 		await client.connect()
-			.then(() => client.query("SELECT max(id) from t_musicshortcut"))
-			.then((res) => res.rows[0].max)
-			.then((row_num) => client.query("INSERT INTO t_musicshortcut (id, sortkey, fullpath) VALUES ($1, $2, $3)", [(row_num + 1), sortkey, fullpath]))
+			.then(() => client.query(`INSERT INTO ${tname} (id, sortkey, fullpath) VALUES ${BuildValuesSql_musicshortcut(data)}`))
 			.then((res) => console.log(res))
-			.then(() => client.end());
+			.catch(err => console.error(err))
+			.finally(() => client.end());
 	} catch (err) {
 		console.error("ERROR DETECTED");
 		console.error(err);
 	}
-	return Promise.resolve();
 }
 
 async function main() {
@@ -56,3 +82,4 @@ async function main() {
 }
 
 main();
+
