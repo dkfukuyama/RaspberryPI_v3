@@ -10,6 +10,7 @@ interface db
 }
 
 export async function read_all(tableName: string) {
+
 	try {
 		const client = new Client(DB_conf);
 		var t = await client.connect()

@@ -9,12 +9,7 @@
 
 
 <script type="text/javascript">
-	const __debug = true;
-
-	function selector_change(e){
-		// from scripts/controller_config_register.js
-		MusicShortCutRegister(this.num, e.currentTarget.value, __debug);
-	}
+	const __debug = false;
 
 	async function saveButtonClick(){
 		let array = {};
@@ -26,8 +21,18 @@
 		await Save(data_to_save, __debug);
 	}
 
-	let loadedata = LoadAll(__debug);
-	
+	async function win_load() {
+		let loadedata = await LoadAll(__debug);
+		for(let i=1; i<=9 ;i++){
+			let s = document.getElementById(`SELECT_${i}`);
+			s.value = ((i in loadedata) ? loadedata[i].fullpath : '');
+		}
+		
+	}
+
+	window.onload = ()=>{
+		win_load();
+	};
 </script>
 
 <!--
@@ -48,15 +53,9 @@
 					<% } %>
 				</Select>
 			</div>
-
-			<script type="text/javascript">
-				var s = document.getElementById("<%- selector_id %>");
-				s.addEventListener('change', {handleEvent:selector_change, num: <%- i %>});
-				s.value = loadedata[<%- i %>] ? '設定なし';
-			</script>
 		<% } %>
 		<button type="button" class="btn btn-primary col-6" onclick="saveButtonClick()">きろく</button>
-		<button type="button" class="btn btn-primary col-6" onclick="saveButtonClick()">リセット</button>
+		<button type="button" class="btn btn-primary col-6" onclick="win_load()">リセット</button>
 	</div>
 </div>
 

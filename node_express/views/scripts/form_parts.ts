@@ -26,10 +26,10 @@ export async function post_command(path: string, command_param: ICommand, respon
 				// XMLデータ取得
 				let data = JSON.parse(xhr.responseText);
 				try {
-					response_func ?? response_func(data);
+					if(response_func) response_func(data);
 					resolve(data);
 				} catch (err) {
-					response_func ?? response_func(err);
+					if(response_func) response_func(err);
 					reject(err);
 				} finally {
 					clearTimeout(t);

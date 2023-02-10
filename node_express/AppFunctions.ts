@@ -78,7 +78,6 @@ export const AppFunctions: IAppFunctions = {
 						reject(err)
 					})
 			} else if (params.mode == 'save') {
-				console.log(JSON.stringify(params.data_to_save, null, 3));
 				await update(params.tableName, params.data_to_save).then(data =>
 					resolve({
 						Args: params,

@@ -3,8 +3,8 @@ declare const post_command: (a: any, b: any, c: any) => Promise<any>;
 
 type IFiles = { [key: number]: { sortkey: number; fullpath: string } };
 
-function res_func(obj: any) {
-	//alert(obj);
+function res_func(obj: any, debug_alert?: boolean) {
+	if (debug_alert) alert(JSON.stringify({ res_func: obj }, null, 2));
 }
 
 async function LoadAll(debug_alert?: boolean): Promise<IFiles>{
@@ -17,11 +17,10 @@ async function LoadAll(debug_alert?: boolean): Promise<IFiles>{
 		},
 		no_consolelog: true,
 		short_return: true,
-	}, debug_alert ? res_func : null);
-	let obj: { id: number; sortkey: number; fullpath: string }[] = getdata.Obj;
+	}, (str) => res_func(str, debug_alert));
 
+	let obj: { id: number; sortkey: number; fullpath: string }[] = getdata.Obj;
 	let Files: IFiles = {};
-	
 	for (let i:number = 1; i <= 9; i++){
 		let f = obj.filter(o => o.id == i);
 		let e = (f.length == 0) ? { sortkey: i, fullpath: '' } : { sortkey: f[0].sortkey, fullpath: f[0].fullpath };
