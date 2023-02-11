@@ -92,6 +92,25 @@ export const AppFunctions: IAppFunctions = {
 			}
 		});
 	},
+	'play_music_shortcut': async (params: IAppFunctionData) => {
+		return new Promise((resolve, reject) => {
+			try {
+				let mediaUrl = params.id;
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList(mediaUrl, null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
+					resolve({
+						Args: params,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+				}
+			} catch (err) {
+				reject(err);
+			}
+		});
+	},
 	'play_music': async (params: IAppFunctionData) => {
 		return new Promise((resolve, reject) => {
 			try {
