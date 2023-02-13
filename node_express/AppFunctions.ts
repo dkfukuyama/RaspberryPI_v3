@@ -8,7 +8,7 @@ import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_P
 import { GoogleTTS } from '@/GoogleTTS';
 import { ExecChain } from '@/UtilFunctions';
 
-import { read_all, update } from '@/DataBaseOperation';
+import { read_all, read_musicshortcutFromId, update } from '@/DataBaseOperation';
 
 //import { HttpServer, HttpsServer } from '@/GlobalObj';
 
@@ -93,12 +93,12 @@ export const AppFunctions: IAppFunctions = {
 		});
 	},
 	'play_music_shortcut': async (params: IAppFunctionData) => {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
-				let mediaUrl = params.id;
+				let mediaUrl:string = (await read_musicshortcutFromId(params.id)).fullpath;
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
-					g.PlayList(mediaUrl, null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
+					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
 					resolve({
 						Args: params,
 						CommandTerminationType: 'OK',
