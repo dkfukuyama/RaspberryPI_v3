@@ -79,8 +79,9 @@ export const AppFunctions: IAppFunctions = {
 	},
 	'play_music_shortcut': async (params: IAppFunctionData) => {
 		return new Promise(async (resolve, reject) => {
+			let mediaUrl: string = undefined;
 			try {
-				let mediaUrl:string = (await read_musicshortcutFromId(params.id)).fullpath;
+				mediaUrl = (await read_musicshortcutFromId(params.id)).fullpath;
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
 					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
@@ -89,7 +90,10 @@ export const AppFunctions: IAppFunctions = {
 						CommandTerminationType: 'OK',
 					});
 				} else {
-					reject(`Speaker with IP Address ${params.speakeraddress} is not Found`);
+					reject({
+						media: mediaUrl,
+						message: `Speaker with IP Address ${params.SpeakerAddress} is not Found`
+					});
 				}
 			} catch (err) {
 				reject(err);
@@ -291,7 +295,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                         Args: body,
                         CommandTerminationType: 'ERROR',
                         ErrorMessage: 'Internal Error',
-                        Obj: err.toString(),
+                        Obj: err,
                     };
                     return temp;
                 });
