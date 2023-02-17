@@ -8,7 +8,7 @@ import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_P
 import { GoogleTTS } from '@/GoogleTTS';
 import { ExecChain } from '@/UtilFunctions';
 
-import { read_all, update } from '@/DataBaseOperation';
+import { read_all, read_musicshortcutFromId, update } from '@/DataBaseOperation';
 
 //import { HttpServer, HttpsServer } from '@/GlobalObj';
 
@@ -74,6 +74,29 @@ export const AppFunctions: IAppFunctions = {
 					})
 			} else {
 				reject(`mode : "${params.mode}" is invalid`);
+			}
+		});
+	},
+	'play_music_shortcut': async (params: IAppFunctionData) => {
+		return new Promise(async (resolve, reject) => {
+			let mediaUrl: string = undefined;
+			try {
+				mediaUrl = (await read_musicshortcutFromId(params.id)).fullpath;
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
+					resolve({
+						Args: params,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject({
+						media: mediaUrl,
+						message: `Speaker with IP Address ${params.SpeakerAddress} is not Found`
+					});
+				}
+			} catch (err) {
+				reject(err);
 			}
 		});
 	},
@@ -272,7 +295,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                         Args: body,
                         CommandTerminationType: 'ERROR',
                         ErrorMessage: 'Internal Error',
-                        Obj: err.toString(),
+                        Obj: err,
                     };
                     return temp;
                 });

@@ -1,4 +1,5 @@
 import { application } from "express";
+import { AppConf } from "./AppConf";
 
 const { Client } = require('pg');
 
@@ -48,6 +49,22 @@ export async function update(tname: ETableNames, rows: { [id: number]: object })
 	return update_seed[tname](rows);
 }
 
+export async function read_musicshortcutFromId(id: number): Promise<{id: number, sortkey: number, fullpath: string}> {
+
+	try {
+		const client = new Client(DB_conf);
+		var t = await client.connect()
+			.then(() => client.query(`SELECT * from t_musicshortcut WHERE id = ${id}`))
+			.then((res) => res.rows[0])
+			.then((res) => { res.fullpath = `${AppConf().httpsDir_music}/${res.fullpath}.mp3`; return res; })
+			.finally((res) => { client.end(); return res });
+		return Promise.resolve(t);
+	} catch (err) {
+		console.error("ERROR DETECTED");
+		return Promise.reject(err);
+	}
+}
+
 function BuildValuesSql_musicshortcut(data: { [id: number]: { sorkey: number, fullname: string }; }): string {
 	const return_val = Object.keys(data).map(key => {
 		let v = data[key];
@@ -79,7 +96,7 @@ async function update_musicshortcut(data: { [id: number]: { sorkey: number, full
 }
 
 async function main() {
-	await read_all('t_musicshortcut');
+	console.log(await read_musicshortcutFromId(9));
 }
 
 main();
