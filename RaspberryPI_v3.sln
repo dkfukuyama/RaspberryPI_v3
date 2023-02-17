@@ -9,6 +9,7 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "slack_hubot", "slack_hubot\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26ED2C3C-A130-4B34-BB54-377A98A71541}"
 	ProjectSection(SolutionItems) = preProject
+		Invoke-RestMethod.txt = Invoke-RestMethod.txt
 		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
