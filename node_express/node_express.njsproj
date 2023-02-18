@@ -51,9 +51,10 @@
     <Content Include="clean.ts">
       <TestFramework>mocha</TestFramework>
     </Content>
-    <Content Include="conf\db_access.json">
+    <Content Include="conf\.gitignore">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="conf\db_access.json" />
     <Content Include="ft_socket_client.ts">
       <SubType>Code</SubType>
     </Content>
