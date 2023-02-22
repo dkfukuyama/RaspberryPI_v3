@@ -82,6 +82,7 @@ export const AppFunctions: IAppFunctions = {
 			let mediaUrl: string = undefined;
 			try {
 				mediaUrl = (await read_musicshortcutFromId(params.id)).fullpath;
+				//AppConf().music_shortcut_dir
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
 					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
@@ -284,6 +285,9 @@ export const AppFunctions: IAppFunctions = {
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
         console.log("COMMAND MODE via HTTP");
+
+		console.log(req.rawHeaders);
+		console.log(req.body);
 
         let body: IAppFunctionArgs = req.body;
         let results: IAppFunctionResults

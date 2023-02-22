@@ -34,6 +34,12 @@ ApplyToExpress(App);
 
 const PageParams = new PageParameters
 
+App.use(express.json({
+	verify: (req: any, res, buf) => {
+		req.rawBody = buf.toString();
+	}
+}));
+
 PageParams.Pages.forEach(p => {
 
     if (PageParams.PageFunctions.Post[p.path]) {
@@ -83,8 +89,9 @@ PageParams.Pages.forEach(p => {
                 next();
             }
         });
-    }
-    App.all(p.path, function (req, res) {
+	}
+
+	App.all(p.path, function (req, res) {
         try {
             let data = {
                 page: p,
