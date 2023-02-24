@@ -1,0 +1,1 @@
+pm2 startOrRestart pm2start_watch.json
