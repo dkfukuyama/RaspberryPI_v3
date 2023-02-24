@@ -11,7 +11,7 @@ interface IGL {
 	RecCommandLine: string;
 	RecCommandLineReplacer: { outfile: string, length: string }|null;
 
-	music_shortcut_dir: string;
+	music_shortcut_dir?: string;
 
 	UseSocketIoExpress?: boolean;
 

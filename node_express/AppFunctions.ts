@@ -10,8 +10,6 @@ import { ExecChain } from '@/UtilFunctions';
 
 import { read_all, read_musicshortcutFromId, update } from '@/DataBaseOperation';
 
-//import { HttpServer, HttpsServer } from '@/GlobalObj';
-
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;
@@ -82,7 +80,6 @@ export const AppFunctions: IAppFunctions = {
 			let mediaUrl: string = undefined;
 			try {
 				mediaUrl = (await read_musicshortcutFromId(params.id)).fullpath;
-				//AppConf().music_shortcut_dir
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
 				if (g) {
 					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });

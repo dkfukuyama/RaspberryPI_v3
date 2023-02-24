@@ -2,7 +2,7 @@ $body = @{
     mode = 'play_music_shortcut';
 	short_return = $true;
     data = @{
-		id = 6;
+		id = 3;
 		SpeakerAddress = "192_168_1_8";
 	};
 };
