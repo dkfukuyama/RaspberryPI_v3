@@ -83,8 +83,9 @@ PageParams.Pages.forEach(p => {
                 next();
             }
         });
-    }
-    App.all(p.path, function (req, res) {
+	}
+
+	App.all(p.path, function (req, res) {
         try {
             let data = {
                 page: p,

@@ -11,7 +11,7 @@ interface IGL {
 	RecCommandLine: string;
 	RecCommandLineReplacer: { outfile: string, length: string }|null;
 
-	music_shortcut_dir?: string | null;
+	music_shortcut_dir?: string;
 
 	UseSocketIoExpress?: boolean;
 
@@ -43,6 +43,8 @@ let GL_VARS: IGL = {
 
 	voiceSubDir: '',
 	recDir: '',
+
+	music_shortcut_dir: '.',
 
 	httpDir0: '',
     httpDir_music: '',
@@ -102,7 +104,7 @@ export function AppConf(): IGL {
 
 			GL_VARS.UseSocketIoExpress = process.env.USE_SOCKET_IO_EXPRESS ? true : false;
 
-			GL_VARS.music_shortcut_dir = process.env.MUSIC_SHORTCUT_FOLDER ? process.env.MUSIC_SHORTCUT_FOLDER: ".";
+			GL_VARS.music_shortcut_dir = process.env.MUSIC_SHORTCUT_FOLDER ? process.env.MUSIC_SHORTCUT_FOLDER : GL_VARS.music_shortcut_dir;
 
             firstTry = false;
         }

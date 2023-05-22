@@ -2,8 +2,8 @@ $body = @{
     mode = 'play_music_shortcut';
 	short_return = $true;
     data = @{
-		id = 2;
-		SpeakerAddress = "192.168.1.21";
+		id = 3;
+		SpeakerAddress = "192_168_1_8";
 	};
 };
 $Params = @{

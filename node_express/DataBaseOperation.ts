@@ -1,4 +1,5 @@
 import { application } from "express";
+import path from "path";
 import { AppConf } from "./AppConf";
 
 const { Client } = require('pg');
@@ -56,7 +57,7 @@ export async function read_musicshortcutFromId(id: number): Promise<{id: number,
 		var t = await client.connect()
 			.then(() => client.query(`SELECT * from t_musicshortcut WHERE id = ${id}`))
 			.then((res) => res.rows[0])
-			.then((res) => { res.fullpath = `${AppConf().httpsDir_music}/${res.fullpath}.mp3`; return res; })
+			.then((res) => { res.fullpath = `${AppConf().httpsDir_music}/${path.join(AppConf().music_shortcut_dir, res.fullpath)}.mp3`; return res; })
 			.finally((res) => { client.end(); return res });
 		return Promise.resolve(t);
 	} catch (err) {

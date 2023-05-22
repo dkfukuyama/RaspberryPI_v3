@@ -4,7 +4,7 @@ import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from
 import { AppConf } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
 import { FileListSearch } from '@/FileListSearch';
-import path from 'path';
+import path = require('path');
 
 type IPFunc = (req: express.Request, res: express.Response) => Promise<object|string>;
 
