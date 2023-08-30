@@ -18,8 +18,8 @@ const options = {
 	key: fs.readFileSync('../express_key/ca.key'),
 	cert: fs.readFileSync('../express_key/ca.crt')
 };
-export const HttpsServer = https.createServer(options, App);
-export const HttpServer = http.createServer(App);
+export const HttpsServer = https.Server(options, App);
+export const HttpServer = http.Server(App);
 
 App.use(favicon(path.join(__dirname, '/views/ico/favicon.png')));
 App.use(bodyParser.urlencoded({

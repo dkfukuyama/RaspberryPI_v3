@@ -8,6 +8,8 @@ import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_P
 import { GoogleTTS } from '@/GoogleTTS';
 import { ExecChain } from '@/UtilFunctions';
 
+import { HttpServer, HttpsServer } from '@/GlobalObj';
+
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;
@@ -29,21 +31,6 @@ export type IAppFunctionResults = {
 export interface IAppFunctions_0 {
     [key: string]: (params: IAppFunctionData) => Promise<IAppFunctionResults>;
 };
-
-/*
- POWERSHELL SEND
-$url = "http://192.168.1.231/command";
-$postdata = @{
-mode='ghome_cnt_volume';
-data=@{
-Volume_0_100= "20";
-SpeakerAddress="192.168.1.20";
-}
-};
-$body = [System.Text.Encoding]::UTF8.GetBytes(($postdata|ConvertTo-Json));
-Invoke-WebRequest -Method POST -Uri $url -Body $body -ContentType 'application/json';
- 
-*/
 
 export type IAppFunctions = IAppFunctions_0 | null;
 export const AppFunctions: IAppFunctions = {
@@ -77,6 +64,13 @@ export const AppFunctions: IAppFunctions = {
 			} catch (err) {
 				reject(err);
 			}
+		});
+	},
+	'ghome_info': async (params: IAppFunctionData) => {
+		return Promise.resolve({
+			Args: params,
+			Obj: GoogleHomeController.gHomeAddresses,
+			CommandTerminationType: 'OK',
 		});
 	},
 	'ghome_cnt_volume': async (params: IAppFunctionData) => {
