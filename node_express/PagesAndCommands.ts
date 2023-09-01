@@ -1,8 +1,9 @@
 import express from 'express';
 
 import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from "@/GoogleHomeController";
-import { AppConf } from "@/AppConf";
+import { AppConf, IGL } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
+import { IMusicList, FileListSearch } from '@/FileListSearch';
 
 type IPFunc = (req: express.Request, res: express.Response) => Promise<object|string>;
 
@@ -31,6 +32,7 @@ export class PageParameters {
 		ghomeSpeakers: IGoogleHomeSeekResults[];
 		server_ws: string;
 		useSocketIoExpress: boolean;
+		global: IGL;
 	};
 
 	UpdateCommon() {
@@ -38,6 +40,7 @@ export class PageParameters {
 			ghomeSpeakers: GoogleHomeController.gHomeAddresses,
 			server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`,
 			useSocketIoExpress: AppConf().UseSocketIoExpress,
+			global: AppConf(),
 		}
 	};
 
@@ -63,6 +66,9 @@ export class PageParameters {
 			title: 'おんがくをかける(テスト中)',
 			view_page: './play_music2.ejs',
 			level: 0,
+			specialParams: {
+				FileListSearch: FileListSearch,  
+			}
 		},
 		{
 			path: '/conf_remocon',

@@ -7,7 +7,7 @@ export const slkapi = new SlackApi(process.env.SLACK_API_TOKEN);
 const httpServerPort_Default = 80;
 const httpsServerPort_Default = 443;
 
-interface IGL {
+export interface IGL {
 	SoxCommandPath?: string;
 	RecCommandLine: string;
 	RecCommandLineReplacer: { outfile: string, length: string }|null;

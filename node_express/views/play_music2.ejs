@@ -6,6 +6,8 @@
 	<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 <% } %>
 
+<% let bt_index = 0 %>
+
 <script>
 	const g_addr = <%- JSON.stringify(g_addr) %>;
 	const server_ws = "<%- common.server_ws %>";
@@ -13,13 +15,80 @@
 	const query = <%- JSON.stringify(query) %>
 	const client_type = 'MusicPlayer';
 	const special = <%- JSON.stringify(page?.specialParams ?? {}) %>;
+
+	let pages = [];
+
+	function genUrlQuery(){
+
+		let str = '';
+		for(let i=0; i<pages.length; i++){
+			if(i>0) str += '&';
+			str += `name${i}=${pages[i].Name}&open${i}=${pages[i].IsOpen}&path${i}=${pages[i].Path}`;
+		}
+
+		if(str != ''){
+			return `${location.origin}${location.pathname}?${str}`;
+		}
+		return `${location.origin}${location.pathname}`;
+	}
+
+	let click = [];
+	g_addr.forEach((g, i)=>{
+		pages.push({IsOpen: 0, Name: g.friendlyName, Path: ''});
+		this[`click_${i}`] = function(){
+			pages[i].IsOpen = pages[i].IsOpen ? 0 : 1;
+			history.pushState({}, '', genUrlQuery());
+		}
+	});
+
+	function enterPage(){
+		
+		let keys = Object.keys(query);
+		let key_names = keys.filter(k=>k.startsWith("name")).map(k=>query[k]);
+		let val = {};
+
+		key_names.forEach((k, i)=>{
+			val[k] = {
+				index: i,
+				open : query.hasOwnProperty(`open${i}`) ? (query[`open${i}`] ?? 0) : 0,
+				path : query.hasOwnProperty(`path${i}`) ? (query[`path${i}`] ?? '') : '',
+			};
+		});
+
+		key_names.forEach(k=>{
+			let e = document.getElementById(`bt_${k}`);
+
+			if(e){
+				if( val[k].open > 0) e.click();
+			}
+		});
+
+	}
+
 </script>
+
+<%
+
+	let keys = Object.keys(query);
+	let key_names = keys.filter(k=>k.startsWith("name")).map(k=>query[k]);
+	let val = {};
+
+	key_names.forEach((k, i)=>{
+		val[k] = {
+			index: i,
+			open : query.hasOwnProperty(`open${i}`) ? (query[`open${i}`] ?? 0) : 0,
+			path : query.hasOwnProperty(`path${i}`) ? (query[`path${i}`] ?? '') : '',
+		};
+	});
+%>
+
 
 <% g_addr.forEach((g, i)=>{ %>
 	<div class="row" id="row_<%- g.friendlyName %>">
 					<button id="bt_<%- g.friendlyName %>" class="btn btn-primary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<%- g.friendlyName %>" aria-controls="collapseExample<%- g.friendlyName %>" aria-expanded="false" onclick="click_<%- i %>()" >
 						<%- g.speakerName %>
 					</button>
+
 					<div class="collapse" id="collapseExample<%- g.friendlyName %>" aria-labelledby="header_<%- g.friendlyName %>">
 				<div class="container">
 						<div class="row">
@@ -98,72 +167,57 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-lg-8">
 								<div class="container">
+
+									<%
+										let fls = new page.specialParams.FileListSearch(common.global.saveDir0);
+										let v = val.hasOwnProperty(g.friendlyName) ? val[g.friendlyName] : null;
+										
+										let path = (v != null && v.hasOwnProperty("path")) ? v.path : ".";
+										fls.GetInfo(path);
+										let musics = fls.GetList();
+									%>
+
 									<div class="row">
-										<% for(let j=0; j<10; j++){ %>
-										<div class="col-sm-12 col-md-6 col-lg-4">
-											<button class="btn btn-outline-info my-2 py-2 w-100">aaa</button>
+										<% musics.FileList.forEach(f=>{ %>
+										<div class="col-md-12 col-lg-6 col-xxl-4">
+											<button class="btn btn-outline-info my-2 py-2 w-100"><%- f.Name %></button>
 										</div>
-										<% } %>
+										<% }); %>
 									</div>
+
+									<div class="row">
+										<div> フォルダを移動する </div>
+										<% musics.DirList.forEach(f=>{ %>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<% bt_index++; %>
+											<button id="dir_bt_<%- bt_index %>" class="btn btn-success my-2 py-2 w-100"><%- f.Name %></button>
+											<script>
+												document.getElementById("dir_bt_<%- bt_index %>").onclick = function(){
+													let pa = pages.filter(p=>p.Name == "<%- g.friendlyName %>");
+													let pb = pages.filter(p=>p.Name != "<%- g.friendlyName %>");
+
+													if(pa.length == 1){
+														pa[0].Path = "<%- f.Name %>";
+													}
+
+													pages = pb;
+													pages.push(pa[0]);
+
+													location.href = genUrlQuery();
+
+												}
+											</script>
+										</div>
+										<% }); %>
+									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 	</div>
-<% }) %>
-
-<script>
-	let pages = [];
-
-	function genUrlQuery(){
-
-		let str = '';
-		for(let i=0; i<pages.length; i++){
-			if(i>0) str += '&';
-			str += `open_${pages[i].Name}=${pages[i].IsOpen}`;
-		}
-
-		if(str != ''){
-			return `${location.origin}${location.pathname}?${str}`;
-		}
-		return `${location.origin}${location.pathname}`;
-	}
-	
-	<% g_addr.forEach((g, i)=>{ %>
-
-	pages.push({IsOpen: false, Name: "<%- g.friendlyName %>"});
-	function click_<%- i %>(){
-		pages[<%- i %>].IsOpen = !pages[<%- i %>].IsOpen;
-
-		history.pushState({}, '', genUrlQuery());
-	}
-
-	<% }) %>
-
-	function enterPage(){
-		let keys = Object.keys(query);
-		keys.forEach(k=>{
-
-			if(query[k] == "true"){
-
-				let k2 = k.replace(/open_/, "");
-				let e = document.getElementById(`bt_${k2}`);
-			
-				if(e){
-					e.click();
-				}
-			}
-		});
-	}
-
-
-
-	enterPage();
-
-</script>
-
-
+<% }); %>
 
 
 	<div class="row" id="gs-container">
@@ -178,7 +232,7 @@
 	</div>
 
 <script>
-
+	enterPage();
 </script>
 
 <!-- <script src="/scripts/connect2.js"></script> -->

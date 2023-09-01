@@ -1,4 +1,4 @@
-import { FileListSearchResults } from "@/FileListSearch";
+import { IMusicList } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
 import { EPlayOptionIdName, ERepeatMode, ESoxEffectsPresetKey, IAppFunctionArgs_GHomeCnt, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
@@ -22,9 +22,6 @@ declare const query: IPlayMusicQuery;
 
 declare const special: any;
 
-interface IMusicList {
-	[index: string]: FileListSearchResults;
-}
 let MusicList: IMusicList = {};
 
 // サーバーへ接続
