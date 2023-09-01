@@ -103,6 +103,7 @@
     <Content Include="views\item.ejs" />
     <Content Include="views\menu.ejs" />
     <Content Include="views\controler_config.ejs" />
+    <Content Include="views\play_music2.ejs" />
     <Content Include="views\voice_changer.ejs" />
     <Content Include="views\music.ejs" />
     <Content Include="views\parts\SpeakerStatus.html" />
@@ -113,9 +114,6 @@
     <Content Include="views\send_voice.ejs" />
     <Content Include="views\speak.ejs" />
     <Content Include="watch_ts.ps1" />
-    <TypeScriptCompile Include="views\scripts\controller_config_register.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="views\scripts\form_parts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

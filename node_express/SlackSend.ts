@@ -1,5 +1,7 @@
 import { IncomingWebhook } from '@slack/webhook';
 
+import path from 'path'
+
 export class Slack {
 
     private Webhook: IncomingWebhook|null = null;
@@ -31,4 +33,48 @@ export class Slack {
             console.error(`SLACK WEBHOOK ERROR -- ${text}`);
         }
     };
+}
+
+
+export class SlackApi {
+
+	private fs = require('fs');
+	private BotToken: string;
+	constructor(botToken: string) {
+		this.BotToken = botToken;
+	}
+
+	public SendFileAsync(fileName: string): Promise<object> {
+		if (this.fs.existsSync(fileName)) {
+
+			return new Promise((resolve, reject) => {
+
+				require('request').post({
+					uri: "https://slack.com/api/files.upload",
+					headers: {
+						"Authorization": `Bearer ${this.BotToken}`,
+					},
+					formData: {
+						channels: "#general",
+						filetype: path.extname(fileName),
+						filename: fileName,
+						file: require('fs').createReadStream(fileName)
+					}
+				}, function (error: any, response: any, body: any) {
+					if (error) {
+						resolve(error);
+						console.error(error);
+						console.debug(body);
+					} else {
+						try {
+							resolve(JSON.parse(response.body));
+						} catch {
+							reject({ statusCode: response.statusCode, statusMessage: response.statusMessage });
+						}
+					}
+				});
+			});
+
+		} else return Promise.reject({ "ok": false, "error": "file not exists", "fileName": fileName });
+	}
 }

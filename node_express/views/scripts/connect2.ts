@@ -1,4 +1,4 @@
-import { IMusicList } from "@/FileListSearch";
+import { FileListSearchResults } from "@/FileListSearch";
 import { IPlayMusicQuery } from "@/GHomeMonitor";
 import { EPlayOptionIdName, ERepeatMode, ESoxEffectsPresetKey, IAppFunctionArgs_GHomeCnt, IAppFunctionArgs_PlayMusic, IPlayOption, ISendMusicCommand } from "@/GoogleHomeController";
 
@@ -22,6 +22,9 @@ declare const query: IPlayMusicQuery;
 
 declare const special: any;
 
+interface IMusicList {
+	[index: string]: FileListSearchResults;
+}
 let MusicList: IMusicList = {};
 
 // サーバーへ接続
@@ -32,7 +35,7 @@ socket.on("connect", () => {
 	socket.emit("hello from client", { send_datetime: new Date(), client_type: client_type, query: query });
 });
 
-setInterval(()=>socket.emit("update"), 1000);
+//setInterval(()=>socket.emit("update"), 1000);
 
 // receive a message from the server
 socket.on("hello from server", (data) => {
@@ -41,7 +44,7 @@ socket.on("hello from server", (data) => {
 
 socket.on("S2C_send_status", (data) => {
 	AddToList(`Status :: ${JSON.stringify(data, null, "\t")}`);
-	ghhc.BuildHtml(data);
+	//
 });
 
 socket.on("S2C_play_OK", (data) => {
@@ -163,7 +166,7 @@ interface IGoogleHomeSeekResults {
 	speakerName: string;
 }
 
-interface GContainer { Key: string, Value: {Self: IGoogleHomeSeekResults, Status: any, PlayerStatus: any } };
+interface GContainer { Key: string, Value: {Self: IGoogleHomeSeekResults, Status: any|null, PlayerStatus: any|null } };
 
 class GoogleHomeHtmlContainer {
 	private container: string;
@@ -194,13 +197,22 @@ class GoogleHomeHtmlContainer {
 	}
 
 	static a: number = 0;
+
 	BuildHtml_sub(g: GContainer) {
+
+		alert(1);
 
 		let addr = g.Value.Self.address.replace(/\./g, "_");
 
 		let elem1 = document.getElementById(addr);
 
+		alert(2);
+
 		if (elem1 == null) {
+
+			alert(3);
+
+
 			const parser = new DOMParser();
 			let str: string = this.load_html.replace(/ID_NAME/g, addr).replace(/collapseExample/g, `collapse_${addr}`);
 
@@ -208,7 +220,6 @@ class GoogleHomeHtmlContainer {
 			let elem = this.load_doc.getElementById(addr);
 			document.getElementById(this.container).appendChild(elem);
 			elem1 = document.getElementById(addr);
-
 
 			socket.emit("C2S_request_musiclist", { addr: addr, dir: '' });
 
@@ -318,4 +329,23 @@ class GoogleHomeHtmlContainer {
 
 var ghhc = new GoogleHomeHtmlContainer(container_id);
 ghhc.Load();
+
+
+declare let g_addr: IGoogleHomeSeekResults[];
+
+let data: GContainer[] = [];
+
+g_addr.forEach(g => {
+	let g_obj = {
+		Key: g.address,
+		Value: {
+			Self: g,
+			Status: null,
+			PlayerStatus: null,
+		}
+	};
+	data.push(g_obj);
+});
+
+ghhc.BuildHtml(data);
 

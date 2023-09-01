@@ -21,6 +21,10 @@ export interface FileListSearchResults {
     ErrorFlag: boolean;
 }
 
+export interface IMusicList {
+	[index: string]: FileListSearchResults;
+}
+
 export class FileListSearch {
     private InitializeOK: boolean = false;
     private DirBaseFullPath: string;  // ファイル探索の起点となるパス

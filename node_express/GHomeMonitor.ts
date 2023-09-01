@@ -24,7 +24,7 @@ export interface IPlayMusicQuery {
 };
 
 
-interface IGHomes {
+export interface IGHomes {
 	[Key: string]: {
 		g: GoogleHomeController;
 		lastUpdated: Date;
@@ -127,14 +127,15 @@ export class SocketIoConnectionManager {
 }
 
 export class GHomeMonitor {
-	GHomes: IGHomes;
+	private GHomes: IGHomes;
 
     private SocketIoPort: number = 3000;
     private ConnectionManager: SocketIoConnectionManager;
 	private MonitoringLoopInt: NodeJS.Timeout | null = null;
-	private GetGHomes(): IGHomes { return this.GHomes; }
 	private Http: any;
 	private Https: any;
+
+	public GetGHomes(): IGHomes { return this.GHomes; }
 
 	constructor(socket_io_port: number) {
         GoogleHomeController.init();
