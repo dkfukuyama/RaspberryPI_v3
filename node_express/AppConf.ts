@@ -1,6 +1,7 @@
 import path = require('path');
-import { Slack } from '@/SlackSend';
+import { Slack, SlackApi } from '@/SlackSend';
 export const slk = new Slack(process.env.SLACK_WEBHOOK);
+export const slkapi = new SlackApi(process.env.SLACK_API_TOKEN);
 
 
 const httpServerPort_Default = 80;

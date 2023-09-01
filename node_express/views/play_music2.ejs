@@ -1,0 +1,186 @@
+<% let g_addr = common.ghomeSpeakers %>
+
+<% if(common.useSocketIoExpress){ %>
+	<script src="/socket.io/socket.io.js"></script>
+<% }else{ %>
+	<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+<% } %>
+
+<script>
+	const g_addr = <%- JSON.stringify(g_addr) %>;
+	const server_ws = "<%- common.server_ws %>";
+	const container_id = "gs-container";
+	const query = <%- JSON.stringify(query) %>
+	const client_type = 'MusicPlayer';
+	const special = <%- JSON.stringify(page?.specialParams ?? {}) %>;
+</script>
+
+<% g_addr.forEach((g, i)=>{ %>
+	<div class="row" id="row_<%- g.friendlyName %>">
+					<button id="bt_<%- g.friendlyName %>" class="btn btn-primary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<%- g.friendlyName %>" aria-controls="collapseExample<%- g.friendlyName %>" aria-expanded="false" onclick="click_<%- i %>()" >
+						<%- g.speakerName %>
+					</button>
+					<div class="collapse" id="collapseExample<%- g.friendlyName %>" aria-labelledby="header_<%- g.friendlyName %>">
+				<div class="container">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-lg-4">
+								<div class="alert alert-success">状態一覧</div>
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>IPアドレス</td>
+											<td><span class="IpAddress"><%- g.address %></span></td>
+										</tr>
+										<tr>
+											<td><span>音量</span></td>
+											<td><span class="Volume"></span></td>
+										</tr>
+										<tr>
+											<td>
+												<input type="range" class="volume_slider" name="volume_slider" min="0" max="100" value="0" step="1">
+											</td>
+										</tr>
+										<tr>
+											<td>状態</td>
+											<td><span class="statusText"></span></td>
+										</tr>
+										<tr>
+											<td>曲名</td>
+											<td><span class="title"></span></td>
+										</tr>
+										<tr>
+											<td>再生中の時間</td>
+											<td><span class="currentTime"></span></td>
+										</tr>
+										<tr>
+											<td>曲の長さ</td>
+											<td><span class="duration"></span></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="alert alert-info">再生設定</div>
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>
+												<div class="w-100">
+													<label for="pitch">たかさ</label><input type="range" class="pitch" name="pitch" min="-1200" max="1200" value="0" step="100">
+													<label for="pitchText" class="pitchText"></label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="w-100">
+													<label for="tempo">はやさ</label>
+													<input type="range" class="tempo" name="tempo" min="0.5" max="2" value="1" step="0.1">
+													<label for="tempoText" class="tempoText"></label>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<!--くりかえし-->
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<!--じゅんばん-->
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<!--とくしゅこうか-->
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-lg-8">
+								<div class="container">
+									<div class="row">
+										<% for(let j=0; j<10; j++){ %>
+										<div class="col-sm-12 col-md-6 col-lg-4">
+											<button class="btn btn-outline-info my-2 py-2 w-100">aaa</button>
+										</div>
+										<% } %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	</div>
+<% }) %>
+
+<script>
+	let pages = [];
+
+	function genUrlQuery(){
+
+		let str = '';
+		for(let i=0; i<pages.length; i++){
+			if(i>0) str += '&';
+			str += `open_${pages[i].Name}=${pages[i].IsOpen}`;
+		}
+
+		if(str != ''){
+			return `${location.origin}${location.pathname}?${str}`;
+		}
+		return `${location.origin}${location.pathname}`;
+	}
+	
+	<% g_addr.forEach((g, i)=>{ %>
+
+	pages.push({IsOpen: false, Name: "<%- g.friendlyName %>"});
+	function click_<%- i %>(){
+		pages[<%- i %>].IsOpen = !pages[<%- i %>].IsOpen;
+
+		history.pushState({}, '', genUrlQuery());
+	}
+
+	<% }) %>
+
+	function enterPage(){
+		let keys = Object.keys(query);
+		keys.forEach(k=>{
+
+			if(query[k] == "true"){
+
+				let k2 = k.replace(/open_/, "");
+				let e = document.getElementById(`bt_${k2}`);
+			
+				if(e){
+					e.click();
+				}
+			}
+		});
+	}
+
+
+
+	enterPage();
+
+</script>
+
+
+
+
+	<div class="row" id="gs-container">
+		<button id="mess_show" class="btn btn-secondary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false">
+			サーバメッセージ表示の切り替え
+		</button>
+		<div class="collapse" id="collapseExample">
+			<div id="www" style="width: 100%; height: 500px; overflow-y: scroll; border: 1px #999999 solid;">
+				<div id="MessageText" ></div>
+			</div>
+		</div>
+	</div>
+
+<script>
+
+</script>
+
+<!-- <script src="/scripts/connect2.js"></script> -->
+
+

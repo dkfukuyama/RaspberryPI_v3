@@ -59,6 +59,12 @@ export class PageParameters {
 			}
 		},
 		{
+			path: '/play_music2',
+			title: 'おんがくをかける(テスト中)',
+			view_page: './play_music2.ejs',
+			level: 0,
+		},
+		{
 			path: '/conf_remocon',
 			title: 'リモコンのせってい',
 			view_page: './conf_remocon.ejs',

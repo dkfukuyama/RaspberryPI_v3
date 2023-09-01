@@ -8,7 +8,7 @@ const sch = require('@/scheduler');
 
 import * as NodeMailerWrapper from '@/NodeMailerWrapper';
 
-import { AppConf, slk } from '@/AppConf';
+import { AppConf, slk, slkapi } from '@/AppConf';
 import { HttpServer, HttpsServer } from '@/GlobalObj';
 import { Monitor } from '@/AppFunctions';
 
@@ -81,6 +81,7 @@ async function main0() {
     slk.Log(sn);
 
     OverWriteCompiledJsFile('views/scripts/connect.js');
+    OverWriteCompiledJsFile('views/scripts/connect2.js');
 
     sch.setNodeCrontab();
 
@@ -96,24 +97,15 @@ async function main0() {
 
 	HttpsServer.listen(443);
 	HttpServer.listen(httpServerPort, () => slk.Log(`http server port No. ${httpServerPort}`)).on('error', (err) => slk.Err(`......PORT LISTEN ERROR 80...${err}`));
+
+	slkapi.SendFileAsync("out.log");
+	slkapi.SendFileAsync("error.log");
+
+
 	Monitor.Start(HttpServer, HttpsServer);
 }
 
-async function main_wrap() {
-    const mail = new NodeMailerWrapper.NodeMailer(process.env.GMAIL_ADDR, process.env.GMAIL_PASS);;
-
-	mail.SendTextAndAttachmentsAsync("PI-02B boot", `${new Date()}`, [{ filename: "out.log", path: "out.log" }, { filename: "error.log", path: "error.log" }])
-		.then(res => { console.log("SEND MAIL OK"); console.log(res); })
-		.catch(err => console.error(err));
-
-	await main0().then(() => {
-        slk.Err("Enter into the Main->then routine");
-    }).catch(err => {
-        slk.Err("Enter into the Main->catch routine");
-        slk.Err(err);
-    });
-}
-main_wrap();
+main0();
 
 /*
  * 参考記事

@@ -38,13 +38,13 @@ export class Slack {
 
 export class SlackApi {
 
-	fs = require('fs');
-	BotToken: string;
+	private fs = require('fs');
+	private BotToken: string;
 	constructor(botToken: string) {
 		this.BotToken = botToken;
 	}
 
-	SendFileAsync(fileName: string): Promise<object> {
+	public SendFileAsync(fileName: string): Promise<object> {
 		if (this.fs.existsSync(fileName)) {
 
 			return new Promise((resolve, reject) => {

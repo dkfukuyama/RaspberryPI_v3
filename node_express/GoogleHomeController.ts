@@ -1,6 +1,6 @@
 import path = require('path');
 import { delay_ms, clearEventEmitter, __LINE__ } from '@/UtilFunctions';
-import { IAppFunctionArgs } from './AppFunctions';
+import { IAppFunctionArgs } from '@/AppFunctions';
 import { Socket } from 'socket.io';
 
 export interface IGoogleHomeSeekResults {
@@ -166,6 +166,7 @@ export class GoogleHomeController {
     private MediaPlayer = null;
 
     private IpAddress: string = "";
+
     private ConnectionRetryIntervalMs: number = 100;
 	static Sox: string = 'sox';
     Interval_t: NodeJS.Timeout | null = null;
@@ -204,7 +205,7 @@ export class GoogleHomeController {
                 GoogleHomeController.gHomeAddresses = temp;
             }
             if (GoogleHomeController.gHomeAddresses?.length) {
-                GoogleHomeController.secondsCount = (GoogleHomeController.secondsCount + 1) % 10;
+                GoogleHomeController.secondsCount = (GoogleHomeController.secondsCount + 1) % 30;
             }
             else {
                 GoogleHomeController.secondsCount = (GoogleHomeController.secondsCount + 1) % 4;

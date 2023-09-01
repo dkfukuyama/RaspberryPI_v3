@@ -98,7 +98,6 @@ PageParams.Pages.forEach(p => {
                 query: req.query,
                 pages: PageParams.Pages,
 				common: PageParams.Common,
-				
             });
 
         } catch (er) {
