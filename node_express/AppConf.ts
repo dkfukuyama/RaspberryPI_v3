@@ -12,6 +12,8 @@ export interface IGL {
 	RecCommandLine: string;
 	RecCommandLineReplacer: { outfile: string, length: string }|null;
 
+	music_shortcut_dir?: string | null;
+
 	UseSocketIoExpress?: boolean;
 
     errorFlag: boolean;
@@ -100,6 +102,8 @@ export function AppConf(): IGL {
 			};
 
 			GL_VARS.UseSocketIoExpress = process.env.USE_SOCKET_IO_EXPRESS ? true : false;
+
+			GL_VARS.music_shortcut_dir = process.env.MUSIC_SHORTCUT_FOLDER ? process.env.MUSIC_SHORTCUT_FOLDER: ".";
 
             firstTry = false;
         }

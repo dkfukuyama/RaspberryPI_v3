@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /node_express/report.html
 
 express_key/*
+/node_express/conf

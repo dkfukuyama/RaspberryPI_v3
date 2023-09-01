@@ -27,6 +27,7 @@ interface PreExecFunctions {
         [key: string]: IPFunc
     };
 }
+
 export class PageParameters {
 	Common: {
 		ghomeSpeakers: IGoogleHomeSeekResults[];
@@ -41,6 +42,15 @@ export class PageParameters {
 			server_ws: `ws://${AppConf().httpDir0}:${process.env.SOCKETIO_PORT}`,
 			useSocketIoExpress: AppConf().UseSocketIoExpress,
 			global: AppConf(),
+		}
+	};
+
+	
+	UpdateSpecialParams: { [key: string]: (obj?: any | null) => (any | null); } = {
+		'/conf_remocon' : () => {
+			const f = new FileListSearch(AppConf().saveDir0, AppConf().httpDir_music);
+			f.GetInfo(path.join(AppConf().saveDir0, AppConf().music_shortcut_dir));
+			return f.GetList().FileList;
 		}
 	};
 
@@ -73,8 +83,11 @@ export class PageParameters {
 		{
 			path: '/conf_remocon',
 			title: 'リモコンのせってい',
-			view_page: './conf_remocon.ejs',
+			view_page: './controler_config.ejs',
 			level: 0,
+			specialParams: {
+				GetFunc: ()=>this.UpdateSpecialParams['/conf_remocon'](),
+			}
 		},
 		{
 			path: '/voice_changer',
@@ -116,12 +129,6 @@ export class PageParameters {
 			title2: 'クイズゲームをつくる',
 			view_page: './quiz.ejs',
 			level: 1
-		},
-		{
-			path: '/controler_config',
-			title: 'コントローラ設定',
-			view_page: './controler_config.ejs',
-			level: 0
 		},
 		{
 			path: '/config',

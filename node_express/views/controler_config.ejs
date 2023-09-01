@@ -1,29 +1,59 @@
 <% let g_addr = common.ghomeSpeakers %>
+<% let special = page?.specialParams ?? [] %>
 
 
-<% if(useSocketIoExpress){ %>
-	<script src="/socket.io/socket.io.js"></script>
-<% }else{ %>
-	<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
-<% } %>
+<script type="text/javascript" src="/scripts/form_parts.js">
+</script>
+<script type="text/javascript" src="/scripts/controller_config_register.js">
+</script>
 
+
+<script type="text/javascript">
+	const __debug = false;
+
+	async function saveButtonClick(){
+		let array = {};
+		for(let i=1; i<=9; i++){
+			let e = document.getElementById(`SELECT_${i}`).value.toString();
+			array[i] = e;
+		}
+		let data_to_save = buildSaveData(array);
+		await Save(data_to_save, __debug);
+	}
+
+	async function win_load() {
+		let loadedata = await LoadAll(__debug);
+		for(let i=1; i<=9 ;i++){
+			let s = document.getElementById(`SELECT_${i}`);
+			s.value = ((i in loadedata) ? loadedata[i].fullpath : '');
+		}
+		
+	}
+
+	window.onload = ()=>{
+		win_load();
+	};
+</script>
+
+<!--
+<% const files = special.GetFunc().filter(f=>f.Type == "File"); %>
+-->
 <div class="container">
 	<div class="row">
-		<% for(let i=0; i<9; i++){ %>
+		<% for(let i=1; i<=9; i++){ %>
 			<div class="col-md-4 col-12">
-				<div>i</div>
-					<Select class="form-select">
-						<option>てすと</option>
-					</Select>
+				<% let selector_id = `SELECT_${i}` %>
+				<div><%- i %>番</div>
+				<Select class="form-select" id="<%- selector_id %>">
+					<option value="" selected>設定なし</option>
+					<% for(let k=0; k<files.length; k++){ %>
+						<option value="<%- files[k].Name %>"><%- files[k].Name %></option>
+					<% } %>
+				</Select>
 			</div>
 		<% } %>
+		<button type="button" class="btn btn-primary col-6" onclick="saveButtonClick()">きろく</button>
+		<button type="button" class="btn btn-primary col-6" onclick="win_load()">リセット</button>
 	</div>
 </div>
 
-<script>
-	const server_ws = "<%- common.server_ws %>";
-	const container_id = "gs-container";
-	const query = <%- JSON.stringify(query) %>
-	const client_type = 'MusicPlayer';
-	const special = <%- JSON.stringify(page?.specialParams ?? {}) %>
-</script>

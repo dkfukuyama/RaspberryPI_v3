@@ -66,9 +66,9 @@
 		post_command({
 			alert_text : '標準出力ログを表示します。',
 			mode : 'system_command',
+			no_consolelog: true,
 			data: {
 				command : 'cat out.log',
-				log_output_off: 'true',
 			}
 		});
 	}
@@ -77,9 +77,9 @@
 		post_command({
 			alert_text : 'エラーログを表示します。',
 			mode : 'system_command',
+			no_consolelog: true,
 			data: {
 				command : 'cat error.log',
-				log_output_off: 'true',
 			}
 		});
 	}
@@ -89,9 +89,9 @@
 		post_command({
 			alert_text : 'バージョンを表示します。',
 			mode : 'system_command',
+			no_consolelog: true,
 			data: {
 				command : 'git log -1',
-				log_output_off: 'true',
 			}
 		});
 	}

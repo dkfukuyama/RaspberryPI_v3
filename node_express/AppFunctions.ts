@@ -8,7 +8,9 @@ import { GoogleHomeController, IAppFunctionArgs_GHomeCntData, IAppFunctionArgs_P
 import { GoogleTTS } from '@/GoogleTTS';
 import { ExecChain } from '@/UtilFunctions';
 
-import { HttpServer, HttpsServer } from '@/GlobalObj';
+import { read_all, read_musicshortcutFromId, update } from '@/DataBaseOperation';
+
+//import { HttpServer, HttpsServer } from '@/GlobalObj';
 
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
@@ -17,7 +19,8 @@ const exec = require('child_process').exec;
 type IAppFunctionData = any;
 
 export type IAppFunctionArgs = {
-    mode: string;
+	mode: string;
+	no_consolelog?: boolean;
 	data: IAppFunctionData;
 } 
 
@@ -46,7 +49,57 @@ export const AppFunctions: IAppFunctions = {
             Obj: Promise.resolve(require('./clean').clean_wav(100)),
             CommandTerminationType: 'OK',
         }));
-    },
+	},
+	'sqldata': async (params: IAppFunctionData) => {
+		return new Promise(async (resolve, reject) => {
+			if (params.mode == 'load') {
+				await read_all(params.tableName).then(data =>
+					resolve({
+						Args: params,
+						Obj: data,
+						CommandTerminationType: 'OK',
+					}))
+					.catch(err => {
+						reject(err)
+					})
+			} else if (params.mode == 'save') {
+				await update(params.tableName, params.data_to_save).then(data =>
+					resolve({
+						Args: params,
+						Obj: data,
+						CommandTerminationType: 'OK',
+					}))
+					.catch(err => {
+						reject(err)
+					})
+			} else {
+				reject(`mode : "${params.mode}" is invalid`);
+			}
+		});
+	},
+	'play_music_shortcut': async (params: IAppFunctionData) => {
+		return new Promise(async (resolve, reject) => {
+			let mediaUrl: string = undefined;
+			try {
+				mediaUrl = (await read_musicshortcutFromId(params.id)).fullpath;
+				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
+				if (g) {
+					g.PlayList([mediaUrl], null, { "RepeatMode": "REPEAT_OFF", "PlayOrder": "CLEAR_OTHERS" });
+					resolve({
+						Args: params,
+						CommandTerminationType: 'OK',
+					});
+				} else {
+					reject({
+						media: mediaUrl,
+						message: `Speaker with IP Address ${params.SpeakerAddress} is not Found`
+					});
+				}
+			} catch (err) {
+				reject(err);
+			}
+		});
+	},
 	'play_music': async (params: IAppFunctionData) => {
 		return new Promise((resolve, reject) => {
 			try {
@@ -102,7 +155,7 @@ export const AppFunctions: IAppFunctions = {
 				"git fetch origin master",
 				"git reset --hard origin/master",
 				() => { process.chdir('../slack_hubot'); return "dir : slack_hubot" },
-				'tsc --build', () => { process.chdir('../node_express'); return "dir : slack_hubot" },
+				'tsc --build', () => { process.chdir('../node_express'); return "dir : node_express" },
 				"npm install",
 				"npm run build"
 			]);
@@ -174,7 +227,7 @@ export const AppFunctions: IAppFunctions = {
 			const OutFiles = GetStandardFileNames({ dir: [AppConf().recDir, ''], ext: ".wav" });
 			console.log(OutFiles);
 			await GoogleTTS.GetTtsAudioData({
-				outfilePath: OutFiles[0], text: params.Text ?? '���̓G���[',
+				outfilePath: OutFiles[0], text: params.Text ?? '入力エラー',
 				voiceTypeId: 0
 			}).then(() => {
 				let g = Monitor.GetGhObjByAddress(params.SpeakerAddress)?.g;
@@ -242,7 +295,7 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                         Args: body,
                         CommandTerminationType: 'ERROR',
                         ErrorMessage: 'Internal Error',
-                        Obj: err.toString(),
+                        Obj: err,
                     };
                     return temp;
                 });
@@ -253,8 +306,10 @@ export function ApplyToExpress(expApp: express.Express): express.Express {
                 CommandTerminationType: "ERROR",
                 ErrorMessage: "Command not Exists",
             };
-        }
-        console.log(JSON.stringify(results, null, "\t"));
+		}
+		if (!body.no_consolelog) {
+			console.log(JSON.stringify(results, null, "\t"));
+		}
         res.json(results);
     });
 
@@ -277,8 +332,10 @@ export function ApplyToSocket(socket: Socket): Socket {
                         Obj: err,
                     };
                     return temp;
-                });
-            console.log(JSON.stringify(results, null, "\t"));
+				});
+			//if (!body.no_consolelog) {
+			//	console.log(JSON.stringify(results, null, "\t"));
+			//}
             socket.emit(p, results);
             await new Promise<void>((resolve) => setTimeout(()=>resolve(), 1000));
             socket.disconnect();

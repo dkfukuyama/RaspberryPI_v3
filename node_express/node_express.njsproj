@@ -51,13 +51,20 @@
     <Content Include="clean.ts">
       <TestFramework>mocha</TestFramework>
     </Content>
+    <Content Include="conf\db_access.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="ft_socket_client.ts">
       <SubType>Code</SubType>
     </Content>
     <Content Include="FunctionTest\test_02.json" />
     <Content Include="FunctionTest\test_01.json" />
     <Content Include="FunctionTest\test_all.ps1" />
+    <TypeScriptCompile Include="DataBaseOperation.ts" />
     <TypeScriptCompile Include="FileListSearch.ts" />
+    <TypeScriptCompile Include="FunctionTest\ft_FileList.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="FunctionTest\ft_GoogleSpeaker.ts" />
     <TypeScriptCompile Include="GlobalObj.ts">
       <SubType>Code</SubType>
@@ -118,9 +125,6 @@
     <TypeScriptCompile Include="GHomeMonitor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="FunctionTest\test_env.secret">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="main_app.ts">
       <TestFramework>
       </TestFramework>
@@ -141,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FunctionTest\" />
+    <Folder Include="conf\" />
     <Folder Include="UnitTest\" />
     <Folder Include="views\" />
     <Folder Include="views\css\" />
