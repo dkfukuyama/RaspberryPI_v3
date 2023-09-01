@@ -2,13 +2,13 @@ $body = @{
     mode = 'play_music_shortcut';
 	short_return = $true;
     data = @{
-		id = 6;
+		id = 3;
 		SpeakerAddress = "192_168_1_8";
 	};
 };
 $Params = @{
 	Method = "POST";
-	Uri = "http://192.168.1.231/command";
+	Uri = "http://192.168.1.200/command";
 	Body = ($Body | ConvertTo-Json);
 	ContentType = "application/json"
 }

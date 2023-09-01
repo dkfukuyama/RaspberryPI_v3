@@ -10,8 +10,6 @@ import { ExecChain } from '@/UtilFunctions';
 
 import { read_all, read_musicshortcutFromId, update } from '@/DataBaseOperation';
 
-//import { HttpServer, HttpsServer } from '@/GlobalObj';
-
 export const Monitor = new GHomeMonitor(parseInt(process.env.SOCKETIO_PORT));
 
 const exec = require('child_process').exec;
@@ -284,6 +282,9 @@ export const AppFunctions: IAppFunctions = {
 export function ApplyToExpress(expApp: express.Express): express.Express {
     expApp.post('/command', async function (req: express.Request, res: express.Response, next: express.NextFunction) {
         console.log("COMMAND MODE via HTTP");
+
+		console.log(req.rawHeaders);
+		console.log(req.body);
 
         let body: IAppFunctionArgs = req.body;
         let results: IAppFunctionResults

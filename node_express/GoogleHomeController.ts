@@ -41,7 +41,7 @@ export type EPlayOptionShowName = "くりかえし" | "じゅんばん" | "と�
 
 export type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
 export type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
-export type ESoxEffectsPresetKey = "None" | "Yamabiko" | "Reverb" | "Robot" | "Kimoi" | "Random";
+export type ESoxEffectsPresetKey = "None" | "Yamabiko" | "Reverb" | "Robot" | "Kimoi" | 'Phase' | 'Overdrive' | 'Contrast' | "Random";
 
 export interface IPlayOption {
 	RepeatMode?: ERepeatMode;
@@ -91,6 +91,9 @@ export class PlayOptionSelector {
 			{ Value: "Yamabiko", ShowName: "やまびこ", command: "echo 0.8 0.9 400 0.3 800 0.25 1200 0.1 1600 0.05" },
 			{ Value: "Reverb", ShowName: "リバーブ", command: "reverb" },
 			{ Value: "Robot", ShowName: "ロボット", command: "echo 0.5 0.8 30 1 echo 0.5 0.8 13 1 echo 0.8 0.9 13 1 echo 0.8 0.8 13 1 gain -e -5" },
+			{ Value: "Phase", ShowName: "ふぇいず", command: "phaser 0.8 0.74 3 0.4 0.5 -t"},
+			{ Value: "Overdrive", ShowName: "おーばーどらいぶ", command: "overdrive 8 8"},
+			{ Value: "Contrast", ShowName: "コントラスト", command: "contrast 70"},
 			{
 				Value: "Kimoi",
 				ShowName: "きもい",
