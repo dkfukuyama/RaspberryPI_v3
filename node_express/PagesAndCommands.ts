@@ -4,6 +4,7 @@ import { GoogleHomeController, IGoogleHomeSeekResults, PlayOptionSelector } from
 import { AppConf, IGL } from "@/AppConf";
 import { GoogleTTS } from '@/GoogleTTS';
 import { IMusicList, FileListSearch } from '@/FileListSearch';
+import path from 'path';
 
 type IPFunc = (req: express.Request, res: express.Response) => Promise<object|string>;
 
@@ -93,6 +94,12 @@ export class PageParameters {
 			path: '/voice_changer',
 			title: 'ボイスチェンジャー',
 			view_page: './voice_changer.ejs',
+			level: 0,
+		},
+		{
+			path: '/voice_inp',
+			title: '音声送信',
+			view_page: './voice_inp.ejs',
 			level: 0,
 		},
 		{

@@ -6,7 +6,28 @@
 	<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 <% } %>
 
-<% let bt_index = 0 %>
+<%
+
+	let bt_index = 0;
+	let keys = Object.keys(query);
+	let key_names = keys.filter(k=>k.startsWith("name")).map(k=>query[k]);
+	let val = {};
+	let val_pages = [];
+
+	g_addr.forEach(g=>{
+		if(!key_names.includes(g.friendlyName)) key_names.push(g.friendlyName);
+	});
+
+	key_names.forEach((k, i)=>{
+		val[k] = {
+			"index": i,
+			"open" : query.hasOwnProperty(`open${i}`) ? (query[`open${i}`] ?? 0) : 0,
+			"path" : query.hasOwnProperty(`path${i}`) ? (query[`path${i}`] ?? '') : '',
+		};
+
+		val_pages.push({IsOpen: val[k].open, Name: k, Path: val[k].path});
+	});
+%>
 
 <script>
 	const g_addr = <%- JSON.stringify(g_addr) %>;
@@ -16,7 +37,7 @@
 	const client_type = 'MusicPlayer';
 	const special = <%- JSON.stringify(page?.specialParams ?? {}) %>;
 
-	let pages = [];
+	let pages = <%- JSON.stringify(val_pages) %>;
 
 	function genUrlQuery(){
 
@@ -33,63 +54,49 @@
 	}
 
 	let click = [];
-	g_addr.forEach((g, i)=>{
-		pages.push({IsOpen: 0, Name: g.friendlyName, Path: ''});
-		this[`click_${i}`] = function(){
-			pages[i].IsOpen = pages[i].IsOpen ? 0 : 1;
+
+	<% g_addr.forEach((g, i)=>{ %>
+
+		function click_<%- i %> (){
+			for(let j=0; j<pages.length; j++){
+				if(pages[j].Name == "<%- g.friendlyName %>"){
+					pages[j].IsOpen = parseInt(pages[j].IsOpen) == 1 ? 0 : 1;
+				}
+			}
 			history.pushState({}, '', genUrlQuery());
 		}
-	});
-
-	function enterPage(){
-		
-		let keys = Object.keys(query);
-		let key_names = keys.filter(k=>k.startsWith("name")).map(k=>query[k]);
-		let val = {};
-
-		key_names.forEach((k, i)=>{
-			val[k] = {
-				index: i,
-				open : query.hasOwnProperty(`open${i}`) ? (query[`open${i}`] ?? 0) : 0,
-				path : query.hasOwnProperty(`path${i}`) ? (query[`path${i}`] ?? '') : '',
-			};
-		});
-
-		key_names.forEach(k=>{
-			let e = document.getElementById(`bt_${k}`);
-
-			if(e){
-				if( val[k].open > 0) e.click();
-			}
-		});
-
-	}
+	<% }); %>
 
 </script>
 
 <%
+	
+	g_addr.forEach((g, i)=>{ 
 
-	let keys = Object.keys(query);
-	let key_names = keys.filter(k=>k.startsWith("name")).map(k=>query[k]);
-	let val = {};
+		let fls;
+		let v;
+		let musics;
 
-	key_names.forEach((k, i)=>{
-		val[k] = {
-			index: i,
-			open : query.hasOwnProperty(`open${i}`) ? (query[`open${i}`] ?? 0) : 0,
-			path : query.hasOwnProperty(`path${i}`) ? (query[`path${i}`] ?? '') : '',
-		};
-	});
+		let path = ".";
+		let open = 0;
+
+		fls = new page.specialParams.FileListSearch(common.global.saveDir0);
+		v = val.hasOwnProperty(g.friendlyName) ? val[g.friendlyName] : null;
+
+		path = (v != null && v.hasOwnProperty("path")) ? v.path : ".";
+		fls.GetInfo(path);
+		musics = fls.GetList();
+
+		open = (v != null && v.hasOwnProperty("open")) ? parseInt(v.open) : 0;
+	
 %>
 
-
-<% g_addr.forEach((g, i)=>{ %>
 	<div class="row" id="row_<%- g.friendlyName %>">
-					<button id="bt_<%- g.friendlyName %>" class="btn btn-primary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<%- g.friendlyName %>" aria-controls="collapseExample<%- g.friendlyName %>" aria-expanded="false" onclick="click_<%- i %>()" >
+					<button id="bt_<%- g.friendlyName %>" class="btn btn-primary my-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<%- g.friendlyName %>" aria-controls="collapseExample<%- g.friendlyName %>" aria-expanded="<%- open==1 ? "true" : "false"%>" onclick="click_<%- i %>()" >
 						<%- g.speakerName %>
 					</button>
 
-					<div class="collapse" id="collapseExample<%- g.friendlyName %>" aria-labelledby="header_<%- g.friendlyName %>">
+					<div class="collapse<%- open==1 ? " show" : ""%>" id="collapseExample<%- g.friendlyName %>" aria-labelledby="header_<%- g.friendlyName %>">
 				<div class="container">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-lg-4">
@@ -168,15 +175,6 @@
 							<div class="col-xs-12 col-sm-6 col-lg-8">
 								<div class="container">
 
-									<%
-										let fls = new page.specialParams.FileListSearch(common.global.saveDir0);
-										let v = val.hasOwnProperty(g.friendlyName) ? val[g.friendlyName] : null;
-										
-										let path = (v != null && v.hasOwnProperty("path")) ? v.path : ".";
-										fls.GetInfo(path);
-										let musics = fls.GetList();
-									%>
-
 									<div class="row">
 										<% musics.FileList.forEach(f=>{ %>
 										<div class="col-md-12 col-lg-6 col-xxl-4">
@@ -193,18 +191,12 @@
 											<button id="dir_bt_<%- bt_index %>" class="btn btn-success my-2 py-2 w-100"><%- f.Name %></button>
 											<script>
 												document.getElementById("dir_bt_<%- bt_index %>").onclick = function(){
-													let pa = pages.filter(p=>p.Name == "<%- g.friendlyName %>");
-													let pb = pages.filter(p=>p.Name != "<%- g.friendlyName %>");
-
-													if(pa.length == 1){
-														pa[0].Path = "<%- f.Name %>";
+													for(let i=0; i<pages.length; i++){
+														if(pages[i].Name == "<%- g.friendlyName %>"){
+															pages[i].Path = "<%- f.Name %>";
+														}
 													}
-
-													pages = pb;
-													pages.push(pa[0]);
-
 													location.href = genUrlQuery();
-
 												}
 											</script>
 										</div>
@@ -230,10 +222,6 @@
 			</div>
 		</div>
 	</div>
-
-<script>
-	enterPage();
-</script>
 
 <!-- <script src="/scripts/connect2.js"></script> -->
 

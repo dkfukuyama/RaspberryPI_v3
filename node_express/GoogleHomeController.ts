@@ -41,7 +41,8 @@ export type EPlayOptionShowName = "くりかえし" | "じゅんばん" | "と�
 
 export type ERepeatMode = "REPEAT_OFF" | "REPEAT_ALL" | "REPEAT_SINGLE" | "REPEAT_ALL_AND_SHUFFLE";
 export type EPlayOrder = "INTERRUPT" | "CLEAR_OTHERS" | "ADD_AFTER_PLAYING" | "ADD_FIRST" | "ADD_LAST";
-export type ESoxEffectsPresetKey = "None" | "Yamabiko" | "Reverb" | "Robot" | "Kimoi" | "Random";
+export type ESoxEffectsPresetKey = "None" | "Yamabiko" | "Reverb" | "Robot" | "Kimoi" | 'Phase' | 'Overdrive' | 'Contrast' | "Random";
+
 
 export interface IPlayOption {
 	RepeatMode?: ERepeatMode;
